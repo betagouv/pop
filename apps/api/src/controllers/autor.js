@@ -65,13 +65,13 @@ router.put(
       #swagger.description = "Utilisé lors de l'import"  
     */
 		const notices = JSON.parse(req.body.autorNotices);
-		var promises = [];
+		const promises = [];
 
 		try {
 			const updateMode = req.body.updateMode;
 			const user = req.user;
 			for (let i = 0; i < notices.length; i++) {
-				var e = notices[i];
+				const e = notices[i];
 				const ref = e.notice.REF;
 				const prevNotice = await Autor.findOne({ REF: ref });
 				await determineProducteur(e.notice);
@@ -86,33 +86,32 @@ router.put(
 						success: false,
 						msg: "Autorisation nécessaire pour mettre à jour ces notices",
 					});
-				} else {
-					// Prepare and update notice.
-					await transformBeforeCreateAndUpdate(e.notice, prevNotice);
-					const oaiObj = { DMAJ: e.notice.DMAJ };
-
-					//Ajout de l'historique de la notice
-					var today = moment
-						.tz(new Date(), timeZone)
-						.format("YYYY-MM-DD HH:mm");
-
-					const HISTORIQUE = e.notice.HISTORIQUE || [];
-					const newHistorique = {
-						nom: user.nom,
-						prenom: user.prenom,
-						email: user.email,
-						date: today,
-						updateMode: updateMode,
-					};
-
-					HISTORIQUE.push(newHistorique);
-					e.notice.HISTORIQUE = HISTORIQUE;
-
-					var obj = new Autor(e.notice);
-					checkESIndex(obj);
-					promises.push(updateNotice(Autor, ref, e.notice));
-					promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
 				}
+				// Prepare and update notice.
+				await transformBeforeCreateAndUpdate(e.notice, prevNotice);
+				const oaiObj = { DMAJ: e.notice.DMAJ };
+
+				//Ajout de l'historique de la notice
+				const today = moment
+					.tz(new Date(), timeZone)
+					.format("YYYY-MM-DD HH:mm");
+
+				const HISTORIQUE = e.notice.HISTORIQUE || [];
+				const newHistorique = {
+					nom: user.nom,
+					prenom: user.prenom,
+					email: user.email,
+					date: today,
+					updateMode: updateMode,
+				};
+
+				HISTORIQUE.push(newHistorique);
+				e.notice.HISTORIQUE = HISTORIQUE;
+
+				const obj = new Autor(e.notice);
+				checkESIndex(obj);
+				promises.push(updateNotice(Autor, ref, e.notice));
+				promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
 			}
 			// Consume promises and send sucessfull result.
 			await Promise.all(promises);
@@ -158,7 +157,7 @@ router.put(
 			const oaiObj = { DMAJ: notice.DMAJ };
 
 			//Ajout de l'historique de la notice
-			var today = moment.tz(new Date(), "YYYY-MM-DD HH:mm", timeZone);
+			const today = moment.tz(new Date(), "YYYY-MM-DD HH:mm", timeZone);
 
 			const HISTORIQUE = notice.HISTORIQUE || [];
 			const newHistorique = {
@@ -201,7 +200,7 @@ router.post(
 		const notices = JSON.parse(req.body.autorNotices);
 		const promises = [];
 		for (let i = 0; i < notices.length; i++) {
-			var e = notices[i];
+			const e = notices[i];
 			// Clean object.
 			for (const propName in e.notice) {
 				if (!e.notice[propName]) {
@@ -223,8 +222,8 @@ router.post(
 					msg: "Autorisation nécessaire pour créer cette ressource.",
 				});
 			}
-			var obj = new Autor(e.notice);
-			var obj2 = new NoticesOAI(oaiObj);
+			const obj = new Autor(e.notice);
+			const obj2 = new NoticesOAI(oaiObj);
 			checkESIndex(obj);
 			promises.push(obj.save());
 			promises.push(obj2.save());

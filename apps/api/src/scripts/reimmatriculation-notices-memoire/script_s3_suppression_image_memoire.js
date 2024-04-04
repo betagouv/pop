@@ -1,6 +1,6 @@
 require("dotenv").config();
 const AWS = require("aws-sdk");
-const fs = require("fs");
+const fs = require("node:fs");
 const path = require("node:path");
 const csv = require("csv");
 const filenamify = require("filenamify");
@@ -57,8 +57,8 @@ async function deleteImageMemoire(notice) {
 				}
 
 				countDelete++;
-				if (countDelete % 500 == 0 || countDelete == i - 1) {
-					console.log("Total images supprimées : " + countDelete);
+				if (countDelete % 500 === 0 || countDelete === i - 1) {
+					console.log(`Total images supprimées : ${countDelete}`);
 				}
 				resolve(data);
 			});

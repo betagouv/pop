@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("node:fs");
 const path = require("node:path");
 const modelsPath = "./models";
 const csvPath = "../csv";

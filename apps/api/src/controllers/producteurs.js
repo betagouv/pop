@@ -97,7 +97,7 @@ router.put(
 
 		//Update the new producteur with this LABEL and BASE and removing index from base objects
 		for (let i = 0; i < base.length; i++) {
-			delete base[i].index;
+			base[i].index = undefined;
 		}
 
 		// Get producteur by its id.
@@ -127,13 +127,13 @@ router.put(
 			await producteur.save();
 			return res.status(200).send({
 				success: true,
-				msg: `La mise à jour a été effectuée avec succès`,
+				msg: "La mise à jour a été effectuée avec succès",
 			});
 		} catch (e) {
 			capture(e);
 			res.status(500).send({
 				success: false,
-				msg: `La mise à jour a échoué`,
+				msg: "La mise à jour a échoué",
 			});
 		}
 	},
@@ -191,7 +191,7 @@ router.post(
 
 		//Create the new producteur with this LABEL and BASE and removing index from base objects
 		for (let i = 0; i < base.length; i++) {
-			delete base[i].index;
+			base[i].index = undefined;
 		}
 		const LABEL = label;
 		const BASE = base;
@@ -224,16 +224,16 @@ function producteurValidation(_id, label, base, allProducteurs) {
 	//Si parmis les producteurs existants il y en a un portant le même nom, retourne une erreur
 	allProducteurs.map((item) => {
 		//Ajout des préfixes déjà utilisés
-		if (item._id != _id) {
+		if (item._id !== _id) {
 			item.BASE.map((base) => {
 				usedPrefixes.push(...base.prefixes);
 			});
-			if (String(item.LABEL) === label && item._id != _id) {
+			if (String(item.LABEL) === label && item._id !== _id) {
 				msg = "Ce nom de producteur existe déjà";
 			}
 		}
 	});
-	if (msg != "") {
+	if (msg !== "") {
 		return { success: false, msg };
 	}
 
@@ -242,14 +242,14 @@ function producteurValidation(_id, label, base, allProducteurs) {
 		const testedBase = base[i];
 
 		//Test si base et préfixe sont remplis
-		if (testedBase.base == "") {
+		if (testedBase.base === "") {
 			msg = "Veuillez sélectionner une base";
 			return { success: false, msg };
 		}
 
 		//Test si une même base est sélectionnée plusieurs fois
 		for (let j = 0; j < usedBases.length; j++) {
-			if (usedBases[j] == testedBase.base) {
+			if (usedBases[j] === testedBase.base) {
 				msg =
 					"Une même base ne doit pas être sélectionnée plusieurs fois pour un même producteur";
 				return { success: false, msg };
@@ -259,14 +259,10 @@ function producteurValidation(_id, label, base, allProducteurs) {
 		//Test si un préfixe est déjà utilisé
 		for (let k = 0; k < testedBase.prefixes.length; k++) {
 			if (usedPrefixes.includes(testedBase.prefixes[k])) {
-				msg =
-					"Le préfixe " +
-					testedBase.prefixes[k] +
-					" est déjà utilisé";
+				msg = `Le préfixe ${testedBase.prefixes[k]} est déjà utilisé`;
 				return { success: false, msg };
-			} else {
-				usedPrefixes.push(testedBase.prefixes[k]);
 			}
+			usedPrefixes.push(testedBase.prefixes[k]);
 		}
 
 		//Ajout de la base utilisée dans la liste des bases

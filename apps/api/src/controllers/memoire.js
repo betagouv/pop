@@ -89,7 +89,7 @@ async function withFlags(notice) {
 	// M45867 - Ajout condition sur le contrôle des régions, si le champ PAYS contient uniquement france la vérification est effectué sinon pas de vérification
 	// Le controle est présent pour les producteurs MPP
 	let checkRegion = true;
-	if ("MPP" == notice.PRODUCTEUR) {
+	if ("MPP" === notice.PRODUCTEUR) {
 		checkRegion =
 			Array.isArray(notice.PAYS) &&
 			notice.PAYS.length < 2 &&
@@ -448,16 +448,18 @@ router.put(
 		}
 
 		// Update IMPORT ID.
-		if (notice.POP_IMPORT && notice.POP_IMPORT.length) {
+		if (notice.POP_IMPORT?.length) {
 			const id = notice.POP_IMPORT[0];
-			delete notice.POP_IMPORT;
+			notice.POP_IMPORT = undefined;
 			notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
 		}
 		await transformBeforeUpdate(notice);
 
 		const timeZone = "Europe/Paris";
 		//Ajout de l'historique de la notice
-		var today = moment.tz(new Date(), timeZone).format("YYYY-MM-DD HH:mm");
+		const today = moment
+			.tz(new Date(), timeZone)
+			.format("YYYY-MM-DD HH:mm");
 
 		const HISTORIQUE = prevNotice.HISTORIQUE || [];
 		const newHistorique = {

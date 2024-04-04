@@ -5,16 +5,16 @@ let nbrN = 0;
 
 notices.forEach((notice) => {
 	const arrayMemoire = notice.MEMOIRE.map((element) => {
-		if (element.url == "") {
-			var noticeMemoire = db.memoire.find({ REF: element.ref });
+		if (element.url === "") {
+			const noticeMemoire = db.memoire.find({ REF: element.ref });
 
 			noticeMemoire.forEach((el) => {
-				if (el.IMG && el.IMG != "") {
+				if (el.IMG && el.IMG !== "") {
 					// element.URL = noticeMemoire.IMG;
 					printjson(el.IMG);
 					printjson(notice.REF);
 					nbrN++;
-					print(nbrN + " notices");
+					print(`${nbrN} notices`);
 				}
 			});
 		}

@@ -8,7 +8,7 @@ if (nbNotices > 0) {
 	notices.forEach((notice) => {
 		let contient = "non";
 		// Pour la valeur contient_image = oui, il faut au moins une url de renseignée dans la liste des notices mémoire.
-		if (notice.MEMOIRE.some((m) => m.url != "")) {
+		if (notice.MEMOIRE.some((m) => m.url !== "")) {
 			contient = "oui";
 		}
 
@@ -19,7 +19,7 @@ if (nbNotices > 0) {
 
 		nbNotices--;
 		if (nbNotices % 1000 === 0) {
-			print(nbNotices + " notices restantes");
+			print(`${nbNotices} notices restantes`);
 		}
 	});
 }

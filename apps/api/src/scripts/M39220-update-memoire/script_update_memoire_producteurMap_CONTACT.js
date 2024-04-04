@@ -13,5 +13,5 @@ notices.forEach((element) => {
 		},
 	);
 	nbreNotices--;
-	print(nbreNotices + "notices restantes");
+	print(`${nbreNotices}notices restantes`);
 });

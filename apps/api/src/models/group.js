@@ -7,7 +7,7 @@ const GroupSchema = new Schema({
 });
 
 GroupSchema.method("toJSON", function () {
-	var group = this.toObject();
+	const group = this.toObject();
 	return group;
 });
 

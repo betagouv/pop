@@ -1,5 +1,5 @@
-var notices = db.memoire.find().noCursorTimeout();
-var noticeCount = db.memoire.count();
+const notices = db.memoire.find().noCursorTimeout();
+let noticeCount = db.memoire.count();
 
 function cleanData(array) {
 	return array
@@ -10,93 +10,93 @@ function cleanData(array) {
 }
 
 notices.forEach((notice) => {
-	var ref = notice.REF;
+	const ref = notice.REF;
 
 	//Transformation des champ string to array
 	//REG
-	var arrayPays = !Array.isArray(notice.PAYS)
+	const arrayPays = !Array.isArray(notice.PAYS)
 		? cleanData(notice.PAYS.split(";"))
 		: cleanData(notice.PAYS);
 
 	//REG
-	var arrayReg = !Array.isArray(notice.REG)
+	const arrayReg = !Array.isArray(notice.REG)
 		? cleanData(notice.REG.split(";"))
 		: cleanData(notice.REG);
 
 	//DPT
-	var arrayDpt = !Array.isArray(notice.DPT)
+	const arrayDpt = !Array.isArray(notice.DPT)
 		? cleanData(notice.DPT.split(";"))
 		: cleanData(notice.DPT);
 
 	//COM
-	var arrayCom = !Array.isArray(notice.COM)
+	const arrayCom = !Array.isArray(notice.COM)
 		? cleanData(notice.COM.split(";"))
 		: cleanData(notice.COM);
 
 	//INSEE
-	var arrayInsee = !Array.isArray(notice.INSEE)
+	const arrayInsee = !Array.isArray(notice.INSEE)
 		? cleanData(notice.INSEE.split(";"))
 		: cleanData(notice.INSEE);
 
 	//MCL
-	var arrayMcl = !Array.isArray(notice.MCL)
+	const arrayMcl = !Array.isArray(notice.MCL)
 		? cleanData(notice.MCL.split(";"))
 		: cleanData(notice.MCL);
 
 	//AUTOEU
-	var arrayAutoeu = !Array.isArray(notice.AUTOEU)
+	const arrayAutoeu = !Array.isArray(notice.AUTOEU)
 		? cleanData(notice.AUTOEU.split(";"))
 		: cleanData(notice.AUTOEU);
 
 	//AUTR
-	var arrayAutr = notice.AUTR
+	const arrayAutr = notice.AUTR
 		? !Array.isArray(notice.AUTR)
 			? cleanData(notice.AUTR.split(";"))
 			: cleanData(notice.AUTR)
 		: [];
 
 	//SCLE
-	var arrayScle = !Array.isArray(notice.SCLE)
+	const arrayScle = !Array.isArray(notice.SCLE)
 		? cleanData(notice.SCLE.split(";"))
 		: cleanData(notice.SCLE);
 
 	//DATOEU
-	var arrayDatoeu = !Array.isArray(notice.DATOEU)
+	const arrayDatoeu = !Array.isArray(notice.DATOEU)
 		? cleanData(notice.DATOEU.split(";"))
 		: cleanData(notice.DATOEU);
 
 	//DOM
-	var arrayDom = !Array.isArray(notice.DOM)
+	const arrayDom = !Array.isArray(notice.DOM)
 		? cleanData(notice.DOM.split(";"))
 		: cleanData(notice.DOM);
 
 	//MCPER
-	var arrayMcper = !Array.isArray(notice.MCPER)
+	const arrayMcper = !Array.isArray(notice.MCPER)
 		? cleanData(notice.MCPER.split(";"))
 		: cleanData(notice.MCPER);
 
 	//AUTG
-	var arrayAutg = !Array.isArray(notice.AUTG)
+	const arrayAutg = !Array.isArray(notice.AUTG)
 		? cleanData(notice.AUTG.split(";"))
 		: cleanData(notice.AUTG);
 
 	//AUTOR
-	var arrayAutor = !Array.isArray(notice.AUTOR)
+	const arrayAutor = !Array.isArray(notice.AUTOR)
 		? cleanData(notice.AUTOR.split(";"))
 		: cleanData(notice.AUTOR);
 
 	//COTECOR
-	var arrayCotecor = !Array.isArray(notice.COTECOR)
+	const arrayCotecor = !Array.isArray(notice.COTECOR)
 		? cleanData(notice.COTECOR.split(";"))
 		: cleanData(notice.COTECOR);
 
 	//AUTTI
-	var arrayAutti = !Array.isArray(notice.AUTTI)
+	const arrayAutti = !Array.isArray(notice.AUTTI)
 		? cleanData(notice.AUTTI.split(";"))
 		: cleanData(notice.AUTTI);
 
 	//AUT
-	var arrayAut = notice.AUT
+	const arrayAut = notice.AUT
 		? !Array.isArray(notice.AUT)
 			? cleanData(notice.AUT.split(";"))
 			: cleanData(notice.AUT)
@@ -129,5 +129,5 @@ notices.forEach((notice) => {
 	);
 
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });

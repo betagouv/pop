@@ -68,7 +68,7 @@ router.post("/", limiter, upload.any(), async (req, res) => {
 		const doc = await gallery.save();
 
 		// Save the associated image if present.
-		if (req.files && req.files.length && req.files[0].originalname) {
+		if (req.files?.length && req.files[0].originalname) {
 			const imagePath = `gallery/${filenamify(doc._id)}/${filenamify(
 				req.files[0].originalname,
 			)}`;

@@ -23,14 +23,15 @@ router.post("/signin", async (req, res) => {
   */
 	const email = req.body.email.toLowerCase();
 	const password = req.body.password;
-	const MSG_FAIL_AUTH = `Email ou mot de passe incorrect.`;
-	const MSG_WARNING_AUTH = `Email ou mot de passe incorrect.# En cas de nouvelle saisie erronée, votre compte sera temporairement bloqué.`;
+	const MSG_FAIL_AUTH = "Email ou mot de passe incorrect.";
+	const MSG_WARNING_AUTH =
+		"Email ou mot de passe incorrect.# En cas de nouvelle saisie erronée, votre compte sera temporairement bloqué.";
 	const MSG_ACCOUNT_LOCKED = `Compte temporairement bloqué.# Veuillez réessayer dans quelques minutes ou contacter l'administrateur POP.`;
 
 	if (!email || !password) {
 		return res
 			.status(400)
-			.send({ success: false, msg: `Mot de passe et email requis.` });
+			.send({ success: false, msg: "Mot de passe et email requis." });
 	}
 	let user;
 	try {
@@ -138,7 +139,7 @@ router.post("/forgetPassword", async (req, res) => {
   */
 	const email = req.body.email.toLowerCase();
 	if (!email) {
-		return res.status(400).send({ success: false, msg: `Email requis.` });
+		return res.status(400).send({ success: false, msg: "Email requis." });
 	}
 
 	let user;
@@ -154,7 +155,7 @@ router.post("/forgetPassword", async (req, res) => {
 		return res.status(404).send({ success: false, msg });
 	}
 
-	var password = generator.generate({
+	const password = generator.generate({
 		length: 12,
 		numbers: true,
 		symbols: true,
@@ -186,14 +187,14 @@ router.post(
 		if (!pwd1) {
 			return res.status(400).send({
 				success: false,
-				msg: `Le nouveau mot de passe ne peut être vide`,
+				msg: "Le nouveau mot de passe ne peut être vide",
 			});
 		}
 
 		if (pwd1 !== pwd2) {
 			return res.status(400).send({
 				success: false,
-				msg: `Les mots de passe ne sont pas identiques`,
+				msg: "Les mots de passe ne sont pas identiques",
 			});
 		}
 
@@ -221,19 +222,18 @@ router.post(
 				} catch (e) {
 					return res.status(500).send({
 						success: false,
-						msg: `La mise à jour du mot de passe a échoué.`,
+						msg: "La mise à jour du mot de passe a échoué.",
 					});
 				}
 				return res.status(200).send({
 					success: true,
-					msg: `La mise à jour du mot de passe a été effectuée avec succès`,
-				});
-			} else {
-				return res.status(401).send({
-					success: false,
-					msg: `La mise à jour du mot de passe a échoué. Le mot de passe original n'est pas bon.`,
+					msg: "La mise à jour du mot de passe a été effectuée avec succès",
 				});
 			}
+			return res.status(401).send({
+				success: false,
+				msg: `La mise à jour du mot de passe a échoué. Le mot de passe original n'est pas bon.`,
+			});
 		});
 	},
 );

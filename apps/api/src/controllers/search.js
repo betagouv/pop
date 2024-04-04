@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { esUrl, esPort, ID_PROD_APP, ovh } = require("../config.js");
-const http = require("http");
+const http = require("node:http");
 const aws4 = require("aws4");
 const { ndjsonToJsonText } = require("ndjson-to-json-text");
 const es = require("../elasticsearch.js")();
@@ -24,12 +24,13 @@ function getResultInElasticSearch6CompatibilityMode(results) {
 // Scroll API (required for full exports)
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html#search-request-scroll
 router.post("/scroll", (req, res) => {
-	let path, body;
+	let path;
+	let body;
 	// First request with a full query, next with a scroll_id.
 	if (req.query.scroll_id) {
 		path = "/_search/scroll";
 		body = JSON.stringify({ scroll: "1m", scroll_id: req.query.scroll_id });
-	} else if (req.query.index && req.query.index.match(/^[a-z]+$/)) {
+	} else if (req.query.index?.match(/^[a-z]+$/)) {
 		path = `/${req.query.index}/_search?scroll=1m`;
 		body = req.body;
 	} else {
@@ -155,7 +156,7 @@ function addFilterFields(req, opts) {
 		.join("\n");
 
 	if (transformData) {
-		opts.body = reqFilter + "\n";
+		opts.body = `${reqFilter}\n`;
 	}
 
 	return opts;

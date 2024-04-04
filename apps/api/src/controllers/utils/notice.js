@@ -6,7 +6,7 @@ const { indexOf } = require("./regions");
 function getNewId(collection, prefix, dpt) {
 	return new Promise((resolve, reject) => {
 		const q = collection
-			.findOne({ REF: { $regex: new RegExp("^" + prefix + dpt) } })
+			.findOne({ REF: { $regex: new RegExp(`^${prefix}${dpt}`) } })
 			.sort({ REF: -1 });
 		q.exec((error, doc) => {
 			if (error) {
@@ -103,7 +103,7 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
 						//Cas particulier pour memoire : le prefixe AP n'est pas suffisant pour déterminer le producteur
 						//Dans ce cas, le producteur "AUTRE" est ajouté et le cas particulier est géré plus bas pour déterminer
 						//si le producteur reste "AUTRE", ou s'il devient UDAP ou MAP
-						if (prefix == "AP" && collection == "memoire") {
+						if (prefix === "AP" && collection === "memoire") {
 							possibleProducteurs.push({
 								prefix: prefix,
 								label: "AUTRE",
@@ -120,14 +120,15 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
 		});
 	});
 
-	if (collection == "memoire") {
+	if (collection === "memoire") {
 		if (
 			IDPROD != null &&
 			String(REF).startsWith("AP") &&
 			String(IDPROD).startsWith("Service départemental")
 		) {
 			return "UDAP";
-		} else if (
+		}
+		if (
 			(IDPROD != null && String(IDPROD).startsWith("SAP")) ||
 			(EMET != null && String(EMET).startsWith("SAP"))
 		) {
@@ -146,11 +147,11 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
 			}
 		});
 		return finalProd;
-	} else if (defaultProducteur != "") {
-		return defaultProducteur;
-	} else {
-		return null;
 	}
+	if (defaultProducteur !== "") {
+		return defaultProducteur;
+	}
+	return null;
 }
 
 // Get "producteur" for memoire notices.
@@ -162,21 +163,23 @@ function findMemoireProducteur(REF, IDPROD, EMET) {
 		String(REF).startsWith("IVC")
 	) {
 		return "INV";
-	} else if (String(REF).startsWith("OA")) {
+	}
+	if (String(REF).startsWith("OA")) {
 		return "CAOA";
-	} else if (String(REF).startsWith("MH")) {
+	}
+	if (String(REF).startsWith("MH")) {
 		return "CRMH";
-	} else if (String(REF).startsWith("AR")) {
+	}
+	if (String(REF).startsWith("AR")) {
 		return "ARCH";
-	} else if (
+	}
+	if (
 		String(REF).startsWith("AP") &&
 		String(IDPROD).startsWith("Service départemental")
 	) {
 		return "UDAP";
-	} else if (
-		String(IDPROD).startsWith("SAP") ||
-		String(EMET).startsWith("SAP")
-	) {
+	}
+	if (String(IDPROD).startsWith("SAP") || String(EMET).startsWith("SAP")) {
 		return "MAP";
 	}
 	return "AUTRE";
@@ -216,7 +219,7 @@ async function checkValidRef(refList, collection, POP_FLAGS, fieldName) {
 			const ref = refList[i];
 			const notice = await collection.findOne({ REF: ref });
 			if (!notice) {
-				POP_FLAGS.push(fieldName + "_MATCH_FAIL");
+				POP_FLAGS.push(`${fieldName}_MATCH_FAIL`);
 			}
 		}
 	}

@@ -108,7 +108,7 @@ notices = db.memoire.find({ DPT: /[a-zA-Z]/ }).noCursorTimeout();
 noticeCount = notices.count();
 
 print("DEBUT DE TRAITEMENT DPT");
-print(noticeCount + " NOTICES");
+print(`${noticeCount} NOTICES`);
 
 const bulk = db.memoire.initializeUnorderedBulkOp();
 
@@ -134,7 +134,10 @@ notices.forEach((notice) => {
 			DPT: arrayDpt,
 		};
 		// Vérification de DPT_LETTRE, si vide, création des valeurs à partir de DPT
-		if (Array.isArray(notice.DPT_LETTRE) && notice.DPT_LETTRE.length == 0) {
+		if (
+			Array.isArray(notice.DPT_LETTRE) &&
+			notice.DPT_LETTRE.length === 0
+		) {
 			objSet.DPT_LETTRE = arrayDpt.map((dpt) => getDepartement(dpt));
 		}
 		bulk.find({ REF: notice.REF }).update([
@@ -145,7 +148,7 @@ notices.forEach((notice) => {
 	}
 
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });
 
 print("DEBUT DE UPDATE DPT");
@@ -157,7 +160,7 @@ notices = db.memoire.find({ DPT_LETTRE: /[0-9]/ }).noCursorTimeout();
 noticeCount = notices.count();
 
 print("DEBUT DE TRAITEMENT DPT_LETTRE");
-print(noticeCount + " NOTICES");
+print(`${noticeCount} NOTICES`);
 
 const bulk2 = db.memoire.initializeUnorderedBulkOp();
 
@@ -188,7 +191,7 @@ notices.forEach((notice) => {
 	}
 
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });
 
 print("DEBUT DE UPDATE DPT_LETTRE");

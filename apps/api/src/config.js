@@ -1,6 +1,6 @@
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
-const mongoUrl = process.env.DB_ENDPOINT || `mongodb://127.0.0.1/pop`;
+const mongoUrl = process.env.DB_ENDPOINT || "mongodb://127.0.0.1/pop";
 const dbName = process.env.DB_NAME || "pop";
 const esUrl = process.env.ES_ENDPOINT || "http://127.0.0.1:9200";
 const esPort = process.env.ES_PORT || 80;

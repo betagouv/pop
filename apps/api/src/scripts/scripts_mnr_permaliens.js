@@ -1,6 +1,6 @@
 const conf = require("dotenv").config();
 require("../mongo");
-const fs = require("fs");
+const fs = require("node:fs");
 const Mnr = require("../models/mnr");
 const { async } = require("rxjs/internal/scheduler/async");
 const Gallery = require("../models/gallery");
@@ -46,7 +46,7 @@ function generatePermaliens() {
 
 				fs.writeFileSync(
 					"./src/scripts/permaliens.csv",
-					notice.INV + ";" + app_url + "/gallery/" + doc._id + ";\n",
+					`${notice.INV};${app_url}/gallery/${doc._id};\n`,
 					{ flag: "a+" },
 				);
 				observer.next(i);
@@ -63,5 +63,5 @@ function generatePermaliens() {
 }
 
 generatePermaliens().subscribe((nbre) => {
-	console.log(nbre + " liens créés");
+	console.log(`${nbre} liens créés`);
 });

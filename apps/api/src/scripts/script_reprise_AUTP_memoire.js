@@ -1,24 +1,24 @@
-var notices = db.memoire.find().noCursorTimeout();
-var noticeCount = db.memoire.count();
+const notices = db.memoire.find().noCursorTimeout();
+let noticeCount = db.memoire.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
+	const ref = aRow.REF;
 
 	//Transformation string AUTP to array
 	//Procédure pour AUTP
-	var autp = aRow.AUTP;
-	var arrayAutp;
-	var typeAutp = typeof autp;
-	if (typeAutp == "string") {
+	const autp = aRow.AUTP;
+	let arrayAutp;
+	const typeAutp = typeof autp;
+	if (typeAutp === "string") {
 		arrayAutp = autp.split(";");
 
-		for (var i = 0; i < arrayAutp.length; i++) {
+		for (let i = 0; i < arrayAutp.length; i++) {
 			arrayAutp[i] = arrayAutp[i].trim();
 		}
 
 		//Delete elements with empty string
 		arrayAutp.forEach((item) => {
-			var pos = arrayAutp.indexOf(item);
-			if (item == "") {
+			const pos = arrayAutp.indexOf(item);
+			if (item === "") {
 				arrayAutp.splice(pos, 1);
 			}
 		});
@@ -34,5 +34,5 @@ notices.forEach((aRow) => {
 	}
 
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });

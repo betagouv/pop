@@ -24,7 +24,7 @@ async function run() {
 	const answers = await inquirer.prompt({
 		type: "confirm",
 		name: "force",
-		message: "Do you really want to delete: " + indices.join(", "),
+		message: `Do you really want to delete: ${indices.join(", ")}`,
 	});
 	if (!answers.force) {
 		return;

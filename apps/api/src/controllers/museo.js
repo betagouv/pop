@@ -97,9 +97,9 @@ async function transformBeforeCreateOrUpdate(notice) {
 		//Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
 		if (
 			coordonnees.lat !== 0 &&
-			!isNaN(coordonnees.lat) &&
+			!Number.isNaN(coordonnees.lat) &&
 			coordonnees.lon !== 0 &&
-			!isNaN(coordonnees.lon)
+			!Number.isNaN(coordonnees.lon)
 		) {
 			// Vérification de la cohérence des coordonnées
 			if (
@@ -240,7 +240,7 @@ router.post(
 		// Update IMPORT ID (this code is unclear…)
 		if (notice.POP_IMPORT.length) {
 			const id = notice.POP_IMPORT[0];
-			delete notice.POP_IMPORT;
+			notice.POP_IMPORT = undefined;
 			notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
 		}
 
@@ -344,7 +344,7 @@ router.put(
 		// Update IMPORT ID (this code is unclear…)
 		if (notice.POP_IMPORT.length) {
 			const id = notice.POP_IMPORT[0];
-			delete notice.POP_IMPORT;
+			notice.POP_IMPORT = undefined;
 			notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
 		}
 
@@ -352,26 +352,26 @@ router.put(
 		if ("import" === updateMode) {
 			// Les coordonnées ne sont pas fournies, alors il faut reprendre les coordonnées déjà enregistrées
 			if (
-				typeof notice["POP_COORDONNEES.lon"] == "undefined" &&
-				typeof notice["POP_COORDONNEES.lat"] == "undefined"
+				typeof notice["POP_COORDONNEES.lon"] === "undefined" &&
+				typeof notice["POP_COORDONNEES.lat"] === "undefined"
 			) {
 				notice.POP_COORDONNEES = {
 					lat: prevNotice.POP_COORDONNEES.lat,
 					lon: prevNotice.POP_COORDONNEES.lon,
 				};
-				delete notice["POP_COORDONNEES.lat"];
-				delete notice["POP_COORDONNEES.lon"];
+				notice["POP_COORDONNEES.lat"] = undefined;
+				notice["POP_COORDONNEES.lon"] = undefined;
 			} else if (
-				notice["POP_COORDONNEES.lon"] == "" &&
-				notice["POP_COORDONNEES.lat"] == ""
+				notice["POP_COORDONNEES.lon"] === "" &&
+				notice["POP_COORDONNEES.lat"] === ""
 			) {
 				// Les coordonnées sont vidées
 				notice.POP_COORDONNEES = {
 					lat: 0,
 					lon: 0,
 				};
-				delete notice["POP_COORDONNEES.lat"];
-				delete notice["POP_COORDONNEES.lon"];
+				notice["POP_COORDONNEES.lat"] = undefined;
+				notice["POP_COORDONNEES.lon"] = undefined;
 			}
 		}
 
@@ -379,7 +379,9 @@ router.put(
 
 		const timeZone = "Europe/Paris";
 		//Ajout de l'historique de la notice
-		var today = moment.tz(new Date(), timeZone).format("YYYY-MM-DD HH:mm");
+		const today = moment
+			.tz(new Date(), timeZone)
+			.format("YYYY-MM-DD HH:mm");
 
 		const HISTORIQUE = prevNotice.HISTORIQUE || [];
 		const newHistorique = {
@@ -423,7 +425,7 @@ router.put(
 		try {
 			await Promise.all(promises);
 			//Maj index elasticsearch
-			var obj = new Museo(notice);
+			const obj = new Museo(notice);
 			checkESIndex(obj);
 
 			res.status(200).send({ success: true, msg: "Notice mise à jour." });

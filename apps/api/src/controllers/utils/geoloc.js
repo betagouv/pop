@@ -63,7 +63,11 @@ function lambertToWGS84(xy, zone) {
 
 	const coords = xy.split(";").map((e) => Number.parseFloat(e.trim()));
 
-	if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
+	if (
+		coords.length !== 2 ||
+		Number.isNaN(coords[0]) ||
+		Number.isNaN(coords[1])
+	) {
 		return {
 			lat: 0,
 			lon: 0,
@@ -156,7 +160,7 @@ function lambertToWGS84(xy, zone) {
 			return {
 				lat: 0,
 				lon: 0,
-				message: "La zone " + zone.toLowerCase() + " est incorrecte",
+				message: `La zone ${zone.toLowerCase()} est incorrecte`,
 			};
 	}
 }
@@ -181,17 +185,17 @@ function getPolygonCentroid(pts) {
 	if (!pts) {
 		return null;
 	}
-	var first = pts[0],
-		last = pts[pts.length - 1];
-	if (first[0] != last[0] || first[1] != last[1]) pts.push(first);
-	var twicearea = 0,
-		x = 0,
-		y = 0,
-		nPts = pts.length,
-		p1,
-		p2,
-		f;
-	for (var i = 0, j = nPts - 1; i < nPts; j = i++) {
+	const first = pts[0];
+	const last = pts[pts.length - 1];
+	if (first[0] !== last[0] || first[1] !== last[1]) pts.push(first);
+	let twicearea = 0;
+	let x = 0;
+	let y = 0;
+	const nPts = pts.length;
+	let p1;
+	let p2;
+	let f;
+	for (let i = 0, j = nPts - 1; i < nPts; j = i++) {
 		p1 = pts[i];
 		p2 = pts[j];
 		f = p1[0] * p2[1] - p2[0] * p1[1];
@@ -207,11 +211,11 @@ function getPolygonCentroid(pts) {
 }
 
 function isLatitude(lat) {
-	return isFinite(lat) && Math.abs(lat) <= 90;
+	return Number.isFinite(lat) && Math.abs(lat) <= 90;
 }
 
 function isLongitude(lng) {
-	return isFinite(lng) && Math.abs(lng) <= 180;
+	return Number.isFinite(lng) && Math.abs(lng) <= 180;
 }
 
 function hasCorrectCoordinates(notice) {

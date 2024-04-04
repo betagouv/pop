@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("node:fs");
 const AWS = require("aws-sdk");
 const { s3Bucket } = require("../../config.js");
 

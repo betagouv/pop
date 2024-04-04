@@ -47,7 +47,7 @@ async function recipients(to) {
 		default:
 			try {
 				const user = await User.findOne({ email: to });
-				if (user && user.email) {
+				if (user?.email) {
 					return user.email;
 				}
 			} catch (e) {}

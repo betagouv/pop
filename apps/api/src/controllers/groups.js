@@ -76,21 +76,20 @@ router.get(
 		// Si on a bien un utilisateur rattaché à un groupe et un rôle, ainsi qu'une notice
 		if (user && ref && user.role && user.group) {
 			//Si l'utilisateur a un rôle administrateur et que son groupe est admin ou celui correspondant à la collection, retourne true
-			if (user.role == "administrateur" && user.group === "admin") {
+			if (user.role === "administrateur" && user.group === "admin") {
 				validate = true;
 				return res.status(200).send({ success: true, validate });
 			}
 
 			// Mantis 38639 - Si utilisateur de role producteur et groupe inventaire, alors pas de modif possible
-			if (user.role == "producteur" && user.group === "inv") {
+			if (user.role === "producteur" && user.group === "inv") {
 				validate = false;
 				return res.status(200).send({ success: true, validate });
-			} else {
-				// Si la collection est mnr ou author, on renvoie true pour eviter de changer le comportement
-				if (collection === "mnr" || collection === "autor") {
-					validate = true;
-					return res.status(200).send({ success: true, validate });
-				}
+			}
+			// Si la collection est mnr ou author, on renvoie true pour eviter de changer le comportement
+			if (collection === "mnr" || collection === "autor") {
+				validate = true;
+				return res.status(200).send({ success: true, validate });
 			}
 
 			//On récupère le groupe de l'utilisateur en base
@@ -180,13 +179,13 @@ router.put(
 			await group.save();
 			return res.status(200).send({
 				success: true,
-				msg: `La mise à jour a été effectuée avec succès`,
+				msg: "La mise à jour a été effectuée avec succès",
 			});
 		} catch (e) {
 			capture(e);
 			res.status(500).send({
 				success: false,
-				msg: `La mise à jour a échoué`,
+				msg: "La mise à jour a échoué",
 			});
 		}
 	},
@@ -220,7 +219,7 @@ router.post(
 
 		//Create the new group with this LABEL and PROUCTEURS and removing index from base objects
 		for (let i = 0; i < producteurs.length; i++) {
-			delete producteurs[i].index;
+			producteurs[i].index = undefined;
 		}
 
 		const LABEL = label;
@@ -253,11 +252,11 @@ function groupValidation(_id, label, producteurs, allGroups) {
 
 	//Si parmis les groupes existants il y en a un portant le même nom, retourne une erreur
 	allGroups.map((item) => {
-		if (String(item.LABEL) === label && item._id != _id) {
+		if (String(item.LABEL) === label && item._id !== _id) {
 			msg = "Ce nom de groupe existe déjà";
 		}
 	});
-	if (msg != "") {
+	if (msg !== "") {
 		return { success: false, msg };
 	}
 
@@ -268,13 +267,10 @@ function groupValidation(_id, label, producteurs, allGroups) {
 	for (let i = 0; i < producteurs.length; i++) {
 		const producteur = producteurs[i];
 
-		if (producteur != "") {
+		if (producteur !== "") {
 			usedProducteurs.map((used) => {
 				if (String(used) === String(producteur)) {
-					msg =
-						'Le producteur "' +
-						producteur +
-						'"ne doit pas être présent plusieurs fois dans le même groupe';
+					msg = `Le producteur "${producteur}"ne doit pas être présent plusieurs fois dans le même groupe`;
 				} else {
 					usedProducteurs[usedProducteurs.length] = producteur;
 				}
@@ -288,7 +284,7 @@ function groupValidation(_id, label, producteurs, allGroups) {
 		}
 	}
 
-	if (msg != "") {
+	if (msg !== "") {
 		return { success: false, msg };
 	}
 

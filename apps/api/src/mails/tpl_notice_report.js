@@ -114,7 +114,7 @@ function addJocondeReport(notices) {
 	const urlOpenTheso = "https://opentheso.huma-num.fr/opentheso/";
 
 	arr.push(`<p>${count} avertissement(s) dont : </p>`);
-	arr.push(`<ul>`);
+	arr.push("<ul>");
 	for (let key in obj) {
 		const count = obj[key].count;
 		const nots = obj[key].notices;
@@ -163,12 +163,12 @@ function addJocondeReport(notices) {
 
 			arr.push(`<li>${count} avec pour message "${key}" :</li>`);
 		}
-		arr.push(`<ul>`);
+		arr.push("<ul>");
 		arr.push(...nots.map((e) => `<li>${e}</li>`));
-		arr.push(`</ul>`);
+		arr.push("</ul>");
 	}
 
-	arr.push(`</ul>`);
+	arr.push("</ul>");
 
 	return arr;
 }
@@ -189,10 +189,10 @@ function addHeader(collection, institution, email, fileNames = []) {
 	arr.push(`<h2>Contact : ${contact}</h2>`);
 
 	if (fileNames.length > 0) {
-		arr.push(`<h2>Fichier(s) importé(s) :</h2>`);
-		arr.push(`<ul>`);
+		arr.push("<h2>Fichier(s) importé(s) :</h2>");
+		arr.push("<ul>");
 		arr.push(...fileNames.map((e) => `<li>${e}</li>`));
-		arr.push(`</ul>`);
+		arr.push("</ul>");
 	}
 	return arr;
 }
@@ -216,12 +216,12 @@ function addCommonBody(notices) {
 	}, 0);
 
 	arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`);
-	arr.push(`<ul>`);
+	arr.push("<ul>");
 	arr.push(
 		`<li>${notices.length - rejected.length} notice(s) valide(s)</li>`,
 	);
 	arr.push(`<li style="list-style-type:none">`);
-	arr.push(`<ul>`);
+	arr.push("<ul>");
 	arr.push(`<li>${created.length} notice(s) créée(s)</li>`);
 	arr.push(`<li>${updated.length} notice(s) mise(s) à jour</li>`);
 	arr.push(
@@ -230,10 +230,10 @@ function addCommonBody(notices) {
 		} notice(s) importée(s) sans mise à jour</li>`,
 	);
 	arr.push(`<li>${imagesNumber} image(s) chargée(s)</li>`);
-	arr.push(`</ul>`);
-	arr.push(`</li >`);
+	arr.push("</ul>");
+	arr.push("</li >");
 	arr.push(`<li>${rejected.length} notice(s) rejetée(s)</li>`);
-	arr.push(`</ul>`);
+	arr.push("</ul>");
 
 	return arr;
 }
@@ -247,7 +247,7 @@ function addFooter(importId) {
 	const arr = [];
 	const diffUrl = `${process.env.POP_URL}/search/list?import=["${importId}"]`;
 	const fileUrl = `${process.env.BUCKET_URL}import/${importId}/import.csv`;
-	arr.push(`<h1>Liens</h1>`);
+	arr.push("<h1>Liens</h1>");
 	arr.push(
 		`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`,
 	);
@@ -266,7 +266,7 @@ function addReport(notices) {
 	const created = notices.filter((e) => e._status === "created");
 	const updated = notices.filter((e) => e._status === "updated");
 	const rejected = notices.filter((e) => e._status === "rejected");
-	arr.push(`<h1>Notices créées</h1>`);
+	arr.push("<h1>Notices créées</h1>");
 	{
 		const columns = [
 			...fieldToExport.map((e) => e.name),
@@ -274,10 +274,10 @@ function addReport(notices) {
 			"Details",
 		];
 		const lines = [];
-		for (var i = 0; i < created.length; i++) {
+		for (let i = 0; i < created.length; i++) {
 			const fields = fieldToExport.map((e) => `"${created[i][e.key]}"`);
 			lines.push([...fields, "Création", ""]);
-			for (var j = 0; j < created[i]._warnings.length; j++) {
+			for (let j = 0; j < created[i]._warnings.length; j++) {
 				lines.push([
 					...fields,
 					"Avertissement",
@@ -289,17 +289,17 @@ function addReport(notices) {
 		arr.push(...table);
 	}
 	{
-		arr.push(`<h1>Notices modifiées</h1>`);
+		arr.push("<h1>Notices modifiées</h1>");
 		const columns = [
 			...fieldToExport.map((e) => e.name),
 			"Etat",
 			"Details",
 		];
 		const lines = [];
-		for (var i = 0; i < updated.length; i++) {
+		for (let i = 0; i < updated.length; i++) {
 			const fields = fieldToExport.map((e) => `"${updated[i][e.key]}"`);
 			lines.push([...fields, "Modification", ""]);
-			for (var j = 0; j < updated[i]._warnings.length; j++) {
+			for (let j = 0; j < updated[i]._warnings.length; j++) {
 				lines.push([
 					...fields,
 					"Avertissement",
@@ -311,7 +311,7 @@ function addReport(notices) {
 		arr.push(...table);
 	}
 	{
-		arr.push(`<h1>Notices rejetées</h1>`);
+		arr.push("<h1>Notices rejetées</h1>");
 		const columns = [
 			...fieldToExport.map((e) => e.name),
 			"Etat",
@@ -355,14 +355,14 @@ function createHTMLTable(columns, objs) {
 	arr.push(
 		`<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">`,
 	);
-	arr.push(`<tr>`);
+	arr.push("<tr>");
 	arr.push(
 		...columns.map(
 			(e) =>
 				`<th style="font-family:Arial, Helvetica, sans-serif; font-size:14px;border:1px solid black;">${e}</th>`,
 		),
 	);
-	arr.push(`</tr>`);
+	arr.push("</tr>");
 	arr.push(
 		...objs.map((line) => {
 			const arr2 = [];
@@ -379,7 +379,7 @@ function createHTMLTable(columns, objs) {
 			return arr2.join("");
 		}),
 	);
-	arr.push(`</table > `);
+	arr.push("</table > ");
 	return arr;
 }
 

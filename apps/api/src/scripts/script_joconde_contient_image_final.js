@@ -1,9 +1,9 @@
-var notices = db.joconde.find().noCursorTimeout();
-var noticeCount = db.joconde.count();
+const notices = db.joconde.find().noCursorTimeout();
+let noticeCount = db.joconde.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
-	var _img = aRow.IMG;
-	var contient_image = "non";
+	const ref = aRow.REF;
+	const _img = aRow.IMG;
+	let contient_image = "non";
 	//Update field WWW
 
 	if (_img && _img.length > 0) {
@@ -20,5 +20,5 @@ notices.forEach((aRow) => {
 	);
 
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });

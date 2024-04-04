@@ -171,7 +171,7 @@ async function withFlags(notice) {
 		const convert = convertCOORM(notice.COORM, notice.ZONE);
 		if (
 			convert.message &&
-			convert.message == "La projection utilisée n'est pas correct"
+			convert.message === "La projection utilisée n'est pas correct"
 		) {
 			notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
 		}
@@ -182,18 +182,14 @@ async function withFlags(notice) {
 		const convert = convertCOORM(notice.COOR, notice.ZONE);
 		if (
 			convert.message &&
-			convert.message == "La projection utilisée n'est pas correct"
+			convert.message === "La projection utilisée n'est pas correct"
 		) {
 			notice.POP_FLAGS.push("COOR_NOT_IN_FRANCE");
 		}
 	}
 
 	//Test if coordinates in France
-	if (
-		notice.POP_COORDONNEES &&
-		notice.POP_COORDONNEES.lat &&
-		notice.POP_COORDONNEES.lon
-	) {
+	if (notice.POP_COORDONNEES?.lat && notice.POP_COORDONNEES.lon) {
 		if (
 			!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)
 		) {
@@ -223,8 +219,7 @@ async function withFlags(notice) {
 }
 
 async function transformBeforeCreateOrUpdate(notice) {
-	notice.CONTIENT_IMAGE =
-		notice.MEMOIRE && notice.MEMOIRE.some((e) => e.url) ? "oui" : "non";
+	notice.CONTIENT_IMAGE = notice.MEMOIRE?.some((e) => e.url) ? "oui" : "non";
 	let coordinates;
 
 	// IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
@@ -232,7 +227,7 @@ async function transformBeforeCreateOrUpdate(notice) {
 		// Convert it to a proper format in WGS84
 		const convert = convertCOORM(notice.COORM, notice.ZONE);
 		coordinates = convert.coordinates ? convert.coordinates : [];
-		notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
+		notice.POP_COORDINATES_POLYGON = { type: "Polygon", coordinates };
 	}
 
 	if (notice.DPT && notice.DPT.length > 0) {
@@ -251,7 +246,7 @@ async function transformBeforeCreateOrUpdate(notice) {
 	//If no correct coordinates, get polygon centroid.
 	if (hasCorrectPolygon(notice) && !hasCorrectCoordinates(notice)) {
 		const centroid = getPolygonCentroid(coordinates);
-		if (centroid && centroid.length == 2) {
+		if (centroid && centroid.length === 2) {
 			notice.POP_COORDONNEES = { lat: centroid[0], lon: centroid[1] };
 		}
 	}
@@ -300,7 +295,7 @@ function checkIfMemoireImageExist(notice) {
 			});
 
 			const newArr = (notice.MEMOIRE || []).filter((e) =>
-				arr.find((f) => f.ref == e.ref),
+				arr.find((f) => f.ref === e.ref),
 			);
 			for (let i = 0; i < arr.length; i++) {
 				if (!newArr.find((e) => e.REF === arr[i].REF)) {
@@ -437,7 +432,7 @@ router.put(
 			// Update IMPORT ID
 			if (notice.POP_IMPORT.length) {
 				const id = notice.POP_IMPORT[0];
-				delete notice.POP_IMPORT;
+				notice.POP_IMPORT = undefined;
 				notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
 			}
 
@@ -462,7 +457,7 @@ router.put(
 
 			const timeZone = "Europe/Paris";
 			//Ajout de l'historique de la notice
-			var today = moment
+			const today = moment
 				.tz(new Date(), timeZone)
 				.format("YYYY-MM-DD HH:mm");
 

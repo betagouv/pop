@@ -40,4 +40,4 @@ notices.forEach((notice) => {
 	}
 });
 
-print(countUpdate + " notices mise à jour");
+print(`${countUpdate} notices mise à jour`);

@@ -77,7 +77,7 @@ function getBaseName(baseName) {
 	} catch (error) {
 		return res.status(500).send({
 			success: false,
-			msg: "Error at getBaseCompletName: " + error,
+			msg: `Error at getBaseCompletName: ${error}`,
 		});
 	}
 }
@@ -114,7 +114,7 @@ function getBaseCompletName(baseName) {
 		capture(error);
 		return res.status(500).send({
 			success: false,
-			msg: "Error at getBaseCompletName: " + error,
+			msg: `Error at getBaseCompletName: ${error}`,
 		});
 	}
 }
@@ -189,7 +189,7 @@ async function createMongoGetRecordQuery(queryContent) {
  */
 async function createMongoQueryNoticeOai(queryContent) {
 	try {
-		var listNotices = [];
+		const listNotices = [];
 		if (Object.keys(queryContent).includes("set")) {
 			if (Object.keys(queryContent).includes("from")) {
 				if (Object.keys(queryContent).includes("until")) {
@@ -315,10 +315,10 @@ async function createMongoQueryNoticeOai(queryContent) {
  */
 async function createMongoQueryNoticeOaiWithToken(token) {
 	try {
-		var listNotices = [];
-		if ("SET" in token && token.SET != "") {
-			if ("FROM" in token && token.FROM != "") {
-				if ("UNTIL" in token && token.UNTIL != "") {
+		const listNotices = [];
+		if ("SET" in token && token.SET !== "") {
+			if ("FROM" in token && token.FROM !== "") {
+				if ("UNTIL" in token && token.UNTIL !== "") {
 					listNotices.push(
 						await noticesOAI
 							.find({
@@ -353,7 +353,7 @@ async function createMongoQueryNoticeOaiWithToken(token) {
 					);
 				}
 			} else {
-				if ("UNTIL" in token && token.UNTIL != "") {
+				if ("UNTIL" in token && token.UNTIL !== "") {
 					listNotices.push(
 						await noticesOAI
 							.find({
@@ -379,8 +379,8 @@ async function createMongoQueryNoticeOaiWithToken(token) {
 				}
 			}
 		} else {
-			if ("FROM" in token && token.FROM != "") {
-				if ("UNTIL" in token && token.UNTIL != "") {
+			if ("FROM" in token && token.FROM !== "") {
+				if ("UNTIL" in token && token.UNTIL !== "") {
 					listNotices.push(
 						await noticesOAI
 							.find({
@@ -413,7 +413,7 @@ async function createMongoQueryNoticeOaiWithToken(token) {
 					);
 				}
 			} else {
-				if ("UNTIL" in token && token.UNTIL != "") {
+				if ("UNTIL" in token && token.UNTIL !== "") {
 					listNotices.push(
 						await noticesOAI
 							.find({
@@ -452,7 +452,7 @@ async function createMongoQueryNoticeOaiWithToken(token) {
  */
 async function getCompletListSize(queryContent) {
 	try {
-		var listSize;
+		let listSize;
 		if (Object.keys(queryContent).includes("set")) {
 			if (Object.keys(queryContent).includes("from")) {
 				if (Object.keys(queryContent).includes("until")) {
@@ -553,9 +553,9 @@ async function getCompletListSize(queryContent) {
  * @param {*} queryContent : les arguments de l'api.
  */
 async function createListIdentifiersXml(queryContent) {
-	var ListNotices = [];
+	let ListNotices = [];
 	let resumpToken = null;
-	var ListSize = await getCompletListSize(queryContent);
+	let ListSize = await getCompletListSize(queryContent);
 
 	if (Object.keys(queryContent).includes("resumptionToken")) {
 		let token = await getResumptionToken(queryContent.resumptionToken);
@@ -627,15 +627,15 @@ async function createListIdentifiersXml(queryContent) {
 async function createGetRecordXml(queryContent) {
 	try {
 		let date;
-		var notice = await createMongoGetRecordQuery(queryContent);
+		const notice = await createMongoGetRecordQuery(queryContent);
 		const identifier = { ListRecords: [] };
 		const base = getBaseCompletName(notice[0].BASE);
-		if (notice[0].DMAJ != "") {
+		if (notice[0].DMAJ !== "") {
 			date = notice[0].DMAJ;
 		} else {
 			date = notice[0].DMIS;
 		}
-		var elem = {
+		const elem = {
 			record: [
 				{
 					header: [
@@ -683,7 +683,7 @@ async function createGetRecordXml(queryContent) {
 	} catch (err) {
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createGetRecordXml: " + error,
+			msg: `Error at createGetRecordXml: ${error}`,
 		});
 	}
 }
@@ -696,8 +696,8 @@ async function createGetRecordXml(queryContent) {
 async function createListRecordsXml(queryContent) {
 	try {
 		const ListNotices = [];
-		var ListOai = [];
-		var ListSize;
+		let ListOai = [];
+		let ListSize;
 		let resumpToken = null;
 
 		if (Object.keys(queryContent).includes("resumptionToken")) {
@@ -745,7 +745,7 @@ async function createListRecordsXml(queryContent) {
 			await Promise.all(
 				ListNotices.map(async (oai) => {
 					const set = getBaseName(oai.BASE);
-					var notice = await set.find({ REF: oai.REF });
+					const notice = await set.find({ REF: oai.REF });
 					const base = getBaseCompletName(notice[0].BASE);
 					const elem = {
 						record: [
@@ -818,7 +818,7 @@ async function createListRecordsXml(queryContent) {
 	} catch (err) {
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createListRecordXml: " + err,
+			msg: `Error at createListRecordXml: ${err}`,
 		});
 	}
 }
@@ -914,7 +914,7 @@ async function createXmlFileListIdentifiers(queryContent) {
 	} catch (err) {
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createListRecordsXml: " + err,
+			msg: `Error at createListRecordsXml: ${err}`,
 		});
 	}
 }
@@ -948,7 +948,7 @@ async function createXmlFileListRecords(queryContent) {
 	} catch (err) {
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createListRecordsXml: " + err,
+			msg: `Error at createListRecordsXml: ${err}`,
 		});
 	}
 }

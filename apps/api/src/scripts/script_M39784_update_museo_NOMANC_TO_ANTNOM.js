@@ -13,5 +13,5 @@ notices.forEach((aRow) => {
 	);
 
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });

@@ -11,13 +11,13 @@ function createRecordAutor(elem, notice) {
 		let coverageSpatial = "";
 
 		if ("NOM" in notice) {
-			if (notice.NOM != "") {
+			if (notice.NOM !== "") {
 				title = notice.NOM;
 			}
 		}
 		if ("PNOM" in notice) {
-			if (notice.PNOM != "") {
-				if (title != "") {
+			if (notice.PNOM !== "") {
+				if (title !== "") {
 					title.concat(" ;", notice.PNOM);
 				} else {
 					title = notice.PNOM;
@@ -27,18 +27,18 @@ function createRecordAutor(elem, notice) {
 
 		if ("FONC" in notice) {
 			notice.FONC.map((fonc) => {
-				if (fonc != "") {
-					if (title != "") {
+				if (fonc !== "") {
+					if (title !== "") {
 						title.concat(" ;", fonc);
 					} else {
 						title = fonc;
 					}
-					if (subject != "") {
+					if (subject !== "") {
 						subject.concat(" ;", fonc);
 					} else {
 						subject = fonc;
 					}
-					if (type != "") {
+					if (type !== "") {
 						type.concat(" ;", fonc);
 					} else {
 						type = fonc;
@@ -47,13 +47,13 @@ function createRecordAutor(elem, notice) {
 			});
 		}
 
-		if (title != "") {
+		if (title !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:title": title });
 		}
 
 		if ("GAR" in notice) {
-			if (notice.GAR != "") {
-				if (subject != "") {
+			if (notice.GAR !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.GAR);
 				} else {
 					subject = notice.GAR;
@@ -62,8 +62,8 @@ function createRecordAutor(elem, notice) {
 		}
 
 		if ("BIF" in notice) {
-			if (notice.BIF != "") {
-				if (subject != "") {
+			if (notice.BIF !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.BIF);
 				} else {
 					subject = notice.BIF;
@@ -72,8 +72,8 @@ function createRecordAutor(elem, notice) {
 		}
 
 		if ("PREF" in notice) {
-			if (notice.PREF != "") {
-				if (subject != "") {
+			if (notice.PREF !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PREF);
 				} else {
 					subject = notice.PREF;
@@ -82,8 +82,8 @@ function createRecordAutor(elem, notice) {
 		}
 
 		if ("SYMB" in notice) {
-			if (notice.SYMB != "") {
-				if (subject != "") {
+			if (notice.SYMB !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.SYMB);
 				} else {
 					subject = notice.SYMB;
@@ -93,13 +93,13 @@ function createRecordAutor(elem, notice) {
 
 		if ("TYPID" in notice) {
 			notice.TYPID.map((typid) => {
-				if (typid != "") {
-					if (subject != "") {
+				if (typid !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", typid);
 					} else {
 						subject = typid;
 					}
-					if (type != "") {
+					if (type !== "") {
 						type.concat(" ;", typid);
 					} else {
 						type = typid;
@@ -108,14 +108,14 @@ function createRecordAutor(elem, notice) {
 			});
 		}
 
-		if (subject != "") {
+		if (subject !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:subject": subject,
 			});
 		}
 
 		if ("BIO" in notice) {
-			if (notice.BIO != "") {
+			if (notice.BIO !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:description": notice.BIO,
 				});
@@ -123,12 +123,11 @@ function createRecordAutor(elem, notice) {
 		}
 
 		elem.record[1].metadata[0]["oai_dc:dc"].push({
-			"dc:identifier":
-				"www.pop.culture.gouv.fr/notice/autor/" + notice.REF,
+			"dc:identifier": `www.pop.culture.gouv.fr/notice/autor/${notice.REF}`,
 		});
 
 		if ("PRODUCTEUR" in notice) {
-			if (notice.PRODUCTEUR != "") {
+			if (notice.PRODUCTEUR !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:creator": notice.PRODUCTEUR,
 				});
@@ -144,7 +143,7 @@ function createRecordAutor(elem, notice) {
 
 		if ("SCLE" in notice) {
 			notice.SCLE.map((scle) => {
-				if (scle != "") {
+				if (scle !== "") {
 					elem.record[1].metadata[0]["oai_dc:dc"].push({
 						"dc:date": scle,
 					});
@@ -153,7 +152,7 @@ function createRecordAutor(elem, notice) {
 		}
 
 		if ("PRODUCTEUR" in notice) {
-			if (notice.PRODUCTEUR != "") {
+			if (notice.PRODUCTEUR !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:contributor": notice.PRODUCTEUR,
 				});
@@ -167,13 +166,13 @@ function createRecordAutor(elem, notice) {
 			"dc:language": "français",
 		});
 
-		if (type != "") {
+		if (type !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:type": type });
 		}
 
 		if ("AUTORLOCA" in notice) {
-			if (notice.AUTORLOCA != "") {
-				if (coverageSpatial != "") {
+			if (notice.AUTORLOCA !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.AUTORLOCA);
 				} else {
 					coverageSpatial = notice.AUTORLOCA;
@@ -182,8 +181,8 @@ function createRecordAutor(elem, notice) {
 		}
 
 		if ("LOCACT" in notice) {
-			if (notice.LOCACT != "") {
-				if (coverageSpatial != "") {
+			if (notice.LOCACT !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.LOCACT);
 				} else {
 					coverageSpatial = notice.LOCACT;
@@ -191,7 +190,7 @@ function createRecordAutor(elem, notice) {
 			}
 		}
 
-		if (coverageSpatial != "") {
+		if (coverageSpatial !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageSpatial,
 			});
@@ -199,7 +198,7 @@ function createRecordAutor(elem, notice) {
 
 		if ("SCLE" in notice) {
 			notice.SCLE.map((scle) => {
-				if (scle != "") {
+				if (scle !== "") {
 					elem.record[1].metadata[0]["oai_dc:dc"].push({
 						"dc:coverage": scle,
 					});
@@ -210,7 +209,7 @@ function createRecordAutor(elem, notice) {
 		capture(error);
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createRecordObject: " + error,
+			msg: `Error at createRecordObject: ${error}`,
 		});
 	}
 }
@@ -232,13 +231,13 @@ function createRecordJoconde(elem, notice) {
 		let coverageTemporal = "";
 
 		if ("TITR" in notice) {
-			if (notice.TITR != "") {
-				if (title != "") {
+			if (notice.TITR !== "") {
+				if (title !== "") {
 					title.concat(" ;", notice.TITR);
 				} else {
 					title = notice.TITR;
 				}
-				if (subject != "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.TITR);
 				} else {
 					subject = notice.TITR;
@@ -248,18 +247,18 @@ function createRecordJoconde(elem, notice) {
 
 		if ("DENO" in notice) {
 			notice.DENO.map((deno) => {
-				if (deno != "") {
-					if (title != "") {
+				if (deno !== "") {
+					if (title !== "") {
 						title.concat(" ;", deno);
 					} else {
 						title = deno;
 					}
-					if (subject != "") {
+					if (subject !== "") {
 						subject.concat(" ;", deno);
 					} else {
 						subject = deno;
 					}
-					if (type != "") {
+					if (type !== "") {
 						type.concat(" ;", deno);
 					} else {
 						type = deno;
@@ -269,8 +268,8 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("APPL" in notice) {
-			if (notice.APPL != "") {
-				if (title != "") {
+			if (notice.APPL !== "") {
+				if (title !== "") {
 					title.concat(" ;", notice.APPL);
 				} else {
 					title = notice.APPL;
@@ -280,18 +279,18 @@ function createRecordJoconde(elem, notice) {
 
 		if ("DOMN" in notice) {
 			notice.DOMN.map((domn) => {
-				if (domn != "") {
-					if (title != "") {
+				if (domn !== "") {
+					if (title !== "") {
 						title.concat(" ;", domn);
 					} else {
 						title = domn;
 					}
-					if (subject != "") {
+					if (subject !== "") {
 						subject.concat(" ;", domn);
 					} else {
 						subject = domn;
 					}
-					if (type != "") {
+					if (type !== "") {
 						type.concat(" ;", domn);
 					} else {
 						type = domn;
@@ -300,14 +299,14 @@ function createRecordJoconde(elem, notice) {
 			});
 		}
 
-		if (title != "") {
+		if (title !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:title": title });
 		}
 
 		if ("UTIL" in notice) {
 			notice.UTIL.map((util) => {
-				if (util != "") {
-					if (subject != "") {
+				if (util !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", util);
 					} else {
 						subject = util;
@@ -318,15 +317,15 @@ function createRecordJoconde(elem, notice) {
 
 		if ("AUTR" in notice) {
 			notice.AUTR.map((autr) => {
-				if (autr != "") {
-					if (subject != "") {
+				if (autr !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", autr);
 					} else {
 						subject = autr;
 					}
 				}
-				if (autr != "") {
-					if (creator != "") {
+				if (autr !== "") {
+					if (creator !== "") {
 						creator.concat(" ;", autr);
 					} else {
 						creator = autr;
@@ -337,8 +336,8 @@ function createRecordJoconde(elem, notice) {
 
 		if ("ECOL" in notice) {
 			notice.ECOL.map((ecol) => {
-				if (ecol != "") {
-					if (subject != "") {
+				if (ecol !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", ecol);
 					} else {
 						subject = ecol;
@@ -349,13 +348,13 @@ function createRecordJoconde(elem, notice) {
 
 		if ("LIEUX" in notice) {
 			notice.LIEUX.map((lieux) => {
-				if (lieux != "") {
-					if (subject != "") {
+				if (lieux !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", lieux);
 					} else {
 						subject = lieux;
 					}
-					if (coverageSpatial != "") {
+					if (coverageSpatial !== "") {
 						coverageSpatial.concat(" ;", lieux);
 					} else {
 						coverageSpatial = lieux;
@@ -366,13 +365,13 @@ function createRecordJoconde(elem, notice) {
 
 		if ("PERI" in notice) {
 			notice.PERI.map((peri) => {
-				if (peri != "") {
-					if (subject != "") {
+				if (peri !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", peri);
 					} else {
 						subject = peri;
 					}
-					if (date != "") {
+					if (date !== "") {
 						date.concat(" ;", peri);
 					} else {
 						date = peri;
@@ -383,8 +382,8 @@ function createRecordJoconde(elem, notice) {
 
 		if ("PERU" in notice) {
 			notice.PERU.map((peru) => {
-				if (peru != "") {
-					if (subject != "") {
+				if (peru !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", peru);
 					} else {
 						subject = peru;
@@ -395,13 +394,13 @@ function createRecordJoconde(elem, notice) {
 
 		if ("EPOQ" in notice) {
 			notice.EPOQ.map((epoq) => {
-				if (epoq != "") {
-					if (subject != "") {
+				if (epoq !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", epoq);
 					} else {
 						subject = epoq;
 					}
-					if (date != "") {
+					if (date !== "") {
 						date.concat(" ;", epoq);
 					} else {
 						date = epoq;
@@ -412,8 +411,8 @@ function createRecordJoconde(elem, notice) {
 
 		if ("TECH" in notice) {
 			notice.TECH.map((tech) => {
-				if (tech != "") {
-					if (subject != "") {
+				if (tech !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", tech);
 					} else {
 						subject = tech;
@@ -424,8 +423,8 @@ function createRecordJoconde(elem, notice) {
 
 		if ("INSC" in notice) {
 			notice.INSC.map((insc) => {
-				if (insc != "") {
-					if (subject != "") {
+				if (insc !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", insc);
 					} else {
 						subject = insc;
@@ -436,13 +435,13 @@ function createRecordJoconde(elem, notice) {
 
 		if ("REPR" in notice) {
 			notice.REPR.map((repr) => {
-				if (repr != "") {
-					if (subject != "") {
+				if (repr !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", repr);
 					} else {
 						subject = repr;
 					}
-					if (description != "") {
+					if (description !== "") {
 						description.concat(" ;", repr);
 					} else {
 						description = repr;
@@ -453,8 +452,8 @@ function createRecordJoconde(elem, notice) {
 
 		if ("SREP" in notice) {
 			notice.SREP.map((srep) => {
-				if (srep != "") {
-					if (subject != "") {
+				if (srep !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", srep);
 					} else {
 						subject = srep;
@@ -464,13 +463,13 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("REGION" in notice) {
-			if (notice.REGION != "") {
-				if (subject != "") {
+			if (notice.REGION !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.REGION);
 				} else {
 					subject = notice.REGION;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.REGION);
 				} else {
 					coverageSpatial = notice.REGION;
@@ -479,13 +478,13 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("DPT" in notice) {
-			if (notice.DPT != "") {
-				if (subject != "") {
+			if (notice.DPT !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DPT);
 				} else {
 					subject = notice.DPT;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.DPT);
 				} else {
 					coverageSpatial = notice.DPT;
@@ -494,13 +493,13 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("VILLE_M" in notice) {
-			if (notice.VILLE_M != "") {
-				if (subject != "") {
+			if (notice.VILLE_M !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.VILLE_M);
 				} else {
 					subject = notice.VILLE_M;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.VILLE_M);
 				} else {
 					coverageSpatial = notice.VILLE_M;
@@ -509,13 +508,13 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("NOMOFF" in notice) {
-			if (notice.NOMOFF != "") {
-				if (subject != "") {
+			if (notice.NOMOFF !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.NOMOFF);
 				} else {
 					subject = notice.NOMOFF;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.NOMOFF);
 				} else {
 					coverageSpatial = notice.NOMOFF;
@@ -524,13 +523,13 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("DECV" in notice) {
-			if (notice.DECV != "") {
-				if (subject != "") {
+			if (notice.DECV !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DECV);
 				} else {
 					subject = notice.DECV;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.DECV);
 				} else {
 					coverageSpatial = notice.DECV;
@@ -539,8 +538,8 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("APPL" in notice) {
-			if (notice.APPL != "") {
-				if (subject != "") {
+			if (notice.APPL !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.APPL);
 				} else {
 					subject = notice.APPL;
@@ -549,8 +548,8 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("PLIEUX" in notice) {
-			if (notice.PLIEUX != "") {
-				if (subject != "") {
+			if (notice.PLIEUX !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PLIEUX);
 				} else {
 					subject = notice.PLIEUX;
@@ -559,8 +558,8 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("PUTI" in notice) {
-			if (notice.PUTI != "") {
-				if (subject != "") {
+			if (notice.PUTI !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PUTI);
 				} else {
 					subject = notice.PUTI;
@@ -570,13 +569,13 @@ function createRecordJoconde(elem, notice) {
 
 		if ("MILL" in notice) {
 			notice.MILL.map((mill) => {
-				if (mill != "") {
-					if (subject != "") {
+				if (mill !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", mill);
 					} else {
 						subject = mill;
 					}
-					if (date != "") {
+					if (date !== "") {
 						date.concat(" ;", mill);
 					} else {
 						date = mill;
@@ -586,13 +585,13 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("MILU" in notice) {
-			if (notice.MILU != "") {
-				if (subject != "") {
+			if (notice.MILU !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.MILU);
 				} else {
 					subject = notice.MILU;
 				}
-				if (date != "") {
+				if (date !== "") {
 					date.concat(" ;", notice.MILU);
 				} else {
 					date = notice.MILU;
@@ -601,8 +600,8 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("PINS" in notice) {
-			if (notice.PINS != "") {
-				if (subject != "") {
+			if (notice.PINS !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PINS);
 				} else {
 					subject = notice.PINS;
@@ -612,13 +611,13 @@ function createRecordJoconde(elem, notice) {
 
 		if ("ONOM" in notice) {
 			notice.ONOM.map((onom) => {
-				if (onom != "") {
-					if (subject != "") {
+				if (onom !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", onom);
 					} else {
 						subject = onom;
 					}
-					if (creator != "") {
+					if (creator !== "") {
 						creator.concat(" ;", onom);
 					} else {
 						creator = onom;
@@ -628,13 +627,13 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("DESC" in notice) {
-			if (notice.DESC != "") {
-				if (subject != "") {
+			if (notice.DESC !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DESC);
 				} else {
 					subject = notice.DESC;
 				}
-				if (description != "") {
+				if (description !== "") {
 					description.concat(" ;", notice.DESC);
 				} else {
 					description = notice.DESC;
@@ -643,8 +642,8 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("HIST" in notice) {
-			if (notice.HIST != "") {
-				if (subject != "") {
+			if (notice.HIST !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.HIST);
 				} else {
 					subject = notice.HIST;
@@ -654,13 +653,13 @@ function createRecordJoconde(elem, notice) {
 
 		if ("GEOHI" in notice) {
 			notice.GEOHI.map((geohi) => {
-				if (geohi != "") {
-					if (subject != "") {
+				if (geohi !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", geohi);
 					} else {
 						subject = geohi;
 					}
-					if (coverageSpatial != "") {
+					if (coverageSpatial !== "") {
 						coverageSpatial.concat(" ;", geohi);
 					} else {
 						coverageSpatial = geohi;
@@ -670,8 +669,8 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("PDEC" in notice) {
-			if (notice.PDEC != "") {
-				if (subject != "") {
+			if (notice.PDEC !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PDEC);
 				} else {
 					subject = notice.PDEC;
@@ -679,15 +678,15 @@ function createRecordJoconde(elem, notice) {
 			}
 		}
 
-		if (subject != "") {
+		if (subject !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:subject": subject,
 			});
 		}
 
 		if ("ETAT" in notice) {
-			if (notice.ETAT != "") {
-				if (description != "") {
+			if (notice.ETAT !== "") {
+				if (description !== "") {
 					description.concat(" ;", notice.ETAT);
 				} else {
 					description = notice.ETAT;
@@ -696,8 +695,8 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("PREP" in notice) {
-			if (notice.PREP != "") {
-				if (description != "") {
+			if (notice.PREP !== "") {
+				if (description !== "") {
 					description.concat(" ;", notice.PREP);
 				} else {
 					description = notice.PREP;
@@ -705,15 +704,15 @@ function createRecordJoconde(elem, notice) {
 			}
 		}
 
-		if (description != "") {
+		if (description !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:description": description,
 			});
 		}
 
 		if ("APTN" in notice) {
-			if (notice.APTN != "") {
-				if (creator != "") {
+			if (notice.APTN !== "") {
+				if (creator !== "") {
 					creator.concat(" ;", notice.APTN);
 				} else {
 					creator = notice.APTN;
@@ -722,8 +721,8 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("ATTR" in notice) {
-			if (notice.ATTR != "") {
-				if (creator != "") {
+			if (notice.ATTR !== "") {
+				if (creator !== "") {
 					creator.concat(" ;", notice.ATTR);
 				} else {
 					creator = notice.ATTR;
@@ -732,7 +731,7 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("CONTACT" in notice) {
-			if (notice.CONTACT != "") {
+			if (notice.CONTACT !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:source": notice.CONTACT,
 				});
@@ -745,8 +744,8 @@ function createRecordJoconde(elem, notice) {
 
 		if ("PEOC" in notice) {
 			notice.PEOC.map((peoc) => {
-				if (peoc != "") {
-					if (date != "") {
+				if (peoc !== "") {
+					if (date !== "") {
 						date.concat(" ;", peoc);
 					} else {
 						date = peoc;
@@ -755,12 +754,12 @@ function createRecordJoconde(elem, notice) {
 			});
 		}
 
-		if (date != "") {
+		if (date !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:date": date });
 		}
 
 		if ("PRODUCTEUR" in notice) {
-			if (notice.PRODUCTEUR != "") {
+			if (notice.PRODUCTEUR !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:contributor": notice.PRODUCTEUR,
 				});
@@ -768,7 +767,7 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("COPY" in notice) {
-			if (notice.COPY != "") {
+			if (notice.COPY !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:rights": notice.COPY,
 				});
@@ -776,7 +775,7 @@ function createRecordJoconde(elem, notice) {
 		}
 
 		if ("DIMS" in notice) {
-			if (notice.DIMS != "") {
+			if (notice.DIMS !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:format": notice.DIMS,
 				});
@@ -787,16 +786,15 @@ function createRecordJoconde(elem, notice) {
 			"dc:language": "français",
 		});
 
-		if (type != "") {
+		if (type !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:type": type });
 		}
 
 		elem.record[1].metadata[0]["oai_dc:dc"].push({
-			"dc:identifier":
-				"www.pop.culture.gouv.fr/notice/joconde/" + notice.REF,
+			"dc:identifier": `www.pop.culture.gouv.fr/notice/joconde/${notice.REF}`,
 		});
 
-		if (coverageSpatial != "") {
+		if (coverageSpatial !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageSpatial,
 			});
@@ -804,7 +802,7 @@ function createRecordJoconde(elem, notice) {
 
 		if ("SCLE" in notice) {
 			notice.SCLE.map((scle) => {
-				if (coverageTemporal != "") {
+				if (coverageTemporal !== "") {
 					coverageTemporal.concat(" ;", scle);
 				} else {
 					coverageTemporal = scle;
@@ -812,7 +810,7 @@ function createRecordJoconde(elem, notice) {
 			});
 		}
 
-		if (coverageTemporal != "") {
+		if (coverageTemporal !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageTemporal,
 			});
@@ -821,7 +819,7 @@ function createRecordJoconde(elem, notice) {
 		capture(error);
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createRecordObject: " + error,
+			msg: `Error at createRecordObject: ${error}`,
 		});
 	}
 }
@@ -843,15 +841,15 @@ function createRecordMemoire(elem, notice) {
 		let coverageTemporal = "";
 
 		if ("TICO" in notice) {
-			if (notice.TICO != "") {
+			if (notice.TICO !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:title": notice.TICO,
 				});
 			}
 		}
 		if ("EDIF" in notice) {
-			if (notice.EDIF != "") {
-				if (subject != "") {
+			if (notice.EDIF !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.EDIF);
 				} else {
 					subject = notice.EDIF;
@@ -860,8 +858,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("SERIE" in notice) {
-			if (notice.SERIE != "") {
-				if (subject != "") {
+			if (notice.SERIE !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.SERIE);
 				} else {
 					subject = notice.SERIE;
@@ -870,8 +868,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("TITRE" in notice) {
-			if (notice.TITRE != "") {
-				if (subject != "") {
+			if (notice.TITRE !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.TITRE);
 				} else {
 					subject = notice.TITRE;
@@ -880,8 +878,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("MCL" in notice) {
-			if (notice.MCL != "") {
-				if (subject != "") {
+			if (notice.MCL !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.MCL);
 				} else {
 					subject = notice.MCL;
@@ -889,14 +887,14 @@ function createRecordMemoire(elem, notice) {
 			}
 		}
 
-		if (subject != "") {
+		if (subject !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:subject": subject,
 			});
 		}
 
 		if ("LEG" in notice) {
-			if (notice.LEG != "") {
+			if (notice.LEG !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:description": notice.LEG,
 				});
@@ -905,13 +903,13 @@ function createRecordMemoire(elem, notice) {
 
 		if ("AUTP" in notice) {
 			notice.AUTP.map((autp) => {
-				if (autp != "") {
-					if (creator != "") {
+				if (autp !== "") {
+					if (creator !== "") {
 						creator.concat(" ;", autp);
 					} else {
 						creator = autp;
 					}
-					if (rights != "") {
+					if (rights !== "") {
 						rights.concat(" ;", autp);
 					} else {
 						rights = autp;
@@ -921,8 +919,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("AUTOEU" in notice) {
-			if (notice.AUTOEU != "") {
-				if (creator != "") {
+			if (notice.AUTOEU !== "") {
+				if (creator !== "") {
 					creator.concat(" ;", notice.AUTOEU);
 				} else {
 					creator = notice.AUTOEU;
@@ -931,8 +929,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("AUTOR" in notice) {
-			if (notice.AUTOR != "") {
-				if (creator != "") {
+			if (notice.AUTOR !== "") {
+				if (creator !== "") {
 					creator.concat(" ;", notice.AUTOR);
 				} else {
 					creator = notice.AUTOR;
@@ -941,8 +939,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("MCPER" in notice) {
-			if (notice.MCPER != "") {
-				if (creator != "") {
+			if (notice.MCPER !== "") {
+				if (creator !== "") {
 					creator.concat(" ;", notice.MCPER);
 				} else {
 					creator = notice.MCPER;
@@ -950,14 +948,14 @@ function createRecordMemoire(elem, notice) {
 			}
 		}
 
-		if (creator != "") {
+		if (creator !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:creator": creator,
 			});
 		}
 
 		if ("CONTACT" in notice) {
-			if (notice.CONTACT != "") {
+			if (notice.CONTACT !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:source": notice.CONTACT,
 				});
@@ -969,13 +967,13 @@ function createRecordMemoire(elem, notice) {
 		});
 
 		if ("SCLE" in notice) {
-			if (notice.SCLE != "") {
-				if (date != "") {
+			if (notice.SCLE !== "") {
+				if (date !== "") {
 					date.concat(" ;", notice.SCLE);
 				} else {
 					date = notice.SCLE;
 				}
-				if (coverageTemporal != "") {
+				if (coverageTemporal !== "") {
 					coverageTemporal.concat(" ;", notice.SCLE);
 				} else {
 					coverageTemporal = notice.SCLE;
@@ -984,13 +982,13 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("DATOEU" in notice) {
-			if (notice.DATOEU != "") {
-				if (date != "") {
+			if (notice.DATOEU !== "") {
+				if (date !== "") {
 					date.concat(" ;", notice.DATOEU);
 				} else {
 					date = notice.DATOEU;
 				}
-				if (coverageTemporal != "") {
+				if (coverageTemporal !== "") {
 					coverageTemporal.concat(" ;", notice.DATOEU);
 				} else {
 					coverageTemporal = notice.DATOEU;
@@ -998,13 +996,13 @@ function createRecordMemoire(elem, notice) {
 			}
 		}
 		if ("DATPV" in notice) {
-			if (notice.DATPV != "") {
-				if (date != "") {
+			if (notice.DATPV !== "") {
+				if (date !== "") {
 					date.concat(" ;", notice.DATPV);
 				} else {
 					date = notice.DATPV;
 				}
-				if (coverageTemporal != "") {
+				if (coverageTemporal !== "") {
 					coverageTemporal.concat(" ;", notice.DATPV);
 				} else {
 					coverageTemporal = notice.DATPV;
@@ -1012,12 +1010,12 @@ function createRecordMemoire(elem, notice) {
 			}
 		}
 
-		if (date != "") {
+		if (date !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:date": date });
 		}
 
 		if ("PRODUCTEUR" in notice) {
-			if (notice.PRODUCTEUR != "") {
+			if (notice.PRODUCTEUR !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:contributor": notice.PRODUCTEUR,
 				});
@@ -1025,8 +1023,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("COPY" in notice) {
-			if (notice.COPY != "") {
-				if (rights != "") {
+			if (notice.COPY !== "") {
+				if (rights !== "") {
 					rights.concat(" ;", notice.COPY);
 				} else {
 					rights = notice.COPY;
@@ -1034,15 +1032,15 @@ function createRecordMemoire(elem, notice) {
 			}
 		}
 
-		if (rights != "") {
+		if (rights !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:rights": rights,
 			});
 		}
 
 		if ("FORMAT" in notice) {
-			if (notice.FORMAT != "") {
-				if (format != "") {
+			if (notice.FORMAT !== "") {
+				if (format !== "") {
 					format.concat(" ;", notice.FORMAT);
 				} else {
 					format = notice.FORMAT;
@@ -1051,8 +1049,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("FORMATOR" in notice) {
-			if (notice.FORMATOR != "") {
-				if (format != "") {
+			if (notice.FORMATOR !== "") {
+				if (format !== "") {
 					format.concat(" ;", notice.FORMATOR);
 				} else {
 					format = notice.FORMATOR;
@@ -1061,8 +1059,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("FORMATTI" in notice) {
-			if (notice.FORMATTI != "") {
-				if (format != "") {
+			if (notice.FORMATTI !== "") {
+				if (format !== "") {
 					format.concat(" ;", notice.FORMATTI);
 				} else {
 					format = notice.FORMATTI;
@@ -1070,7 +1068,7 @@ function createRecordMemoire(elem, notice) {
 			}
 		}
 
-		if (format != "") {
+		if (format !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:format": format,
 			});
@@ -1081,8 +1079,8 @@ function createRecordMemoire(elem, notice) {
 		});
 
 		if ("TYP" in notice) {
-			if (notice.TYP != "") {
-				if (type != "") {
+			if (notice.TYP !== "") {
+				if (type !== "") {
 					type.concat(" ;", notice.TYP);
 				} else {
 					type = notice.TYP;
@@ -1091,8 +1089,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("TYPDOC" in notice) {
-			if (notice.TYPDOC != "") {
-				if (type != "") {
+			if (notice.TYPDOC !== "") {
+				if (type !== "") {
 					type.concat(" ;", notice.TYPDOC);
 				} else {
 					type = notice.TYPDOC;
@@ -1100,18 +1098,17 @@ function createRecordMemoire(elem, notice) {
 			}
 		}
 
-		if (type != "") {
+		if (type !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:type": type });
 		}
 
 		elem.record[1].metadata[0]["oai_dc:dc"].push({
-			"dc:identifier":
-				"www.pop.culture.gouv.fr/notice/memoire/" + notice.REF,
+			"dc:identifier": `www.pop.culture.gouv.fr/notice/memoire/${notice.REF}`,
 		});
 
 		if ("PAYS" in notice) {
-			if (notice.PAYS != "") {
-				if (coverageSpatial != "") {
+			if (notice.PAYS !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.PAYS);
 				} else {
 					coverageSpatial = notice.PAYS;
@@ -1120,8 +1117,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("REG" in notice) {
-			if (notice.REG != "") {
-				if (coverageSpatial != "") {
+			if (notice.REG !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.REG);
 				} else {
 					coverageSpatial = notice.REG;
@@ -1130,8 +1127,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("DPT" in notice) {
-			if (notice.DPT != "") {
-				if (coverageSpatial != "") {
+			if (notice.DPT !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.DPT);
 				} else {
 					coverageSpatial = notice.DPT;
@@ -1140,8 +1137,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("COM" in notice) {
-			if (notice.COM != "") {
-				if (coverageSpatial != "") {
+			if (notice.COM !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.COM);
 				} else {
 					coverageSpatial = notice.COM;
@@ -1150,8 +1147,8 @@ function createRecordMemoire(elem, notice) {
 		}
 
 		if ("LIEUCOR" in notice) {
-			if (notice.LIEUCOR != "") {
-				if (coverageSpatial != "") {
+			if (notice.LIEUCOR !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.LIEUCOR);
 				} else {
 					coverageSpatial = notice.LIEUCOR;
@@ -1159,12 +1156,12 @@ function createRecordMemoire(elem, notice) {
 			}
 		}
 
-		if (coverageSpatial != "") {
+		if (coverageSpatial !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageSpatial,
 			});
 		}
-		if (coverageTemporal != "") {
+		if (coverageTemporal !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageTemporal,
 			});
@@ -1173,7 +1170,7 @@ function createRecordMemoire(elem, notice) {
 		capture(error);
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createRecordObject: " + error,
+			msg: `Error at createRecordObject: ${error}`,
 		});
 	}
 }
@@ -1193,15 +1190,15 @@ function createRecordMerimee(elem, notice) {
 		let coverageTemporal = "";
 
 		if ("WCOM" in notice) {
-			if (notice.WCOM != "") {
+			if (notice.WCOM !== "") {
 				title.concat(" ;", notice.WCOM);
 			} else {
 				title = notice.WCOM;
 			}
 		}
 		if ("TICO" in notice) {
-			if (notice.TICO != "") {
-				if (title != "") {
+			if (notice.TICO !== "") {
+				if (title !== "") {
 					title.concat(" ;", notice.TICO);
 				} else {
 					title = notice.TICO;
@@ -1209,13 +1206,13 @@ function createRecordMerimee(elem, notice) {
 			}
 		}
 
-		if (title != "") {
+		if (title !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:title": title });
 		}
 
 		if ("REF" in notice) {
-			if (notice.REF != "") {
-				if (subject != "") {
+			if (notice.REF !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.REF);
 				} else {
 					subject = notice.REF;
@@ -1224,8 +1221,8 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("STAT" in notice) {
-			if (notice.STAT != "") {
-				if (subject != "") {
+			if (notice.STAT !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.STAT);
 				} else {
 					subject = notice.STAT;
@@ -1235,8 +1232,8 @@ function createRecordMerimee(elem, notice) {
 
 		if ("PROT" in notice) {
 			notice.PROT.map((prot) => {
-				if (prot != "") {
-					if (subject != "") {
+				if (prot !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", prot);
 					} else {
 						subject = prot;
@@ -1246,8 +1243,8 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("DPRO" in notice) {
-			if (notice.DPRO != "") {
-				if (subject != "") {
+			if (notice.DPRO !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DPRO);
 				} else {
 					subject = notice.DPRO;
@@ -1256,8 +1253,8 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("PPRO" in notice) {
-			if (notice.PPRO != "") {
-				if (subject != "") {
+			if (notice.PPRO !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PPRO);
 				} else {
 					subject = notice.PPRO;
@@ -1266,8 +1263,8 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("HIST" in notice) {
-			if (notice.HIST != "") {
-				if (subject != "") {
+			if (notice.HIST !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.HIST);
 				} else {
 					subject = notice.HIST;
@@ -1276,11 +1273,11 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("DESC" in notice) {
-			if (notice.DESC != "") {
+			if (notice.DESC !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:description": notice.DESC,
 				});
-				if (subject != "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DESC);
 				} else {
 					subject = notice.DESC;
@@ -1290,8 +1287,8 @@ function createRecordMerimee(elem, notice) {
 
 		if ("DENO" in notice) {
 			notice.DENO.map((deno) => {
-				if (deno != "") {
-					if (subject != "") {
+				if (deno !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", deno);
 					} else {
 						subject = deno;
@@ -1301,8 +1298,8 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("TICO" in notice) {
-			if (notice.TICO != "") {
-				if (subject != "") {
+			if (notice.TICO !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.TICO);
 				} else {
 					subject = notice.TICO;
@@ -1311,13 +1308,13 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("WADRS" in notice) {
-			if (notice.WADRS != "") {
-				if (subject != "") {
+			if (notice.WADRS !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.WADRS);
 				} else {
 					subject = notice.WADRS;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.WADRS);
 				} else {
 					coverageSpatial = notice.WADRS;
@@ -1327,8 +1324,8 @@ function createRecordMerimee(elem, notice) {
 
 		if ("CADA" in notice) {
 			notice.CADA.map((cada) => {
-				if (cada != "") {
-					if (subject != "") {
+				if (cada !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", cada);
 					} else {
 						subject = cada;
@@ -1339,8 +1336,8 @@ function createRecordMerimee(elem, notice) {
 
 		if ("SCLE" in notice) {
 			notice.SCLE.map((scle) => {
-				if (scle != "") {
-					if (subject != "") {
+				if (scle !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", scle);
 					} else {
 						subject = scle;
@@ -1351,8 +1348,8 @@ function createRecordMerimee(elem, notice) {
 
 		if ("DATE" in notice) {
 			notice.DATE.map((date) => {
-				if (date != "") {
-					if (subject != "") {
+				if (date !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", date);
 					} else {
 						subject = date;
@@ -1363,13 +1360,13 @@ function createRecordMerimee(elem, notice) {
 
 		if ("AUTR" in notice) {
 			notice.AUTR.map((autr) => {
-				if (autr != "") {
-					if (subject != "") {
+				if (autr !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", autr);
 					} else {
 						subject = autr;
 					}
-					if (creator != "") {
+					if (creator !== "") {
 						creator.concat(" ;", autr);
 					} else {
 						creator = autr;
@@ -1380,13 +1377,13 @@ function createRecordMerimee(elem, notice) {
 
 		if ("PERS" in notice) {
 			notice.PERS.map((pers) => {
-				if (pers != "") {
-					if (subject != "") {
+				if (pers !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", pers);
 					} else {
 						subject = pers;
 					}
-					if (creator != "") {
+					if (creator !== "") {
 						creator.concat(" ;", pers);
 					} else {
 						creator = pers;
@@ -1396,8 +1393,8 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("AFFE" in notice) {
-			if (notice.AFFE != "") {
-				if (subject != "") {
+			if (notice.AFFE !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.AFFE);
 				} else {
 					subject = notice.AFFE;
@@ -1406,13 +1403,13 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("REG" in notice) {
-			if (notice.REG != "") {
-				if (subject != "") {
+			if (notice.REG !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.REG);
 				} else {
 					subject = notice.REG;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.REG);
 				} else {
 					coverageSpatial = notice.REG;
@@ -1421,13 +1418,13 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("WCOM" in notice) {
-			if (notice.WCOM != "") {
-				if (subject != "") {
+			if (notice.WCOM !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.WCOM);
 				} else {
 					subject = notice.WCOM;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.WCOM);
 				} else {
 					coverageSpatial = notice.WCOM;
@@ -1436,13 +1433,13 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("DPT_LETTRE" in notice) {
-			if (notice.DPT_LETTRE != "") {
-				if (subject != "") {
+			if (notice.DPT_LETTRE !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DPT_LETTRE);
 				} else {
 					subject = notice.DPT_LETTRE;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.DPT_LETTRE);
 				} else {
 					coverageSpatial = notice.DPT_LETTRE;
@@ -1450,14 +1447,14 @@ function createRecordMerimee(elem, notice) {
 			}
 		}
 
-		if (subject != "") {
+		if (subject !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:subject": subject,
 			});
 		}
 
 		if ("CONTACT" in notice) {
-			if (notice.CONTACT != "") {
+			if (notice.CONTACT !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:source": notice.CONTACT,
 				});
@@ -1470,13 +1467,13 @@ function createRecordMerimee(elem, notice) {
 
 		if ("SCLE" in notice) {
 			notice.SCLE.map((scle) => {
-				if (scle != "") {
-					if (date != "") {
+				if (scle !== "") {
+					if (date !== "") {
 						date.concat(" ;", scle);
 					} else {
 						date = scle;
 					}
-					if (coverageTemporal != "") {
+					if (coverageTemporal !== "") {
 						coverageTemporal.concat(" ;", scle);
 					} else {
 						coverageTemporal = scle;
@@ -1487,13 +1484,13 @@ function createRecordMerimee(elem, notice) {
 
 		if ("DATE" in notice) {
 			notice.DATE.map((date) => {
-				if (date != "") {
-					if (date != "") {
+				if (date !== "") {
+					if (date !== "") {
 						date.concat(" ;", date);
 					} else {
 						date = date;
 					}
-					if (coverageTemporal != "") {
+					if (coverageTemporal !== "") {
 						coverageTemporal.concat(" ;", date);
 					} else {
 						coverageTemporal = date;
@@ -1502,12 +1499,12 @@ function createRecordMerimee(elem, notice) {
 			});
 		}
 
-		if (date != "") {
+		if (date !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:date": date });
 		}
 
 		if ("PRODUCTEUR" in notice) {
-			if (notice.PRODUCTEUR != "") {
+			if (notice.PRODUCTEUR !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:contributor": notice.PRODUCTEUR,
 				});
@@ -1515,7 +1512,7 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("COPY" in notice) {
-			if (notice.COPY != "") {
+			if (notice.COPY !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:rights": notice.COPY,
 				});
@@ -1523,7 +1520,7 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		if ("DIMS" in notice) {
-			if (notice.DIMS != "") {
+			if (notice.DIMS !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:format": notice.DIMS,
 				});
@@ -1536,7 +1533,7 @@ function createRecordMerimee(elem, notice) {
 
 		if ("DENO" in notice) {
 			notice.DENO.map((deno) => {
-				if (deno != "") {
+				if (deno !== "") {
 					elem.record[1].metadata[0]["oai_dc:dc"].push({
 						"dc:type": deno,
 					});
@@ -1545,17 +1542,16 @@ function createRecordMerimee(elem, notice) {
 		}
 
 		elem.record[1].metadata[0]["oai_dc:dc"].push({
-			"dc:identifier":
-				"www.pop.culture.gouv.fr/notice/merimee/" + notice.REF,
+			"dc:identifier": `www.pop.culture.gouv.fr/notice/merimee/${notice.REF}`,
 		});
 
-		if (coverageSpatial != "") {
+		if (coverageSpatial !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageSpatial,
 			});
 		}
 
-		if (coverageTemporal != "") {
+		if (coverageTemporal !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageTemporal,
 			});
@@ -1564,7 +1560,7 @@ function createRecordMerimee(elem, notice) {
 		capture(error);
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createRecordObject: " + error,
+			msg: `Error at createRecordObject: ${error}`,
 		});
 	}
 }
@@ -1584,8 +1580,8 @@ function createRecordMnr(elem, notice) {
 		let coverageTemporal = "";
 
 		if ("TITR" in notice) {
-			if (notice.TITR != "") {
-				if (title != "") {
+			if (notice.TITR !== "") {
+				if (title !== "") {
 					title.concat(" ;", notice.TITR);
 				} else {
 					title = notice.TITR;
@@ -1594,8 +1590,8 @@ function createRecordMnr(elem, notice) {
 		}
 
 		if ("AUTI" in notice) {
-			if (notice.AUTI != "") {
-				if (title != "") {
+			if (notice.AUTI !== "") {
+				if (title !== "") {
 					title.concat(" ;", notice.AUTI);
 				} else {
 					title = notice.AUTI;
@@ -1603,13 +1599,13 @@ function createRecordMnr(elem, notice) {
 			}
 		}
 
-		if (title != "") {
+		if (title !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:title": title });
 		}
 		if ("DOMN" in notice) {
 			notice.DOMN.map((domn) => {
-				if (domn != "") {
-					if (subject != "") {
+				if (domn !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", domn);
 					} else {
 						subject = domn;
@@ -1619,13 +1615,13 @@ function createRecordMnr(elem, notice) {
 		}
 
 		if ("ECOL" in notice) {
-			if (notice.ECOL != "") {
-				if (subject != "") {
+			if (notice.ECOL !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.ECOL);
 				} else {
 					subject = notice.ECOL;
 				}
-				if (creator != "") {
+				if (creator !== "") {
 					creator.concat(" ;", notice.ECOL);
 				} else {
 					creator = notice.ECOL;
@@ -1634,8 +1630,8 @@ function createRecordMnr(elem, notice) {
 		}
 
 		if ("ETAT" in notice) {
-			if (notice.ETAT != "") {
-				if (subject != "") {
+			if (notice.ETAT !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.ETAT);
 				} else {
 					subject = notice.ETAT;
@@ -1644,13 +1640,13 @@ function createRecordMnr(elem, notice) {
 		}
 
 		if ("STYL" in notice) {
-			if (notice.STYL != "") {
-				if (subject != "") {
+			if (notice.STYL !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.STYL);
 				} else {
 					subject = notice.STYL;
 				}
-				if (creator != "") {
+				if (creator !== "") {
 					creator.concat(" ;", notice.STYL);
 				} else {
 					creator = notice.STYL;
@@ -1660,8 +1656,8 @@ function createRecordMnr(elem, notice) {
 
 		if ("TECH" in notice) {
 			notice.TECH.map((tech) => {
-				if (tech != "") {
-					if (subject != "") {
+				if (tech !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", tech);
 					} else {
 						subject = tech;
@@ -1670,14 +1666,14 @@ function createRecordMnr(elem, notice) {
 			});
 		}
 
-		if (subject != "") {
+		if (subject !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:subject": subject,
 			});
 		}
 
 		if ("HIST" in notice) {
-			if (notice.HIST != "") {
+			if (notice.HIST !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:description": notice.HIST,
 				});
@@ -1686,8 +1682,8 @@ function createRecordMnr(elem, notice) {
 
 		if ("AUTR" in notice) {
 			notice.AUTR.map((autr) => {
-				if (autr != "") {
-					if (creator != "") {
+				if (autr !== "") {
+					if (creator !== "") {
 						creator.concat(" ;", autr);
 					} else {
 						creator = autr;
@@ -1697,8 +1693,8 @@ function createRecordMnr(elem, notice) {
 		}
 
 		if ("ATTR" in notice) {
-			if (notice.ATTR != "") {
-				if (creator != "") {
+			if (notice.ATTR !== "") {
+				if (creator !== "") {
 					creator.concat(" ;", notice.ATTR);
 				} else {
 					creator = notice.ATTR;
@@ -1707,8 +1703,8 @@ function createRecordMnr(elem, notice) {
 		}
 
 		if ("AATT" in notice) {
-			if (notice.AATT != "") {
-				if (creator != "") {
+			if (notice.AATT !== "") {
+				if (creator !== "") {
 					creator.concat(" ;", notice.AATT);
 				} else {
 					creator = notice.AATT;
@@ -1716,14 +1712,14 @@ function createRecordMnr(elem, notice) {
 			}
 		}
 
-		if (creator != "") {
+		if (creator !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:creator": creator,
 			});
 		}
 
 		if ("CONTACT" in notice) {
-			if (notice.CONTACT != "") {
+			if (notice.CONTACT !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:source": notice.CONTACT,
 				});
@@ -1732,7 +1728,7 @@ function createRecordMnr(elem, notice) {
 
 		if ("REDC" in notice) {
 			notice.REDC.map((redc) => {
-				if (redc != "") {
+				if (redc !== "") {
 					elem.record[1].metadata[0]["oai_dc:dc"].push({
 						"dc:publisher": redc,
 					});
@@ -1742,12 +1738,12 @@ function createRecordMnr(elem, notice) {
 
 		if ("SCLE" in notice) {
 			notice.SCLE.map((scle) => {
-				if (date != "") {
+				if (date !== "") {
 					date.concat(" ;", scle);
 				} else {
 					date = scle;
 				}
-				if (coverageTemporal != "") {
+				if (coverageTemporal !== "") {
 					coverageTemporal.concat(" ;", scle);
 				} else {
 					coverageTemporal = scle;
@@ -1756,13 +1752,13 @@ function createRecordMnr(elem, notice) {
 		}
 
 		if ("MILL" in notice) {
-			if (notice.MILL != "") {
-				if (date != "") {
+			if (notice.MILL !== "") {
+				if (date !== "") {
 					date.concat(" ;", notice.MILL);
 				} else {
 					date = notice.MILL;
 				}
-				if (coverageTemporal != "") {
+				if (coverageTemporal !== "") {
 					coverageTemporal.concat(" ;", notice.MILL);
 				} else {
 					coverageTemporal = notice.MILL;
@@ -1770,12 +1766,12 @@ function createRecordMnr(elem, notice) {
 			}
 		}
 
-		if (date != "") {
+		if (date !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:date": date });
 		}
 
 		if ("PRODUCTEUR" in notice) {
-			if (notice.PRODUCTEUR != "") {
+			if (notice.PRODUCTEUR !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:contributor": notice.PRODUCTEUR,
 				});
@@ -1787,7 +1783,7 @@ function createRecordMnr(elem, notice) {
 		});
 
 		if ("DIMS" in notice) {
-			if (notice.DIMS != "") {
+			if (notice.DIMS !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:format": notice.DIMS,
 				});
@@ -1800,8 +1796,8 @@ function createRecordMnr(elem, notice) {
 
 		if ("DOMN" in notice) {
 			notice.DOMN.map((domn) => {
-				if (domn != "") {
-					if (type != "") {
+				if (domn !== "") {
+					if (type !== "") {
 						type.concat(" ;", domn);
 					} else {
 						type = domn;
@@ -1811,8 +1807,8 @@ function createRecordMnr(elem, notice) {
 		}
 
 		if ("CATE" in notice) {
-			if (notice.CATE != "") {
-				if (type != "") {
+			if (notice.CATE !== "") {
+				if (type !== "") {
 					type.concat(" ;", notice.CATE);
 				} else {
 					type = notice.CATE;
@@ -1822,8 +1818,8 @@ function createRecordMnr(elem, notice) {
 
 		if ("DENO" in notice) {
 			notice.DENO.map((deno) => {
-				if (deno != "") {
-					if (type != "") {
+				if (deno !== "") {
+					if (type !== "") {
 						type.concat(" ;", deno);
 					} else {
 						type = deno;
@@ -1832,23 +1828,23 @@ function createRecordMnr(elem, notice) {
 			});
 		}
 
-		if (type != "") {
+		if (type !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:type": type });
 		}
 
 		elem.record[1].metadata[0]["oai_dc:dc"].push({
-			"dc:identifier": "www.pop.culture.gouv.fr/notice/mnr/" + notice.REF,
+			"dc:identifier": `www.pop.culture.gouv.fr/notice/mnr/${notice.REF}`,
 		});
 
 		if ("LOCA" in notice) {
-			if (notice.LOCA != "") {
+			if (notice.LOCA !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:coverage": notice.LOCA,
 				});
 			}
 		}
 
-		if (coverageTemporal != "") {
+		if (coverageTemporal !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageTemporal,
 			});
@@ -1857,7 +1853,7 @@ function createRecordMnr(elem, notice) {
 		capture(error);
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createRecordObject: " + error,
+			msg: `Error at createRecordObject: ${error}`,
 		});
 	}
 }
@@ -1873,15 +1869,15 @@ function createRecordMuseo(elem, notice) {
 		let coverageSpatial = "";
 
 		if ("NOMOFF" in notice) {
-			if (notice.NOMOFF != "") {
+			if (notice.NOMOFF !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:title": notice.NOMOFF,
 				});
 			}
 		}
 		if ("CATEG" in notice) {
-			if (notice.CATEG != "") {
-				if (subject != "") {
+			if (notice.CATEG !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.CATEG);
 				} else {
 					subject = notice.CATEG;
@@ -1891,8 +1887,8 @@ function createRecordMuseo(elem, notice) {
 
 		if ("DOMPAL" in notice) {
 			notice.DOMPAL.map((dompal) => {
-				if (dompal != "") {
-					if (subject != "") {
+				if (dompal !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", dompal);
 					} else {
 						type = dompal;
@@ -1904,8 +1900,8 @@ function createRecordMuseo(elem, notice) {
 
 		if ("THEMES" in notice) {
 			notice.THEMES.map((themes) => {
-				if (themes != "") {
-					if (subject != "") {
+				if (themes !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", themes);
 					} else {
 						subject = themes;
@@ -1915,8 +1911,8 @@ function createRecordMuseo(elem, notice) {
 		}
 
 		if ("STATUT" in notice) {
-			if (notice.STATUT != "") {
-				if (subject != "") {
+			if (notice.STATUT !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.STATUT);
 				} else {
 					subject = notice.STATUT;
@@ -1924,14 +1920,14 @@ function createRecordMuseo(elem, notice) {
 			}
 		}
 
-		if (subject != "") {
+		if (subject !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:subject": subject,
 			});
 		}
 
 		if ("HIST" in notice) {
-			if (notice.HIST != "") {
+			if (notice.HIST !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:description": notice.HIST,
 				});
@@ -1939,7 +1935,7 @@ function createRecordMuseo(elem, notice) {
 		}
 
 		if ("CONTACT_MUSEO" in notice) {
-			if (notice.CONTACT_MUSEO != "") {
+			if (notice.CONTACT_MUSEO !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:creator": notice.CONTACT_MUSEO,
 				});
@@ -1947,7 +1943,7 @@ function createRecordMuseo(elem, notice) {
 		}
 
 		if ("CONTACT_GENERIQUE" in notice) {
-			if (notice.CONTACT_GENERIQUE != "") {
+			if (notice.CONTACT_GENERIQUE !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:source": notice.CONTACT_GENERIQUE,
 				});
@@ -1958,7 +1954,7 @@ function createRecordMuseo(elem, notice) {
 			"dc:publisher": "Ministère de la Culture",
 		});
 		if ("PRODUCTEUR" in notice) {
-			if (notice.PRODUCTEUR != "") {
+			if (notice.PRODUCTEUR !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:contributor": notice.PRODUCTEUR,
 				});
@@ -1973,13 +1969,12 @@ function createRecordMuseo(elem, notice) {
 		});
 		elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:type": "Musée" });
 		elem.record[1].metadata[0]["oai_dc:dc"].push({
-			"dc:identifier":
-				"www.pop.culture.gouv.fr/notice/museo/" + notice.REF,
+			"dc:identifier": `www.pop.culture.gouv.fr/notice/museo/${notice.REF}`,
 		});
 
 		if ("DPT" in notice) {
-			if (notice.DPT != "") {
-				if (coverageSpatial != "") {
+			if (notice.DPT !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.DPT);
 				} else {
 					coverageSpatial = notice.DPT;
@@ -1988,8 +1983,8 @@ function createRecordMuseo(elem, notice) {
 		}
 
 		if ("VILLE_M" in notice) {
-			if (notice.VILLE_M != "") {
-				if (coverageSpatial != "") {
+			if (notice.VILLE_M !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.VILLE_M);
 				} else {
 					coverageSpatial = notice.VILLE_M;
@@ -1997,7 +1992,7 @@ function createRecordMuseo(elem, notice) {
 			}
 		}
 
-		if (coverageSpatial != "") {
+		if (coverageSpatial !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageSpatial,
 			});
@@ -2006,7 +2001,7 @@ function createRecordMuseo(elem, notice) {
 		capture(error);
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createRecordObject: " + error,
+			msg: `Error at createRecordObject: ${error}`,
 		});
 	}
 }
@@ -2028,18 +2023,18 @@ function createRecordPalissy(elem, notice) {
 		let coverageSpatial = "";
 
 		if ("WCOM" in notice) {
-			if (notice.WCOM != "") {
-				if (title != "") {
+			if (notice.WCOM !== "") {
+				if (title !== "") {
 					title.concat(" ;", notice.WCOM);
 				} else {
 					title = notice.WCOM;
 				}
-				if (subject != "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.WCOM);
 				} else {
 					subject = notice.WCOM;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.WCOM);
 				} else {
 					coverageSpatial = notice.WCOM;
@@ -2048,13 +2043,13 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("EDIF" in notice) {
-			if (notice.EDIF != "") {
-				if (title != "") {
+			if (notice.EDIF !== "") {
+				if (title !== "") {
 					title.concat(" ;", notice.EDIF);
 				} else {
 					title = notice.EDIF;
 				}
-				if (subject != "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.EDIF);
 				} else {
 					subject = notice.EDIF;
@@ -2063,13 +2058,13 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("TICO" in notice) {
-			if (notice.TICO != "") {
-				if (title != "") {
+			if (notice.TICO !== "") {
+				if (title !== "") {
 					title.concat(" ;", notice.TICO);
 				} else {
 					title = notice.TICO;
 				}
-				if (subject != "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.TICO);
 				} else {
 					subject = notice.TICO;
@@ -2077,12 +2072,12 @@ function createRecordPalissy(elem, notice) {
 			}
 		}
 
-		if (title != "") {
+		if (title !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:title": title });
 		}
 		if ("REF" in notice) {
-			if (notice.REF != "") {
-				if (subject != "") {
+			if (notice.REF !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.REF);
 				} else {
 					subject = notice.REF;
@@ -2092,8 +2087,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("STAT" in notice) {
 			notice.STAT.map((stat) => {
-				if (stat != "") {
-					if (subject != "") {
+				if (stat !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", stat);
 					} else {
 						subject = stat;
@@ -2103,8 +2098,8 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("PROT" in notice) {
-			if (notice.PROT != "") {
-				if (subject != "") {
+			if (notice.PROT !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PROT);
 				} else {
 					subject = notice.PROT;
@@ -2113,8 +2108,8 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("DPRO" in notice) {
-			if (notice.DPRO != "") {
-				if (subject != "") {
+			if (notice.DPRO !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DPRO);
 				} else {
 					subject = notice.DPRO;
@@ -2123,8 +2118,8 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("PPRO" in notice) {
-			if (notice.PPRO != "") {
-				if (subject != "") {
+			if (notice.PPRO !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PPRO);
 				} else {
 					subject = notice.PPRO;
@@ -2134,8 +2129,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("CATE" in notice) {
 			notice.CATE.map((cate) => {
-				if (cate != "") {
-					if (subject != "") {
+				if (cate !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", cate);
 					} else {
 						subject = cate;
@@ -2146,8 +2141,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("MATR" in notice) {
 			notice.MATR.map((matr) => {
-				if (matr != "") {
-					if (subject != "") {
+				if (matr !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", matr);
 					} else {
 						subject = matr;
@@ -2158,8 +2153,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("INSC" in notice) {
 			notice.INSC.map((insc) => {
-				if (insc != "") {
-					if (subject != "") {
+				if (insc !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", insc);
 					} else {
 						subject = insc;
@@ -2169,8 +2164,8 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("PINS" in notice) {
-			if (notice.PINS != "") {
-				if (subject != "") {
+			if (notice.PINS !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PINS);
 				} else {
 					subject = notice.PINS;
@@ -2179,8 +2174,8 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("HIST" in notice) {
-			if (notice.HIST != "") {
-				if (subject != "") {
+			if (notice.HIST !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.HIST);
 				} else {
 					subject = notice.HIST;
@@ -2189,13 +2184,13 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("DESC" in notice) {
-			if (notice.DESC != "") {
-				if (subject != "") {
+			if (notice.DESC !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DESC);
 				} else {
 					subject = notice.DESC;
 				}
-				if (description != "") {
+				if (description !== "") {
 					description.concat(" ;", notice.DESC);
 				} else {
 					description = notice.DESC;
@@ -2204,8 +2199,8 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("PREP" in notice) {
-			if (notice.PREP != "") {
-				if (subject != "") {
+			if (notice.PREP !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.PREP);
 				} else {
 					subject = notice.PREP;
@@ -2215,8 +2210,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("DENO" in notice) {
 			notice.DENO.map((deno) => {
-				if (deno != "") {
-					if (subject != "") {
+				if (deno !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", deno);
 					} else {
 						subject = deno;
@@ -2226,8 +2221,8 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("DEPL" in notice) {
-			if (notice.DEPL != "") {
-				if (subject != "") {
+			if (notice.DEPL !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DEPL);
 				} else {
 					subject = notice.DEPL;
@@ -2237,7 +2232,7 @@ function createRecordPalissy(elem, notice) {
 
 		if ("SCLE" in notice) {
 			notice.SCLE.map((scle) => {
-				if (subject != "") {
+				if (subject !== "") {
 					subject.concat(" ;", scle);
 				} else {
 					subject = scle;
@@ -2247,7 +2242,7 @@ function createRecordPalissy(elem, notice) {
 
 		if ("DATE" in notice) {
 			notice.DATE.map((date) => {
-				if (subject != "") {
+				if (subject !== "") {
 					subject.concat(" ;", date);
 				} else {
 					subject = date;
@@ -2257,8 +2252,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("AUTR" in notice) {
 			notice.AUTR.map((autr) => {
-				if (autr != "") {
-					if (subject != "") {
+				if (autr !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", autr);
 					} else {
 						subject = autr;
@@ -2269,13 +2264,13 @@ function createRecordPalissy(elem, notice) {
 
 		if ("PERS" in notice) {
 			notice.PERS.map((pers) => {
-				if (pers != "") {
-					if (subject != "") {
+				if (pers !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", pers);
 					} else {
 						subject = pers;
 					}
-					if (creator != "") {
+					if (creator !== "") {
 						creator.concat(" ;", pers);
 					} else {
 						creator = pers;
@@ -2285,13 +2280,13 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("REG" in notice) {
-			if (notice.REG != "") {
-				if (subject != "") {
+			if (notice.REG !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.REG);
 				} else {
 					subject = notice.REG;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.REG);
 				} else {
 					coverageSpatial = notice.REG;
@@ -2300,13 +2295,13 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("DPT_LETTRE" in notice) {
-			if (notice.DPT_LETTRE != "") {
-				if (subject != "") {
+			if (notice.DPT_LETTRE !== "") {
+				if (subject !== "") {
 					subject.concat(" ;", notice.DPT_LETTRE);
 				} else {
 					subject = notice.DPT_LETTRE;
 				}
-				if (coverageSpatial != "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.DPT_LETTRE);
 				} else {
 					coverageSpatial = notice.DPT_LETTRE;
@@ -2316,8 +2311,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("MANQUANT" in notice) {
 			notice.MANQUANT.map((manquant) => {
-				if (manquant != "") {
-					if (subject != "") {
+				if (manquant !== "") {
+					if (subject !== "") {
 						subject.concat(" ;", manquant);
 					} else {
 						subject = manquant;
@@ -2326,13 +2321,13 @@ function createRecordPalissy(elem, notice) {
 			});
 		}
 
-		if (subject != "") {
+		if (subject !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:subject": subject,
 			});
 		}
 
-		if (description != "") {
+		if (description !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:description": description,
 			});
@@ -2340,8 +2335,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("AUTR" in notice) {
 			notice.AUTR.map((autr) => {
-				if (autr != "") {
-					if (creator != "") {
+				if (autr !== "") {
+					if (creator !== "") {
 						creator.concat(" ;", autr);
 					} else {
 						creator = autr;
@@ -2350,14 +2345,14 @@ function createRecordPalissy(elem, notice) {
 			});
 		}
 
-		if (creator != "") {
+		if (creator !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:creator": creator,
 			});
 		}
 
 		if ("CONTACT" in notice) {
-			if (notice.CONTACT != "") {
+			if (notice.CONTACT !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:source": notice.CONTACT,
 				});
@@ -2370,12 +2365,12 @@ function createRecordPalissy(elem, notice) {
 
 		if ("SCLE" in notice) {
 			notice.SCLE.map((scle) => {
-				if (date != "") {
+				if (date !== "") {
 					date.concat(" ;", scle);
 				} else {
 					date = scle;
 				}
-				if (coverageTemporal != "") {
+				if (coverageTemporal !== "") {
 					coverageTemporal.concat(" ;", scle);
 				} else {
 					coverageTemporal = scle;
@@ -2385,12 +2380,12 @@ function createRecordPalissy(elem, notice) {
 
 		if ("DATE" in notice) {
 			notice.DATE.map((date) => {
-				if (date != "") {
+				if (date !== "") {
 					date.concat(" ;", date);
 				} else {
 					date = date;
 				}
-				if (coverageTemporal != "") {
+				if (coverageTemporal !== "") {
 					coverageTemporal.concat(" ;", date);
 				} else {
 					coverageTemporal = date;
@@ -2398,12 +2393,12 @@ function createRecordPalissy(elem, notice) {
 			});
 		}
 
-		if (date != "") {
+		if (date !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:date": date });
 		}
 
 		if ("PRODUCTEUR" in notice) {
-			if (notice.PRODUCTEUR != "") {
+			if (notice.PRODUCTEUR !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:contributor": notice.PRODUCTEUR,
 				});
@@ -2411,7 +2406,7 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("COPY" in notice) {
-			if (notice.COPY != "") {
+			if (notice.COPY !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:rights": notice.COPY,
 				});
@@ -2419,7 +2414,7 @@ function createRecordPalissy(elem, notice) {
 		}
 
 		if ("DIMS" in notice) {
-			if (notice.DIMS != "") {
+			if (notice.DIMS !== "") {
 				elem.record[1].metadata[0]["oai_dc:dc"].push({
 					"dc:format": notice.DIMS,
 				});
@@ -2432,8 +2427,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("CATE" in notice) {
 			notice.CATE.map((cate) => {
-				if (cate != "") {
-					if (type != "") {
+				if (cate !== "") {
+					if (type !== "") {
 						type.concat(" ;", cate);
 					} else {
 						type = cate;
@@ -2444,8 +2439,8 @@ function createRecordPalissy(elem, notice) {
 
 		if ("DENO" in notice) {
 			notice.DENO.map((deno) => {
-				if (deno != "") {
-					if (type != "") {
+				if (deno !== "") {
+					if (type !== "") {
 						type.concat(" ;", deno);
 					} else {
 						type = deno;
@@ -2454,18 +2449,17 @@ function createRecordPalissy(elem, notice) {
 			});
 		}
 
-		if (type != "") {
+		if (type !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({ "dc:type": type });
 		}
 
 		elem.record[1].metadata[0]["oai_dc:dc"].push({
-			"dc:identifier":
-				"www.pop.culture.gouv.fr/notice/palissy/" + notice.REF,
+			"dc:identifier": `www.pop.culture.gouv.fr/notice/palissy/${notice.REF}`,
 		});
 
 		if ("WADRS" in notice) {
-			if (notice.WADRS != "") {
-				if (coverageSpatial != "") {
+			if (notice.WADRS !== "") {
+				if (coverageSpatial !== "") {
 					coverageSpatial.concat(" ;", notice.WADRS);
 				} else {
 					coverageSpatial = notice.WADRS;
@@ -2473,13 +2467,13 @@ function createRecordPalissy(elem, notice) {
 			}
 		}
 
-		if (coverageSpatial != "") {
+		if (coverageSpatial !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageSpatial,
 			});
 		}
 
-		if (coverageTemporal != "") {
+		if (coverageTemporal !== "") {
 			elem.record[1].metadata[0]["oai_dc:dc"].push({
 				"dc:coverage": coverageTemporal,
 			});
@@ -2488,7 +2482,7 @@ function createRecordPalissy(elem, notice) {
 		capture(error);
 		return res.status(500).send({
 			success: false,
-			msg: "Error at createRecordObject: " + error,
+			msg: `Error at createRecordObject: ${error}`,
 		});
 	}
 }

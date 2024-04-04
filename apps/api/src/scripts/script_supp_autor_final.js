@@ -1,15 +1,15 @@
-var notices = db.autor.find().noCursorTimeout();
-var noticeCount = db.autor.count();
+const notices = db.autor.find().noCursorTimeout();
+let noticeCount = db.autor.count();
 
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
+	const ref = aRow.REF;
 	// remove RESID and create string AUTORLOCA
 	if ("RESID" in aRow) {
 		let autorl = "";
 		aRow.RESID.forEach((resid) => {
-			if (resid != "") {
-				if (autorl != "") {
-					autorl = autorl + " , " + resid;
+			if (resid !== "") {
+				if (autorl !== "") {
+					autorl = `${autorl} , ${resid}`;
 				} else {
 					autorl = resid;
 				}
@@ -28,7 +28,7 @@ notices.forEach((aRow) => {
 
 	//put EMET in PRODUCTEUR
 	if ("EMET" in aRow) {
-		if (aRow.EMET != "") {
+		if (aRow.EMET !== "") {
 			const emet = aRow.EMET;
 			//Update field PRODUCTEUR
 			db.autor.update(
@@ -44,13 +44,13 @@ notices.forEach((aRow) => {
 
 	// create field NOMPRENOM
 	if ("NOM" in aRow && "PNOM" in aRow) {
-		if (aRow.NOM != "" && aRow.PNOM != "") {
+		if (aRow.NOM !== "" && aRow.PNOM !== "") {
 			//Update field NOMPRENOM
 			db.autor.update(
 				{ REF: ref },
 				{
 					$set: {
-						NOMPRENOM: aRow.NOM + " " + aRow.PNOM,
+						NOMPRENOM: `${aRow.NOM} ${aRow.PNOM}`,
 					},
 				},
 			);
@@ -72,5 +72,5 @@ notices.forEach((aRow) => {
 	db.autor.update({ REF: ref }, { $unset: { RESID: "" } }, { multi: true });
 
 	noticeCount--;
-	print(noticeCount + " notices autor restantes");
+	print(`${noticeCount} notices autor restantes`);
 });

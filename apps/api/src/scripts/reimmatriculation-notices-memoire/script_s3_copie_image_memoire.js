@@ -1,6 +1,6 @@
 require("dotenv").config();
 const AWS = require("aws-sdk");
-const fs = require("fs");
+const fs = require("node:fs");
 const path = require("node:path");
 const csv = require("csv");
 const filenamify = require("filenamify");
@@ -55,7 +55,7 @@ async function copyImageMemoire(notice) {
 					reject(err.message);
 				} else {
 					if (data.ContentLength > 0) {
-						console.log("nombre de notices :" + i);
+						console.log(`nombre de notices :${i}`);
 
 						s3.putObject(
 							{
@@ -72,12 +72,11 @@ async function copyImageMemoire(notice) {
 								} else {
 									countUpdate++;
 									if (
-										countUpdate % 500 == 0 ||
-										countUpdate == i - 1
+										countUpdate % 500 === 0 ||
+										countUpdate === i - 1
 									) {
 										console.log(
-											"Total images créées : " +
-												countUpdate,
+											`Total images créées : ${countUpdate}`,
 										);
 									}
 									resolve([notice, data]);

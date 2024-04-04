@@ -46,15 +46,14 @@ async function withFlags(notice) {
 async function transformBeforeUpdate(notice) {
 	notice.DMAJ = formattedNow();
 	if (notice.VIDEO !== undefined) {
-		notice.CONTIENT_IMAGE =
-			notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+		notice.CONTIENT_IMAGE = notice.VIDEO?.length ? "oui" : "non";
 	}
 	notice = await withFlags(notice);
 }
 
 async function transformBeforeCreate(notice) {
 	notice.DMAJ = notice.DMIS = formattedNow();
-	notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+	notice.CONTIENT_IMAGE = notice.VIDEO?.length ? "oui" : "non";
 	notice = await withFlags(notice);
 }
 /*
@@ -138,7 +137,7 @@ router.put(
 			// Update IMPORT ID
 			if (notice.POP_IMPORT.length) {
 				const id = notice.POP_IMPORT[0];
-				delete notice.POP_IMPORT;
+				notice.POP_IMPORT = undefined;
 				notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
 			}
 
@@ -146,7 +145,7 @@ router.put(
 
 			const timeZone = "Europe/Paris";
 			//Ajout de l'historique de la notice
-			var today = moment
+			const today = moment
 				.tz(new Date(), timeZone)
 				.format("YYYY-MM-DD HH:mm");
 

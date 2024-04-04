@@ -1,8 +1,8 @@
 /**
  * Mise à jour de la valeur du champ BASE par Rose Valland (MNR-Jeu de Paume)
  */
-var notices = db.mnr.find().noCursorTimeout();
-var noticeCount = db.mnr.count();
+const notices = db.mnr.find().noCursorTimeout();
+let noticeCount = db.mnr.count();
 notices.forEach((aRow) => {
 	db.mnr.update(
 		{ REF: aRow.REF },
@@ -14,5 +14,5 @@ notices.forEach((aRow) => {
 	);
 
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });

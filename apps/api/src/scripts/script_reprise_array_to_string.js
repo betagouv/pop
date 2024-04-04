@@ -1,21 +1,21 @@
-var notices = db.joconde.find().noCursorTimeout();
-var noticeCount = db.joconde.count();
+const notices = db.joconde.find().noCursorTimeout();
+let noticeCount = db.joconde.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
-	var adptString = "";
-	var etatString = "";
-	var prepString = "";
-	var adpt = aRow.ADPT;
-	var etat = aRow.ETAT;
-	var prep = aRow.PREP;
+	const ref = aRow.REF;
+	let adptString = "";
+	let etatString = "";
+	let prepString = "";
+	const adpt = aRow.ADPT;
+	const etat = aRow.ETAT;
+	const prep = aRow.PREP;
 
 	//Procédure pour ADPT
-	var i = 1;
-	var typeAdpt = typeof adpt;
-	if (typeAdpt != "string") {
+	let i = 1;
+	const typeAdpt = typeof adpt;
+	if (typeAdpt !== "string") {
 		aRow.ADPT.forEach((aItem) => {
 			adptString += aItem;
-			if (i != adpt.length) {
+			if (i !== adpt.length) {
 				adptString += "; ";
 			}
 			i++;
@@ -31,12 +31,12 @@ notices.forEach((aRow) => {
 	}
 
 	//Procédure pour ETAT
-	var j = 1;
-	var typeEtat = typeof etat;
-	if (typeEtat != "string") {
+	let j = 1;
+	const typeEtat = typeof etat;
+	if (typeEtat !== "string") {
 		aRow.ETAT.forEach((aItem) => {
 			etatString += aItem;
-			if (j != etat.length) {
+			if (j !== etat.length) {
 				etatString += "; ";
 			}
 			j++;
@@ -52,12 +52,12 @@ notices.forEach((aRow) => {
 	}
 
 	//Procédure pour PREP
-	var k = 1;
-	var typePrep = typeof prep;
-	if (typePrep != "string") {
+	let k = 1;
+	const typePrep = typeof prep;
+	if (typePrep !== "string") {
 		aRow.PREP.forEach((aItem) => {
 			prepString += aItem;
-			if (k != prep.length) {
+			if (k !== prep.length) {
 				prepString += "; ";
 			}
 			k++;
@@ -73,5 +73,5 @@ notices.forEach((aRow) => {
 	}
 
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });

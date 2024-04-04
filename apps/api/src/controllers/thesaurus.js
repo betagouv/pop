@@ -27,7 +27,7 @@ router.get(
 		const value = escapeRegExp(req.query.value);
 		const q = Thesaurus.find({
 			arc: id,
-			value: { $regex: new RegExp("^" + value) },
+			value: { $regex: new RegExp(`^${value}`) },
 		}).limit(10);
 		q.exec((e, values) => {
 			res.send(values);
@@ -48,7 +48,7 @@ router.get(
 		const value = escapeRegExp(req.query.value);
 		const q = Thesaurus.find({
 			idThesaurus: id,
-			value: { $regex: new RegExp("^" + value) },
+			value: { $regex: new RegExp(`^${value}`) },
 		});
 		q.exec((e, values) => {
 			values = values.map((element) => {
@@ -474,7 +474,7 @@ router.get(
 				) {
 					res.status(200).send(response.data);
 				} else {
-					res.status(404).send(`Aucun résultat`);
+					res.status(404).send("Aucun résultat");
 				}
 			})
 			.catch((error) => {
@@ -528,7 +528,7 @@ router.get(
 				) {
 					res.status(200).send(response.data);
 				} else {
-					res.status(404).send(`Aucun résultat`);
+					res.status(404).send("Aucun résultat");
 				}
 			})
 			.catch((error) => {

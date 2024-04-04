@@ -16,14 +16,14 @@ async function canManage(user, notice, collection) {
 		const group = await getUserGroup(user.group);
 
 		//Si l'utilisateur a un rôle administrateur et que son groupe est admin ou celui correspondant à la collection, retourne true
-		if (user.role == "administrateur" && user.group === "admin") {
+		if (user.role === "administrateur" && user.group === "admin") {
 			return true;
 		}
 
 		// Si l'utilisateur a le rôle administrateur ou producteur
 		if (["producteur", "administrateur"].includes(user.role)) {
 			// Si le groupe récupéré en base contient bien un LABEL et des PRODUCTEURS
-			if (group && group.LABEL && group.PRODUCTEURS) {
+			if (group?.LABEL && group.PRODUCTEURS) {
 				// Pour chaque producteurs rattachés au groupe, on vérifie sur le producteur de la notice y est présent
 				group.PRODUCTEURS.map((producteur) => {
 					// Si le producteur de la notice correspond à un de ceux du groupe, on retourne true
@@ -237,7 +237,7 @@ async function canDeleteEnluminures(user, notice) {
 async function getUserGroup(userGroup) {
 	let group;
 
-	if (userGroup == "admin") {
+	if (userGroup === "admin") {
 		return { LABEL: "admin" };
 	}
 	try {

@@ -280,7 +280,7 @@ router.get("/", async (req, res) => {
 			case "GetRecord":
 				try {
 					if (
-						Object.keys(req.query).length != 3 ||
+						Object.keys(req.query).length !== 3 ||
 						!Object.keys(req.query).includes("metadataPrefix") ||
 						!Object.keys(req.query).includes("identifier")
 					) {
@@ -304,13 +304,13 @@ router.get("/", async (req, res) => {
 					}
 					const arg = req.query.identifier.split(":");
 					if (
-						arg.length == 3 &&
-						arg[0] == "oai" &&
+						arg.length === 3 &&
+						arg[0] === "oai" &&
 						baseNames.hasOwnProperty(arg[1]) &&
-						arg[2] != ""
+						arg[2] !== ""
 					) {
 						const ref = await createMongoGetRecordQuery(req.query);
-						if (ref.length == 0) {
+						if (ref.length === 0) {
 							res.locals.getrecord = generateException(
 								req.query,
 								EXCEPTION_CODES.NO_RECORD_FOUND,

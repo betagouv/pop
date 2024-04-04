@@ -83,12 +83,12 @@ const splitExpiredTokens = (tokens) =>
  */
 const getToken = async () => {
 	if (!isTokenExpired(cachedToken)) {
-		console.log(`Valid cached Mapbox token found.`);
+		console.log("Valid cached Mapbox token found.");
 		return cachedToken.token;
 	}
-	console.log(`No valid cached Mapbox token found.`);
+	console.log("No valid cached Mapbox token found.");
 
-	console.log(`Looking for valid old Mapbox tokens.`);
+	console.log("Looking for valid old Mapbox tokens.");
 	const tokens = await getAllTokens();
 	const publicRotatingTokens = filterPublicRotatingTokens(tokens);
 	const [valideTokens, expiredTokens] =
@@ -102,15 +102,15 @@ const getToken = async () => {
 
 	// Return last valid token created, if any.
 	if (valideTokens.length > 0) {
-		console.log(`Valid old token Mapbox found.`);
+		console.log("Valid old token Mapbox found.");
 		return sortTokensDateDesc(valideTokens)[0].token;
 	}
-	console.log(`No valid old token Mapbox found.`);
+	console.log("No valid old token Mapbox found.");
 
 	// No valid token found, let's create a new one.
 	const newToken = await createRotatingToken();
 	cachedToken = newToken;
-	console.log(`New Mapbox token created and cached.`);
+	console.log("New Mapbox token created and cached.");
 
 	return newToken.token;
 };

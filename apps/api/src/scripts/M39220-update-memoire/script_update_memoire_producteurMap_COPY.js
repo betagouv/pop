@@ -13,10 +13,10 @@ notices.forEach((element) => {
 		{ REF: element.REF },
 		{
 			$set: {
-				COPY: "© " + element.COPY,
+				COPY: `© ${element.COPY}`,
 			},
 		},
 	);
 	nbreNotices--;
-	print(nbreNotices + "notices restantes");
+	print(`${nbreNotices}notices restantes`);
 });

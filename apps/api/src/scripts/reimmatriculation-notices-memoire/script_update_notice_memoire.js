@@ -1,12 +1,12 @@
 require("dotenv").config();
 require("../../mongo");
-const fs = require("fs");
+const fs = require("node:fs");
 const Memoire = require("../../models/memoire");
 const path = require("node:path");
 const csv = require("csv");
 const { async } = require("rxjs/internal/scheduler/async");
 const { pathFileCsv, nameFileLog } = require("./utils");
-const { exit } = require("process");
+const { exit } = require("node:process");
 const { Observable } = require("rxjs/internal/Observable");
 
 let counter = 0;
@@ -36,7 +36,7 @@ async function readCsv() {
 		.on("end", () => {
 			console.log(
 				"lecture terminée",
-				"nombre element : " + noticesMemoire.length,
+				`nombre element : ${noticesMemoire.length}`,
 			);
 
 			let arrayUpdate = [];
@@ -46,10 +46,10 @@ async function readCsv() {
 				arrayUpdate.push(notice);
 
 				// Traitement par lot suivant le limite définit
-				if (i % limit === 0 || i == noticesMemoire.length) {
+				if (i % limit === 0 || i === noticesMemoire.length) {
 					updateNoticesMemoire(arrayUpdate).then((res) => {
 						return new Observable((observer) => {
-							observer.next(res + " notices traitées");
+							observer.next(`${res} notices traitées`);
 
 							if (noticesMemoire.length === res || res === 0) {
 								console.log("mise à jour terminé");
@@ -79,22 +79,18 @@ function updateNoticesMemoire(noticesMemoire) {
 					.catch((err) => {
 						// Cas des duplications de clé REF
 						console.log(
-							"-----------------------REF :" + err.op.q.REF,
+							`-----------------------REF :${err.op.q.REF}`,
 						);
 						fs.writeFileSync(
 							nameFileLog,
-							"ANCIENNE REF : " +
-								err.op.q.REF +
-								" NOUVELLE REF : " +
-								err.errmsg +
-								"\n",
+							`ANCIENNE REF : ${err.op.q.REF} NOUVELLE REF : ${err.errmsg}\n`,
 							{ flag: "a+" },
 						);
 
 						// Suppression de la ligne qui est en erreur pour poursuivre le traitement
 						noticesMemoire = noticesMemoire.filter(
 							(notice) =>
-								notice.updateOne.filter.REF != err.op.q.REF,
+								notice.updateOne.filter.REF !== err.op.q.REF,
 						);
 						errorFind = true;
 					});

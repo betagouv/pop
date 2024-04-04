@@ -1,5 +1,5 @@
 require("dotenv").config();
-const fs = require("fs");
+const fs = require("node:fs");
 const mongoose = require("mongoose");
 const inquirer = require("inquirer");
 const program = require("commander");
@@ -20,8 +20,8 @@ const chalk = require("chalk");
 
 // Sync all data from mongo to ES. Rebuild indices. It works without breaking off service.
 async function run() {
-	console.log("ES : " + esUrl);
-	console.log("MongoDB : " + mongoUrl);
+	console.log(`ES : ${esUrl}`);
+	console.log(`MongoDB : ${mongoUrl}`);
 
 	program
 		.version("0.1.0")
@@ -75,7 +75,7 @@ async function run() {
 					await es.ping();
 				} catch (e) {
 					console.error(e);
-					throw new Error(`Failed to locate ping elasticsearch`, e);
+					throw new Error("Failed to locate ping elasticsearch", e);
 				}
 			},
 		},
@@ -158,8 +158,7 @@ async function run() {
 									ctx.rootExists = ovh
 										? existsRes.body
 										: existsRes;
-									task.output =
-										"Root index exists: " + ctx.rootExists;
+									task.output = `Root index exists: ${ctx.rootExists}`;
 								},
 							},
 							{
@@ -172,8 +171,7 @@ async function run() {
 										const estimatedDocumentCount =
 											await noticeClass.estimatedDocumentCount();
 										observer.next(
-											estimatedDocumentCount +
-												" notices to go.",
+											`${estimatedDocumentCount} notices to go.`,
 										);
 										let lastId;
 										while (true) {
@@ -221,7 +219,7 @@ async function run() {
 															},
 														});
 													}
-													delete notice._id;
+													notice._id = undefined;
 													bulk.push({
 														doc: notice,
 														doc_as_upsert: true,

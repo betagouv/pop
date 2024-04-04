@@ -15,7 +15,7 @@ print(nbreNotices);
 
 notices.forEach((notice) => {
 	const arrayStat = notice.STAT.map((value) => {
-		if ("don" == value) {
+		if ("don" === value) {
 			value = "don manuel";
 		}
 		return value;
@@ -30,5 +30,5 @@ notices.forEach((notice) => {
 		},
 	);
 	nbreNotices--;
-	print(nbreNotices + " notices restantes");
+	print(`${nbreNotices} notices restantes`);
 });

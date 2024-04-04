@@ -1,10 +1,10 @@
 require("dotenv").config();
 require("../../mongo");
-const fs = require("fs");
+const fs = require("node:fs");
 const Enluminures = require("../../models/enluminures");
 const csv = require("csv");
 const { pathFileCsv, nameFileLog } = require("./utils");
-const { exit } = require("process");
+const { exit } = require("node:process");
 const { Observable } = require("rxjs/internal/Observable");
 const { async } = require("rxjs/internal/scheduler/async");
 
@@ -50,7 +50,7 @@ async function readCsv() {
 		noticesEnluminures = Object.keys(arrayObj);
 		console.log(
 			"lecture terminée",
-			"nombre element : " + noticesEnluminures.length,
+			`nombre element : ${noticesEnluminures.length}`,
 		);
 
 		let arrayUpdate = [];
@@ -90,10 +90,10 @@ async function readCsv() {
 			}
 
 			// Traitement par lot suivant le limite définit
-			if (i % limit === 0 || i == noticesEnluminures.length) {
+			if (i % limit === 0 || i === noticesEnluminures.length) {
 				updateNotices(arrayUpdate).then((res) => {
 					return new Observable((observer) => {
-						observer.next(res + " notices traitées");
+						observer.next(`${res} notices traitées`);
 
 						if (noticesEnluminures.length === res || res === 0) {
 							console.log("mise à jour terminé");
@@ -124,22 +124,18 @@ function updateNotices(noticesEnluminures) {
 						console.log("erreur", err);
 						// Cas des duplications de clé REF
 						console.log(
-							"-----------------------REF :" + err.op.q.REF,
+							`-----------------------REF :${err.op.q.REF}`,
 						);
 						fs.writeFileSync(
 							nameFileLog,
-							"REF : " +
-								err.op.q.REF +
-								" MESSAGE : " +
-								err.errmsg +
-								"\n",
+							`REF : ${err.op.q.REF} MESSAGE : ${err.errmsg}\n`,
 							{ flag: "a+" },
 						);
 
 						// Suppression de la ligne qui est en erreur pour poursuivre le traitement
 						noticesEnluminures = noticesEnluminures.filter(
 							(notice) =>
-								notice.updateOne.filter.REF != err.op.q.REF,
+								notice.updateOne.filter.REF !== err.op.q.REF,
 						);
 						errorFind = true;
 					});

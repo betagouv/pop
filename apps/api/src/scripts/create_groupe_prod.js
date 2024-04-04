@@ -1,5 +1,5 @@
-var groups = [];
-var producteurs = [];
+const groups = [];
+const producteurs = [];
 
 groups.push({ PRODUCTEURS: ["MUSEE"], LABEL: "joconde", __v: 0 });
 groups.push({

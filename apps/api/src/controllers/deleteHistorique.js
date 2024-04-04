@@ -71,8 +71,10 @@ router.post(
 
 		const timeZone = "Europe/Paris";
 		//Create the new historique with this LABEL and BASE and removing index from base objects
-		const userString = user.prenom + " " + user.nom;
-		var today = moment.tz(new Date(), timeZone).format("YYYY-MM-DD HH:mm");
+		const userString = `${user.prenom} ${user.nom}`;
+		const today = moment
+			.tz(new Date(), timeZone)
+			.format("YYYY-MM-DD HH:mm");
 
 		const data = {
 			REF: ref,
@@ -84,12 +86,13 @@ router.post(
 		const newDeleteHistorique = new DeleteHistorique(data);
 		try {
 			console.log(
-				"new delete historique = " +
-					JSON.stringify(newDeleteHistorique),
+				`new delete historique = ${JSON.stringify(
+					newDeleteHistorique,
+				)}`,
 			);
 			await newDeleteHistorique.save();
 		} catch (e) {
-			console.log("error = " + e);
+			console.log(`error = ${e}`);
 			return res.status(400).json({
 				success: false,
 				msg: `L'historique de la suppression de la notice ${req.body.ref} rencontre une erreur.`,

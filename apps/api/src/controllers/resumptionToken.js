@@ -7,11 +7,10 @@ async function getResumptionToken(resumptoken) {
 		const token = await resumptionToken.find({ TOKEN: resumptoken });
 		if (token) {
 			return token;
-		} else {
-			return res
-				.status(404)
-				.send({ success: false, msg: "token introuvable." });
 		}
+		return res
+			.status(404)
+			.send({ success: false, msg: "token introuvable." });
 	} catch (e) {
 		capture(e);
 		res.status(500).send({ success: false, msg: JSON.stringify(e) });

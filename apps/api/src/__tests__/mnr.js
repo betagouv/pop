@@ -39,7 +39,7 @@ async function createNotice(user, expectedStatus = 200) {
 		.field("notice", JSON.stringify(sampleNotice))
 		.set("Accept", "application/json")
 		.set("Content-Type", "multipart/form-data")
-		.set("Cookie", "token=" + (await getJwtToken(app, user)))
+		.set("Cookie", `token=${await getJwtToken(app, user)}`)
 		.expect(expectedStatus);
 	return response.body;
 }
@@ -50,7 +50,7 @@ async function updateNotice(user, expectedStatus = 200, notice = sampleNotice) {
 		.field("notice", JSON.stringify(notice))
 		.set("Accept", "application/json")
 		.set("Content-Type", "multipart/form-data")
-		.set("Cookie", "token=" + (await getJwtToken(app, user)))
+		.set("Cookie", `token=${await getJwtToken(app, user)}`)
 		.expect(expectedStatus);
 	return response.body;
 }
@@ -59,7 +59,7 @@ async function deleteNotice(user, expectedStatus = 200, notice = sampleNotice) {
 	const response = await request(app)
 		.delete(`/mnr/${notice.REF}`)
 		.set("Accept", "application/json")
-		.set("Cookie", "token=" + (await getJwtToken(app, user)))
+		.set("Cookie", `token=${await getJwtToken(app, user)}`)
 		.expect(expectedStatus);
 	return response.body;
 }
@@ -93,7 +93,7 @@ describe("POST /mnr", () => {
 		const res = await createNotice(await createUser(memoireUser), 401);
 		expect(res.success).toBe(false);
 	});
-	test(`It should not create a notice twice with same REF`, async () => {
+	test("It should not create a notice twice with same REF", async () => {
 		const user = await createUser();
 		let res = await createNotice(user, 200);
 		expect(res.success).toBe(true);
@@ -115,13 +115,13 @@ describe("PUT /mnr/:ref", () => {
 });
 
 describe("DELETE /mnr/:ref", () => {
-	test(`It should delete an existing notice`, async () => {
+	test("It should delete an existing notice", async () => {
 		const user = await createUser();
 		let res = await createNotice(user, 200);
 		res = await deleteNotice(user, 200);
 		expect(res.success).toBe(true);
 	});
-	test(`It should return 404 on deleting a non-existent notice`, async () => {
+	test("It should return 404 on deleting a non-existent notice", async () => {
 		const res = await deleteNotice(await createUser(), 404);
 		expect(res.success).toBe(false);
 	});
@@ -140,7 +140,7 @@ describe("DELETE /mnr/:ref", () => {
 });
 
 describe("GET /mnr/:ref", () => {
-	test(`It should return a notice by for everyone`, async () => {
+	test("It should return a notice by for everyone", async () => {
 		await removeProducteurs();
 		await removeGroups();
 
@@ -151,7 +151,7 @@ describe("GET /mnr/:ref", () => {
 			.expect(200);
 		expect(res.body.TITR).toBe(sampleNotice.TITR);
 	});
-	test(`It should return 404 for non-existant notice`, async () => {
+	test("It should return 404 for non-existant notice", async () => {
 		const res = await request(app)
 			.get("/mnr/LOL")
 			.set("Accept", "application/json")

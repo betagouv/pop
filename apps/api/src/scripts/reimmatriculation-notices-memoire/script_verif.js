@@ -1,12 +1,12 @@
 require("dotenv").config();
 require("../../mongo");
-const fs = require("fs");
+const fs = require("node:fs");
 const Memoire = require("../../models/memoire");
 const path = require("node:path");
 const csv = require("csv");
 const { async } = require("rxjs/internal/scheduler/async");
 const { pathFileCsv, nameFileLog, validationLog } = require("./utils");
-const { exit } = require("process");
+const { exit } = require("node:process");
 const { Observable } = require("rxjs/internal/Observable");
 
 let counter = 0;
@@ -38,13 +38,13 @@ async function readCsv() {
 		.on("end", () => {
 			console.log(
 				"lecture terminée",
-				"nombre element : " + noticesMemoire.length,
+				`nombre element : ${noticesMemoire.length}`,
 			);
 
 			noticesMemoire.forEach((notice) => {
 				updateNoticesMemoire(notice).then((res) => {
 					return new Observable((observer) => {
-						observer.next(res + " notices traitées");
+						observer.next(`${res} notices traitées`);
 
 						if (noticesMemoire.length === res || res === 0) {
 							console.log("mise à jour terminé");
@@ -66,18 +66,7 @@ function updateNoticesMemoire(notice) {
 				} else {
 					fs.writeFileSync(
 						validationLog,
-						notice.OLD_REF +
-							";" +
-							notice.OLD_IMG +
-							";" +
-							notice.OLD_NAME_IMG +
-							";" +
-							notice.NEW_REF +
-							";" +
-							notice.NEW_IMG +
-							";" +
-							notice.NEW_NAME_IMG +
-							"\n",
+						`${notice.OLD_REF};${notice.OLD_IMG};${notice.OLD_NAME_IMG};${notice.NEW_REF};${notice.NEW_IMG};${notice.NEW_NAME_IMG}\n`,
 						{ flag: "a+" },
 					);
 				}

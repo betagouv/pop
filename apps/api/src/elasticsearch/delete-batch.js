@@ -48,17 +48,17 @@ async function run() {
 			try {
 				await es.ping();
 			} catch (err) {
-				throw new Error(`Failed to locate ping elasticsearch`, err);
+				throw new Error("Failed to locate ping elasticsearch", err);
 			}
 		},
 	});
 
 	tasks.add({
-		title: `Deleting indexes`,
+		title: "Deleting indexes",
 		task: async () => {
 			return new Listr(
 				indexesToDelete.map((index) => ({
-					title: "Delete " + index,
+					title: `Delete ${index}`,
 					task: async () => {
 						return await es.indices.delete({ index });
 					},

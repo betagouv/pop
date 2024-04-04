@@ -1,7 +1,7 @@
-var notices = db.museo.find().noCursorTimeout();
-var noticeCount = db.museo.count();
+const notices = db.museo.find().noCursorTimeout();
+let noticeCount = db.museo.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
+	const ref = aRow.REF;
 
 	//Update field WWW
 	db.museo.update(
@@ -14,5 +14,5 @@ notices.forEach((aRow) => {
 	);
 
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });

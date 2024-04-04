@@ -915,9 +915,9 @@ const Schema = new mongoose.Schema(
 			type: [String],
 			default: [],
 			documentation: {
-				description:
-					"Région. Doit être une des valeurs suivantes : " +
-					require("../controllers/utils/regions").join(", "),
+				description: `Région. Doit être une des valeurs suivantes : ${require("../controllers/utils/regions").join(
+					", ",
+				)}`,
 				label: "Région",
 			},
 		},

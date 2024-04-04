@@ -1,9 +1,9 @@
-var notices = db.merimee.find().noCursorTimeout();
-var noticeCount = db.merimee.count();
+let notices = db.merimee.find().noCursorTimeout();
+let noticeCount = db.merimee.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
-	var date;
-	if (aRow.DMAJ == "") {
+	const ref = aRow.REF;
+	let date;
+	if (aRow.DMAJ === "") {
 		date = aRow.DMIS;
 	} else {
 		date = aRow.DMAJ;
@@ -15,15 +15,15 @@ notices.forEach((aRow) => {
 		DMAJ: date,
 	});
 	noticeCount--;
-	print(noticeCount + " notices merimee restantes");
+	print(`${noticeCount} notices merimee restantes`);
 });
 
 notices = db.joconde.find().noCursorTimeout();
 noticeCount = db.joconde.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
-	var date;
-	if (aRow.DMAJ == "") {
+	const ref = aRow.REF;
+	let date;
+	if (aRow.DMAJ === "") {
 		date = aRow.DMIS;
 	} else {
 		date = aRow.DMAJ;
@@ -35,15 +35,15 @@ notices.forEach((aRow) => {
 		DMAJ: date,
 	});
 	noticeCount--;
-	print(noticeCount + " notices joconde restantes");
+	print(`${noticeCount} notices joconde restantes`);
 });
 
 notices = db.palissy.find().noCursorTimeout();
 noticeCount = db.palissy.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
-	var date;
-	if (aRow.DMAJ == "") {
+	const ref = aRow.REF;
+	let date;
+	if (aRow.DMAJ === "") {
 		date = aRow.DMIS;
 	} else {
 		date = aRow.DMAJ;
@@ -55,15 +55,15 @@ notices.forEach((aRow) => {
 		DMAJ: date,
 	});
 	noticeCount--;
-	print(noticeCount + " notices palissy restantes");
+	print(`${noticeCount} notices palissy restantes`);
 });
 
 notices = db.autor.find().noCursorTimeout();
 noticeCount = db.autor.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
-	var date;
-	if (aRow.DMAJ == "") {
+	const ref = aRow.REF;
+	let date;
+	if (aRow.DMAJ === "") {
 		date = aRow.DMIS;
 	} else {
 		date = aRow.DMAJ;
@@ -75,15 +75,15 @@ notices.forEach((aRow) => {
 		DMAJ: date,
 	});
 	noticeCount--;
-	print(noticeCount + " notices autor restantes");
+	print(`${noticeCount} notices autor restantes`);
 });
 
 notices = db.memoire.find().noCursorTimeout();
 noticeCount = db.memoire.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
-	var date;
-	if (aRow.DMAJ == "") {
+	const ref = aRow.REF;
+	let date;
+	if (aRow.DMAJ === "") {
 		date = aRow.DMIS;
 	} else {
 		date = aRow.DMAJ;
@@ -95,15 +95,15 @@ notices.forEach((aRow) => {
 		DMAJ: date,
 	});
 	noticeCount--;
-	print(noticeCount + " notices memoire restantes");
+	print(`${noticeCount} notices memoire restantes`);
 });
 
 notices = db.mnr.find().noCursorTimeout();
 noticeCount = db.mnr.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
-	var date;
-	if (aRow.DMAJ == "") {
+	const ref = aRow.REF;
+	let date;
+	if (aRow.DMAJ === "") {
 		date = aRow.DMIS;
 	} else {
 		date = aRow.DMAJ;
@@ -115,15 +115,15 @@ notices.forEach((aRow) => {
 		DMAJ: date,
 	});
 	noticeCount--;
-	print(noticeCount + " notices mnr restantes");
+	print(`${noticeCount} notices mnr restantes`);
 });
 
 notices = db.museo.find().noCursorTimeout();
 noticeCount = db.museo.count();
 notices.forEach((aRow) => {
-	var ref = aRow.REF;
-	var date;
-	if (aRow.DMAJ == "") {
+	const ref = aRow.REF;
+	let date;
+	if (aRow.DMAJ === "") {
 		date = aRow.DMIS;
 	} else {
 		date = aRow.DMAJ;
@@ -135,5 +135,5 @@ notices.forEach((aRow) => {
 		DMAJ: date,
 	});
 	noticeCount--;
-	print(noticeCount + " notices museo restantes");
+	print(`${noticeCount} notices museo restantes`);
 });

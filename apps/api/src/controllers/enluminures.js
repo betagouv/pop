@@ -50,7 +50,7 @@ async function withFlags(notice) {
 	if (arr) {
 		for (let i = 0; i < arr.length; i++) {
 			if (arr[i] && !validator.isURL(arr[i])) {
-				notice.POP_FLAGS.push(`LIENS_INVALID_URL`);
+				notice.POP_FLAGS.push("LIENS_INVALID_URL");
 			}
 		}
 	}
@@ -122,9 +122,9 @@ function transformBeforeCreateAndUpdate(notice) {
 				//Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
 				if (
 					coordonnees.lat !== 0 &&
-					!isNaN(coordonnees.lat) &&
+					!Number.isNaN(coordonnees.lat) &&
 					coordonnees.lon !== 0 &&
-					!isNaN(coordonnees.lon)
+					!Number.isNaN(coordonnees.lon)
 				) {
 					notice.POP_CONTIENT_GEOLOCALISATION = "oui";
 				} else {
@@ -307,13 +307,13 @@ router.put(
 			// Update IMPORT ID
 			if (notice.POP_IMPORT.length) {
 				const id = notice.POP_IMPORT[0];
-				delete notice.POP_IMPORT;
+				notice.POP_IMPORT = undefined;
 				notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
 			}
 
 			const timeZone = "Europe/Paris";
 			//Ajout de l'historique de la notice
-			var today = moment
+			const today = moment
 				.tz(new Date(), timeZone)
 				.format("YYYY-MM-DD HH:mm");
 

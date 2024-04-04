@@ -55,7 +55,7 @@ router.put(
   */
 		const { nom, prenom, institution, group, role, museofile, isBloqued } =
 			req.body;
-		const email = req.params.email && req.params.email.toLowerCase();
+		const email = req.params.email?.toLowerCase();
 		const authenticatedUser = req.user;
 
 		// Validate required fields.
@@ -123,13 +123,13 @@ router.put(
 			await user.save();
 			return res.status(200).send({
 				success: true,
-				msg: `La mise à jour a été effectuée avec succès`,
+				msg: "La mise à jour a été effectuée avec succès",
 			});
 		} catch (e) {
 			capture(e);
 			res.status(500).send({
 				success: false,
-				msg: `La mise à jour a échoué`,
+				msg: "La mise à jour a échoué",
 			});
 		}
 	},
@@ -146,7 +146,7 @@ router.post(
       #swagger.description = 'Création d\'un utilisateur' 
   */
 		const { nom, prenom, institution, group, role, museofile } = req.body;
-		const email = req.body.email && req.body.email.toLowerCase();
+		const email = req.body.email?.toLowerCase();
 		const authenticatedUser = req.user;
 
 		// Validate required fields.
@@ -276,7 +276,8 @@ function userValidation({
 			msg =
 				"Le champ muséofile est obligatoire pour les producteurs du groupe joconde ou museo.";
 			return { success: false, msg };
-		} else if (museofile.some((e) => !e.match(/^[M?B][0-9]+$/))) {
+		}
+		if (museofile.some((e) => !e.match(/^[M?B][0-9]+$/))) {
 			msg =
 				"Le format du champ muséofile est invalide (utilisez M ou B suivi de plusieurs chiffres)";
 			return { success: false, msg };

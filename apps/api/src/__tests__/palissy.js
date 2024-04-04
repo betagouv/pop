@@ -42,7 +42,7 @@ async function createNotice(user, expectedStatus = 200, notice = sampleNotice) {
 		.field("notice", JSON.stringify(notice))
 		.set("Accept", "application/json")
 		.set("Content-Type", "multipart/form-data")
-		.set("Cookie", "token=" + (await getJwtToken(app, user)))
+		.set("Cookie", `token=${await getJwtToken(app, user)}`)
 		.expect(expectedStatus);
 	return response.body;
 }
@@ -57,7 +57,7 @@ async function createMerimeeNotice(
 		.field("notice", JSON.stringify(notice))
 		.set("Accept", "application/json")
 		.set("Content-Type", "multipart/form-data")
-		.set("Cookie", "token=" + (await getJwtToken(app, user)))
+		.set("Cookie", `token=${await getJwtToken(app, user)}`)
 		.expect(expectedStatus);
 	return response.body;
 }
@@ -68,7 +68,7 @@ async function updateNotice(user, expectedStatus = 200, notice = sampleNotice) {
 		.field("notice", JSON.stringify(notice))
 		.set("Accept", "application/json")
 		.set("Content-Type", "multipart/form-data")
-		.set("Cookie", "token=" + (await getJwtToken(app, user)))
+		.set("Cookie", `token=${await getJwtToken(app, user)}`)
 		.expect(expectedStatus);
 	return response.body;
 }
@@ -77,7 +77,7 @@ async function deleteNotice(user, expectedStatus = 200, notice = sampleNotice) {
 	const response = await request(app)
 		.delete(`/palissy/${notice.REF}`)
 		.set("Accept", "application/json")
-		.set("Cookie", "token=" + (await getJwtToken(app, user)))
+		.set("Cookie", `token=${await getJwtToken(app, user)}`)
 		.expect(expectedStatus);
 	return response.body;
 }
@@ -132,14 +132,14 @@ describe("POST /palissy", () => {
 		const res = await createNotice(await createUser(jocondeUser), 401);
 		expect(res.success).toBe(false);
 	});
-	test(`It should not create a notice twice with same REF`, async () => {
+	test("It should not create a notice twice with same REF", async () => {
 		const user = await createUser();
 		let res = await createNotice(user, 200);
 		expect(res.success).toBe(true);
 		res = await createNotice(user, 500);
 		expect(res.success).toBe(false);
 	});
-	test(`It should raise flags on errors`, async () => {
+	test("It should raise flags on errors", async () => {
 		// Create a valid merimee for reference.
 		let res = await createMerimeeNotice(await createUser(), 200);
 		// Create notice with errors.
@@ -181,13 +181,13 @@ describe("PUT /palissy/:ref", () => {
 });
 
 describe("DELETE /palissy/:ref", () => {
-	test(`It should delete an existing notice`, async () => {
+	test("It should delete an existing notice", async () => {
 		const user = await createUser();
 		let res = await createNotice(user, 200);
 		res = await deleteNotice(user, 200);
 		expect(res.success).toBe(true);
 	});
-	test(`It should return 404 on deleting a non-existent notice`, async () => {
+	test("It should return 404 on deleting a non-existent notice", async () => {
 		const res = await deleteNotice(await createUser(), 404);
 		expect(res.success).toBe(false);
 	});
@@ -206,7 +206,7 @@ describe("DELETE /palissy/:ref", () => {
 });
 
 describe("GET /palissy/:ref", () => {
-	test(`It should return a notice by for everyone`, async () => {
+	test("It should return a notice by for everyone", async () => {
 		await removeProducteurs();
 		await removeGroups();
 
@@ -217,7 +217,7 @@ describe("GET /palissy/:ref", () => {
 			.expect(200);
 		expect(res.body.TITR).toBe(sampleNotice.TITR);
 	});
-	test(`It should return 404 for non-existant notice`, async () => {
+	test("It should return 404 for non-existant notice", async () => {
 		const res = await request(app)
 			.get("/palissy/LOL")
 			.set("Accept", "application/json")

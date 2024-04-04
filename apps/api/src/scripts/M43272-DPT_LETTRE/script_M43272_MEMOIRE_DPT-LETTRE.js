@@ -14,7 +14,7 @@ notices.forEach((notice) => {
 		},
 	);
 	noticeCount--;
-	print(noticeCount + " notices restantes");
+	print(`${noticeCount} notices restantes`);
 });
 
 function getDepartement(v) {
