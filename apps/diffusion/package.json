@@ -33,7 +33,9 @@
     "react-switch": "^6.0.0",
     "react-viewer": "^3.2.2",
     "reactstrap": "^8.10.0",
+    "regenerator-runtime": "^0.14.1",
     "shave": "^2.5.4",
+    "styled-jsx": "^5.1.2",
     "unfetch": "^4.1.0",
     "universal-cookie": "^4.0.3",
     "validator": "^13.6.0",
@@ -45,12 +47,12 @@
     "@babel/preset-react": "^7.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "jest-environment-jsdom": "29.5.0",
     "jest": "^29.5.0",
+    "jest-environment-jsdom": "29.5.0",
     "jest-sonar": "^0.2.15"
   },
   "engines": {
-    "node": "^14.17.5"
+    "node": "16.14"
   },
   "scripts": {
     "dev": "node src/services/server.js",

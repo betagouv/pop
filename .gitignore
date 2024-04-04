@@ -1,3 +1,5 @@
 apps/api/src/controllers/search.js
 .DS_Store
 /data
+node_modules
+opensearch
