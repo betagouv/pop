@@ -191,12 +191,10 @@ router.post(
 		await determineProducteur(notice);
 		await transformBeforeCreate(notice);
 		if (!(await canCreateMnr(req.user, notice))) {
-			return res
-				.status(401)
-				.send({
-					success: false,
-					msg: "Autorisation nécessaire pour créer cette ressource.",
-				});
+			return res.status(401).send({
+				success: false,
+				msg: "Autorisation nécessaire pour créer cette ressource.",
+			});
 		}
 		try {
 			const oaiObj = {
@@ -274,12 +272,10 @@ router.delete(
 				});
 			}
 			if (!(await canDeleteMnr(req.user, doc))) {
-				return res
-					.status(401)
-					.send({
-						success: false,
-						msg: "Autorisation nécessaire pour supprimer cette ressource.",
-					});
+				return res.status(401).send({
+					success: false,
+					msg: "Autorisation nécessaire pour supprimer cette ressource.",
+				});
 			}
 			const promises = doc.VIDEO.map((f) => deleteFile(f, "mnr"));
 			promises.push(doc.remove());

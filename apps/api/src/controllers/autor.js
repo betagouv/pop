@@ -218,12 +218,10 @@ router.post(
 			await determineProducteur(e.notice);
 			await transformBeforeCreateAndUpdate(e.notice, null);
 			if (!canCreateAutor(req.user, e.notice)) {
-				return res
-					.status(401)
-					.send({
-						success: false,
-						msg: "Autorisation nécessaire pour créer cette ressource.",
-					});
+				return res.status(401).send({
+					success: false,
+					msg: "Autorisation nécessaire pour créer cette ressource.",
+				});
 			}
 			var obj = new Autor(e.notice);
 			var obj2 = new NoticesOAI(oaiObj);
@@ -262,12 +260,10 @@ router.delete(
 				});
 			}
 			if (!canDeleteAutor(req.user, doc)) {
-				return res
-					.status(401)
-					.send({
-						success: false,
-						msg: "Autorisation nécessaire pour supprimer cette ressource.",
-					});
+				return res.status(401).send({
+					success: false,
+					msg: "Autorisation nécessaire pour supprimer cette ressource.",
+				});
 			}
 			// remove all images and the document itself.
 			await Promise.all([doc.remove()]);

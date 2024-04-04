@@ -184,21 +184,17 @@ router.post(
 		const { email, pwd, pwd1, pwd2 } = req.body;
 
 		if (!pwd1) {
-			return res
-				.status(400)
-				.send({
-					success: false,
-					msg: `Le nouveau mot de passe ne peut être vide`,
-				});
+			return res.status(400).send({
+				success: false,
+				msg: `Le nouveau mot de passe ne peut être vide`,
+			});
 		}
 
 		if (pwd1 !== pwd2) {
-			return res
-				.status(400)
-				.send({
-					success: false,
-					msg: `Les mots de passe ne sont pas identiques`,
-				});
+			return res.status(400).send({
+				success: false,
+				msg: `Les mots de passe ne sont pas identiques`,
+			});
 		}
 
 		const user = await User.findOne({ email: email.toLowerCase() });

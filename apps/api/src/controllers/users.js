@@ -121,12 +121,10 @@ router.put(
 		// Actually save the user.
 		try {
 			await user.save();
-			return res
-				.status(200)
-				.send({
-					success: true,
-					msg: `La mise à jour a été effectuée avec succès`,
-				});
+			return res.status(200).send({
+				success: true,
+				msg: `La mise à jour a été effectuée avec succès`,
+			});
 		} catch (e) {
 			capture(e);
 			res.status(500).send({

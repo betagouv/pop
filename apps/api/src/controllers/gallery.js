@@ -80,12 +80,10 @@ router.post("/", limiter, upload.any(), async (req, res) => {
 		return res.status(200).send({ success: true, doc });
 	} catch (e) {
 		capture(e);
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Impossible de traiter les données.",
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Impossible de traiter les données.",
+		});
 	}
 });
 

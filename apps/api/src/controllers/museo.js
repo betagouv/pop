@@ -231,12 +231,10 @@ router.post(
 		const notice = JSON.parse(req.body.notice);
 
 		if (!notice || !notice.REF) {
-			return res
-				.status(400)
-				.json({
-					success: false,
-					msg: "Objet museo ou référence absente",
-				});
+			return res.status(400).json({
+				success: false,
+				msg: "Objet museo ou référence absente",
+			});
 		}
 
 		// Update IMPORT ID (this code is unclear…)
@@ -315,12 +313,10 @@ router.put(
 		const updateMode = req.body.updateMode;
 		const user = req.user;
 		if (!notice || !notice.REF) {
-			return res
-				.status(400)
-				.json({
-					success: false,
-					msg: "Objet museo ou référence absente",
-				});
+			return res.status(400).json({
+				success: false,
+				msg: "Objet museo ou référence absente",
+			});
 		}
 
 		// Check authorisation.
@@ -460,12 +456,10 @@ router.delete(
 				});
 			}
 			if (!(await canDeleteMuseo(req.user, doc))) {
-				return res
-					.status(401)
-					.send({
-						success: false,
-						msg: "Autorisation nécessaire pour supprimer cette ressource.",
-					});
+				return res.status(401).send({
+					success: false,
+					msg: "Autorisation nécessaire pour supprimer cette ressource.",
+				});
 			}
 			if (doc.PHOTO) {
 				deleteFile(doc.PHOTO, "museo");

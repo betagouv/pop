@@ -208,12 +208,10 @@ function createRecordAutor(elem, notice) {
 		}
 	} catch (err) {
 		capture(error);
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createRecordObject: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createRecordObject: " + error,
+		});
 	}
 }
 
@@ -821,12 +819,10 @@ function createRecordJoconde(elem, notice) {
 		}
 	} catch (err) {
 		capture(error);
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createRecordObject: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createRecordObject: " + error,
+		});
 	}
 }
 
@@ -1175,12 +1171,10 @@ function createRecordMemoire(elem, notice) {
 		}
 	} catch (err) {
 		capture(error);
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createRecordObject: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createRecordObject: " + error,
+		});
 	}
 }
 
@@ -1568,12 +1562,10 @@ function createRecordMerimee(elem, notice) {
 		}
 	} catch (err) {
 		capture(error);
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createRecordObject: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createRecordObject: " + error,
+		});
 	}
 }
 
@@ -1863,12 +1855,10 @@ function createRecordMnr(elem, notice) {
 		}
 	} catch (err) {
 		capture(error);
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createRecordObject: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createRecordObject: " + error,
+		});
 	}
 }
 
@@ -2014,12 +2004,10 @@ function createRecordMuseo(elem, notice) {
 		}
 	} catch (err) {
 		capture(error);
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createRecordObject: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createRecordObject: " + error,
+		});
 	}
 }
 
@@ -2498,12 +2486,10 @@ function createRecordPalissy(elem, notice) {
 		}
 	} catch (err) {
 		capture(error);
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createRecordObject: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createRecordObject: " + error,
+		});
 	}
 }
 module.exports = {

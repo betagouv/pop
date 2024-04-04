@@ -178,18 +178,19 @@ async function run() {
 										let lastId;
 										while (true) {
 											try {
-												const notices = await noticeClass
-													.find(
-														lastId
-															? {
-																	_id: {
-																		$gt: lastId,
-																	},
-																}
-															: {},
-													)
-													.sort({ _id: 1 })
-													.limit(opts.chunks);
+												const notices =
+													await noticeClass
+														.find(
+															lastId
+																? {
+																		_id: {
+																			$gt: lastId,
+																		},
+																	}
+																: {},
+														)
+														.sort({ _id: 1 })
+														.limit(opts.chunks);
 
 												if (!notices.length) {
 													ctx.error = false;

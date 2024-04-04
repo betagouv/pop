@@ -181,12 +181,12 @@ router.get(
   */
 		try {
 			const thesaurusId = req.query.id;
-			Thesaurus.remove({ arc: thesaurusId }, () => res
-					.status(200)
-					.send({
-						success: true,
-						msg: "Tous les thésaurus ont été supprimés.",
-					}));
+			Thesaurus.remove({ arc: thesaurusId }, () =>
+				res.status(200).send({
+					success: true,
+					msg: "Tous les thésaurus ont été supprimés.",
+				}),
+			);
 		} catch (e) {
 			capture(e);
 			res.status(500).send({ success: false, msg: JSON.stringify(e) });
@@ -234,12 +234,10 @@ router.get(
 		const thesaurusId = req.query.id;
 
 		if (!thesaurusId) {
-			return res
-				.status(400)
-				.send({
-					success: false,
-					msg: `L'identifiant "${thesaurusId}" est invalide`,
-				});
+			return res.status(400).send({
+				success: false,
+				msg: `L'identifiant "${thesaurusId}" est invalide`,
+			});
 		}
 
 		return axios

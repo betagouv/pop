@@ -530,12 +530,10 @@ router.post(
 			const notice = JSON.parse(req.body.notice);
 			await determineProducteur(notice);
 			if (!(await canCreatePalissy(req.user, notice))) {
-				return res
-					.status(401)
-					.send({
-						success: false,
-						msg: "Autorisation nécessaire pour créer cette ressource.",
-					});
+				return res.status(401).send({
+					success: false,
+					msg: "Autorisation nécessaire pour créer cette ressource.",
+				});
 			}
 			notice.MEMOIRE = await checkIfMemoireImageExist(notice);
 			await populateMerimeeREFO(notice);
@@ -633,12 +631,10 @@ router.delete(
 				});
 			}
 			if (!(await canDeletePalissy(req.user, doc))) {
-				return res
-					.status(401)
-					.send({
-						success: false,
-						msg: "Autorisation nécessaire pour supprimer cette ressource.",
-					});
+				return res.status(401).send({
+					success: false,
+					msg: "Autorisation nécessaire pour supprimer cette ressource.",
+				});
 			}
 			await doc.remove();
 			await docOai.remove();

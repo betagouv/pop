@@ -514,12 +514,10 @@ router.post(
 		notice.DMIS = notice.DMAJ = formattedNow();
 		await determineProducteur(notice);
 		if (!(await canCreateMemoire(req.user, notice))) {
-			return res
-				.status(401)
-				.send({
-					success: false,
-					msg: "Autorisation nécessaire pour créer cette ressource.",
-				});
+			return res.status(401).send({
+				success: false,
+				msg: "Autorisation nécessaire pour créer cette ressource.",
+			});
 		}
 		const promises = [];
 
@@ -626,12 +624,10 @@ router.delete(
 				});
 			}
 			if (!(await canDeleteMemoire(req.user, doc))) {
-				return res
-					.status(401)
-					.send({
-						success: false,
-						msg: "Autorisation nécessaire pour supprimer cette ressource.",
-					});
+				return res.status(401).send({
+					success: false,
+					msg: "Autorisation nécessaire pour supprimer cette ressource.",
+				});
 			}
 			// Empty LBASE before updating links then remove documents and remove image.
 			doc.LBASE = [];

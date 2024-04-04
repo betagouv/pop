@@ -244,12 +244,10 @@ router.post(
 			const notice = JSON.parse(req.body.notice);
 			await determineProducteur(notice);
 			if (!(await canCreateJoconde(req.user, notice))) {
-				return res
-					.status(401)
-					.send({
-						success: false,
-						msg: "Autorisation nécessaire pour créer cette ressource.",
-					});
+				return res.status(401).send({
+					success: false,
+					msg: "Autorisation nécessaire pour créer cette ressource.",
+				});
 			}
 			const promises = [];
 
@@ -349,12 +347,10 @@ router.delete(
 				});
 			}
 			if (!(await canDeleteJoconde(req.user, doc))) {
-				return res
-					.status(401)
-					.send({
-						success: false,
-						msg: "Autorisation nécessaire pour supprimer cette ressource.",
-					});
+				return res.status(401).send({
+					success: false,
+					msg: "Autorisation nécessaire pour supprimer cette ressource.",
+				});
 			}
 			// remove all images and the document itself.
 			await Promise.all([

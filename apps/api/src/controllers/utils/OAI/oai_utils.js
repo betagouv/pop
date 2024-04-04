@@ -75,12 +75,10 @@ function getBaseName(baseName) {
 				});
 		}
 	} catch (error) {
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at getBaseCompletName: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at getBaseCompletName: " + error,
+		});
 	}
 }
 
@@ -114,12 +112,10 @@ function getBaseCompletName(baseName) {
 		}
 	} catch (error) {
 		capture(error);
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at getBaseCompletName: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at getBaseCompletName: " + error,
+		});
 	}
 }
 
@@ -685,12 +681,10 @@ async function createGetRecordXml(queryContent) {
 		identifier.ListRecords.push(elem);
 		return identifier;
 	} catch (err) {
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createGetRecordXml: " + error,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createGetRecordXml: " + error,
+		});
 	}
 }
 
@@ -822,12 +816,10 @@ async function createListRecordsXml(queryContent) {
 		}
 		return identifier;
 	} catch (err) {
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createListRecordXml: " + err,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createListRecordXml: " + err,
+		});
 	}
 }
 
@@ -920,12 +912,10 @@ async function createXmlFileListIdentifiers(queryContent) {
 		resp["OAI-PMH"].push(await createListIdentifiersXml(queryContent));
 		return xml(resp, { declaration: true });
 	} catch (err) {
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createListRecordsXml: " + err,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createListRecordsXml: " + err,
+		});
 	}
 }
 
@@ -956,12 +946,10 @@ async function createXmlFileListRecords(queryContent) {
 		resp["OAI-PMH"].push(await createListRecordsXml(queryContent));
 		return xml(resp, { declaration: true });
 	} catch (err) {
-		return res
-			.status(500)
-			.send({
-				success: false,
-				msg: "Error at createListRecordsXml: " + err,
-			});
+		return res.status(500).send({
+			success: false,
+			msg: "Error at createListRecordsXml: " + err,
+		});
 	}
 }
 
