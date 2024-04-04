@@ -11,7 +11,7 @@ const DeleteHistoriqueSchema = new Schema({
 });
 
 DeleteHistoriqueSchema.method("toJSON", function () {
-	var deleteHistorique = this.toObject();
+	const deleteHistorique = this.toObject();
 	return deleteHistorique;
 });
 

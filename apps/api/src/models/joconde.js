@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
-var mongoosePaginate = require("mongoose-paginate");
-var mongoosastic = require("../mongoosastic.js");
-var getElasticInstance = require("../elasticsearch");
+const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
+const mongoosastic = require("../mongoosastic.js");
+const getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema(
 	{

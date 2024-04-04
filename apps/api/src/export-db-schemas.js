@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const modelsPath = "./models";
 const markdownPath = "../doc";
 const excludeModels = [
@@ -34,37 +34,34 @@ const models = fs
 				deprecated: v.options.documentation
 					? v.options.documentation.deprecated
 					: "",
-				description:
-					v.options.documentation &&
-					v.options.documentation.description
-						? v.options.documentation.description
-						: "",
-				label:
-					v.options.documentation && v.options.documentation.label
-						? v.options.documentation.label
-						: "",
+				description: v.options.documentation?.description
+					? v.options.documentation.description
+					: "",
+				label: v.options.documentation?.label
+					? v.options.documentation.label
+					: "",
 			};
 			//   thesaurus: v.options.documentation ? v.options.documentation.thesaurus : "",
 			//   label_mh: v.options.documentation ? v.options.documentation.label_mh || "" : "",
 			//   listeAutorite: v.options.documentation ? v.options.documentation.listeAutorite || "" : "",
 			//   idthesaurus: v.options.documentation ? v.options.documentation.idthesaurus || "" : "",
 
-			if (documentation && documentation.thesaurus) {
+			if (documentation?.thesaurus) {
 				obj.thesaurus = documentation.thesaurus;
 			}
-			if (documentation && documentation.label_mh) {
+			if (documentation?.label_mh) {
 				obj.label_mh = documentation.label_mh;
 			}
-			if (documentation && documentation.listeAutorite) {
+			if (documentation?.listeAutorite) {
 				obj.listeAutorite = documentation.listeAutorite;
 			}
-			if (documentation && documentation.idthesaurus) {
+			if (documentation?.idthesaurus) {
 				obj.idthesaurus = documentation.idthesaurus;
 			}
-			if (documentation && documentation.label_inid) {
+			if (documentation?.label_inid) {
 				obj.label_inid = documentation.label_inid;
 			}
-			if (documentation && documentation.label_inicm) {
+			if (documentation?.label_inicm) {
 				obj.label_inicm = documentation.label_inicm;
 			}
 
@@ -74,7 +71,7 @@ const models = fs
 
 //write ReadMe
 fs.writeFileSync(
-	path.join(__dirname, markdownPath + "/README.md"),
+	path.join(__dirname, `${markdownPath}/README.md`),
 	`# POP SCHEMAS\n 
   ${models
 		.map(
@@ -119,11 +116,11 @@ for (let i = 0; i < models.length; i++) {
 			];
 			return [
 				`### ${path.name}`,
-				path.description + "\n\n",
+				`${path.description}\n\n`,
 				path.thesaurus ? `Thésaurus : ${path.thesaurus} \n\n` : "",
 				"",
-				`|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|`,
-				`|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|`,
+				"|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|",
+				"|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|",
 				`|${elements.join("|")}|`,
 				"",
 			].join("\n");

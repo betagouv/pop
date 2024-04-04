@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-var mongoosastic = require("../mongoosastic.js");
-var getElasticInstance = require("../elasticsearch");
+const mongoosastic = require("../mongoosastic.js");
+const getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema(
 	{

@@ -35,9 +35,9 @@ UserSchema.pre("save", function (next) {
 });
 
 UserSchema.method("toJSON", function () {
-	var user = this.toObject();
-	delete user.password;
-	delete user.__v;
+	const user = this.toObject();
+	user.password = undefined;
+	user.__v = undefined;
 	return user;
 });
 

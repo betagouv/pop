@@ -8,19 +8,20 @@ beforeEach(() => {
 	removeAllUsers();
 });
 
-async function updatePassword(user, expectedStatus = 200, body) {
+async function updatePassword(user, expectedStatus, body) {
+	const token = await getJwtToken(app, user);
 	const response = await request(app)
-		.post(`/auth/updatePassword`)
+		.post("/auth/updatePassword")
 		.set("Accept", "*/*")
 		.set("Content-Type", "application/json")
-		.set("Cookie", "token=" + (await getJwtToken(app, user)))
+		.set("Cookie", `token=${token}`)
 		.send(JSON.stringify(body))
 		.expect(expectedStatus);
 	return response.body;
 }
 
 describe("POST /auth/updatePassword", () => {
-	test(`Mise à jour refusée, mot de passe vide`, async () => {
+	test("Mise à jour refusée, mot de passe vide", async () => {
 		const user = await createUser();
 		const res = await updatePassword(user, 400, {
 			email: user.email,
@@ -31,7 +32,7 @@ describe("POST /auth/updatePassword", () => {
 		expect(res.success).toBe(false);
 	});
 
-	test(`Mise à jour refusée, mot de passe non conforme (inférieur à 12 caractères)`, async () => {
+	test("Mise à jour refusée, mot de passe non conforme (inférieur à 12 caractères)", async () => {
 		const user = await createUser();
 		const res = await updatePassword(user, 401, {
 			email: user.email,
@@ -42,7 +43,7 @@ describe("POST /auth/updatePassword", () => {
 		expect(res.success).toBe(false);
 	});
 
-	test(`Mise à jour refusée, mot de passe non conforme (sans chiffre)`, async () => {
+	test("Mise à jour refusée, mot de passe non conforme (sans chiffre)", async () => {
 		const user = await createUser();
 		const res = await updatePassword(user, 401, {
 			email: user.email,
@@ -53,7 +54,7 @@ describe("POST /auth/updatePassword", () => {
 		expect(res.success).toBe(false);
 	});
 
-	test(`Mise à jour refusée, mot de passe non conforme (sans majuscule)`, async () => {
+	test("Mise à jour refusée, mot de passe non conforme (sans majuscule)", async () => {
 		const user = await createUser();
 		const res = await updatePassword(user, 401, {
 			email: user.email,
@@ -64,7 +65,7 @@ describe("POST /auth/updatePassword", () => {
 		expect(res.success).toBe(false);
 	});
 
-	test(`Mise à jour refusée, mot de passe non conforme (sans caractères spéciaux)`, async () => {
+	test("Mise à jour refusée, mot de passe non conforme (sans caractères spéciaux)", async () => {
 		const user = await createUser();
 		const res = await updatePassword(user, 401, {
 			email: user.email,
@@ -75,7 +76,7 @@ describe("POST /auth/updatePassword", () => {
 		expect(res.success).toBe(false);
 	});
 
-	test(`Mise à jour autorisée`, async () => {
+	test("Mise à jour autorisée", async () => {
 		const user = await createUser();
 		const res = await updatePassword(user, 200, {
 			email: user.email,

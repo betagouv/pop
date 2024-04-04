@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-var mongoosastic = require("../mongoosastic.js");
+const mongoosastic = require("../mongoosastic.js");
 
 const getElasticInstance = require("../elasticsearch");
 

@@ -8,7 +8,7 @@ const ProducteurSchema = new Schema({
 });
 
 ProducteurSchema.method("toJSON", function () {
-	var producteur = this.toObject();
+	const producteur = this.toObject();
 	return producteur;
 });
 

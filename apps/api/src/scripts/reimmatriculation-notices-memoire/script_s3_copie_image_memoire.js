@@ -1,7 +1,7 @@
 require("dotenv").config();
 const AWS = require("aws-sdk");
 const fs = require("fs");
-const path = require("path");
+const path = require("node:path");
 const csv = require("csv");
 const filenamify = require("filenamify");
 const { async } = require("rxjs/internal/scheduler/async");

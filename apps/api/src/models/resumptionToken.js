@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-var mongoosePaginate = require("mongoose-paginate");
+const mongoosePaginate = require("mongoose-paginate");
 
 const Schema = new mongoose.Schema(
 	{
@@ -80,7 +80,7 @@ const Schema = new mongoose.Schema(
 
 Schema.plugin(mongoosePaginate);
 Schema.method("toJSON", function () {
-	var resumptionTokenOAI = this.toObject();
+	const resumptionTokenOAI = this.toObject();
 	return resumptionTokenOAI;
 });
 

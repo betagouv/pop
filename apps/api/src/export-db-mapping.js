@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const modelsPath = "./models";
 const mappingProductionPath = "../../production/src/services/mapping.js";
 const mappingDiffusionPath = "../../diffusion/src/services/mapping.js";
@@ -27,19 +27,19 @@ const models = fs
 					: "",
 				thesaurus: documentation ? documentation.thesaurus || "" : "",
 			};
-			if (documentation && documentation.label_mh) {
+			if (documentation?.label_mh) {
 				obj.label_mh = documentation.label_mh;
 			}
-			if (documentation && documentation.listeAutorite) {
+			if (documentation?.listeAutorite) {
 				obj.listeAutorite = documentation.listeAutorite;
 			}
-			if (documentation && documentation.idthesaurus) {
+			if (documentation?.idthesaurus) {
 				obj.idthesaurus = documentation.idthesaurus;
 			}
-			if (documentation && documentation.label_inid) {
+			if (documentation?.label_inid) {
 				obj.label_inid = documentation.label_inid;
 			}
-			if (documentation && documentation.label_inicm) {
+			if (documentation?.label_inicm) {
 				obj.label_inicm = documentation.label_inicm;
 			}
 			return obj;
@@ -69,7 +69,7 @@ function generateMapping(models) {
 				obj[model.paths[i].path] = JSON.parse(
 					JSON.stringify(model.paths[i]),
 				);
-				delete obj[model.paths[i].path].path;
+				obj[model.paths[i].path].path = undefined;
 			}
 			return `const ${model.name} = ${JSON.stringify(obj)}`;
 		})

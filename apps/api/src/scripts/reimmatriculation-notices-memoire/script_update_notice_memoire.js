@@ -2,7 +2,7 @@ require("dotenv").config();
 require("../../mongo");
 const fs = require("fs");
 const Memoire = require("../../models/memoire");
-const path = require("path");
+const path = require("node:path");
 const csv = require("csv");
 const { async } = require("rxjs/internal/scheduler/async");
 const { pathFileCsv, nameFileLog } = require("./utils");
