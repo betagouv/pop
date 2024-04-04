@@ -13,7 +13,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json({ limit: "200kb" }));
 
 router.get("/:id", async (req, res) => {
-  /* 	
+	/* 	
       #swagger.tags = ['Gallery']
       #swagger.path = '/gallery/{id}'
       #swagger.description = 'Retourne les informations de la notice gallery (permaliens MNR)' 
@@ -37,47 +37,56 @@ router.get("/:id", async (req, res) => {
       }
   */
 
-  let doc;
-  try {
-    doc = await Gallery.findById(req.params.id);
-  } catch (e) {}
-  return doc
-    ? res.status(200).send(doc)
-    : res.status(404).send({ success: false, msg: "Document introuvable" });
+	let doc;
+	try {
+		doc = await Gallery.findById(req.params.id);
+	} catch (e) {}
+	return doc
+		? res.status(200).send(doc)
+		: res.status(404).send({ success: false, msg: "Document introuvable" });
 });
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 30 // limit each IP to 30 requests per windowMs
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 30, // limit each IP to 30 requests per windowMs
 });
 
 router.post("/", limiter, upload.any(), async (req, res) => {
-   /* 	
+	/* 	
       #swagger.tags = ['Gallery']
       #swagger.path = '/gallery'
   */
-  try {
-    const data = JSON.parse(req.body.gallery);
-    if (!data) {
-      return res.status(400).send({ success: false, msg: "Données manquantes" });
-    }
-    // Create and save the gallery with its data.
-    const gallery = new Gallery(data);
-    const doc = await gallery.save();
+	try {
+		const data = JSON.parse(req.body.gallery);
+		if (!data) {
+			return res
+				.status(400)
+				.send({ success: false, msg: "Données manquantes" });
+		}
+		// Create and save the gallery with its data.
+		const gallery = new Gallery(data);
+		const doc = await gallery.save();
 
-    // Save the associated image if present.
-    if (req.files && req.files.length && req.files[0].originalname) {
-      const imagePath = `gallery/${filenamify(doc._id)}/${filenamify(req.files[0].originalname)}`;
-      await uploadFile(imagePath, req.files[0]);
-      doc.image = imagePath;
-      await doc.save();
-    }
+		// Save the associated image if present.
+		if (req.files && req.files.length && req.files[0].originalname) {
+			const imagePath = `gallery/${filenamify(doc._id)}/${filenamify(
+				req.files[0].originalname,
+			)}`;
+			await uploadFile(imagePath, req.files[0]);
+			doc.image = imagePath;
+			await doc.save();
+		}
 
-    return res.status(200).send({ success: true, doc });
-  } catch (e) {
-    capture(e);
-    return res.status(500).send({ success: false, msg: "Impossible de traiter les données." });
-  }
+		return res.status(200).send({ success: true, doc });
+	} catch (e) {
+		capture(e);
+		return res
+			.status(500)
+			.send({
+				success: false,
+				msg: "Impossible de traiter les données.",
+			});
+	}
 });
 
 module.exports = router;

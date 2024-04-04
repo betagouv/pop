@@ -3,7 +3,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const compression = require('compression');
+const compression = require("compression");
 const Sentry = require("@sentry/node");
 const config = require("./config");
 require("./passport")(passport);
@@ -11,14 +11,14 @@ require("./mongo");
 
 const app = express();
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger/swagger_ui.json');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger/swagger_ui.json");
 
 app.enable("trust proxy");
 
 app.use(Sentry.Handlers.requestHandler());
 
-app.use(compression())
+app.use(compression());
 app.use(bodyParser.json({ limit: "50mb" }));
 
 // Parse the ndjson as text for ES proxy
@@ -28,14 +28,19 @@ app.use(bodyParser.text({ type: "application/x-ndjson" }));
 app.use(helmet());
 
 // Enable CORS - Cross Origin Resource Sharing
-app.use(cors({ origin: config.ovh ? [/cloud\.culture\.fr$/, /gouv\.fr$/] : true, credentials: true }));
+app.use(
+	cors({
+		origin: config.ovh ? [/cloud\.culture\.fr$/, /gouv\.fr$/] : true,
+		credentials: true,
+	}),
+);
 
 app.use(passport.initialize());
 
-app.disable('x-powered-by');
+app.disable("x-powered-by");
 
 app.get("/", (_req, res) => {
-  res.send("POP API listening.");
+	res.send("POP API listening.");
 });
 
 app.use("/auth", require("./controllers/auth"));
@@ -73,22 +78,26 @@ app.use("/oai", require("./controllers/oai"));
 // Swagger DOC
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Swagger DOC
-app.use('/api-docs', function(req, res, next) {
+app.use(
+	"/api-docs",
+	function (req, res, next) {
+		res.setHeader(
+			"Content-Security-Policy",
+			//   "default-src 'self'; font-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; style-src-attr 'self';  frame-src 'self';"
+			"default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' 'unsafe-inline';",
+		);
+		//swaggerDocument.host = req.get('host');
+		//req.swaggerDoc = swaggerDocument;
+		next();
+	},
+	swaggerUi.serve,
+	swaggerUi.setup(swaggerDocument),
+);
 
-  res.setHeader(
-    'Content-Security-Policy',
-    //   "default-src 'self'; font-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; style-src-attr 'self';  frame-src 'self';"
-    "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' 'unsafe-inline';"
-  );
-  //swaggerDocument.host = req.get('host');
-  //req.swaggerDoc = swaggerDocument;
-  next();
-}, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-app.use('/mapbox', require("./controllers/mapbox"));
+app.use("/mapbox", require("./controllers/mapbox"));
 
 // Maintenance
-app.use('/maintenance', require("./controllers/maintenance"));
+app.use("/maintenance", require("./controllers/maintenance"));
 
 app.use(Sentry.Handlers.errorHandler());
 

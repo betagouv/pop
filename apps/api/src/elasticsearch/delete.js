@@ -9,38 +9,42 @@ const chalk = require("chalk");
 // Delete one index in ES (i.e. an obsolete indice)
 // Usage: `node delete.js mnr1234`
 async function run() {
-  program.version("0.1.0").parse(process.argv);
+	program.version("0.1.0").parse(process.argv);
 
-  if (!program.args[0]) {
-    console.error(chalk.white.bgRed.bold("You need to add coma separated indices as an argument"));
-    return;
-  }
-  const indices = program.args[0].split(",");
+	if (!program.args[0]) {
+		console.error(
+			chalk.white.bgRed.bold(
+				"You need to add coma separated indices as an argument",
+			),
+		);
+		return;
+	}
+	const indices = program.args[0].split(",");
 
-  const answers = await inquirer.prompt({
-    type: "confirm",
-    name: "force",
-    message: "Do you really want to delete: " + indices.join(", ")
-  });
-  if (!answers.force) {
-    return;
-  }
+	const answers = await inquirer.prompt({
+		type: "confirm",
+		name: "force",
+		message: "Do you really want to delete: " + indices.join(", "),
+	});
+	if (!answers.force) {
+		return;
+	}
 
-  const tasks = new Listr([pingElasticsearchTask(es)]);
+	const tasks = new Listr([pingElasticsearchTask(es)]);
 
-  indices.map(async index => {
-    tasks.add({
-      title: `Delete ${index}`,
-      task: async () => {
-        await es.indices.delete({ index });
-      }
-    });
-  });
+	indices.map(async (index) => {
+		tasks.add({
+			title: `Delete ${index}`,
+			task: async () => {
+				await es.indices.delete({ index });
+			},
+		});
+	});
 
-  try {
-    await tasks.run();
-  } catch (e) {
-    console.error(e);
-  }
+	try {
+		await tasks.run();
+	} catch (e) {
+		console.error(e);
+	}
 }
 run();

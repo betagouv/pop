@@ -1,20 +1,18 @@
 var notices = db.museo.find().noCursorTimeout();
 var noticeCount = db.museo.count();
-notices.forEach(function( aRow ){
+notices.forEach(function (aRow) {
 	var ref = aRow.REF;
-	
+
 	//Update field location to POP_COORDONNEES
 	db.museo.update(
-		{ REF : ref},
+		{ REF: ref },
 		{
-			$rename : {
-				'location' : 'POP_COORDONNEES'
-				}
-			
-		}
-	)
-	
+			$rename: {
+				location: "POP_COORDONNEES",
+			},
+		},
+	);
+
 	noticeCount--;
 	print("ref = " + ref);
-	
-})
+});
