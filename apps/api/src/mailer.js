@@ -19,7 +19,7 @@ class Mailer {
 			});
 
 			// setup email data with unicode symbols
-			let mailOptions = {
+			const mailOptions = {
 				from: '"Support POP" <pop@culture.gouv.fr>', // sender address
 				to, // list of receivers
 				subject, // Subject line

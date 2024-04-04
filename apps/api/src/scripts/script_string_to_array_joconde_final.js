@@ -4,7 +4,7 @@ var noticeCount = db.joconde.count();
 var word = "";
 var check = 0;
 
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	//Transformation string AUTR, DEPO, LIEUX, REPR, WWW to array
 	//Procédure pour AUTR
@@ -14,7 +14,7 @@ notices.forEach(function (aRow) {
 	var typeAutr = typeof autr;
 	if (typeAutr == "string") {
 		autr = Array.from(autr);
-		autr.forEach(function (item) {
+		autr.forEach((item) => {
 			if (item == "(") {
 				check = 1;
 			}
@@ -47,7 +47,7 @@ notices.forEach(function (aRow) {
 			word = "";
 		}
 
-		arrayAutr.forEach(function (item) {
+		arrayAutr.forEach((item) => {
 			var pos = arrayAutr.indexOf(item);
 			if (item == "") {
 				arrayAutr.splice(pos, 1);
@@ -73,7 +73,7 @@ notices.forEach(function (aRow) {
 	var typeDepo = typeof depo;
 	if (typeDepo == "string") {
 		depo = Array.from(depo);
-		depo.forEach(function (item) {
+		depo.forEach((item) => {
 			if (item == "(") {
 				check = 1;
 			}
@@ -106,7 +106,7 @@ notices.forEach(function (aRow) {
 			word = "";
 		}
 
-		arrayDepo.forEach(function (item) {
+		arrayDepo.forEach((item) => {
 			var pos = arrayDepo.indexOf(item);
 			if (item == "") {
 				arrayDepo.splice(pos, 1);
@@ -132,7 +132,7 @@ notices.forEach(function (aRow) {
 	var typeLieux = typeof lieux;
 	if (typeLieux == "string") {
 		lieux = Array.from(lieux);
-		lieux.forEach(function (item) {
+		lieux.forEach((item) => {
 			if (item == "(") {
 				check = 1;
 			}
@@ -165,7 +165,7 @@ notices.forEach(function (aRow) {
 			word = "";
 		}
 
-		arrayLieux.forEach(function (item) {
+		arrayLieux.forEach((item) => {
 			var pos = arrayLieux.indexOf(item);
 			if (item == "") {
 				arrayLieux.splice(pos, 1);
@@ -191,7 +191,7 @@ notices.forEach(function (aRow) {
 	var typeRepr = typeof repr;
 	if (typeRepr == "string") {
 		repr = Array.from(repr);
-		repr.forEach(function (item) {
+		repr.forEach((item) => {
 			if (item == "(") {
 				check = 1;
 			}
@@ -224,7 +224,7 @@ notices.forEach(function (aRow) {
 			word = "";
 		}
 
-		arrayRepr.forEach(function (item) {
+		arrayRepr.forEach((item) => {
 			var pos = arrayRepr.indexOf(item);
 			if (item == "") {
 				arrayRepr.splice(pos, 1);
@@ -250,7 +250,7 @@ notices.forEach(function (aRow) {
 	var typeWww = typeof www;
 	if (typeWww == "string") {
 		www = Array.from(www);
-		www.forEach(function (item) {
+		www.forEach((item) => {
 			if (item == "(") {
 				check = 1;
 			}
@@ -283,7 +283,7 @@ notices.forEach(function (aRow) {
 			word = "";
 		}
 
-		arrayWww.forEach(function (item) {
+		arrayWww.forEach((item) => {
 			var pos = arrayWww.indexOf(item);
 			if (item == "") {
 				arrayWww.splice(pos, 1);

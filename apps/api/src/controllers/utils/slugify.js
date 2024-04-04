@@ -18,7 +18,7 @@ function splitFilename(filename) {
 }
 
 function slugifyFilename(path) {
-	let { name, extension } = splitFilename(path);
+	const { name, extension } = splitFilename(path);
 
 	if (extension !== "") {
 		return `${slugify(name)}.${extension}`;

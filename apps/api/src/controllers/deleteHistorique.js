@@ -7,7 +7,7 @@ const mailer = require("../mailer");
 const { capture } = require("./../sentry.js");
 require("../passport")(passport);
 const DeleteHistorique = require("../models/deleteHistorique");
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -36,14 +36,14 @@ router.get("/", async (req, res) => {
     }
   */
 
-	let query = {};
+	const query = {};
 	try {
 		let deleteHistorique;
 
-		if (req.query.limit && parseInt(req.query.limit)) {
+		if (req.query.limit && Number.parseInt(req.query.limit)) {
 			deleteHistorique = await DeleteHistorique.find(query)
 				.sort({ DATE: -1 })
-				.limit(parseInt(req.query.limit));
+				.limit(Number.parseInt(req.query.limit));
 		} else {
 			deleteHistorique = await DeleteHistorique.find(query);
 		}

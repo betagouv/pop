@@ -110,13 +110,13 @@ noticeCount = notices.count();
 print("DEBUT DE TRAITEMENT DPT");
 print(noticeCount + " NOTICES");
 
-let bulk = db.memoire.initializeUnorderedBulkOp();
+const bulk = db.memoire.initializeUnorderedBulkOp();
 
 notices.forEach((notice) => {
 	const regexDPT = new RegExp(/[a-zA-Z]/);
 	let update = false;
 
-	let arrayDpt = notice.DPT.map((element) => {
+	const arrayDpt = notice.DPT.map((element) => {
 		element = String(element).replace("’", "'");
 		if (regexDPT.test(element)) {
 			for (const [key, value] of Object.entries(objDpt)) {
@@ -130,7 +130,7 @@ notices.forEach((notice) => {
 	});
 
 	if (update) {
-		let objSet = {
+		const objSet = {
 			DPT: arrayDpt,
 		};
 		// Vérification de DPT_LETTRE, si vide, création des valeurs à partir de DPT
@@ -159,13 +159,13 @@ noticeCount = notices.count();
 print("DEBUT DE TRAITEMENT DPT_LETTRE");
 print(noticeCount + " NOTICES");
 
-let bulk2 = db.memoire.initializeUnorderedBulkOp();
+const bulk2 = db.memoire.initializeUnorderedBulkOp();
 
 notices.forEach((notice) => {
 	const regexDPT = new RegExp(/[0-9]/);
 	let update = false;
 
-	let arrayDptLettre = notice.DPT_LETTRE.map((element) => {
+	const arrayDptLettre = notice.DPT_LETTRE.map((element) => {
 		if (regexDPT.test(element)) {
 			for (const [key, value] of Object.entries(objDpt)) {
 				if (key === element) {

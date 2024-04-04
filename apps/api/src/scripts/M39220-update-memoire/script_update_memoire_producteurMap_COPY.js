@@ -1,4 +1,4 @@
-let notices = db.memoire
+const notices = db.memoire
 	.find({
 		PRODUCTEUR: "MAP",
 		$and: [{ COPY: { $gt: "" } }, { COPY: { $not: { $regex: "©" } } }],

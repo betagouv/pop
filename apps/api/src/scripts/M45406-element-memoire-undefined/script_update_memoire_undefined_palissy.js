@@ -6,7 +6,7 @@ nbreNotices = notices.count();
 print(nbreNotices);
 
 notices.forEach((notice) => {
-	let arrayMemoire = notice.MEMOIRE.filter(
+	const arrayMemoire = notice.MEMOIRE.filter(
 		(element) => typeof element !== "undefined",
 	);
 

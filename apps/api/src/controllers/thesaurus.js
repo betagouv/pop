@@ -23,9 +23,9 @@ router.get(
       #swagger.path = '/thesaurus/search'
       #swagger.description = 'Retourne les informations de la notice Thesaurus en fonction des paramètres' 
   */
-		let id = req.query.id;
-		let value = escapeRegExp(req.query.value);
-		let q = Thesaurus.find({
+		const id = req.query.id;
+		const value = escapeRegExp(req.query.value);
+		const q = Thesaurus.find({
 			arc: id,
 			value: { $regex: new RegExp("^" + value) },
 		}).limit(10);
@@ -44,9 +44,9 @@ router.get(
       #swagger.path = '/thesaurus/autocompleteThesaurus'
       #swagger.description = 'Retourne les thésaurus en fonction de son identifiant et correspondant à la valeur (autocompletion)' 
   */
-		let id = req.query.id;
-		let value = escapeRegExp(req.query.value);
-		let q = Thesaurus.find({
+		const id = req.query.id;
+		const value = escapeRegExp(req.query.value);
+		const q = Thesaurus.find({
 			idThesaurus: id,
 			value: { $regex: new RegExp("^" + value) },
 		});
@@ -74,8 +74,8 @@ router.get(
       #swagger.path = '/thesaurus/validate'
       #swagger.description = 'Retourne les thésaurus en fonction de son identifiant et correspondant à la valeur' 
   */
-		let id = req.query.id;
-		let value = escapeRegExp(req.query.value);
+		const id = req.query.id;
+		const value = escapeRegExp(req.query.value);
 		const query = {
 			idThesaurus: id,
 			$text: {
@@ -181,14 +181,12 @@ router.get(
   */
 		try {
 			const thesaurusId = req.query.id;
-			Thesaurus.remove({ arc: thesaurusId }, function () {
-				return res
+			Thesaurus.remove({ arc: thesaurusId }, () => res
 					.status(200)
 					.send({
 						success: true,
 						msg: "Tous les thésaurus ont été supprimés.",
-					});
-			});
+					}));
 		} catch (e) {
 			capture(e);
 			res.status(500).send({ success: false, msg: JSON.stringify(e) });
@@ -358,7 +356,7 @@ router.post("/refreshThesaurus", async (req, res) => {
 async function updateThesaurus(idThesaurus, respData) {
 	const data = respData;
 
-	Thesaurus.deleteMany({ idThesaurus: idThesaurus }, function () {
+	Thesaurus.deleteMany({ idThesaurus: idThesaurus }, () => {
 		createThesaurus(idThesaurus, data);
 	});
 }
@@ -426,7 +424,7 @@ async function createThesaurus(idThesaurus, parseData) {
 	parseData.forEach((el, i) => {
 		if (parseData[i][propAltLabel]) {
 			parseData[i][propAltLabel].forEach((element) => {
-				let theso = new Thesaurus({
+				const theso = new Thesaurus({
 					idThesaurus: idThesaurus,
 					arc: parseData[i][propId],
 					value: element["@value"],
@@ -439,7 +437,7 @@ async function createThesaurus(idThesaurus, parseData) {
 
 		if (parseData[i][propPrefLabel]) {
 			parseData[i][propPrefLabel].forEach((element) => {
-				let theso = new Thesaurus({
+				const theso = new Thesaurus({
 					idThesaurus: idThesaurus,
 					arc: parseData[i][propId],
 					value: element["@value"],
@@ -584,7 +582,7 @@ function getTopConceptsByThesaurusId(thesaurusId) {
 }
 
 function post(req, service) {
-	let envelopedBody = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ginco.mcc.fr/"> 
+	const envelopedBody = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ginco.mcc.fr/"> 
     <soapenv:Header/> 
     <soapenv:Body>${req}</soapenv:Body> 
     </soapenv:Envelope>`;

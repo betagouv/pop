@@ -51,7 +51,7 @@ for (let i = 0; i < models.length; i++) {
 
 	for (let j = 0; j < model.paths.length; j++) {
 		const line = [];
-		for (let key in model.paths[j]) {
+		for (const key in model.paths[j]) {
 			line.push(`"${model.paths[j][key]}"`);
 		}
 		arr.push(line.join(","));

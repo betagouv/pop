@@ -32,7 +32,7 @@ function generatePermaliens() {
 
 		// Construction des paramètres
 		notices.forEach(async (notice, index) => {
-			let params = {
+			const params = {
 				params: {
 					base: "mnr",
 					mode: "advanced",
@@ -40,7 +40,7 @@ function generatePermaliens() {
 					view: "list",
 				},
 			};
-			let gallery = new Gallery(params);
+			const gallery = new Gallery(params);
 			await gallery.save().then((doc) => {
 				i++;
 

@@ -25,16 +25,16 @@ const {
 	createRecordMuseo,
 	createRecordPalissy,
 } = require("./oai_records");
-let xml = require("xml");
-let moment = require("moment-timezone");
+const xml = require("xml");
+const moment = require("moment-timezone");
 
 /**
  * setInterval permet de supprimer les tokens expiré
  * Bloqué si on fait les tests
  */
 if (process.env.NODE_ENV !== "test") {
-	setInterval(async function () {
-		let listTokens = await resumptionTokenOAI.find();
+	setInterval(async () => {
+		const listTokens = await resumptionTokenOAI.find();
 		listTokens.map(async (token) => {
 			if (
 				moment(token.DEXP).format("YYYY-MM-DDTHH:mm:ss") <
@@ -130,7 +130,7 @@ function getBaseCompletName(baseName) {
  * @param {*} notice
  */
 function createRecord(elem, notice) {
-	let base = getBaseCompletName(notice.BASE).toLowerCase();
+	const base = getBaseCompletName(notice.BASE).toLowerCase();
 	switch (base) {
 		case "autor":
 			createRecordAutor(elem, notice);
@@ -170,8 +170,8 @@ function createRecord(elem, notice) {
  */
 async function createMongoGetRecordQuery(queryContent) {
 	try {
-		let identifier = queryContent.identifier.split(":");
-		let base = getBaseName(identifier[1]);
+		const identifier = queryContent.identifier.split(":");
+		const base = getBaseName(identifier[1]);
 		try {
 			return await base.find({ REF: identifier[2] });
 		} catch (error) {
@@ -566,7 +566,7 @@ async function createListIdentifiersXml(queryContent) {
 		token = token[0];
 		ListSize = token.SIZE;
 		if (token.SIZE > token.CURSOR * 50 + 50) {
-			let query = {
+			const query = {
 				from: token.FROM,
 				until: token.UNTIL,
 				set: token.SET,
@@ -591,10 +591,10 @@ async function createListIdentifiersXml(queryContent) {
 		ListNotices = await createMongoQueryNoticeOai(queryContent);
 	}
 
-	let identifier = { ListIdentifiers: [] };
+	const identifier = { ListIdentifiers: [] };
 	ListNotices.map((notices) => {
 		notices.map((notice) => {
-			let elem = {
+			const elem = {
 				header: [
 					{
 						identifier: `oai:${notice.BASE.toLowerCase()}:${
@@ -632,8 +632,8 @@ async function createGetRecordXml(queryContent) {
 	try {
 		let date;
 		var notice = await createMongoGetRecordQuery(queryContent);
-		let identifier = { ListRecords: [] };
-		let base = getBaseCompletName(notice[0].BASE);
+		const identifier = { ListRecords: [] };
+		const base = getBaseCompletName(notice[0].BASE);
 		if (notice[0].DMAJ != "") {
 			date = notice[0].DMAJ;
 		} else {
@@ -701,7 +701,7 @@ async function createGetRecordXml(queryContent) {
  */
 async function createListRecordsXml(queryContent) {
 	try {
-		let ListNotices = [];
+		const ListNotices = [];
 		var ListOai = [];
 		var ListSize;
 		let resumpToken = null;
@@ -711,7 +711,7 @@ async function createListRecordsXml(queryContent) {
 			token = token[0];
 			ListSize = token.SIZE;
 			if (token.SIZE > token.CURSOR * 50 + 50) {
-				let query = {
+				const query = {
 					from: token.FROM,
 					until: token.UNTIL,
 					set: token.SET,
@@ -745,15 +745,15 @@ async function createListRecordsXml(queryContent) {
 				});
 			});
 		}
-		let identifier = { ListRecords: [] };
-		let Promises = [];
+		const identifier = { ListRecords: [] };
+		const Promises = [];
 		Promises.push(
 			await Promise.all(
 				ListNotices.map(async (oai) => {
 					const set = getBaseName(oai.BASE);
 					var notice = await set.find({ REF: oai.REF });
-					let base = getBaseCompletName(notice[0].BASE);
-					let elem = {
+					const base = getBaseCompletName(notice[0].BASE);
+					const elem = {
 						record: [
 							{
 								header: [
@@ -887,7 +887,7 @@ async function createXmlFileIdentify(queryContent, responseContent) {
 		],
 	};
 	resp["OAI-PMH"].push({ request: [{ _attr: queryContent }, baseUrl] });
-	let earliest = await noticesOAI.find().sort({ DMAJ: -1 }).limit(1);
+	const earliest = await noticesOAI.find().sort({ DMAJ: -1 }).limit(1);
 	responseContent.Identify[4].earliestDatestamp = earliest[0].DMAJ;
 	resp["OAI-PMH"].push(responseContent);
 	return xml(resp, { declaration: true });

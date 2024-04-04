@@ -1,6 +1,6 @@
 var notices = db.memoire.find().noCursorTimeout();
 var noticeCount = db.memoire.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 
 	//Transformation string AUTP to array
@@ -16,7 +16,7 @@ notices.forEach(function (aRow) {
 		}
 
 		//Delete elements with empty string
-		arrayAutp.forEach(function (item) {
+		arrayAutp.forEach((item) => {
 			var pos = arrayAutp.indexOf(item);
 			if (item == "") {
 				arrayAutp.splice(pos, 1);

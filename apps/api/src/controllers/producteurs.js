@@ -151,8 +151,8 @@ router.get(
     #swagger.description = 'Retourne les informations du Producteur en fonction du prefixes' 
   */
 		let listePrefix = [];
-		let listeProducteur = req.query.producteurs;
-		let producteurs = await Producteur.find({});
+		const listeProducteur = req.query.producteurs;
+		const producteurs = await Producteur.find({});
 		// Renvoie la liste des préfixes associés aux producteurs en paramètre
 		producteurs.map((producteur) =>
 			producteur.BASE.filter((base) =>
@@ -174,7 +174,7 @@ router.post(
     #swagger.path = '/producteur'
     #swagger.description = 'Création d'une nouveau Producteur' 
   */
-		let { label, base } = req.body;
+		const { label, base } = req.body;
 
 		// Validate required fields.
 		let allProducteurs;
@@ -214,8 +214,8 @@ router.post(
 
 function producteurValidation(_id, label, base, allProducteurs) {
 	let msg = "";
-	let usedBases = [];
-	let usedPrefixes = [];
+	const usedBases = [];
+	const usedPrefixes = [];
 
 	// Some params are required.
 	if (!label) {

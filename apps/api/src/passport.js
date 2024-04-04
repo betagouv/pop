@@ -20,17 +20,17 @@ const cookieExtractor = (req) => {
 	return null;
 };
 
-module.exports = function (passport) {
+module.exports = (passport) => {
 	const opts = {};
 	opts.jwtFromRequest = cookieExtractor;
 	opts.secretOrKey = config.secret;
 	passport.use(
-		new JwtStrategy(opts, function (jwtPayload, done) {
+		new JwtStrategy(opts, (jwtPayload, done) => {
 			User.findOne(
 				{
 					_id: jwtPayload._id,
 				},
-				function (err, user) {
+				(err, user) => {
 					if (err) {
 						return done(err, false);
 					}

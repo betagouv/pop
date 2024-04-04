@@ -3,7 +3,7 @@
  */
 var notices = db.mnr.find().noCursorTimeout();
 var noticeCount = db.mnr.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	db.mnr.update(
 		{ REF: aRow.REF },
 		{

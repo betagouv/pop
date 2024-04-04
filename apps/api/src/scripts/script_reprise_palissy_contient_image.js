@@ -1,4 +1,4 @@
-let notices = db.palissy
+const notices = db.palissy
 	.find({ MEMOIRE: { $gt: { $size: 0 } } })
 	.noCursorTimeout()
 	.toArray();

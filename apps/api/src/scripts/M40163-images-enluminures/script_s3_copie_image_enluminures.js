@@ -36,7 +36,7 @@ async function readCsv() {
 async function copyImage(notice) {
 	return new Promise((resolve, reject) => {
 		try {
-			let params = {
+			const params = {
 				Bucket: process.env.BUCKET,
 				Key: `${notice.OLDIMG}`,
 			};

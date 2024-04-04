@@ -8,7 +8,7 @@ const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const Enluminures = require("../models/enluminures");
 const NoticesOAI = require("../models/noticesOAI");
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 const { capture } = require("./../sentry.js");
 const {
 	uploadFile,
@@ -97,7 +97,7 @@ function transformBeforeCreateAndUpdate(notice) {
 			//Si la notice contient des coordonnées, contient geolocalisation devient oui
 			let lat = "";
 			let lon = "";
-			let coordonnees = { lat: 0, lon: 0 };
+			const coordonnees = { lat: 0, lon: 0 };
 
 			if (
 				notice["POP_COORDONNEES.lat"] ||
@@ -114,10 +114,10 @@ function transformBeforeCreateAndUpdate(notice) {
 			}
 			if (lat || lon) {
 				if (lat) {
-					coordonnees.lat = parseFloat(lat.replace(",", "."));
+					coordonnees.lat = Number.parseFloat(lat.replace(",", "."));
 				}
 				if (lon) {
-					coordonnees.lon = parseFloat(lon.replace(",", "."));
+					coordonnees.lon = Number.parseFloat(lon.replace(",", "."));
 				}
 				//Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
 				if (
@@ -231,7 +231,7 @@ router.post(
 			await populateLinksEnlunminures(notice, notice.REFDE, "REFC");
 			await populateLinksEnlunminures(notice, notice.REFC, "REFDE");
 
-			let oaiObj = {
+			const oaiObj = {
 				REF: notice.REF,
 				BASE: "enluminures",
 				DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD"),
@@ -319,7 +319,7 @@ router.put(
 				.tz(new Date(), timeZone)
 				.format("YYYY-MM-DD HH:mm");
 
-			let HISTORIQUE = prevNotice.HISTORIQUE || [];
+			const HISTORIQUE = prevNotice.HISTORIQUE || [];
 			const newHistorique = {
 				nom: user.nom,
 				prenom: user.prenom,
@@ -333,7 +333,7 @@ router.put(
 			// Prepare and update notice.
 			await transformBeforeCreateAndUpdate(notice);
 			const obj = new Enluminures(notice);
-			let oaiObj = { DMAJ: notice.DMAJ };
+			const oaiObj = { DMAJ: notice.DMAJ };
 			checkESIndex(obj);
 			promises.push(updateNotice(Enluminures, ref, notice));
 			promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));

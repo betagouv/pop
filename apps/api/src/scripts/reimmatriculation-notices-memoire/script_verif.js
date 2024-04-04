@@ -14,7 +14,7 @@ const limit = 2000;
 
 // Récupère les notices Mémoire a mettre à jour
 async function readCsv() {
-	let noticesMemoire = [];
+	const noticesMemoire = [];
 	let i = 0;
 
 	// vidage des logs précédent

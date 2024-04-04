@@ -1,12 +1,12 @@
 var notices = db.autor.find().noCursorTimeout();
 var noticeCount = db.autor.count();
 
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	// remove RESID and create string AUTORLOCA
 	if ("RESID" in aRow) {
 		let autorl = "";
-		aRow.RESID.forEach(function (resid) {
+		aRow.RESID.forEach((resid) => {
 			if (resid != "") {
 				if (autorl != "") {
 					autorl = autorl + " , " + resid;
@@ -29,7 +29,7 @@ notices.forEach(function (aRow) {
 	//put EMET in PRODUCTEUR
 	if ("EMET" in aRow) {
 		if (aRow.EMET != "") {
-			let emet = aRow.EMET;
+			const emet = aRow.EMET;
 			//Update field PRODUCTEUR
 			db.autor.update(
 				{ REF: ref },

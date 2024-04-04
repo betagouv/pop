@@ -12,7 +12,7 @@ const {
 	removeProducteurs,
 	removeGroups,
 } = require("./setup/helpers");
-let sampleNotice = require("./__notices__/memoire-1");
+const sampleNotice = require("./__notices__/memoire-1");
 
 jest.mock("../elasticsearch");
 const es = require("../elasticsearch");

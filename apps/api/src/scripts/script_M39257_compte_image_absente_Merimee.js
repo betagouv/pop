@@ -4,7 +4,7 @@ nbreNotices = notices.count();
 let nbrN = 0;
 
 notices.forEach((notice) => {
-	let arrayMemoire = notice.MEMOIRE.map((element) => {
+	const arrayMemoire = notice.MEMOIRE.map((element) => {
 		if (element.url == "") {
 			var noticeMemoire = db.memoire.find({ REF: element.ref });
 

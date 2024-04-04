@@ -7,7 +7,7 @@ const passport = require("passport");
 const { capture } = require("./../sentry.js");
 const Mnr = require("../models/mnr");
 const NoticesOAI = require("../models/noticesOAI");
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 
 const {
 	uploadFile,
@@ -150,7 +150,7 @@ router.put(
 				.tz(new Date(), timeZone)
 				.format("YYYY-MM-DD HH:mm");
 
-			let HISTORIQUE = prevNotice.HISTORIQUE || [];
+			const HISTORIQUE = prevNotice.HISTORIQUE || [];
 			const newHistorique = {
 				nom: user.nom,
 				prenom: user.prenom,
@@ -163,7 +163,7 @@ router.put(
 			notice.HISTORIQUE = HISTORIQUE;
 
 			const doc = new Mnr(notice);
-			let oaiObj = { DMAJ: notice.DMAJ };
+			const oaiObj = { DMAJ: notice.DMAJ };
 			checkESIndex(doc);
 			promises.push(updateNotice(Mnr, ref, notice));
 			promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
@@ -199,7 +199,7 @@ router.post(
 				});
 		}
 		try {
-			let oaiObj = {
+			const oaiObj = {
 				REF: notice.REF,
 				BASE: "mnr",
 				DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD"),
@@ -298,7 +298,7 @@ router.delete(
 function determineProducteur(notice) {
 	return new Promise(async (resolve, reject) => {
 		try {
-			let noticeProducteur = await identifyProducteur(
+			const noticeProducteur = await identifyProducteur(
 				"mnr",
 				notice.REF,
 				"",

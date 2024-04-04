@@ -12,7 +12,7 @@ const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const NoticesOAI = require("../models/noticesOAI");
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 const { capture } = require("./../sentry.js");
 const {
 	uploadFile,
@@ -197,7 +197,7 @@ router.put(
 				.tz(new Date(), timeZone)
 				.format("YYYY-MM-DD HH:mm");
 
-			let HISTORIQUE = prevNotice.HISTORIQUE || [];
+			const HISTORIQUE = prevNotice.HISTORIQUE || [];
 			const newHistorique = {
 				nom: user.nom,
 				prenom: user.prenom,
@@ -211,7 +211,7 @@ router.put(
 			// Prepare and update notice.
 			await transformBeforeCreateAndUpdate(notice);
 			const obj = new Joconde(notice);
-			let oaiObj = { DMAJ: notice.DMAJ };
+			const oaiObj = { DMAJ: notice.DMAJ };
 			checkESIndex(obj);
 			promises.push(updateNotice(Joconde, ref, notice));
 			promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
@@ -273,7 +273,7 @@ router.post(
 			await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
 			await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
 
-			let oaiObj = {
+			const oaiObj = {
 				REF: notice.REF,
 				BASE: "joconde",
 				DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD"),

@@ -9,7 +9,7 @@ function cleanData(array) {
 		.filter((element) => element !== "");
 }
 
-notices.forEach(function (notice) {
+notices.forEach((notice) => {
 	var ref = notice.REF;
 
 	//Transformation des champ string to array

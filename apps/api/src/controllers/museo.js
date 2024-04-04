@@ -13,7 +13,7 @@ const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef } = require("./utils/notice");
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 const { capture } = require("./../sentry.js");
 
 const {
@@ -74,7 +74,7 @@ async function transformBeforeCreateOrUpdate(notice) {
 	//Si la notice contient des coordonnées, contient geolocalisation devient oui
 	let lat = "";
 	let lon = "";
-	let coordonnees = { lat: 0, lon: 0 };
+	const coordonnees = { lat: 0, lon: 0 };
 
 	if (notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]) {
 		lat = String(notice["POP_COORDONNEES.lat"]);
@@ -89,10 +89,10 @@ async function transformBeforeCreateOrUpdate(notice) {
 
 	if (lat || lon) {
 		if (lat) {
-			coordonnees.lat = parseFloat(lat.replace(",", "."));
+			coordonnees.lat = Number.parseFloat(lat.replace(",", "."));
 		}
 		if (lon) {
-			coordonnees.lon = parseFloat(lon.replace(",", "."));
+			coordonnees.lon = Number.parseFloat(lon.replace(",", "."));
 		}
 		//Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
 		if (
@@ -132,7 +132,7 @@ async function transformBeforeCreateOrUpdate(notice) {
 	}
 
 	//Attribution producteur
-	let noticeProducteur = await identifyProducteur(
+	const noticeProducteur = await identifyProducteur(
 		"museo",
 		notice.REF,
 		"",
@@ -267,7 +267,7 @@ router.post(
 			}
 
 			promises.push(updateJocondeNotices(notice));
-			let oaiObj = {
+			const oaiObj = {
 				REF: notice.REF,
 				BASE: "museo",
 				DMAJ: notice.DMAJ,
@@ -385,7 +385,7 @@ router.put(
 		//Ajout de l'historique de la notice
 		var today = moment.tz(new Date(), timeZone).format("YYYY-MM-DD HH:mm");
 
-		let HISTORIQUE = prevNotice.HISTORIQUE || [];
+		const HISTORIQUE = prevNotice.HISTORIQUE || [];
 		const newHistorique = {
 			nom: user.nom,
 			prenom: user.prenom,
@@ -414,7 +414,7 @@ router.put(
 		}
 
 		promises.push(updateJocondeNotices(notice));
-		let oaiObj = {
+		const oaiObj = {
 			REF: notice.REF,
 			BASE: "museo",
 			DMAJ: notice.DMAJ,

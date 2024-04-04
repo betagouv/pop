@@ -11,10 +11,10 @@ notices.forEach((notice) => {
 	});
 
 	// Construction du tableau MEMOIRE
-	let arrayMemoire = noticesMemoire
+	const arrayMemoire = noticesMemoire
 		.map((noticeMemoire) => {
 			if (noticeMemoire) {
-				let memoire = {};
+				const memoire = {};
 				memoire._id = noticeMemoire._id;
 				memoire.ref = noticeMemoire.REF;
 				memoire.url = noticeMemoire.IMG;

@@ -14,7 +14,7 @@ nbreNotices = notices.count();
 print(nbreNotices);
 
 notices.forEach((notice) => {
-	let arrayStat = notice.STAT.map((value) => {
+	const arrayStat = notice.STAT.map((value) => {
 		if ("don" == value) {
 			value = "don manuel";
 		}

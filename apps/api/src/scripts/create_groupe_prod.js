@@ -117,10 +117,10 @@ producteurs.push({
 	__v: 0,
 });
 
-groups.forEach(function (gr) {
+groups.forEach((gr) => {
 	db.groups.insert(gr);
 });
 
-producteurs.forEach(function (prod) {
+producteurs.forEach((prod) => {
 	db.producteurs.insert(prod);
 });

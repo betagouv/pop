@@ -80,7 +80,7 @@ app.use("/oai", require("./controllers/oai"));
 // Swagger DOC
 app.use(
 	"/api-docs",
-	function (req, res, next) {
+	(req, res, next) => {
 		res.setHeader(
 			"Content-Security-Policy",
 			//   "default-src 'self'; font-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; style-src-attr 'self';  frame-src 'self';"

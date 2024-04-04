@@ -24,16 +24,16 @@ async function readCsv() {
 		}
 	});
 
-	let stream = fs
+	const stream = fs
 		.createReadStream(pathFileCsv)
 		.pipe(csv.parse({ delimiter: ";" }));
 
-	let arrayObj = [];
+	const arrayObj = [];
 
-	stream.on("readable", function () {
+	stream.on("readable", () => {
 		while ((chunk = stream.read()) != null) {
 			if (i > 0) {
-				let REF = chunk[1].split("/")[1];
+				const REF = chunk[1].split("/")[1];
 				if (arrayObj[REF]) {
 					if (!arrayObj[REF].includes(chunk[1])) {
 						arrayObj[REF] = [...arrayObj[REF], chunk[1]];
@@ -46,7 +46,7 @@ async function readCsv() {
 		}
 	});
 
-	stream.on("end", function () {
+	stream.on("end", () => {
 		noticesEnluminures = Object.keys(arrayObj);
 		console.log(
 			"lecture terminée",
@@ -54,7 +54,7 @@ async function readCsv() {
 		);
 
 		let arrayUpdate = [];
-		let i = 0;
+		const i = 0;
 		noticesEnluminures.forEach(async (ref) => {
 			// Préparation du tableau pour le bulk
 			// Récupération de la notice
@@ -63,7 +63,7 @@ async function readCsv() {
 				{ REF: 1, VIDEO: 1 },
 			);
 
-			let clearNoticeVideo = [];
+			const clearNoticeVideo = [];
 			notice.VIDEO.forEach((element) => {
 				if (!clearNoticeVideo.includes(element)) {
 					clearNoticeVideo.push(element);
@@ -71,11 +71,11 @@ async function readCsv() {
 			});
 
 			if (notice) {
-				let noticeVIDEO = [
+				const noticeVIDEO = [
 					...clearNoticeVideo,
 					...arrayObj[ref].filter((el) => !notice.VIDEO.includes(el)),
 				];
-				let contientImage = noticeVIDEO.length > 0 ? "oui" : "non";
+				const contientImage = noticeVIDEO.length > 0 ? "oui" : "non";
 
 				arrayUpdate.push({
 					updateOne: {

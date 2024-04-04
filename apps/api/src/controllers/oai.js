@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 
 /***************************************** Templates ****************************************/
 const {
@@ -302,14 +302,14 @@ router.get("/", async (req, res) => {
 						);
 						return res.status(200).send(res.locals.Erreur).end();
 					}
-					let arg = req.query.identifier.split(":");
+					const arg = req.query.identifier.split(":");
 					if (
 						arg.length == 3 &&
 						arg[0] == "oai" &&
 						baseNames.hasOwnProperty(arg[1]) &&
 						arg[2] != ""
 					) {
-						let ref = await createMongoGetRecordQuery(req.query);
+						const ref = await createMongoGetRecordQuery(req.query);
 						if (ref.length == 0) {
 							res.locals.getrecord = generateException(
 								req.query,

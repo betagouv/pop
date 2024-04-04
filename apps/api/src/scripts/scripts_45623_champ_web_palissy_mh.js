@@ -1,4 +1,4 @@
-let codes = {
+const codes = {
 	10001: "10289",
 	10016: "10174",
 	10036: "10058",
@@ -4199,8 +4199,8 @@ try {
 		.noCursorTimeout();
 
 	notices.forEach((notice) => {
-		let anciensInseeArray = notice.INSEE;
-		let nouveauxInsee = [];
+		const anciensInseeArray = notice.INSEE;
+		const nouveauxInsee = [];
 		anciensInseeArray.forEach((insee) => {
 			if (codes[insee]) nouveauxInsee.push(codes[insee]);
 		});

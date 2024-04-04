@@ -1,4 +1,4 @@
-let notices = db.memoire.find({ PRODUCTEUR: "MAP" }).noCursorTimeout();
+const notices = db.memoire.find({ PRODUCTEUR: "MAP" }).noCursorTimeout();
 let nbreNotices = notices.count();
 
 print(nbreNotices);

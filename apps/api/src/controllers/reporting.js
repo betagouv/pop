@@ -72,7 +72,7 @@ router.post(
 			return res.status(400).send("Destinataires invalides.");
 		}
 		try {
-			let content = generateTemplateReport(body);
+			const content = generateTemplateReport(body);
 			await Mailer.send(subject, to, content, true);
 			return res.status(200).send({ success: true, msg: "OK" });
 		} catch (e) {

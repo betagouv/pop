@@ -1,6 +1,6 @@
 //Récuperation des notices de la base palissy
 //Cette requête s'exprime ainsi: Récupère les notices de la base palissy où: ((COOR ou COORM) && ZONE sont renseignés && POP_CONTIENT_GEOLOCALISATION = non) OU (latitude && longitude = 0 && POP_CONTIENT_GEOLOCALISATION = non)
-let notices = db.palissy
+const notices = db.palissy
 	.find({
 		$or: [
 			{

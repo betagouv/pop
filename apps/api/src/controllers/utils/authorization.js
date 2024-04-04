@@ -13,7 +13,7 @@ async function canManage(user, notice, collection) {
 	// Si on a bien un utilisateur rattaché à un groupe et un rôle, ainsi qu'une notice
 	if (user && notice && user.role && user.group) {
 		//On récupère le groupe de l'utilisateur en base
-		let group = await getUserGroup(user.group);
+		const group = await getUserGroup(user.group);
 
 		//Si l'utilisateur a un rôle administrateur et que son groupe est admin ou celui correspondant à la collection, retourne true
 		if (user.role == "administrateur" && user.group === "admin") {
@@ -51,7 +51,7 @@ async function canManage(user, notice, collection) {
 
 async function canManageJoconde(user, notice) {
 	//On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-	let validate = await canManage(user, notice, "joconde");
+	const validate = await canManage(user, notice, "joconde");
 
 	//On retourne si oui ou non il a le droit
 	return validate;
@@ -74,7 +74,7 @@ async function canDeleteJoconde(user, notice) {
 
 async function canManageAutor(user, notice) {
 	//On détermine si l'utilisateur a le droit d'apporter des modifications à la notice autor
-	let validate = await canManage(user, notice, "autor");
+	const validate = await canManage(user, notice, "autor");
 
 	//On retourne si oui ou non il a le droit
 	return validate;
@@ -97,7 +97,7 @@ async function canDeleteAutor(user, notice) {
 
 async function canManageMnr(user, notice) {
 	//On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-	let validate = await canManage(user, notice, "mnr");
+	const validate = await canManage(user, notice, "mnr");
 
 	//On retourne si oui ou non il a le droit
 	return validate;
@@ -120,7 +120,7 @@ async function canDeleteMnr(user, notice) {
 
 async function canManageMemoire(user, notice) {
 	//On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-	let validate = await canManage(user, notice, "memoire");
+	const validate = await canManage(user, notice, "memoire");
 
 	//On retourne si oui ou non il a le droit
 	return validate;
@@ -143,7 +143,7 @@ async function canDeleteMemoire(user, notice) {
 
 async function canManagePalissy(user, notice) {
 	//On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-	let validate = await canManage(user, notice, "palissy");
+	const validate = await canManage(user, notice, "palissy");
 
 	//On retourne si oui ou non il a le droit
 	return validate;
@@ -166,7 +166,7 @@ async function canDeletePalissy(user, notice) {
 
 async function canManageMerimee(user, notice) {
 	//On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-	let validate = await canManage(user, notice, "merimee");
+	const validate = await canManage(user, notice, "merimee");
 
 	//On retourne si oui ou non il a le droit
 	return validate;
@@ -189,7 +189,7 @@ async function canDeleteMerimee(user, notice) {
 
 async function canManageMuseo(user, notice) {
 	//On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-	let validate = await canManage(user, notice, "museo");
+	const validate = await canManage(user, notice, "museo");
 
 	//On retourne si oui ou non il a le droit
 	return validate;
@@ -212,7 +212,7 @@ async function canDeleteMuseo(user, notice) {
 
 async function canManageEnluminures(user, notice) {
 	//On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-	let validate = await canManage(user, notice, "enluminures");
+	const validate = await canManage(user, notice, "enluminures");
 
 	//On retourne si oui ou non il a le droit
 	return validate;

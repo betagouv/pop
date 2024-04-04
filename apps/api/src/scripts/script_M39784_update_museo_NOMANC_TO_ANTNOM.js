@@ -1,4 +1,4 @@
-let notices = db.museo.find({}).noCursorTimeout();
+const notices = db.museo.find({}).noCursorTimeout();
 let noticeCount = db.museo.count();
 print(noticeCount);
 notices.forEach((aRow) => {

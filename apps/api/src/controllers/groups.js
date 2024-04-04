@@ -94,7 +94,7 @@ router.get(
 			}
 
 			//On récupère le groupe de l'utilisateur en base
-			let group = await Group.findOne({ LABEL: user.group });
+			const group = await Group.findOne({ LABEL: user.group });
 
 			// Si l'utilisateur a le rôle administrateur ou producteur
 			if (["producteur", "administrateur"].includes(user.role)) {
@@ -204,7 +204,7 @@ router.post(
         #swagger.path = '/groups'
         #swagger.description = 'Création d\'un groupe' 
     */
-		let { label, producteurs } = req.body;
+		const { label, producteurs } = req.body;
 		// Validate required fields.
 		let allGroups;
 		try {
@@ -245,7 +245,7 @@ router.post(
 //Méthode permettant de valider les données du groupe
 function groupValidation(_id, label, producteurs, allGroups) {
 	let msg = "";
-	let usedProducteurs = [];
+	const usedProducteurs = [];
 
 	// Some params are required.
 	if (!label) {
@@ -268,7 +268,7 @@ function groupValidation(_id, label, producteurs, allGroups) {
 		msg = "Le groupe doit contenir au moins un producteur";
 	}
 	for (let i = 0; i < producteurs.length; i++) {
-		let producteur = producteurs[i];
+		const producteur = producteurs[i];
 
 		if (producteur != "") {
 			usedProducteurs.map((used) => {

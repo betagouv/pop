@@ -63,7 +63,7 @@ function generateTemplateReport(params) {
  * @returns
  */
 function addJocondeReport(notices) {
-	let arr = [];
+	const arr = [];
 	let obj = {};
 	let count = 0;
 
@@ -86,11 +86,11 @@ function addJocondeReport(notices) {
 					],
 				};
 
-				let idThesaurus = notices[i]._warnings[j].substr(
+				const idThesaurus = notices[i]._warnings[j].substr(
 					notices[i]._warnings[j].indexOf(")]") - 3,
 					3,
 				);
-				if (!Number.isNaN(parseInt(idThesaurus))) {
+				if (!Number.isNaN(Number.parseInt(idThesaurus))) {
 					obj[notices[i]._warnings[j]].idThesaurus = idThesaurus;
 				}
 			}
@@ -98,7 +98,7 @@ function addJocondeReport(notices) {
 	}
 
 	const newObj = Object.entries(obj)
-		.sort(function (a, b) {
+		.sort((a, b) => {
 			// Compare
 			if (a[1].idThesaurus < b[1].idThesaurus) return -1;
 			if (a[1].idThesaurus > b[1].idThesaurus) return 1;
@@ -203,7 +203,7 @@ function addHeader(collection, institution, email, fileNames = []) {
  * @returns Array
  */
 function addCommonBody(notices) {
-	let arr = [];
+	const arr = [];
 	const created = notices.filter((e) => e._status === "created");
 	const updated = notices.filter((e) => e._status === "updated");
 	const rejected = notices.filter((e) => e._status === "rejected");

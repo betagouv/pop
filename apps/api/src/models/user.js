@@ -42,7 +42,7 @@ UserSchema.method("toJSON", function () {
 });
 
 UserSchema.methods.comparePassword = function (passw, cb) {
-	bcrypt.compare(passw, this.password, function (err, res) {
+	bcrypt.compare(passw, this.password, (err, res) => {
 		if (err) {
 			return cb(err);
 		}
@@ -50,7 +50,7 @@ UserSchema.methods.comparePassword = function (passw, cb) {
 	});
 };
 
-UserSchema.methods.validatePassword = function (email, newPassword, cb) {
+UserSchema.methods.validatePassword = (email, newPassword, cb) => {
 	let validMdp = true;
 	let message = "";
 	/**
@@ -69,7 +69,7 @@ UserSchema.methods.validatePassword = function (email, newPassword, cb) {
 	if (validMdp) {
 		// le mot de passe ne doit pas contenir plus de 3 caractères consécutifs issu du login
 		for (let i = 0; i < newPassword.length - 1; i++) {
-			let verif = newPassword.substring(i, i + 3);
+			const verif = newPassword.substring(i, i + 3);
 			if (verif.length > 2 && email.indexOf(verif) > -1) {
 				validMdp = false;
 				message =

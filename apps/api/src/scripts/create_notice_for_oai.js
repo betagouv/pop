@@ -1,6 +1,6 @@
 var notices = db.merimee.find().noCursorTimeout();
 var noticeCount = db.merimee.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	var date;
 	if (aRow.DMAJ == "") {
@@ -20,7 +20,7 @@ notices.forEach(function (aRow) {
 
 notices = db.joconde.find().noCursorTimeout();
 noticeCount = db.joconde.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	var date;
 	if (aRow.DMAJ == "") {
@@ -40,7 +40,7 @@ notices.forEach(function (aRow) {
 
 notices = db.palissy.find().noCursorTimeout();
 noticeCount = db.palissy.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	var date;
 	if (aRow.DMAJ == "") {
@@ -60,7 +60,7 @@ notices.forEach(function (aRow) {
 
 notices = db.autor.find().noCursorTimeout();
 noticeCount = db.autor.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	var date;
 	if (aRow.DMAJ == "") {
@@ -80,7 +80,7 @@ notices.forEach(function (aRow) {
 
 notices = db.memoire.find().noCursorTimeout();
 noticeCount = db.memoire.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	var date;
 	if (aRow.DMAJ == "") {
@@ -100,7 +100,7 @@ notices.forEach(function (aRow) {
 
 notices = db.mnr.find().noCursorTimeout();
 noticeCount = db.mnr.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	var date;
 	if (aRow.DMAJ == "") {
@@ -120,7 +120,7 @@ notices.forEach(function (aRow) {
 
 notices = db.museo.find().noCursorTimeout();
 noticeCount = db.museo.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	var date;
 	if (aRow.DMAJ == "") {

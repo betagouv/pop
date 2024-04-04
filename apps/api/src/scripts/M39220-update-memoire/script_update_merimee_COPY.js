@@ -4,8 +4,8 @@ nbreNotices = notices.count();
 print(nbreNotices);
 
 notices.forEach((notice) => {
-	let arrayMemoire = notice.MEMOIRE.map((element) => {
-		let noticeMemoire = db.memoire.findOne({ REF: element.ref });
+	const arrayMemoire = notice.MEMOIRE.map((element) => {
+		const noticeMemoire = db.memoire.findOne({ REF: element.ref });
 		if (noticeMemoire) {
 			element.ref = noticeMemoire.REF;
 			element.url = noticeMemoire.IMG;

@@ -1,6 +1,6 @@
 //Récuperation des notices de la base merimee
 //Cette requête s'exprime ainsi: Récupère les notices de la base mérimée où: ((COOR ou COORM) && ZONE sont renseignés && POP_CONTIENT_GEOLOCALISATION = non) OU (latitude && longitude = 0 && POP_CONTIENT_GEOLOCALISATION = non)
-let notices = db.merimee
+const notices = db.merimee
 	.find({
 		$or: [
 			{

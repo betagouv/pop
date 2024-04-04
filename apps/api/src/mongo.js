@@ -8,7 +8,7 @@ mongoose.connect(mongoUrl, {
 	dbName,
 }); // Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise; // Get the default connection
-let db = mongoose.connection;
+const db = mongoose.connection;
 
 if (process.env.NODE_ENV !== "test") {
 	// Bind connection to error event (to get notification of connection errors)

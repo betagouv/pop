@@ -11,10 +11,10 @@ nbreNotices = notices.count();
 print(nbreNotices);
 
 notices.forEach((notice) => {
-	let newNumvers = `J/${notice.NUMVERS}`;
-	let list = notice.COTECTI.split(";")
+	const newNumvers = `J/${notice.NUMVERS}`;
+	const list = notice.COTECTI.split(";")
 		.map((el) => {
-			let arrayCotecti = el
+			const arrayCotecti = el
 				.trim()
 				.split("/")
 				.map((element, index, { length }) => {

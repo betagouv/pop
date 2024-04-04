@@ -21,7 +21,7 @@ nbreNotices = notices.count();
 print(nbreNotices);
 
 notices.forEach((notice) => {
-	let noticeMuseo = db.museo.findOne({ REF: notice.MUSEO });
+	const noticeMuseo = db.museo.findOne({ REF: notice.MUSEO });
 
 	if (noticeMuseo && "oui" === noticeMuseo.POP_CONTIENT_GEOLOCALISATION) {
 		db.joconde.update(

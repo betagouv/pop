@@ -64,7 +64,7 @@ router.post("/signin", async (req, res) => {
 			.send({ success: false, msg: MSG_ACCOUNT_LOCKED });
 	}
 
-	user.comparePassword(req.body.password, async function (err, isMatch) {
+	user.comparePassword(req.body.password, async (err, isMatch) => {
 		if (isMatch && !err) {
 			const token = jwt.sign({ _id: user._id }, config.secret, {
 				expiresIn: "12h",
@@ -216,7 +216,7 @@ router.post(
 			return res.status(401).send(checkPassword);
 		}
 
-		user.comparePassword(pwd, async function (err, isMatch) {
+		user.comparePassword(pwd, async (err, isMatch) => {
 			if (isMatch && !err) {
 				user.set({ password: pwd1 });
 				user.set({ hasResetPassword: true });
@@ -242,7 +242,7 @@ router.post(
 	},
 );
 
-router.get("/logout", function (req, res) {
+router.get("/logout", (req, res) => {
 	res.clearCookie("token");
 	return res.json({ success: true, msg: "Successfully logout" });
 });

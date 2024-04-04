@@ -45,7 +45,7 @@ async function deleteImageMemoire(notice) {
 			const path = `memoire/${filenamify(notice.OLDREF)}/${filenamify(
 				notice.NAMEIMG,
 			)}`;
-			let params = {
+			const params = {
 				Bucket: process.env.BUCKET,
 				Key: `${notice.NEWIMG}`,
 			};

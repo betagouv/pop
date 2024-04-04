@@ -1,6 +1,6 @@
 var notices = db.joconde.find().noCursorTimeout();
 var noticeCount = db.joconde.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 	var adptString = "";
 	var etatString = "";
@@ -13,7 +13,7 @@ notices.forEach(function (aRow) {
 	var i = 1;
 	var typeAdpt = typeof adpt;
 	if (typeAdpt != "string") {
-		aRow.ADPT.forEach(function (aItem) {
+		aRow.ADPT.forEach((aItem) => {
 			adptString += aItem;
 			if (i != adpt.length) {
 				adptString += "; ";
@@ -34,7 +34,7 @@ notices.forEach(function (aRow) {
 	var j = 1;
 	var typeEtat = typeof etat;
 	if (typeEtat != "string") {
-		aRow.ETAT.forEach(function (aItem) {
+		aRow.ETAT.forEach((aItem) => {
 			etatString += aItem;
 			if (j != etat.length) {
 				etatString += "; ";
@@ -55,7 +55,7 @@ notices.forEach(function (aRow) {
 	var k = 1;
 	var typePrep = typeof prep;
 	if (typePrep != "string") {
-		aRow.PREP.forEach(function (aItem) {
+		aRow.PREP.forEach((aItem) => {
 			prepString += aItem;
 			if (k != prep.length) {
 				prepString += "; ";

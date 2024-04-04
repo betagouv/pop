@@ -5,7 +5,7 @@ const { indexOf } = require("./regions");
 // Creates a new ID for a notice of type "collection".
 function getNewId(collection, prefix, dpt) {
 	return new Promise((resolve, reject) => {
-		let q = collection
+		const q = collection
 			.findOne({ REF: { $regex: new RegExp("^" + prefix + dpt) } })
 			.sort({ REF: -1 });
 		q.exec((error, doc) => {
@@ -14,7 +14,7 @@ function getNewId(collection, prefix, dpt) {
 			}
 			if (doc) {
 				const ref = doc.REF.substring((prefix + dpt).length);
-				const newId = addZeros(parseInt(ref) + 1, ref.length);
+				const newId = addZeros(Number.parseInt(ref) + 1, ref.length);
 				resolve(prefix + dpt + newId);
 			} else {
 				const ln = 10 - (prefix + dpt).length;
@@ -83,7 +83,7 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
 	);
 
 	//Liste des producteurs donc le préfixe correspond au début de la REF de la notice
-	let possibleProducteurs = [];
+	const possibleProducteurs = [];
 	let finalProd = "";
 	let defaultProducteur = "";
 
@@ -99,7 +99,7 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
 				baseItem.prefixes.map((prefix) => {
 					if (REF.startsWith(prefix.toString())) {
 						//Retourne le label du producteur
-						let label = producteur.LABEL;
+						const label = producteur.LABEL;
 						//Cas particulier pour memoire : le prefixe AP n'est pas suffisant pour déterminer le producteur
 						//Dans ce cas, le producteur "AUTRE" est ajouté et le cas particulier est géré plus bas pour déterminer
 						//si le producteur reste "AUTRE", ou s'il devient UDAP ou MAP
@@ -232,7 +232,7 @@ function removeChar(chaine) {
 	const search = '""';
 	const replaceChar = '"';
 
-	let keep = chaine[0] === search && chaine[chaine.length - 1] === search;
+	const keep = chaine[0] === search && chaine[chaine.length - 1] === search;
 	chaine = chaine.replace(search, replaceChar);
 
 	// Analyse des caractères à supprimer

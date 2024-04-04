@@ -1,4 +1,4 @@
-let notices = db.merimee
+const notices = db.merimee
 	.find({ MEMOIRE: { $gt: { $size: 0 } } })
 	.noCursorTimeout()
 	.toArray();

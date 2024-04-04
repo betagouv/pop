@@ -1,6 +1,6 @@
 var notices = db.autor.find().noCursorTimeout();
 var noticeCount = db.autor.count();
-notices.forEach(function (aRow) {
+notices.forEach((aRow) => {
 	var ref = aRow.REF;
 
 	//Procédure pour BASE

@@ -12,7 +12,7 @@ const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef, removeChar } = require("./utils/notice");
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 const { cleanArrayValue } = require("./utils/dataFilter");
 
 const {
@@ -230,7 +230,7 @@ async function transformBeforeCreateOrUpdate(notice) {
 	// IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
 	if (notice.COORM && notice.ZONE) {
 		// Convert it to a proper format in WGS84
-		let convert = convertCOORM(notice.COORM, notice.ZONE);
+		const convert = convertCOORM(notice.COORM, notice.ZONE);
 		coordinates = convert.coordinates ? convert.coordinates : [];
 		notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
 	}
@@ -466,7 +466,7 @@ router.put(
 				.tz(new Date(), timeZone)
 				.format("YYYY-MM-DD HH:mm");
 
-			let HISTORIQUE = prevNotice.HISTORIQUE || [];
+			const HISTORIQUE = prevNotice.HISTORIQUE || [];
 			const newHistorique = {
 				nom: user.nom,
 				prenom: user.prenom,
@@ -482,7 +482,7 @@ router.put(
 			cleanArrayValue(notice);
 
 			const obj = new Palissy(notice);
-			let oaiObj = { DMAJ: notice.DMAJ };
+			const oaiObj = { DMAJ: notice.DMAJ };
 			checkESIndex(obj);
 
 			const promises = [];
@@ -544,7 +544,7 @@ router.post(
 			await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
 			await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
 
-			let oaiObj = {
+			const oaiObj = {
 				REF: notice.REF,
 				BASE: "palissy",
 				DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD"),
@@ -656,7 +656,7 @@ router.delete(
 function determineProducteur(notice) {
 	return new Promise(async (resolve, reject) => {
 		try {
-			let noticeProducteur = await identifyProducteur(
+			const noticeProducteur = await identifyProducteur(
 				"palissy",
 				notice.REF,
 				"",

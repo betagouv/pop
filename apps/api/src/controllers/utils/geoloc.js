@@ -61,7 +61,7 @@ function lambertToWGS84(xy, zone) {
 		return { lat: 0, lon: 0 };
 	}
 
-	const coords = xy.split(";").map((e) => parseFloat(e.trim()));
+	const coords = xy.split(";").map((e) => Number.parseFloat(e.trim()));
 
 	if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
 		return {
@@ -163,7 +163,7 @@ function lambertToWGS84(xy, zone) {
 
 function convertCOORM(COORM, ZONE) {
 	if (COORM) {
-		let coords = COORM.split("/");
+		const coords = COORM.split("/");
 		const arr = [];
 		for (let i = 0; i < coords.length; i++) {
 			const obj = lambertToWGS84(coords[i], ZONE);

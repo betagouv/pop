@@ -1,4 +1,4 @@
-let xml = require("xml");
+const xml = require("xml");
 
 const baseUrl = "https://api.pop.culture.gouv.fr/oai";
 

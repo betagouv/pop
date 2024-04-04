@@ -14,7 +14,7 @@ const Autor = require("../models/autor");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const Producteur = require("../models/producteur");
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 const { checkValidRef } = require("./utils/notice");
 const { cleanArrayValue } = require("./utils/dataFilter");
 
@@ -40,7 +40,7 @@ const { getDepartement } = require("./utils/departments");
 
 // Control properties document, flag each error.
 async function withFlags(notice) {
-	let listPrefix = await getPrefixesFromProducteurs([
+	const listPrefix = await getPrefixesFromProducteurs([
 		"palissy",
 		"merimee",
 		"autor",
@@ -220,7 +220,7 @@ async function updateMemoireImageForNotice(
 	MARQ = "",
 ) {
 	const MEMOIRE = notice.MEMOIRE;
-	let index = MEMOIRE.findIndex((e) => e.ref === REF);
+	const index = MEMOIRE.findIndex((e) => e.ref === REF);
 	if (index !== -1) {
 		// update if needed only
 		if (
@@ -265,14 +265,14 @@ async function updateLinks(notice) {
 
 		// get the original notice to get IMG & COPY
 		//const { REF, IMG, COPY } = notice;
-		let REF = notice.REF;
-		let noticeMemoire = await Memoire.findOne({ REF: REF });
-		let IMG = notice.IMG
+		const REF = notice.REF;
+		const noticeMemoire = await Memoire.findOne({ REF: REF });
+		const IMG = notice.IMG
 			? notice.IMG
 			: noticeMemoire
 				? noticeMemoire.IMG
 				: "";
-		let COPY = notice.COPY
+		const COPY = notice.COPY
 			? notice.COPY
 			: noticeMemoire
 				? noticeMemoire.COPY
@@ -289,8 +289,8 @@ async function updateLinks(notice) {
 					? noticeMemoire.TICO
 					: "") ||
 			`${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
-		let LBASE = notice.LBASE || [];
-		let MARQ = notice.MARQ
+		const LBASE = notice.LBASE || [];
+		const MARQ = notice.MARQ
 			? notice.MARQ
 			: noticeMemoire
 				? noticeMemoire.MARQ
@@ -459,7 +459,7 @@ router.put(
 		//Ajout de l'historique de la notice
 		var today = moment.tz(new Date(), timeZone).format("YYYY-MM-DD HH:mm");
 
-		let HISTORIQUE = prevNotice.HISTORIQUE || [];
+		const HISTORIQUE = prevNotice.HISTORIQUE || [];
 		const newHistorique = {
 			nom: user.nom,
 			prenom: user.prenom,
@@ -478,7 +478,7 @@ router.put(
 		cleanArrayValue(notice);
 
 		const obj = new Memoire(notice);
-		let oaiObj = { DMAJ: notice.DMAJ };
+		const oaiObj = { DMAJ: notice.DMAJ };
 		checkESIndex(obj);
 
 		try {
@@ -547,7 +547,7 @@ router.post(
 		//Modification des liens entre bases
 		await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
 		await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
-		let oaiObj = {
+		const oaiObj = {
 			REF: notice.REF,
 			BASE: "memoire",
 			DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD"),
@@ -657,7 +657,7 @@ router.delete(
 async function determineProducteur(notice) {
 	return new Promise(async (resolve, reject) => {
 		try {
-			let noticeProducteur = await identifyProducteur(
+			const noticeProducteur = await identifyProducteur(
 				"memoire",
 				notice.REF,
 				notice.IDPROD,

@@ -123,11 +123,11 @@ router.use("/:indices/_msearch", async (req, res) => {
 
 function addFilterFields(req, opts) {
 	let transformData = false;
-	let reqFilter = opts.body
+	const reqFilter = opts.body
 		.split("\n")
 		.filter((val) => val !== "")
 		.map((val) => {
-			let obj = JSON.parse(val);
+			const obj = JSON.parse(val);
 
 			if (Object.keys(obj).includes("query")) {
 				const listeNonDiffusable = [

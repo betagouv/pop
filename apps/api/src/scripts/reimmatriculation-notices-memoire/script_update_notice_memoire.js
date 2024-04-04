@@ -14,7 +14,7 @@ const limit = 2000;
 
 // Récupère les notices Mémoire a mettre à jour
 async function readCsv() {
-	let noticesMemoire = [];
+	const noticesMemoire = [];
 	let i = 0;
 
 	// vidage des logs précédent
@@ -40,7 +40,7 @@ async function readCsv() {
 			);
 
 			let arrayUpdate = [];
-			let i = 0;
+			const i = 0;
 			noticesMemoire.forEach((notice) => {
 				// Préparation du tableau pour le bulk
 				arrayUpdate.push(notice);

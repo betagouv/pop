@@ -20,8 +20,8 @@ async function getResumptionToken(resumptoken) {
 
 async function createResumptionToken(nbPage, listSize, queryContent) {
 	try {
-		let expDate = new Date();
-		let resumpObj = {
+		const expDate = new Date();
+		const resumpObj = {
 			TOKEN: uuid(),
 			DEXP: moment(expDate.setDate(expDate.getDate() + 1)).format(
 				"YYYY-MM-DDTHH:mm:ss",
@@ -33,7 +33,7 @@ async function createResumptionToken(nbPage, listSize, queryContent) {
 			META: queryContent.metadataPrefix,
 			SIZE: listSize,
 		};
-		let obj = new resumptionToken(resumpObj);
+		const obj = new resumptionToken(resumpObj);
 		const promises = [];
 		promises.push(obj.save());
 		await Promise.all(promises);

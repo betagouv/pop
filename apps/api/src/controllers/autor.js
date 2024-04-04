@@ -18,7 +18,7 @@ const {
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const { checkESIndex, identifyProducteur } = require("../controllers/utils");
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 const timeZone = "Europe/Paris";
 
 router.get("/:ref", async (req, res) => {
@@ -69,7 +69,7 @@ router.put(
 
 		try {
 			const updateMode = req.body.updateMode;
-			let user = req.user;
+			const user = req.user;
 			for (let i = 0; i < notices.length; i++) {
 				var e = notices[i];
 				const ref = e.notice.REF;
@@ -89,14 +89,14 @@ router.put(
 				} else {
 					// Prepare and update notice.
 					await transformBeforeCreateAndUpdate(e.notice, prevNotice);
-					let oaiObj = { DMAJ: e.notice.DMAJ };
+					const oaiObj = { DMAJ: e.notice.DMAJ };
 
 					//Ajout de l'historique de la notice
 					var today = moment
 						.tz(new Date(), timeZone)
 						.format("YYYY-MM-DD HH:mm");
 
-					let HISTORIQUE = e.notice.HISTORIQUE || [];
+					const HISTORIQUE = e.notice.HISTORIQUE || [];
 					const newHistorique = {
 						nom: user.nom,
 						prenom: user.prenom,
@@ -155,12 +155,12 @@ router.put(
 			// Prepare and update notice.
 			await transformBeforeCreateAndUpdate(notice);
 			await determineProducteur(notice);
-			let oaiObj = { DMAJ: notice.DMAJ };
+			const oaiObj = { DMAJ: notice.DMAJ };
 
 			//Ajout de l'historique de la notice
 			var today = moment.tz(new Date(), "YYYY-MM-DD HH:mm", timeZone);
 
-			let HISTORIQUE = notice.HISTORIQUE || [];
+			const HISTORIQUE = notice.HISTORIQUE || [];
 			const newHistorique = {
 				nom: req.user.nom,
 				prenom: req.user.prenom,
@@ -199,18 +199,18 @@ router.post(
       #swagger.description = "Utilisé pour la création du document"  
     */
 		const notices = JSON.parse(req.body.autorNotices);
-		let promises = [];
+		const promises = [];
 		for (let i = 0; i < notices.length; i++) {
 			var e = notices[i];
 			// Clean object.
-			for (let propName in e.notice) {
+			for (const propName in e.notice) {
 				if (!e.notice[propName]) {
 					delete e.notice[propName];
 				}
 			}
 
 			e.notice.DMIS = formattedNow();
-			let oaiObj = {
+			const oaiObj = {
 				REF: e.notice.REF,
 				BASE: "autor",
 				DMAJ: e.notice.DMIS,
@@ -322,7 +322,7 @@ function transformBeforeCreateAndUpdate(notice, prevNotice) {
 async function determineProducteur(notice) {
 	return new Promise(async (resolve, reject) => {
 		try {
-			let noticeProducteur = await identifyProducteur(
+			const noticeProducteur = await identifyProducteur(
 				"autor",
 				notice.REF,
 				"",

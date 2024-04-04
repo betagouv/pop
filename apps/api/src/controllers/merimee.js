@@ -11,7 +11,7 @@ const Memoire = require("../models/memoire");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
-let moment = require("moment-timezone");
+const moment = require("moment-timezone");
 const { checkValidRef, removeChar } = require("./utils/notice");
 const { cleanArrayValue } = require("./utils/dataFilter");
 
@@ -229,7 +229,7 @@ async function transformBeforeCreateOrUpdate(notice) {
 	// IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
 	if (notice.COORM && notice.ZONE) {
 		// Convert it to a proper format in WGS84
-		let convert = convertCOORM(notice.COORM, notice.ZONE);
+		const convert = convertCOORM(notice.COORM, notice.ZONE);
 		coordinates = convert.coordinates ? convert.coordinates : [];
 		notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
 	}
@@ -479,7 +479,7 @@ router.put(
 				.tz(new Date(), timeZone)
 				.format("YYYY-MM-DD HH:mm");
 
-			let HISTORIQUE = prevNotice.HISTORIQUE || [];
+			const HISTORIQUE = prevNotice.HISTORIQUE || [];
 			const newHistorique = {
 				nom: user.nom,
 				prenom: user.prenom,
@@ -496,7 +496,7 @@ router.put(
 			await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
 
 			const doc = new Merimee(notice);
-			let oaiObj = { DMAJ: notice.DMAJ };
+			const oaiObj = { DMAJ: notice.DMAJ };
 
 			// Suppression des valeurs vident pour les champs multivalues
 			cleanArrayValue(notice);
@@ -541,7 +541,7 @@ router.post(
 			//Modification liens entre bases
 			await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
 			await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
-			let oaiObj = {
+			const oaiObj = {
 				REF: notice.REF,
 				BASE: "merimee",
 				DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD"),
@@ -652,7 +652,7 @@ router.delete(
 function determineProducteur(notice) {
 	return new Promise(async (resolve, reject) => {
 		try {
-			let noticeProducteur = await identifyProducteur(
+			const noticeProducteur = await identifyProducteur(
 				"merimee",
 				notice.REF,
 				"",

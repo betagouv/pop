@@ -178,7 +178,7 @@ async function run() {
 										let lastId;
 										while (true) {
 											try {
-												let notices = await noticeClass
+												const notices = await noticeClass
 													.find(
 														lastId
 															? {
@@ -198,7 +198,7 @@ async function run() {
 												}
 
 												const bulk = [];
-												for (let i in notices) {
+												for (const i in notices) {
 													const notice = JSON.parse(
 														JSON.stringify(
 															notices[i],
