@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import inv from "../../../assets/inventaire.jpg";
 import mh from "../../../assets/mh.png";
 import mpp from "../../../assets/mpp.png";
-import { bucket_url } from "../../../config.js";
+import { bucket_url } from "../../../config;
 import utils from "./utils";
 const castToArray = utils.castToArray;
 

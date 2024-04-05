@@ -5,7 +5,7 @@ import jr from "../../../assets/JR.S.jpg";
 import inv from "../../../assets/inventaire.jpg";
 import mdi from "../../../assets/logoMDI.png";
 import mh from "../../../assets/mh.png";
-import { bucket_url } from "../../../config.js";
+import { bucket_url } from "../../../config;
 
 import utils from "./utils";
 

@@ -409,6 +409,9 @@ importers:
       react-redux-toastr:
         specifier: ^7.6.5
         version: 7.6.13(prop-types@15.8.1)(react-redux@7.2.9)(react@17.0.2)(redux@4.2.1)
+      react-router:
+        specifier: 5.3.4
+        version: 5.3.4(react@17.0.2)
       react-router-dom:
         specifier: ^5.2.0
         version: 5.3.4(react@17.0.2)

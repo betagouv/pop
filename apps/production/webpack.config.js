@@ -41,12 +41,12 @@ module.exports = (env) => {
 
 	return {
 		mode: "production",
-		entry: ["@babel/polyfill", "./src/index.js"],
+		entry: ["@babel/polyfill", "./src/index.jsx"],
 		devtool: false,
 		bail: true,
 		output: {
 			path: path.resolve("build"),
-			filename: "[contenthash].index.js",
+			filename: "[contenthash].index.[ext]",
 			publicPath: "/",
 		},
 		resolve: {
@@ -66,7 +66,7 @@ module.exports = (env) => {
 					use: [{ loader: "style-loader" }, { loader: "css-loader" }],
 				},
 				{
-					test: /\.js$/,
+					test: /\.(js|jsx)$/,
 					loader: "babel-loader",
 					include: path.resolve("src"),
 					exclude: /node_modules|__tests__/,

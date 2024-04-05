@@ -35,6 +35,7 @@
 		"react-leaflet": "^3.2.1",
 		"react-redux": "^7.2.4",
 		"react-redux-toastr": "^7.6.5",
+		"react-router": "5.3.4",
 		"react-router-dom": "^5.2.0",
 		"react-tag-input": "^6.7.3",
 		"react-viewer": "^3.2.2",

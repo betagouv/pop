@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { bucket_url } from "../../../config.js";
+import { bucket_url } from "../../../config;
 
 export default ({ data }) => {
 	let img = null;

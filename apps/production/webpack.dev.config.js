@@ -1,5 +1,4 @@
 const path = require("node:path");
-
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
@@ -25,7 +24,7 @@ module.exports = (env) => {
 
 	return {
 		mode: "development",
-		entry: ["./src/index.js"],
+		entry: ["./src/index.jsx"],
 		devtool: "source-map",
 		output: {
 			path: path.resolve("build"),
@@ -42,6 +41,7 @@ module.exports = (env) => {
 			},
 		},
 		resolve: {
+			extensions: [".", ".js", ".jsx"],
 			fallback: {
 				buffer: require.resolve("buffer/"),
 				fs: false,
@@ -58,7 +58,7 @@ module.exports = (env) => {
 					use: [{ loader: "style-loader" }, { loader: "css-loader" }],
 				},
 				{
-					test: /\.js$/,
+					test: /\.(js|jsx)$/,
 					loader: "babel-loader",
 					include: path.resolve("src"),
 					exclude: /(node_modules|__tests__)/,
@@ -67,7 +67,7 @@ module.exports = (env) => {
 					},
 				},
 				{
-					test: /\.js$/,
+					test: /\.(js|jsx)$/,
 					include: path.resolve(
 						"node_modules/@popproject/pop-react-elasticsearch",
 					),
