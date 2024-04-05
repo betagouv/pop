@@ -1,22 +1,22 @@
 import React from "react";
-import { Row, Col, Container, Button, Form } from "reactstrap";
-import { reduxForm } from "redux-form";
-import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import { toastr } from "react-redux-toastr";
 import { Link } from "react-router-dom";
+import { Button, Col, Container, Form, Row } from "reactstrap";
+import { reduxForm } from "redux-form";
+import Loader from "../../components/Loader";
+import { bucket_url, pop_url } from "../../config";
+import Joconde from "../../entities/Joconde";
+import API from "../../services/api";
 import Mapping from "../../services/mapping";
-import DeleteButton from "./components/DeleteButton";
+import AccordionHistorique from "./components/AccordionHistorique";
 import BackButton from "./components/BackButton";
+import DeleteButton from "./components/DeleteButton";
+import Comments from "./components/comments.js";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
-import Section from "./components/section.js";
-import Comments from "./components/comments.js";
 import MapComponent from "./components/map.js";
-import Joconde from "../../entities/Joconde";
-import Loader from "../../components/Loader";
-import API from "../../services/api";
-import { bucket_url, pop_url } from "../../config";
-import AccordionHistorique from "./components/AccordionHistorique";
+import Section from "./components/section.js";
 
 import "./index.css";
 

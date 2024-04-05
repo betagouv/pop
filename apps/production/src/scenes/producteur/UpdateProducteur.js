@@ -61,7 +61,9 @@ class UpdateProducteur extends React.Component {
 	//Méthode de suppression d'une ligne à l'index renseigné
 	deleteBaseLine(index) {
 		this.setState({
-			baseList: this.state.baseList.filter((item) => item.index !== index),
+			baseList: this.state.baseList.filter(
+				(item) => item.index !== index,
+			),
 		});
 	}
 

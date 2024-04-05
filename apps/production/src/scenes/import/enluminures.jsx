@@ -1,12 +1,12 @@
 import React from "react";
-import { Container } from "reactstrap";
 import { connect } from "react-redux";
-import Mapping from "../../services/mapping";
-import Importer from "./importer";
+import { Container } from "reactstrap";
+import { bucket_url, pop_url } from "../../config";
 import Enluminures from "../../entities/Enluminures";
-import utils from "./utils";
-import { pop_url, bucket_url } from "../../config";
+import Mapping from "../../services/mapping";
 import { slugifyFilename } from "../notice/components/utils";
+import Importer from "./importer";
+import utils from "./utils";
 
 class Import extends React.Component {
 	async parseFiles(files, encoding) {

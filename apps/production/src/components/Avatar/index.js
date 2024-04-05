@@ -17,9 +17,9 @@ export default ({ email, photoURL }) => {
 			</span>
 		);
 	}
-		return (
-			<span className="avatar">
-				<img className="Logo" alt="" src={photoURL} />
-			</span>
-		);
+	return (
+		<span className="avatar">
+			<img className="Logo" alt="" src={photoURL} />
+		</span>
+	);
 };

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
 import {
-	Elasticsearch,
-	SearchBox,
-	Results,
-	toUrlQueryString,
-	fromUrlQueryString,
 	ActiveFilters,
+	Elasticsearch,
+	Results,
+	SearchBox,
+	fromUrlQueryString,
+	toUrlQueryString,
 } from "@popproject/pop-react-elasticsearch";
-import { Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Row, Col } from "reactstrap";
+import { Redirect } from "react-router-dom";
+import { Col, Row } from "reactstrap";
+import { bucket_url, es_url } from "../../config.js";
 import CollapsableFacet from "../search/components/CollapsableFacet.js";
-import { es_url, bucket_url } from "../../config.js";
 import utils from "../search/components/utils.js";
 import "./index.css";
 

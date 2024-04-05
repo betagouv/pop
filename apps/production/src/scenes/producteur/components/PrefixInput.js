@@ -29,7 +29,9 @@ export default class PrefixInput extends React.Component {
 		if (!Array.isArray(this.props.prefixes)) {
 			return (
 				<div>
-					{"Les préfixes devrait être une liste mais est un élément unique"}
+					{
+						"Les préfixes devrait être une liste mais est un élément unique"
+					}
 				</div>
 			);
 		}

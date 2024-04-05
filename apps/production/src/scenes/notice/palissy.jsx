@@ -1,24 +1,24 @@
 import React from "react";
-import { Row, Col, Container, Button, Form } from "reactstrap";
-import { reduxForm } from "redux-form";
-import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
-import Mapping from "../../services/mapping";
+import { toastr } from "react-redux-toastr";
 import { Link } from "react-router-dom";
-import DeleteButton from "./components/DeleteButton";
+import { Button, Col, Container, Form, Row } from "reactstrap";
+import { reduxForm } from "redux-form";
+import Loader from "../../components/Loader";
+import { bucket_url, pop_url } from "../../config.js";
+import Palissy from "../../entities/Palissy";
+import API from "../../services/api";
+import Mapping from "../../services/mapping";
+import AccordionHistorique from "./components/AccordionHistorique";
 import BackButton from "./components/BackButton";
+import DeleteButton from "./components/DeleteButton";
+import InputFiles from "./components/InputFiles";
+import Comments from "./components/comments.js";
 import Field from "./components/field";
 import FieldImages from "./components/fieldImages";
-import Section from "./components/section.js";
-import Comments from "./components/comments.js";
 import MapComponent from "./components/map.js";
-import { bucket_url, pop_url } from "../../config.js";
-import Loader from "../../components/Loader";
-import InputFiles from "./components/InputFiles";
-import API from "../../services/api";
-import Palissy from "../../entities/Palissy";
+import Section from "./components/section.js";
 import "./index.css";
-import AccordionHistorique from "./components/AccordionHistorique";
 
 class Notice extends React.Component {
 	state = {

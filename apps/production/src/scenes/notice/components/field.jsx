@@ -1,8 +1,8 @@
+import autosize from "autosize";
 import React from "react";
-import { Field } from "redux-form";
 import { WithContext as Tags } from "react-tag-input";
 import { UncontrolledTooltip } from "reactstrap";
-import autosize from "autosize";
+import { Field } from "redux-form";
 import api from "../../../services/api";
 import "./field.css";
 

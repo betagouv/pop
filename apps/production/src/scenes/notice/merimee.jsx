@@ -1,23 +1,23 @@
 import React from "react";
-import { Row, Col, Container, Button, Form } from "reactstrap";
-import { reduxForm } from "redux-form";
-import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
-import Mapping from "../../services/mapping";
+import { toastr } from "react-redux-toastr";
 import { Link } from "react-router-dom";
-import DeleteButton from "./components/DeleteButton";
-import BackButton from "./components/BackButton";
-import Field from "./components/field.js";
-import FieldImages from "./components/fieldImages";
-import InputFiles from "./components/InputFiles";
-import Section from "./components/section.js";
-import MapComponent from "./components/map.js";
-import Comments from "./components/comments.js";
+import { Button, Col, Container, Form, Row } from "reactstrap";
+import { reduxForm } from "redux-form";
+import Loader from "../../components/Loader";
 import { bucket_url, pop_url } from "../../config.js";
 import Merimee from "../../entities/Merimee";
-import Loader from "../../components/Loader";
 import API from "../../services/api";
+import Mapping from "../../services/mapping";
 import AccordionHistorique from "./components/AccordionHistorique";
+import BackButton from "./components/BackButton";
+import DeleteButton from "./components/DeleteButton";
+import InputFiles from "./components/InputFiles";
+import Comments from "./components/comments.js";
+import Field from "./components/field.js";
+import FieldImages from "./components/fieldImages";
+import MapComponent from "./components/map.js";
+import Section from "./components/section.js";
 
 import "./index.css";
 

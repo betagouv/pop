@@ -5,8 +5,8 @@ import { Redirect } from "react-router-dom";
 import { Button, Container, Input } from "reactstrap";
 
 import Loader from "../../components/Loader";
-import api from "../../services/api";
 import authAction from "../../redux/auth/actions";
+import api from "../../services/api";
 const { logout, signinByToken } = authAction;
 import { message_info_password } from "../../config";
 

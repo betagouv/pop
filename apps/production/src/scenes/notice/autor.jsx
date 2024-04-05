@@ -1,20 +1,20 @@
 import React from "react";
-import { bucket_url, pop_url } from "../../config.js";
-import { Col, Container, Button, Form, Row } from "reactstrap";
-import { reduxForm } from "redux-form";
-import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
-import Mapping from "../../services/mapping.js";
-import FieldImages from "./components/fieldImages.js";
+import { toastr } from "react-redux-toastr";
 import { Link } from "react-router-dom";
+import { Button, Col, Container, Form, Row } from "reactstrap";
+import { reduxForm } from "redux-form";
+import Loader from "../../components/Loader/index.js";
+import { bucket_url, pop_url } from "../../config.js";
+import Autor from "../../entities/Autor.js";
+import API from "../../services/api.js";
+import Mapping from "../../services/mapping.js";
+import AccordionHistorique from "./components/AccordionHistorique.js";
 import BackButton from "./components/BackButton.js";
 import DeleteButton from "./components/DeleteButton.js";
 import Field from "./components/field.js";
+import FieldImages from "./components/fieldImages.js";
 import Section from "./components/section.js";
-import Loader from "../../components/Loader/index.js";
-import API from "../../services/api.js";
-import Autor from "../../entities/Autor.js";
-import AccordionHistorique from "./components/AccordionHistorique.js";
 
 import "./index.css";
 

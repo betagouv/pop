@@ -4,7 +4,7 @@ import utils from "../components/utils";
 
 export default function CollapsableFacet({ initialCollapsed, title, ...rest }) {
 	initialCollapsed = initialCollapsed !== undefined ? initialCollapsed : true;
-	initialCollapsed = !(rest.initialValue?.length);
+	initialCollapsed = !rest.initialValue?.length;
 	const [collapsed, setCollapsed] = useState(initialCollapsed);
 
 	function FacetWrapper() {

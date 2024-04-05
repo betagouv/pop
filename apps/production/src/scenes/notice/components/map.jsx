@@ -83,9 +83,7 @@ export default class MapComponent extends React.Component {
 			];
 		}
 
-		if (
-			POP_COORDINATES_POLYGON?.coordinates?.length
-		) {
+		if (POP_COORDINATES_POLYGON?.coordinates?.length) {
 			center = POP_COORDINATES_POLYGON.coordinates[0];
 		}
 

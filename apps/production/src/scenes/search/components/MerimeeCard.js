@@ -25,13 +25,17 @@ export default ({ data }) => {
 	const productorImage = (p) => {
 		if (p === "Inventaire") {
 			return <img src={inv} className="producteur" />;
-		}if (p === "Monuments Historiques") {
+		}
+		if (p === "Monuments Historiques") {
 			return <img src={mh} className="producteur mh" />;
-		}if (p === "Label Maisons des illustres") {
+		}
+		if (p === "Label Maisons des illustres") {
 			return <img src={mdi} className="producteur mdi" />;
-		}if (p === "Label Jardin remarquable") {
+		}
+		if (p === "Label Jardin remarquable") {
 			return <img src={jr} className="producteur jr" />;
-		}if (p === "Label Architecture contemporaine remarquable") {
+		}
+		if (p === "Label Architecture contemporaine remarquable") {
 			return <img src={acr} className="producteur acr" />;
 		}
 		return <div />;

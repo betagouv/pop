@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Col, Row } from "reactstrap";
 import "./section.css";
 
 export default ({ title, icon, color, children }) => {

@@ -57,9 +57,7 @@ class Producteur extends React.Component {
 																(
 																	itemPrefix,
 																) => {
-																	return (
-																		` ${itemPrefix}`
-																	);
+																	return ` ${itemPrefix}`;
 																},
 															)} )`
 														: "")}

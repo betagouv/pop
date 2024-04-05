@@ -1,17 +1,17 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import { Route, Switch } from "react-router-dom";
 import API from "../../services/api";
 
-import Home from "./home";
 import Mh from "./MH";
-import Joconde from "./joconde";
-import Mnr from "./mnr";
-import Inv from "./inv";
-import Memoire from "./memoire";
-import List from "./list";
-import Museo from "./museo";
 import Enluminures from "./enluminures";
+import Home from "./home";
+import Inv from "./inv";
+import Joconde from "./joconde";
+import List from "./list";
+import Memoire from "./memoire";
+import Mnr from "./mnr";
+import Museo from "./museo";
 
 class Import extends React.Component {
 	state = {

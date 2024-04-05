@@ -43,9 +43,10 @@ export default class Memoire extends Notice {
 				).length > 0
 			) {
 				this._warnings.push(
-					`Le champ LBASE doit commencer par : ${listPrefix.listePrefix.reduce((result, prefix) =>
+					`Le champ LBASE doit commencer par : ${listPrefix.listePrefix.reduce(
+						(result, prefix) =>
 							result == null ? prefix : `${result}, ${prefix}`,
-						)}`,
+					)}`,
 				);
 			}
 		}

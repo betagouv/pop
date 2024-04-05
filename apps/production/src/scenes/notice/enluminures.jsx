@@ -1,21 +1,21 @@
 import React from "react";
-import { Col, Container, Button, Form, Row } from "reactstrap";
-import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import Mapping from "../../services/mapping";
-import DeleteButton from "./components/DeleteButton";
-import BackButton from "./components/BackButton";
-import Field from "./components/field.js";
-import Section from "./components/section.js";
-import Comments from "./components/comments.js";
-import MapComponent from "./components/map.js";
+import { toastr } from "react-redux-toastr";
+import { Button, Col, Container, Form, Row } from "reactstrap";
+import { reduxForm } from "redux-form";
 import Loader from "../../components/Loader";
-import FieldImages from "./components/fieldImages";
+import { bucket_url, pop_url } from "../../config";
 import EnluminuresEntity from "../../entities/Enluminures";
 import API from "../../services/api";
+import Mapping from "../../services/mapping";
 import AccordionHistorique from "./components/AccordionHistorique";
-import { bucket_url, pop_url } from "../../config";
-import { toastr } from "react-redux-toastr";
+import BackButton from "./components/BackButton";
+import DeleteButton from "./components/DeleteButton";
+import Comments from "./components/comments.js";
+import Field from "./components/field.js";
+import FieldImages from "./components/fieldImages";
+import MapComponent from "./components/map.js";
+import Section from "./components/section.js";
 import "./index.css";
 
 class Enluminures extends React.Component {

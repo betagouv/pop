@@ -63,7 +63,7 @@ const isMhProducteur = (initialValues) => {
 		});
 		return filterKey.length > 0;
 	}
-		return false;
+	return false;
 };
 
 /**

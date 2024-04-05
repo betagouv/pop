@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
 import {
-	Elasticsearch,
-	SearchBox,
-	Results,
-	toUrlQueryString,
-	fromUrlQueryString,
 	ActiveFilters,
+	Elasticsearch,
+	Results,
+	SearchBox,
+	fromUrlQueryString,
+	toUrlQueryString,
 } from "@popproject/pop-react-elasticsearch";
-import { Row, Col } from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { Col, Row } from "reactstrap";
+import { bucket_url, es_url, pop_url } from "../../config.js";
 import CollapsableFacet from "../search/components/CollapsableFacet.js";
-import utils from "./utils.js";
-import "./list.css";
-import { es_url, bucket_url, pop_url } from "../../config.js";
 import p_utils from "../search/components/utils.js";
+import "./list.css";
+import utils from "./utils.js";
 
 export default function List() {
 	const initialValues = fromUrlQueryString(

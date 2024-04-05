@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "reactstrap";
+import Mnr from "../../entities/Mnr";
 import Mapping from "../../services/mapping";
 import Importer from "./importer";
-import Mnr from "../../entities/Mnr";
 
 import utils from "./utils";
 

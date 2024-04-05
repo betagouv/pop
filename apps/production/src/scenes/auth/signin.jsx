@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Container, Button, Row, Col } from "reactstrap";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { Button, Col, Container, Row } from "reactstrap";
 import Actions from "../../redux/auth/actions";
 const { signin } = Actions;
 

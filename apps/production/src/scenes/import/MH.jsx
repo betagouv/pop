@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "reactstrap";
 import Mapping from "../../services/mapping";
-import Importer from "./importer";
 import common_mh_inv from "./common_mh_inv";
+import Importer from "./importer";
 
 export default class Import extends React.Component {
 	render() {

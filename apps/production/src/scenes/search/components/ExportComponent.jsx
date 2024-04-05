@@ -73,12 +73,12 @@ function Loading({ onFinish, collection, ctx, target, header }) {
 				}
 				// TODO: stream the result to preserve client memory and not to crash the browser.
 				const d = new Date();
-				const date = (`0${d.getDate()}`).slice(-2);
-				const month = (`0${d.getMonth() + 1}`).slice(-2);
+				const date = `0${d.getDate()}`.slice(-2);
+				const month = `0${d.getMonth() + 1}`.slice(-2);
 				const year = d.getFullYear();
-				const minutes = (`0${d.getMinutes()}`).slice(-2);
-				const hours = (`0${d.getHours()}`).slice(-2);
-				const secondes = (`0${d.getSeconds()}`).slice(-2);
+				const minutes = `0${d.getMinutes()}`.slice(-2);
+				const hours = `0${d.getHours()}`.slice(-2);
+				const secondes = `0${d.getSeconds()}`.slice(-2);
 				const fileName = `${collection}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
 				exportData(fileName, docs, header);
 				onFinish();
@@ -219,7 +219,7 @@ async function exportData(fileName, entities, header) {
 			if (typeof value === "object") {
 				value = JSON.stringify(value);
 			}
-			value = (`${value}`).replace(/"/g, '""');
+			value = `${value}`.replace(/"/g, '""');
 
 			//Traitement spécifique pour la base Muséofile
 			if (

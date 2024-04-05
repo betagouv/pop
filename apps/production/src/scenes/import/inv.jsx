@@ -1,12 +1,12 @@
 import React from "react";
 import { Container } from "reactstrap";
-import Mapping from "../../services/mapping";
-import Importer from "./importer";
-import common_mh_inv from "./common_mh_inv";
+import Memoire from "../../entities/Memoire";
 import Merimee from "../../entities/Merimee";
 import Palissy from "../../entities/Palissy";
-import Memoire from "../../entities/Memoire";
+import Mapping from "../../services/mapping";
 import { slugifyFilename } from "../notice/components/utils";
+import common_mh_inv from "./common_mh_inv";
+import Importer from "./importer";
 
 import utils from "./utils";
 

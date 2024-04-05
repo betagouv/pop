@@ -21,7 +21,8 @@ export default ({ data }) => {
 	const productorImage = (p) => {
 		if (p === "Inventaire") {
 			return <img src={inv} className="producteur" />;
-		}if (p === "Monuments Historiques") {
+		}
+		if (p === "Monuments Historiques") {
 			return <img src={mh} className="producteur mh" />;
 		}
 		return <div />;
