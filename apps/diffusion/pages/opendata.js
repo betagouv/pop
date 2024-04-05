@@ -63,7 +63,7 @@ export default class extends React.Component {
 						code des relations entre le public et l’Administration,
 						regroupées au sein de la plateforme POP, sont
 						téléchargeables sur{" "}
-						<a href="https://data.culture.gouv.fr" target="_blank">
+						<a href="https://data.culture.gouv.fr" target="_blank" rel="noreferrer">
 							https://data.culture.gouv.fr
 						</a>
 						<br />
@@ -92,7 +92,7 @@ export default class extends React.Component {
 						sont tenus au respect de{" "}
 						<a
 							href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000038528420/"
-							target="_blank"
+							target="_blank" rel="noreferrer"
 						>
 							la loi Informatique et Libertés
 						</a>
@@ -140,7 +140,7 @@ export default class extends React.Component {
 						<li>
 							<a
 								href="https://data.culture.gouv.fr/explore/dataset/base-joconde-extrait/"
-								target="_blank"
+								target="_blank" rel="noreferrer"
 							>
 								Joconde
 							</a>
@@ -149,7 +149,7 @@ export default class extends React.Component {
 						<li>
 							<a
 								href="https://data.culture.gouv.fr/explore/dataset/liste-des-objets-mobiliers-propriete-publique-classes-au-titre-des-monuments-/"
-								target="_blank"
+								target="_blank" rel="noreferrer"
 							>
 								Palissy MH
 							</a>
@@ -158,7 +158,7 @@ export default class extends React.Component {
 						<li>
 							<a
 								href="https://data.culture.gouv.fr/explore/dataset/liste-des-immeubles-proteges-au-titre-des-monuments-historiques/table/"
-								target="_blank"
+								target="_blank" rel="noreferrer"
 							>
 								Mérimée MH
 							</a>
@@ -167,7 +167,7 @@ export default class extends React.Component {
 						<li>
 							<a
 								href="https://data.culture.gouv.fr/explore/dataset/musees-de-france-base-museofile/information/"
-								target="_blank"
+								target="_blank" rel="noreferrer"
 							>
 								Muséofile
 							</a>
@@ -176,7 +176,7 @@ export default class extends React.Component {
 						<li>
 							<a
 								href="https://data.culture.gouv.fr/explore/dataset/base-autor-ressources-biographiques-et-identification-des-auteurs/information/"
-								target="_blank"
+								target="_blank" rel="noreferrer"
 							>
 								Autor
 							</a>

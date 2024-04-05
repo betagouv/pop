@@ -7,12 +7,12 @@ export async function findCollection(ref = "") {
 	if (typeof ref !== "string") {
 		return "";
 	}
-	let collection = "";
+	const collection = "";
 	let producteurs = [];
 	const response = await API.getProducteurs();
 
 	//Bases ne contenant pas de prefixes
-	let possibleBases = [];
+	const possibleBases = [];
 
 	if (response && response.producteurs) {
 		producteurs = response.producteurs;
@@ -214,9 +214,9 @@ export function highlighting(wholeWord) {
 export function lastSearch(searchParams, searchParamsUrl, pop_url) {
 	if (searchParams.idQuery) {
 		let url;
-		let view = searchParams.last_view;
+		const view = searchParams.last_view;
 		if (searchParams.qb) {
-			let list = searchParamsUrl.split("qb=");
+			const list = searchParamsUrl.split("qb=");
 			url = `${pop_url}/advanced-search/${view}/${searchParams.base}?qb=${list[1]}`;
 		} else {
 			url = `${pop_url}/search/${view}?${searchParamsUrl}`;

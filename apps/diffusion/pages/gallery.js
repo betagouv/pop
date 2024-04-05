@@ -18,7 +18,7 @@ export default class extends React.Component {
 			const gallery = await API.getGallery(id);
 			// Gallery should have params.
 			if (gallery.params) {
-				let { view, mode, ...params } = gallery.params;
+				const { view, mode, ...params } = gallery.params;
 				// Add gallery id to params
 				params.gallery = JSON.stringify(id);
 				// "res" means server-side.

@@ -1,13 +1,14 @@
 import { View, Text, Image, Link } from "@react-pdf/renderer";
-import { bucket_url, pop_url } from "./../../config";
 import { styles } from "../../pdf/pdfNotice/styles";
 import { getNoticeInfo } from "../../utils";
+import { bucket_url, pop_url } from "./../../config";
 
-export function MerimeeAbregeePdf(notice) {
-	const { title, logo, localisation } = getNoticeInfo(notice);
-	const line3 = concatTabs(notice.AUTR, notice.SCLE);
-	const line4 =
-		notice.STAT + (notice.STAT && notice.DPRO ? " ; " : "") + notice.DPRO;
+export function PalissyAbregeePdf(notice) {
+	const { title, subtitle, logo, localisation } = getNoticeInfo(notice);
+	const line3 = concatTabs(notice.CATE, notice.MATR);
+	const line4 = concatTabs(notice.AUTR, notice.SCLE);
+	const line5 =
+		notice.STAT.join(" , ") + (notice.DPRO ? " ; " + notice.DPRO : "");
 
 	return (
 		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
@@ -29,14 +30,18 @@ export function MerimeeAbregeePdf(notice) {
 				<View style={styles.noticeAbregeeDetails}>
 					<View style={styles.leftContent}>
 						<Text style={styles.abregeeContentTitle}>{title}</Text>
+						<Text style={styles.abregeeContentSubtitle}>
+							{subtitle}
+						</Text>
 						<Text style={styles.abregeeContentText}>
 							{localisation}
 						</Text>
 						<Text style={styles.abregeeContentText}>{line3}</Text>
 						<Text style={styles.abregeeContentText}>{line4}</Text>
+						<Text style={styles.abregeeContentText}>{line5}</Text>
 					</View>
 					<View style={styles.rightContent}>
-						<Text style={styles.abregeeBase}>Mérimée</Text>
+						<Text style={styles.abregeeBase}>Palissy</Text>
 						<Text style={styles.abregeeREF}>{notice.REF}</Text>
 						{logo != null && logo !== "" ? (
 							<Image style={styles.logo} src={logo} />
@@ -51,7 +56,7 @@ export function MerimeeAbregeePdf(notice) {
 }
 
 function concatTabs(tab1, tab2) {
-	let tab = [];
-	let string = tab.concat(tab1).concat(tab2).join(", ");
+	const tab = [];
+	const string = tab.concat(tab1).concat(tab2).join(", ");
 	return string;
 }

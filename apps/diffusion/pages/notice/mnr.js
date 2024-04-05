@@ -175,10 +175,10 @@ export default class extends React.Component {
 				})}`;
 				// M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice
 				if (d.indexOf("#") > -1) {
-					d = d.replace(new RegExp("#", "g"), "\n");
+					d = d.replace(/#/g, "\n");
 				}
 				return (
-					<a href={url} key={d} target="_blank">
+					<a href={url} key={d} target="_blank" rel="noreferrer">
 						{d}
 					</a>
 				);
@@ -627,7 +627,7 @@ const SeeMore = () => {
 					<Link href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945">
 						<a
 							href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945"
-							target="_blank"
+							target="_blank" rel="noreferrer"
 						>
 							www.culture.gouv.fr/spoliations-restitutions-1933-1945
 						</a>

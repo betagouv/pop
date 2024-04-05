@@ -204,14 +204,14 @@ export default class Map extends React.Component {
 			});
 		}
 
-		for (let key in removeList) {
+		for (const key in removeList) {
 			if (!this.markers[key]._isSelected) {
 				this.markers[key].remove();
 				delete this.markers[key];
 			}
 		}
 
-		for (let key in newMarkers) {
+		for (const key in newMarkers) {
 			newMarkers[key].addTo(this.map);
 			this.markers[key] = newMarkers[key];
 		}

@@ -26,7 +26,7 @@ function joinData(data) {
 }
 // Takes `[["foo", "bar"], ["foo"], "bar"]`, returns "foo, bar"
 function pickFirst(data) {
-	let [first] = withoutEmptyStrings(data);
+	const [first] = withoutEmptyStrings(data);
 	return first;
 }
 

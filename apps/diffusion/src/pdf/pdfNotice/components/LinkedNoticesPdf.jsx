@@ -1,5 +1,5 @@
 import { View, Text, Image, Link } from "@react-pdf/renderer";
-import { styles } from "../../pdfNotice/styles";
+import { styles } from "../styles";
 import { getNoticeInfo } from "../../../utils";
 
 export function LinkedNoticesPdf(notice) {

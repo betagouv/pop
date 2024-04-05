@@ -1,24 +1,21 @@
 import { View, Text, Image, Link } from "@react-pdf/renderer";
 import { styles } from "../../pdf/pdfNotice/styles";
-import { getNoticeInfo } from "../../utils";
 import { bucket_url, pop_url } from "./../../config";
+import { getNoticeInfo } from "../../utils";
 
-export function PalissyAbregeePdf(notice) {
-	const { title, subtitle, logo, localisation } = getNoticeInfo(notice);
-	const line3 = concatTabs(notice.CATE, notice.MATR);
-	const line4 = concatTabs(notice.AUTR, notice.SCLE);
-	const line5 =
-		notice.STAT.join(" , ") + (notice.DPRO ? " ; " + notice.DPRO : "");
+export function MuseoAbregeePdf(notice) {
+	const { title, subtitle, image_preview, localisation } =
+		getNoticeInfo(notice);
 
 	return (
 		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
 			<View style={styles.noticeAbregeeContainer}>
 				<View style={styles.imageAbregee}>
-					{notice.MEMOIRE.length > 0 ? (
+					{notice.PHOTO ? (
 						<Image
 							src={
 								bucket_url +
-								notice.MEMOIRE[0].url +
+								notice.PHOTO +
 								"?" +
 								new Date().getTime()
 							}
@@ -34,20 +31,19 @@ export function PalissyAbregeePdf(notice) {
 							{subtitle}
 						</Text>
 						<Text style={styles.abregeeContentText}>
+							{notice.NOMOFF ? "" : notice.NOMUSAGE}
+						</Text>
+						<Text style={styles.abregeeContentText}>
 							{localisation}
 						</Text>
-						<Text style={styles.abregeeContentText}>{line3}</Text>
-						<Text style={styles.abregeeContentText}>{line4}</Text>
-						<Text style={styles.abregeeContentText}>{line5}</Text>
 					</View>
 					<View style={styles.rightContent}>
-						<Text style={styles.abregeeBase}>Palissy</Text>
+						<Text style={styles.abregeeBase}>Museo</Text>
 						<Text style={styles.abregeeREF}>{notice.REF}</Text>
-						{logo != null && logo !== "" ? (
-							<Image style={styles.logo} src={logo} />
-						) : (
-							<Text></Text>
-						)}
+						<Image
+							style={styles.logo}
+							src="/static/musee-de-france.png"
+						/>
 					</View>
 				</View>
 			</View>
@@ -56,7 +52,7 @@ export function PalissyAbregeePdf(notice) {
 }
 
 function concatTabs(tab1, tab2) {
-	let tab = [];
-	let string = tab.concat(tab1).concat(tab2).join(", ");
+	const tab = [];
+	const string = tab.concat(tab1).concat(tab2).join(", ");
 	return string;
 }

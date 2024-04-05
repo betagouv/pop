@@ -88,7 +88,7 @@ export function EnluminuresPdf(notice, title, typeNotice, links) {
 									>
 										<a
 											href={notice.LIENS[0]}
-											target="_blank"
+											target="_blank" rel="noreferrer"
 										>
 											<Text>
 												Voir la notice de la base
@@ -105,7 +105,7 @@ export function EnluminuresPdf(notice, title, typeNotice, links) {
 												>
 													<a
 														href={lien}
-														target="_blank"
+														target="_blank" rel="noreferrer"
 													>
 														<Text>
 															Voir la notice de la

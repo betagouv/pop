@@ -16,7 +16,7 @@ export default class MobileBucketButton extends React.Component {
 	addToBucket(base, ref) {
 		//Récupération du panier actuel dans les cookies
 		const cookies = new Cookies();
-		let currentBucket = cookies.get("currentBucket") || [];
+		const currentBucket = cookies.get("currentBucket") || [];
 
 		//Si on a bien une ref et une base, on ajoute la notice au panier
 		if (base && ref) {
@@ -53,7 +53,7 @@ export default class MobileBucketButton extends React.Component {
 	removeFromBucket(base, ref) {
 		//Récupération du panier actuel dans les cookies
 		const cookies = new Cookies();
-		let currentBucket = cookies.get("currentBucket") || [];
+		const currentBucket = cookies.get("currentBucket") || [];
 
 		//Si on a bien une ref et une base, on ajoute la notice au panier
 		if (base && ref) {
@@ -82,7 +82,7 @@ export default class MobileBucketButton extends React.Component {
 	checkInBucket(base, ref) {
 		//Récupération du panier actuel dans les cookies
 		const cookies = new Cookies();
-		let currentBucket = cookies.get("currentBucket") || [];
+		const currentBucket = cookies.get("currentBucket") || [];
 
 		//Si on a bien une ref et une base, return true
 		if (base && ref) {

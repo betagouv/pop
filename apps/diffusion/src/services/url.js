@@ -73,7 +73,7 @@ export function replaceSearchRouteWithUrl(options = {}) {
 
 export function pushSearchRoute(options = {}) {
 	const { mode, view, base } = options;
-	let { params } = options;
+	const { params } = options;
 
 	// Get all search params displayed in current URL as real JS values (not stringified).
 	const prevParams = JsonParseValues(

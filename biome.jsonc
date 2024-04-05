@@ -16,7 +16,8 @@
     "rules": {
       "recommended": true,
       "complexity": {
-        "noForEach": "warn"
+        "noForEach": "warn",
+        "useOptionalChain": "off" // Need compat with some older navs
       },
       "correctness": {
         "useExhaustiveDependencies": "warn"

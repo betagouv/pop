@@ -358,7 +358,7 @@ export default class extends React.Component {
 										content={
 											<a
 												href={"https://" + notice.URL_M}
-												target="_blank"
+												target="_blank" rel="noreferrer"
 											>
 												{notice.URL_M}
 											</a>

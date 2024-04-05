@@ -64,14 +64,14 @@ export default class extends React.Component {
 		const hasBase = Boolean(this.props.base);
 		if (checked) {
 			if (hasBase) {
-				let myBase = this.props.base.split('"');
+				const myBase = this.props.base.split('"');
 				if (myBase.length > 3) {
 					Router.push(
 						"/search?view=list&mode=advanced",
 						"/advanced-search/list/",
 					);
 				} else {
-					let key = bases.find((e) => e.base === myBase[1]).key;
+					const key = bases.find((e) => e.base === myBase[1]).key;
 					Router.push("/advanced-search/list/" + key);
 				}
 			} else {
@@ -116,8 +116,8 @@ export default class extends React.Component {
 		// List key not search filter
 		const keyNotFilter = ["mainSearch", "qb", "last_view", "idQuery"];
 
-		let arrayKey = {};
-		let objFilter = {}; // Objet affiner votre recherche
+		const arrayKey = {};
+		const objFilter = {}; // Objet affiner votre recherche
 		values.forEach((value, key) => {
 			arrayKey[key] = value;
 

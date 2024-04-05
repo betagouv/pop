@@ -61,12 +61,12 @@ export default class Bucket extends React.Component {
 	}
 
 	fillBucket = async () => {
-		let cookies = new Cookies();
+		const cookies = new Cookies();
 		const bucket = cookies.get("currentBucket");
 		try {
-			let newBucket = await Promise.all(
+			const newBucket = await Promise.all(
 				bucket.map(async (item) => {
-					let notice = await API.getNotice(item.base, item.ref);
+					const notice = await API.getNotice(item.base, item.ref);
 					return notice;
 				}),
 			);
@@ -187,7 +187,7 @@ export default class Bucket extends React.Component {
 		let blocIndex = 0;
 
 		const listOfNotices = this.state.bucket;
-		let blocList = [];
+		const blocList = [];
 		let tempList = [];
 
 		listOfNotices.map((notice, index) => {

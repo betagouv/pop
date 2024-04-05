@@ -94,7 +94,7 @@ class SearchAdvanced extends React.Component {
 	 */
 	isMhProducteur() {
 		if (this.props.initialValues.get("qb") !== undefined) {
-			let filterKey = this.props.initialValues
+			const filterKey = this.props.initialValues
 				.get("qb")
 				.filter(
 					(element) =>

@@ -203,7 +203,7 @@ function replaceAll(str, find, replace) {
 
 function addLinkToText(str) {
 	let result;
-	let obj = new Object();
+	const obj = new Object();
 	let i = 1;
 
 	do {
@@ -222,7 +222,7 @@ function addLinkToText(str) {
 		}
 	} while (result.continue);
 
-	let content = [];
+	const content = [];
 
 	for (let j = 1; j <= i; j++) {
 		if (typeof obj["text_" + j] != "undefined") {
@@ -231,13 +231,13 @@ function addLinkToText(str) {
 		if (typeof obj["link_" + j] != "undefined") {
 			if (obj["link_" + j].toLowerCase().indexOf("www") === 0) {
 				content.push(
-					<a href={"http://" + obj["link_" + j]} target="_blank">
+					<a href={"http://" + obj["link_" + j]} target="_blank" rel="noreferrer">
 						{obj["link_" + j]}
 					</a>,
 				);
 			} else {
 				content.push(
-					<a href={obj["link_" + j]} target="_blank">
+					<a href={obj["link_" + j]} target="_blank" rel="noreferrer">
 						{obj["link_" + j]}
 					</a>,
 				);
@@ -256,8 +256,8 @@ function splitString(str) {
 	const length = str.length;
 
 	// Recherche du premier http ou www rencontré
-	let splitHTTP = str.toLowerCase().indexOf(termeHTTP);
-	let splitWWW = str.toLowerCase().indexOf(termeWWW);
+	const splitHTTP = str.toLowerCase().indexOf(termeHTTP);
+	const splitWWW = str.toLowerCase().indexOf(termeWWW);
 	let firstSplit;
 
 	if (splitHTTP !== -1 && splitWWW !== -1) {
@@ -275,19 +275,19 @@ function splitString(str) {
 	}
 
 	// Découpage en 2 selon la première occurence trouvée
-	let text1 = str.substring(0, firstSplit);
-	let text2 = str.substring(firstSplit, length);
+	const text1 = str.substring(0, firstSplit);
+	const text2 = str.substring(firstSplit, length);
 
 	// Découpage de la 2ème partie pour trouver la fin du lien
-	let splitEspace = text2.indexOf(termeEspace);
+	const splitEspace = text2.indexOf(termeEspace);
 
 	if (splitEspace === -1) {
-		let link = text2.substring(0, length);
+		const link = text2.substring(0, length);
 		return { text1: text1, link: link, continue: false };
 	}
 
-	let link = text2.substring(0, splitEspace);
-	let text3 = text2.substring(splitEspace, length);
+	const link = text2.substring(0, splitEspace);
+	const text3 = text2.substring(splitEspace, length);
 
 	return { text1: text1, link: link, text3: text3, continue: true };
 }

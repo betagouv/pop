@@ -70,7 +70,7 @@ export function toGeoJson(arr) {
 			];
 		}
 
-		let feature = {
+		const feature = {
 			type: "Feature",
 			id: item.points[0].meta().key,
 			properties: {

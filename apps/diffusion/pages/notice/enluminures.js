@@ -46,7 +46,7 @@ const SeeMore = ({ notice }) => {
 					title={mapping.enluminures.LIENS.label}
 					content={
 						<Link href={notice.LIENS[0]}>
-							<a href={notice.LIENS[0]} target="_blank">
+							<a href={notice.LIENS[0]} target="_blank" rel="noreferrer">
 								{linkLabel}
 							</a>
 						</Link>
@@ -60,7 +60,7 @@ const SeeMore = ({ notice }) => {
 					<Field
 						content={
 							<Link href={notice.LIENS[i]}>
-								<a href={notice.LIENS[i]} target="_blank">
+								<a href={notice.LIENS[i]} target="_blank" rel="noreferrer">
 									{linkLabel}
 								</a>
 							</Link>

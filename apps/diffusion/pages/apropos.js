@@ -150,7 +150,7 @@ export default class extends React.Component {
 							Valland (MNR-Jeu de Paume), alimentée par la{" "}
 							<a
 								href="https://www.culture.gouv.fr/Nous-connaitre/Organisation/Le-secretariat-general/Mission-de-recherche-et-de-restitution-des-biens-culturels-spolies-entre-1933-et-1945/Biens-culturels-MNR-et-Base-Rose-Valland-MNR-Jeu-de-Paume"
-								target="_blank"
+								target="_blank" rel="noreferrer"
 							>
 								Mission de recherche et de restitution des biens
 								culturels spoliés entre 1933 et 1945
@@ -161,14 +161,14 @@ export default class extends React.Component {
 							l'Einsatzstab Reichsleiter Rosenberg (ERR) au{" "}
 							<a
 								href="https://www.culture.gouv.fr/Nous-connaitre/Organisation/Le-secretariat-general/Mission-de-recherche-et-de-restitution-des-biens-culturels-spolies-entre-1933-et-1945/Recherche-de-provenance-outils-et-methode/Photographies-prises-au-Jeu-de-Paume-pendant-l-Occupation"
-								target="_blank"
+								target="_blank" rel="noreferrer"
 							>
 								musée du Jeu de Paume
 							</a>
 							, lieu de stockage et d’exposition des œuvres
 							spoliées avant leur départ pour l’Allemagne. Les
 							vues générales présentées dans les notices{" "}
-							<a target="_blank" href={getUriJeuDePaume()}>
+							<a target="_blank" href={getUriJeuDePaume()} rel="noreferrer">
 								Jeu de Paume sous l’Occupation
 							</a>{" "}
 							correspondent à quatorze négatifs conservés aux
@@ -180,7 +180,7 @@ export default class extends React.Component {
 							plan des deux niveaux du{" "}
 							<a
 								href="https://www.culture.gouv.fr/Nous-connaitre/Organisation/Le-secretariat-general/Mission-de-recherche-et-de-restitution-des-biens-culturels-spolies-entre-1933-et-1945/Recherche-de-provenance-outils-et-methode/Photographies-prises-au-Jeu-de-Paume-pendant-l-Occupation"
-								target="_blank"
+								target="_blank" rel="noreferrer"
 							>
 								Jeu de Paume
 							</a>

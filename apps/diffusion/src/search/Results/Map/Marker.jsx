@@ -65,7 +65,7 @@ export default class Marker {
 
 function createClusterMarkerElement(feature, color) {
 	const value = feature.properties.count;
-	let el = document.createElement("div");
+	const el = document.createElement("div");
 	el.style.backgroundColor = color;
 	el.className = "marker-cluster";
 	if (value > 100000) {
@@ -77,9 +77,9 @@ function createClusterMarkerElement(feature, color) {
 	} else if (value > 5000) {
 		el.style.width = el.style.height = "55px";
 	}
-	let count = document.createElement("div");
+	const count = document.createElement("div");
 	count.className = "count";
-	let countText = document.createTextNode(value);
+	const countText = document.createTextNode(value);
 	count.appendChild(countText);
 	el.appendChild(count);
 	return el;
@@ -87,7 +87,7 @@ function createClusterMarkerElement(feature, color) {
 
 function createMarkerElement(feature) {
 	const notice = feature.properties.hits[0];
-	let el = document.createElement("div");
+	const el = document.createElement("div");
 
 	const { image_preview, logo } = getNoticeInfo(notice._source);
 

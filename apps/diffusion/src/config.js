@@ -11,15 +11,15 @@ function deleteLastSlash(url) {
 	return url;
 }
 
-let api_url = deleteLastSlash(publicRuntimeConfig.api_url);
+const api_url = deleteLastSlash(publicRuntimeConfig.api_url);
 const server_api_url = deleteLastSlash(serverRuntimeConfig.api_url);
-let bucket_url = publicRuntimeConfig.bucket_url + "/";
-let pop_url = publicRuntimeConfig.pop_url;
-let eurelian = publicRuntimeConfig.eurelian;
-let es_url = `${api_url}/search/`;
+const bucket_url = publicRuntimeConfig.bucket_url + "/";
+const pop_url = publicRuntimeConfig.pop_url;
+const eurelian = publicRuntimeConfig.eurelian;
+const es_url = `${api_url}/search/`;
 const sentryDsn = publicRuntimeConfig.sentryDsn;
 
-let emailContactMnr =
+const emailContactMnr =
 	"isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture.gouv.fr";
 
 module.exports = {

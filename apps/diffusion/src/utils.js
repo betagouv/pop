@@ -85,7 +85,7 @@ export function getNoticeInfo(notice) {
 				subtitle = notice.DOMPAL.join(", ");
 			}
 
-			let localisations = [];
+			const localisations = [];
 			if (notice.VILLE_M) {
 				localisations.push(notice.VILLE_M);
 			}
@@ -95,9 +95,9 @@ export function getNoticeInfo(notice) {
 			if (notice.REGION) {
 				localisations.push(notice.REGION);
 			}
-			let localisation = localisations.join(", ");
+			const localisation = localisations.join(", ");
 
-			let metaDescription = "";
+			const metaDescription = "";
 
 			const image_preview = notice.PHOTO
 				? `${bucket_url}${notice.PHOTO}`
@@ -122,7 +122,7 @@ export function getNoticeInfo(notice) {
 
 			const subtitle = notice.SUJET;
 
-			let metaDescription = "";
+			const metaDescription = "";
 
 			const image_preview = notice.VIDEO.length
 				? `${bucket_url}${notice.VIDEO[0]}`
@@ -150,7 +150,7 @@ export function getNoticeInfo(notice) {
 				logo = "/static/mnr.png";
 			}
 
-			let metaDescription = "";
+			const metaDescription = "";
 
 			const image_preview = notice.VIDEO.length
 				? `${bucket_url}${notice.VIDEO[0]}`
@@ -184,7 +184,7 @@ export function getNoticeInfo(notice) {
 				logo = "/static/materiautheque.png";
 			}
 
-			let metaDescription = "";
+			const metaDescription = "";
 
 			const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
@@ -341,7 +341,7 @@ export function getNoticeInfo(notice) {
 			}
 
 			localisation = localisation.join(" ; ");
-			let metaDescription = "";
+			const metaDescription = "";
 
 			const images = notice.MEMOIRE.map((e, i) => {
 				const src = e.url
@@ -372,7 +372,7 @@ export function getNoticeInfo(notice) {
 			};
 		}
 		case "Ressources biographiques (Autor)": {
-			let title = notice.NOMPRENOM
+			const title = notice.NOMPRENOM
 				? notice.NOMPRENOM
 				: (notice.PREN ? notice.PREN : " ") +
 					(notice.NOM ? notice.NOM : "");
@@ -441,7 +441,7 @@ export function getNoticeInfo(notice) {
 			});
 
 			//Symbole
-			let symbole = isOrfevre ? notice.SYMB : "";
+			const symbole = isOrfevre ? notice.SYMB : "";
 
 			//Dates et lieus d'existence
 			let datesLieus = "";
@@ -463,7 +463,7 @@ export function getNoticeInfo(notice) {
 				(notice.ARK ? "Lien ARK : " + notice.ARK : "");
 
 			//Adresse
-			let adresse = notice?.ADRS;
+			const adresse = notice?.ADRS;
 
 			return {
 				title,
@@ -575,7 +575,7 @@ export function generateLinks(values, name) {
 				[name]: JSON.stringify([a]),
 			})}`;
 			return (
-				<a href={url} key={a} target="_blank">
+				<a href={url} key={a} target="_blank" rel="noreferrer">
 					{a}
 				</a>
 			);

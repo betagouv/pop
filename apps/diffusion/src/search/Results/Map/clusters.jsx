@@ -1,19 +1,15 @@
-"use strict";
+
 // Source: https://github.com/NathanEpstein/clusters/blob/master/clusters.js
 
 // The more this coeff is big, the closer we get to the areas with the most notice
 const COEFF = 2000;
 
 module.exports = {
-	data: getterSetter([], function (arrayOfArrays) {
+	data: getterSetter([], (arrayOfArrays) => {
 		var n = arrayOfArrays[0].length;
 		return arrayOfArrays
-			.map(function (array) {
-				return array.length == n;
-			})
-			.reduce(function (boolA, boolB) {
-				return boolA & boolB;
-			}, true);
+			.map((array) => array.length == n)
+			.reduce((boolA, boolB) => boolA & boolB, true);
 	}),
 
 	clusters: function () {
@@ -24,27 +20,17 @@ module.exports = {
 		var points = pointsAndCentroids.points;
 		var centroids = pointsAndCentroids.centroids;
 
-		return centroids.map(function (centroid) {
-			return {
+		return centroids.map((centroid) => ({
 				centroid: centroid.location(),
 				points: points
-					.filter(function (point) {
-						return point.label() == centroid.label();
-					})
-					.map(function (point) {
-						return point;
-					}),
-			};
-		});
+					.filter((point) => point.label() == centroid.label())
+					.map((point) => point),
+			}));
 	},
 
-	k: getterSetter(undefined, function (value) {
-		return (value % 1 == 0) & (value > 0);
-	}),
+	k: getterSetter(undefined, (value) => (value % 1 == 0) & (value > 0)),
 
-	iterations: getterSetter(Math.pow(10, 3), function (value) {
-		return (value % 1 == 0) & (value > 0);
-	}),
+	iterations: getterSetter(Math.pow(10, 3), (value) => (value % 1 == 0) & (value > 0)),
 };
 
 function kmeans(data, config) {
@@ -53,9 +39,7 @@ function kmeans(data, config) {
 	var iterations = config.iterations;
 
 	// initialize point objects with data
-	var points = data.map(function (vector) {
-		return new Point(vector);
-	});
+	var points = data.map((vector) => new Point(vector));
 
 	// intialize centroids randomly
 	var centroids = [];
@@ -65,10 +49,10 @@ function kmeans(data, config) {
 
 	// update labels and centroid locations until convergence
 	for (var iter = 0; iter < iterations; iter++) {
-		points.forEach(function (point) {
+		points.forEach((point) => {
 			point.updateLabel(centroids);
 		});
-		centroids.forEach(function (centroid) {
+		centroids.forEach((centroid) => {
 			centroid.updateLocation(points);
 		});
 	}
@@ -81,32 +65,26 @@ function kmeans(data, config) {
 
 // objects
 function Point(location) {
-	var self = this;
 	this.meta = getterSetter(location);
 	this.location = getterSetter(location.coordinates);
 	this.label = getterSetter();
-	this.updateLabel = function (centroids) {
-		var distancesSquared = centroids.map(function (centroid) {
-			return sumOfSquareDiffs(
-				self.location(),
+	this.updateLabel = (centroids) => {
+		var distancesSquared = centroids.map((centroid) => sumOfSquareDiffs(
+				this.location(),
 				centroid.location(),
-				self.meta().count / 1000,
-			);
-		});
-		self.label(mindex(distancesSquared));
+				this.meta().count / 1000,
+			));
+		this.label(mindex(distancesSquared));
 	};
 }
 
 function Centroid(initialLocation, label) {
-	var self = this;
 	this.location = getterSetter(initialLocation);
 	this.label = getterSetter(label);
-	this.updateLocation = function (points) {
-		var pointsWithThisCentroid = points.filter(function (point) {
-			return point.label() == self.label();
-		});
+	this.updateLocation = (points) => {
+		var pointsWithThisCentroid = points.filter((point) => point.label() == this.label());
 		if (pointsWithThisCentroid.length > 0)
-			self.location(averageLocation(pointsWithThisCentroid));
+			this.location(averageLocation(pointsWithThisCentroid));
 	};
 }
 
@@ -115,28 +93,20 @@ function getterSetter(initialValue, validator) {
 	var thingToGetSet = initialValue;
 	var isValid =
 		validator ||
-		function (val) {
-			return true;
-		};
-	return function (newValue) {
+		((val) => true);
+	return (newValue) => {
 		if (typeof newValue === "undefined") return thingToGetSet;
 		if (isValid(newValue)) thingToGetSet = newValue;
 	};
 }
 
 function sumOfSquareDiffs(oneVector, anotherVector, weight = 1) {
-	var squareDiffs = oneVector.map(function (component, i) {
-		return Math.pow(weight * (component - anotherVector[i]), 2);
-	});
-	return squareDiffs.reduce(function (a, b) {
-		return a + b;
-	}, 0);
+	var squareDiffs = oneVector.map((component, i) => Math.pow(weight * (component - anotherVector[i]), 2));
+	return squareDiffs.reduce((a, b) => a + b, 0);
 }
 
 function mindex(array) {
-	var min = array.reduce(function (a, b) {
-		return Math.min(a, b);
-	});
+	var min = array.reduce((a, b) => Math.min(a, b));
 	return array.indexOf(min);
 }
 
@@ -152,7 +122,5 @@ function averageLocation(points) {
 		[0, 0],
 	);
 
-	return vectorSum.map(function (val) {
-		return val / total;
-	});
+	return vectorSum.map((val) => val / total);
 }

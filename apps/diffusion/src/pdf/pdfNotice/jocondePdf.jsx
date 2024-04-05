@@ -18,7 +18,7 @@ export function JocondePdf(notice, title, links, museo) {
 				</Text>
 				{/* M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice */}
 				<Text style={styles.title}>
-					{title.replace(new RegExp("#", "g"), "\n")}
+					{title.replace(/#/g, "\n")}
 				</Text>
 
 				<View style={styles.content}>

@@ -52,7 +52,7 @@ export function TextFieldReprPdf(value) {
 		return null;
 	}
 
-	let links = [];
+	const links = [];
 	// Préparation des object urls pour la création des liens
 	value.content.forEach((v) => {
 		// Si la valeur contient des caractères séparateur
@@ -70,7 +70,7 @@ export function TextFieldReprPdf(value) {
 		}
 	});
 
-	let objVal = {};
+	const objVal = {};
 
 	// Création des liens pour chaque valeur
 	if (Array.isArray(links)) {
@@ -84,7 +84,7 @@ export function TextFieldReprPdf(value) {
 							src={item.url ? item.url : item}
 							debug={true}
 						>
-							<a href={item.url} target="_blank">
+							<a href={item.url} target="_blank" rel="noreferrer">
 								{<Text>{item.val.trim()}</Text>}
 							</a>
 						</Link>
@@ -96,13 +96,13 @@ export function TextFieldReprPdf(value) {
 	}
 
 	// Découpage de la chaine pour la gestion du retour à la ligne
-	let splitValue = strValue
+	const splitValue = strValue
 		.split("#")
 		.map((el) => el.trim())
 		.filter((el) => el !== "");
 
 	const renderField = splitValue.map((v) => {
-		let values = [];
+		const values = [];
 		v.split(";").forEach((el) => {
 			el = el.trim();
 			if (el && el !== "") {

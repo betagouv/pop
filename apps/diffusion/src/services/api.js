@@ -1,5 +1,5 @@
 import fetch from "isomorphic-unfetch";
-let { api_url: apiUrl, server_api_url } = require("../config");
+const { api_url: apiUrl, server_api_url } = require("../config");
 import Sentry from "./sentry";
 
 let api_url = apiUrl;
@@ -39,7 +39,7 @@ class api {
 	}
 
 	createGallery(params) {
-		let formData = new FormData();
+		const formData = new FormData();
 		formData.append("gallery", JSON.stringify({ params }));
 
 		return fetch(`${api_url}/gallery`, {

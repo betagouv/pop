@@ -1,8 +1,8 @@
 import Field from "../../notices/Field";
 import mapping from "../../services/mapping";
 import { Document, Page, View, Text, Image, Link } from "@react-pdf/renderer";
-import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
-import { styles } from "../pdfNotice/styles";
+import { LinkedNoticesPdf } from "./components/LinkedNoticesPdf";
+import { styles } from "./styles";
 import { bucket_url } from "../../config";
 import { pdfLinks, postFixedLink, getUrlArchive } from "../../notices/utils";
 
