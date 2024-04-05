@@ -1,5 +1,5 @@
-import React from "react";
 import Link from "next/link";
+import React from "react";
 import { getNoticeInfo } from "../utils";
 
 class LinkedNotice extends React.Component {

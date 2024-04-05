@@ -1,8 +1,8 @@
 import React from "react";
+import { pushSearchRoute } from "../../services/url";
+import List from "./List";
 import MapComponent from "./Map";
 import Mosaic from "./Mosaic";
-import List from "./List";
-import { pushSearchRoute } from "../../services/url";
 
 class Results extends React.Component {
 	toggle(view, params) {

@@ -1,9 +1,9 @@
+import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer";
+import { bucket_url } from "../../config";
 import Field from "../../notices/Field";
 import mapping from "../../services/mapping";
-import { Document, Page, View, Text, Image, Link } from "@react-pdf/renderer";
-import { styles } from "../pdfNotice/styles";
-import { bucket_url } from "../../config";
 import { getNoticeInfo } from "../../utils";
+import { styles } from "../pdfNotice/styles";
 
 export function EnluminuresPdf(notice, title, typeNotice, links) {
 	return (

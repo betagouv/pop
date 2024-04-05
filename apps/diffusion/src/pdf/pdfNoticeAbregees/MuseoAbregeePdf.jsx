@@ -1,7 +1,7 @@
-import { View, Text, Image, Link } from "@react-pdf/renderer";
+import { Image, Link, Text, View } from "@react-pdf/renderer";
 import { styles } from "../../pdf/pdfNotice/styles";
-import { bucket_url, pop_url } from "./../../config";
 import { getNoticeInfo } from "../../utils";
+import { bucket_url, pop_url } from "./../../config";
 
 export function MuseoAbregeePdf(notice) {
 	const { title, subtitle, image_preview, localisation } =
@@ -13,10 +13,9 @@ export function MuseoAbregeePdf(notice) {
 				<View style={styles.imageAbregee}>
 					{notice.PHOTO ? (
 						<Image
-							src={
-								`${bucket_url +
-								notice.PHOTO}?${new Date().getTime()}`
-							}
+							src={`${
+								bucket_url + notice.PHOTO
+							}?${new Date().getTime()}`}
 						/>
 					) : (
 						<Image src={"/static/noimage.png"} />

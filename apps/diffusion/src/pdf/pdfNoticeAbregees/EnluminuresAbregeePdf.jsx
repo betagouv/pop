@@ -1,7 +1,7 @@
-import { View, Text, Image, Link } from "@react-pdf/renderer";
-import { bucket_url, pop_url } from "./../../config";
+import { Image, Link, Text, View } from "@react-pdf/renderer";
 import { styles } from "../../pdf/pdfNotice/styles";
 import { getNoticeInfo } from "../../utils";
+import { bucket_url, pop_url } from "./../../config";
 
 export function EnluminuresAbregeePdf(notice) {
 	const { title, subtitle } = getNoticeInfo(notice);
@@ -18,10 +18,9 @@ export function EnluminuresAbregeePdf(notice) {
 				<View style={styles.imageAbregee}>
 					{notice.VIDEO.length > 0 ? (
 						<Image
-							src={
-								`${bucket_url +
-								notice.VIDEO[0]}?${new Date().getTime()}`
-							}
+							src={`${
+								bucket_url + notice.VIDEO[0]
+							}?${new Date().getTime()}`}
 						/>
 					) : (
 						<Image src={"/static/noimage.png"} />

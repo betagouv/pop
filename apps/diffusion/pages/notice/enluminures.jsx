@@ -1,32 +1,32 @@
-import React from "react";
-import { Row, Col, Container } from "reactstrap";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import Head from "next/head";
 import Link from "next/link";
-import API from "../../src/services/api";
-import throw404 from "../../src/services/throw404";
-import mapping from "../../src/services/mapping";
+import React from "react";
+import { Col, Container, Row } from "reactstrap";
+import Cookies from "universal-cookie";
+import BucketButton from "../../src/components/BucketButton";
 import Layout from "../../src/components/Layout";
-import Field from "../../src/notices/Field";
-import Title from "../../src/notices/Title";
-import FieldImages from "../../src/notices/FieldImages";
+import { pop_url } from "../../src/config";
 import ContactUs from "../../src/notices/ContactUs";
+import Field from "../../src/notices/Field";
+import FieldImages from "../../src/notices/FieldImages";
+import LinkedNotices from "../../src/notices/LinkedNotices";
 import MapComponent from "../../src/notices/Map";
+import noticeStyle from "../../src/notices/NoticeStyle";
+import Title from "../../src/notices/Title";
 import {
-	schema,
-	getParamsFromUrl,
 	findCollection,
+	getParamsFromUrl,
 	highlighting,
 	lastSearch,
+	schema,
 } from "../../src/notices/utils";
-import noticeStyle from "../../src/notices/NoticeStyle";
-import { getNoticeInfo, trackDownload } from "../../src/utils";
-import BucketButton from "../../src/components/BucketButton";
-import Cookies from "universal-cookie";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { EnluminuresPdf } from "../../src/pdf/pdfNotice/enluminuresPdf";
-import LinkedNotices from "../../src/notices/LinkedNotices";
-import { pop_url } from "../../src/config";
+import API from "../../src/services/api";
 import EAnalytics from "../../src/services/eurelian";
+import mapping from "../../src/services/mapping";
+import throw404 from "../../src/services/throw404";
+import { getNoticeInfo, trackDownload } from "../../src/utils";
 
 const pushLinkedNotices = (a, d, base) => {
 	for (let i = 0; Array.isArray(d) && i < d.length; i++) {

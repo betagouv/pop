@@ -1,6 +1,6 @@
+import { ActiveFilters } from "@popproject/pop-react-elasticsearch";
 import React from "react";
 import { Badge } from "reactstrap";
-import { ActiveFilters } from "@popproject/pop-react-elasticsearch";
 
 const MobileFilters = ({ openMenu }) => (
 	<div className="filter_mobile_menu" onClick={openMenu}>

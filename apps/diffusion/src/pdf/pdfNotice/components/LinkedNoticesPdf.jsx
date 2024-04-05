@@ -1,14 +1,12 @@
-import { View, Text, Image, Link } from "@react-pdf/renderer";
-import { styles } from "../styles";
+import { Image, Link, Text, View } from "@react-pdf/renderer";
 import { getNoticeInfo } from "../../../utils";
+import { styles } from "../styles";
 
 export function LinkedNoticesPdf(notice) {
 	const { title, image_preview } = getNoticeInfo(notice);
 	return (
 		<Link
-			src={
-				`https://www.pop.culture.gouv.fr/notice/${notice.collection}/${notice.REF}`
-			}
+			src={`https://www.pop.culture.gouv.fr/notice/${notice.collection}/${notice.REF}`}
 		>
 			<View style={styles.linkedNotice}>
 				{image_preview && (

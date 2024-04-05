@@ -1,8 +1,8 @@
+import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
+import { bucket_url } from "../../config";
 import Field from "../../notices/Field";
 import mapping from "../../services/mapping";
-import { Document, Page, View, Text, Image } from "@react-pdf/renderer";
 import { styles } from "../pdfNotice/styles";
-import { bucket_url } from "../../config";
 
 export function AutorPdf(notice, title, datesLieus, referenceArk) {
 	return (
@@ -236,10 +236,9 @@ export function AutorPdf(notice, title, datesLieus, referenceArk) {
 							<View>
 								<Image
 									style={styles.image}
-									src={
-										`${bucket_url +
-										notice.MEMOIRE[0].url}?${new Date().getTime()}`
-									}
+									src={`${
+										bucket_url + notice.MEMOIRE[0].url
+									}?${new Date().getTime()}`}
 								/>
 							</View>
 						) : null}

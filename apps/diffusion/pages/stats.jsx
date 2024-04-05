@@ -1,10 +1,10 @@
-import React from "react";
+import https from "node:https";
 import fetch from "isomorphic-unfetch";
 import Head from "next/head";
-import { Container, Row, Col } from "reactstrap";
+import React from "react";
+import { Col, Container, Row } from "reactstrap";
 import Layout from "../src/components/Layout";
 import API from "../src/services/api";
-import https from "node:https";
 
 export default class extends React.Component {
 	static async getInitialProps() {

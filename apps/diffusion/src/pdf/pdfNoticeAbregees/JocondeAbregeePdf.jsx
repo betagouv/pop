@@ -1,7 +1,7 @@
-import { bucket_url, pop_url } from "./../../config";
-import { View, Text, Image, Link } from "@react-pdf/renderer";
+import { Image, Link, Text, View } from "@react-pdf/renderer";
 import { styles } from "../../pdf/pdfNotice/styles";
 import { getNoticeInfo } from "../../utils";
+import { bucket_url, pop_url } from "./../../config";
 
 // These 3 helpers functions helps to build strings with data
 // (witch can be strings, array, array in arrays, etc.)
@@ -39,10 +39,9 @@ export function JocondeAbregeePdf(notice) {
 				<View style={styles.imageAbregee}>
 					{notice.IMG.length > 0 ? (
 						<Image
-							src={
-								`${bucket_url +
-								notice.IMG[0]}?${new Date().getTime()}`
-							}
+							src={`${
+								bucket_url + notice.IMG[0]
+							}?${new Date().getTime()}`}
 						/>
 					) : (
 						<Image src={"/static/noimage.png"} />

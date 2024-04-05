@@ -1,9 +1,9 @@
+import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
+import { bucket_url } from "../../config";
 import Field from "../../notices/Field";
 import mapping from "../../services/mapping";
-import { Document, Page, View, Text, Image } from "@react-pdf/renderer";
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
-import { bucket_url } from "../../config";
 
 export function MuseoPdf(notice, title, links) {
 	return (
@@ -189,10 +189,9 @@ export function MuseoPdf(notice, title, links) {
 							<View>
 								<Image
 									style={styles.image}
-									src={
-										`${bucket_url +
-										notice.PHOTO}?${new Date().getTime()}`
-									}
+									src={`${
+										bucket_url + notice.PHOTO
+									}?${new Date().getTime()}`}
 								/>
 							</View>
 						) : null}

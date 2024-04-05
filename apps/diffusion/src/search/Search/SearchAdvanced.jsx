@@ -1,8 +1,8 @@
+import { QueryBuilder } from "@popproject/pop-react-elasticsearch";
+import { withRouter } from "next/router";
 import React from "react";
 import { Row } from "reactstrap";
-import { withRouter } from "next/router";
 import Mapping from "../../services/mapping";
-import { QueryBuilder } from "@popproject/pop-react-elasticsearch";
 import { operators, useEventListener } from "../utils";
 
 export const bases = [
@@ -103,7 +103,7 @@ class SearchAdvanced extends React.Component {
 				);
 			return filterKey.length > 0;
 		}
-			return false;
+		return false;
 	}
 
 	render() {

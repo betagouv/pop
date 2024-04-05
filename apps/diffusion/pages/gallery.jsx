@@ -1,9 +1,9 @@
+import queryString from "query-string";
 import React from "react";
 import API from "../src/services/api";
-import queryString from "query-string";
-import { pushSearchRoute, paramsToUrlAlias } from "../src/services/url";
-import throw404 from "../src/services/throw404";
 import EAnalytics from "../src/services/eurelian";
+import throw404 from "../src/services/throw404";
+import { paramsToUrlAlias, pushSearchRoute } from "../src/services/url";
 
 export default class extends React.Component {
 	componentDidMount() {

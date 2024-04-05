@@ -1,35 +1,35 @@
-import React from "react";
-import { Row, Col, Container } from "reactstrap";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import Head from "next/head";
 import Link from "next/link";
-import { getNoticeInfo, generateLinks, trackDownload } from "../../src/utils";
-import API from "../../src/services/api";
-import throw404 from "../../src/services/throw404";
-import mapping from "../../src/services/mapping";
+import React from "react";
+import { Col, Container, Row } from "reactstrap";
+import Cookies from "universal-cookie";
+import BucketButton from "../../src/components/BucketButton";
 import Layout from "../../src/components/Layout";
-import Field from "../../src/notices/Field";
-import LinkedNotices from "../../src/notices/LinkedNotices";
-import Title from "../../src/notices/Title";
+import { pop_url } from "../../src/config";
 import ContactUs from "../../src/notices/ContactUs";
+import Field from "../../src/notices/Field";
 import FieldImages from "../../src/notices/FieldImages";
+import LinkedNotices from "../../src/notices/LinkedNotices";
 import MapComponent from "../../src/notices/Map";
+import noticeStyle from "../../src/notices/NoticeStyle";
+import Title from "../../src/notices/Title";
 import {
-	postFixedLink,
-	schema,
-	getParamsFromUrl,
 	findCollection,
+	getParamsFromUrl,
+	getUrlArchive,
 	highlighting,
 	lastSearch,
-	getUrlArchive,
+	postFixedLink,
+	schema,
 } from "../../src/notices/utils";
-import noticeStyle from "../../src/notices/NoticeStyle";
-import { bucket_url } from "./../../src/config";
-import BucketButton from "../../src/components/BucketButton";
-import Cookies from "universal-cookie";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { MerimeePdf } from "../../src/pdf/pdfNotice/merimeePdf";
-import { pop_url } from "../../src/config";
+import API from "../../src/services/api";
 import EAnalytics from "../../src/services/eurelian";
+import mapping from "../../src/services/mapping";
+import throw404 from "../../src/services/throw404";
+import { generateLinks, getNoticeInfo, trackDownload } from "../../src/utils";
+import { bucket_url } from "./../../src/config";
 
 const pushLinkedNotices = (a, d, base) => {
 	for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -139,8 +139,9 @@ export default class extends React.Component {
 					listRefs[indexOfCurrentNotice - 1],
 				);
 				if (previousCollection !== "") {
-					prevLink =
-						`notice/${previousCollection}/${listRefs[indexOfCurrentNotice - 1]}?${this.props.searchParamsUrl}`;
+					prevLink = `notice/${previousCollection}/${
+						listRefs[indexOfCurrentNotice - 1]
+					}?${this.props.searchParamsUrl}`;
 				}
 			}
 			if (indexOfCurrentNotice < listRefs.length - 1) {
@@ -148,8 +149,9 @@ export default class extends React.Component {
 					listRefs[indexOfCurrentNotice + 1],
 				);
 				if (nextCollection !== "") {
-					nextLink =
-						`notice/${nextCollection}/${listRefs[indexOfCurrentNotice + 1]}?${this.props.searchParamsUrl}`;
+					nextLink = `notice/${nextCollection}/${
+						listRefs[indexOfCurrentNotice + 1]
+					}?${this.props.searchParamsUrl}`;
 				}
 			}
 			this.setState({ prevLink, nextLink });
@@ -174,7 +176,7 @@ export default class extends React.Component {
 				</a>
 			);
 		}
-			return null;
+		return null;
 	}
 
 	renderNextButton() {
@@ -189,7 +191,7 @@ export default class extends React.Component {
 				</a>
 			);
 		}
-			return null;
+		return null;
 	}
 
 	// Display a list of links to authors

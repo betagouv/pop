@@ -1,22 +1,22 @@
-import React from "react";
-import Head from "next/head";
-import { Row, Container } from "reactstrap";
 import {
 	Elasticsearch,
-	toUrlQueryString,
 	fromUrlQueryString,
+	toUrlQueryString,
 } from "@popproject/pop-react-elasticsearch";
-import Switch from "react-switch";
+import Head from "next/head";
 import Router from "next/router";
+import queryString from "query-string";
+import React from "react";
+import Switch from "react-switch";
+import { Container, Row } from "reactstrap";
 import Layout from "../src/components/Layout";
+import { es_url, eurelian } from "../src/config";
 import Header from "../src/search/Header";
 import Menu from "../src/search/Menu";
-import Permalink from "../src/search/Permalink";
 import MobileFilters from "../src/search/MobileFilters";
+import Permalink from "../src/search/Permalink";
 import Results from "../src/search/Results";
 import Search from "../src/search/Search";
-import { es_url, eurelian } from "../src/config";
-import queryString from "query-string";
 import { bases } from "../src/search/Search/SearchAdvanced";
 import { replaceSearchRouteWithUrl } from "../src/services/url";
 import EAnalytics from "./../src/services/eurelian";
@@ -309,7 +309,9 @@ export default class extends React.Component {
 								{this.props.mode === "simple" ? (
 									<div className="search-results">
 										<div
-											className={"search-container search-container-simple"}
+											className={
+												"search-container search-container-simple"
+											}
 										>
 											<Search
 												mode={this.props.mode}
@@ -338,7 +340,8 @@ export default class extends React.Component {
 												initialValues={initialValues}
 												nbResult={(total) => {
 													if (
-														this.state.ready === true
+														this.state.ready ===
+														true
 													) {
 														this.sendParams(
 															total,

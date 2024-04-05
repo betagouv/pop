@@ -1,5 +1,5 @@
-import React from "react";
 import { SearchBox } from "@popproject/pop-react-elasticsearch";
+import React from "react";
 import { useEventListener } from "../utils";
 
 function customQuery(query, fields) {

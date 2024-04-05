@@ -1,13 +1,13 @@
-import React from "react";
-import Link from "next/link";
-import { getNoticeInfo, saveListRef } from "../../utils";
-import Mapping from "../../services/mapping";
-import BucketButton from "../../components/BucketButton";
 import { toUrlQueryString } from "@popproject/pop-react-elasticsearch";
 import router from "next/dist/client/router";
+import Link from "next/link";
+import React from "react";
 import { Button } from "reactstrap";
+import BucketButton from "../../components/BucketButton";
 import MobileBucketButton from "../../components/MobileBucketButton";
 import { bucket_url } from "../../config";
+import Mapping from "../../services/mapping";
+import { getNoticeInfo, saveListRef } from "../../utils";
 
 // These 3 helpers functions helps to build strings with data
 // (witch can be strings, array, array in arrays, etc.)
@@ -117,7 +117,9 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 							<p>
 								{" "}
 								{data.AUTOEU && data.AUTOEU.length > 0
-									? `Auteur de l’œuvre représentée : ${data.AUTOEU.join(" ; ")}`
+									? `Auteur de l’œuvre représentée : ${data.AUTOEU.join(
+											" ; ",
+										)}`
 									: ""}
 							</p>
 							<p>{loc}</p>
@@ -169,7 +171,9 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 					<p>
 						{" "}
 						{data.AUTOEU && data.AUTOEU.length > 0
-							? `Auteur de l’œuvre représentée : ${data.AUTOEU.join(" ; ")}`
+							? `Auteur de l’œuvre représentée : ${data.AUTOEU.join(
+									" ; ",
+								)}`
 							: ""}
 					</p>
 					<p>{loc}</p>

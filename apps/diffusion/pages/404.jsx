@@ -1,8 +1,8 @@
+import Head from "next/head";
 import React from "react";
+import { Col, Container, Row } from "reactstrap";
 import Layout from "../src/components/Layout";
 import Sentry from "../src/services/sentry";
-import { Container, Row, Col } from "reactstrap";
-import Head from "next/head";
 
 const BrowserException = (args) => new Error(args);
 const notifySentry = (err) => {

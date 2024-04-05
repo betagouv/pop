@@ -1,5 +1,5 @@
+import { Image, Link, Text, View } from "@react-pdf/renderer";
 import * as React from "react";
-import { Text, Image, View, Link } from "@react-pdf/renderer";
 import { styles } from "../pdf/pdfNotice/styles";
 
 export default ({
@@ -109,36 +109,36 @@ export default ({
 		);
 	}
 	//Si on imprime un pdf d'une notice
-	
-		//S'il s'agit de liens cliquables
-		if (link) {
-			return (
-				<View>
-					<Text style={styles.fieldTitle}>{`${title} : `}</Text>
-					{!isLineBreakLink ? (
-						<View style={styles.listLinked}>
-							{renderLinksPdf(content, isLineBreakLink)}
-						</View>
-					) : (
-						<Text style={styles.listItemLinked}>
-							{renderLinksPdf(content, isLineBreakLink)}
-						</Text>
-					)}
-				</View>
-			);
-		}
-		//S'il s'agit de texte statique
-		
-			return (
-				<View>
-					<Text style={styles.fieldTitle}>{`${title} : `}</Text>
-					{React.isValidElement(str) ? (
-						<Text style={styles.text}>{str.props.children}</Text>
-					) : (
-						<Text style={styles.text}>{str}</Text>
-					)}
-				</View>
-			);
+
+	//S'il s'agit de liens cliquables
+	if (link) {
+		return (
+			<View>
+				<Text style={styles.fieldTitle}>{`${title} : `}</Text>
+				{!isLineBreakLink ? (
+					<View style={styles.listLinked}>
+						{renderLinksPdf(content, isLineBreakLink)}
+					</View>
+				) : (
+					<Text style={styles.listItemLinked}>
+						{renderLinksPdf(content, isLineBreakLink)}
+					</Text>
+				)}
+			</View>
+		);
+	}
+	//S'il s'agit de texte statique
+
+	return (
+		<View>
+			<Text style={styles.fieldTitle}>{`${title} : `}</Text>
+			{React.isValidElement(str) ? (
+				<Text style={styles.text}>{str.props.children}</Text>
+			) : (
+				<Text style={styles.text}>{str}</Text>
+			)}
+		</View>
+	);
 };
 
 /**

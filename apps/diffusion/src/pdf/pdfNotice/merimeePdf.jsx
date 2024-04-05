@@ -1,10 +1,10 @@
+import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer";
+import { bucket_url } from "../../config";
 import Field from "../../notices/Field";
+import { getUrlArchive, postFixedLink } from "../../notices/utils";
 import mapping from "../../services/mapping";
-import { Document, Page, View, Text, Image, Link } from "@react-pdf/renderer";
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
-import { bucket_url } from "../../config";
-import { postFixedLink, getUrlArchive } from "../../notices/utils";
 
 export function MerimeePdf(notice, title, localisation, links) {
 	const arr = [];
@@ -665,10 +665,9 @@ export function MerimeePdf(notice, title, localisation, links) {
 							<View>
 								<Image
 									style={styles.image}
-									src={
-										`${bucket_url +
-										notice.MEMOIRE[0].url}?${new Date().getTime()}`
-									}
+									src={`${
+										bucket_url + notice.MEMOIRE[0].url
+									}?${new Date().getTime()}`}
 								/>
 							</View>
 						) : null}

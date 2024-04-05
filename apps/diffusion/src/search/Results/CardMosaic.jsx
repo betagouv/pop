@@ -1,8 +1,8 @@
-import React from "react";
+import { toUrlQueryString } from "@popproject/pop-react-elasticsearch";
 import Link from "next/link";
+import React from "react";
 import { Col } from "reactstrap";
 import { getNoticeInfo, saveListRef } from "../../utils";
-import { toUrlQueryString } from "@popproject/pop-react-elasticsearch";
 
 export default ({ index, data, searchParams, listRefs, idQuery }) => {
 	const { title, image_preview } = getNoticeInfo(data);

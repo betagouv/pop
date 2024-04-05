@@ -1,6 +1,6 @@
+import queryString from "query-string";
 import Cookies from "universal-cookie";
 import { bucket_url } from "./config";
-import queryString from "query-string";
 import EAnalytics from "./services/eurelian";
 
 export function getNoticeInfo(notice) {
@@ -422,10 +422,9 @@ export function getNoticeInfo(notice) {
 			//Date d'activité
 			let activite = "";
 			if (notice.DATES || LOCACT) {
-				activite =
-					` - (dates d'activité : ${notice.DATES}${notice.DATES && notice.LOCACT
-						? ` - ${notice.LOCACT}`
-						: ""}`;
+				activite = ` - (dates d'activité : ${notice.DATES}${
+					notice.DATES && notice.LOCACT ? ` - ${notice.LOCACT}` : ""
+				}`;
 			}
 
 			//Fonction
@@ -444,13 +443,11 @@ export function getNoticeInfo(notice) {
 			//Dates et lieus d'existence
 			let datesLieus = "";
 			datesLieus += notice.DNAISS
-				? notice.DNAISS +
-					(notice.LNAISS ? ` (${notice.LNAISS}) ` : "")
+				? notice.DNAISS + (notice.LNAISS ? ` (${notice.LNAISS}) ` : "")
 				: "";
 			datesLieus += notice.DNAISS && notice.DMORT ? " - " : "";
 			datesLieus += notice.DMORT
-				? notice.DMORT +
-					(notice.LMORT ? ` (${notice.LMORT}) ` : "")
+				? notice.DMORT + (notice.LMORT ? ` (${notice.LMORT}) ` : "")
 				: "";
 
 			//Référence ISNI : ISNI_VERIFIEE / Lien ark : ARK
@@ -494,18 +491,23 @@ function jocondeMetaDescription(n) {
 	const cleanRepr = n.REPR && String(n.REPR).replace(/\(.*\)/, "");
 	if (n.DESC && cleanAutor && n.DESC.length < 100) {
 		return `${n.DESC} par ${cleanAutor}`;
-	}if (cleanRepr && museum && n.TECH && n.TECH.length) {
+	}
+	if (cleanRepr && museum && n.TECH && n.TECH.length) {
 		if (cleanAutor) {
 			return `${cleanRepr} par ${cleanAutor} (${n.TECH[0]}) - ${museum}`;
 		}
-			return `${cleanRepr} (${n.TECH[0]}) - ${museum}`;
-	}if (n.TITR && cleanAutor && museum) {
+		return `${cleanRepr} (${n.TECH[0]}) - ${museum}`;
+	}
+	if (n.TITR && cleanAutor && museum) {
 		return `${cleanAutor} : ${n.TITR} - ${museum}`;
-	}if (n.DESC.length >= 100 && cleanAutor) {
+	}
+	if (n.DESC.length >= 100 && cleanAutor) {
 		return `${cleanAutor} : ${String(n.DESC).split(/[;.]/)[0]}`;
-	}if (n.DESC.length < 150 && cleanAutor) {
+	}
+	if (n.DESC.length < 150 && cleanAutor) {
 		return n.DESC;
-	}if (n.TICO) {
+	}
+	if (n.TICO) {
 		return museum ? `${n.TICO} - ${museum}` : n.TICO;
 	}
 	return "";
@@ -517,13 +519,16 @@ function memoireMetaDescription(n) {
 		return `${n.EDIF} à ${n.COM} - ${n.LEG}${
 			cleanAutor ? ` - Photo : ${cleanAutor}` : ""
 		}`;
-	}if (n.LEG && n.LIEUCOR) {
+	}
+	if (n.LEG && n.LIEUCOR) {
 		return `${n.LEG} - ${n.LIEUCOR}${
 			cleanAutor ? ` - Photo : ${cleanAutor}` : ""
 		}`;
-	}if (n.LEG) {
+	}
+	if (n.LEG) {
 		return `${n.LEG}${cleanAutor ? ` - Photo : ${cleanAutor}` : ""}`;
-	}if (n.OBJT) {
+	}
+	if (n.OBJT) {
 		return `${n.OBJT}${cleanAutor ? ` - Photo : ${cleanAutor}` : ""}`;
 	}
 	return "";

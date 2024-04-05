@@ -1,4 +1,3 @@
-
 // Source: https://github.com/NathanEpstein/clusters/blob/master/clusters.js
 
 // The more this coeff is big, the closer we get to the areas with the most notice
@@ -21,16 +20,19 @@ module.exports = {
 		const centroids = pointsAndCentroids.centroids;
 
 		return centroids.map((centroid) => ({
-				centroid: centroid.location(),
-				points: points
-					.filter((point) => point.label() === centroid.label())
-					.map((point) => point),
-			}));
+			centroid: centroid.location(),
+			points: points
+				.filter((point) => point.label() === centroid.label())
+				.map((point) => point),
+		}));
 	},
 
 	k: getterSetter(undefined, (value) => (value % 1 === 0) & (value > 0)),
 
-	iterations: getterSetter(10 ** 3, (value) => (value % 1 === 0) & (value > 0)),
+	iterations: getterSetter(
+		10 ** 3,
+		(value) => (value % 1 === 0) & (value > 0),
+	),
 };
 
 function kmeans(data, config) {
@@ -69,11 +71,13 @@ function Point(location) {
 	this.location = getterSetter(location.coordinates);
 	this.label = getterSetter();
 	this.updateLabel = (centroids) => {
-		const distancesSquared = centroids.map((centroid) => sumOfSquareDiffs(
+		const distancesSquared = centroids.map((centroid) =>
+			sumOfSquareDiffs(
 				this.location(),
 				centroid.location(),
 				this.meta().count / 1000,
-			));
+			),
+		);
 		this.label(mindex(distancesSquared));
 	};
 }
@@ -82,7 +86,9 @@ function Centroid(initialLocation, label) {
 	this.location = getterSetter(initialLocation);
 	this.label = getterSetter(label);
 	this.updateLocation = (points) => {
-		const pointsWithThisCentroid = points.filter((point) => point.label() === this.label());
+		const pointsWithThisCentroid = points.filter(
+			(point) => point.label() === this.label(),
+		);
 		if (pointsWithThisCentroid.length > 0)
 			this.location(averageLocation(pointsWithThisCentroid));
 	};
@@ -91,9 +97,7 @@ function Centroid(initialLocation, label) {
 // convenience functions
 function getterSetter(initialValue, validator) {
 	let thingToGetSet = initialValue;
-	const isValid =
-		validator ||
-		((val) => true);
+	const isValid = validator || ((val) => true);
 	return (newValue) => {
 		if (typeof newValue === "undefined") return thingToGetSet;
 		if (isValid(newValue)) thingToGetSet = newValue;
@@ -101,7 +105,9 @@ function getterSetter(initialValue, validator) {
 }
 
 function sumOfSquareDiffs(oneVector, anotherVector, weight = 1) {
-	const squareDiffs = oneVector.map((component, i) => (weight * (component - anotherVector[i])) ** 2);
+	const squareDiffs = oneVector.map(
+		(component, i) => (weight * (component - anotherVector[i])) ** 2,
+	);
 	return squareDiffs.reduce((a, b) => a + b, 0);
 }
 

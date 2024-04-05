@@ -1,35 +1,35 @@
-import React from "react";
-import { Row, Col, Container } from "reactstrap";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import Head from "next/head";
 import Link from "next/link";
-import { getNoticeInfo, generateLinks, trackDownload } from "../../src/utils";
-import API from "../../src/services/api";
-import throw404 from "../../src/services/throw404";
-import mapping from "../../src/services/mapping";
+import React from "react";
+import { Col, Container, Row } from "reactstrap";
+import Cookies from "universal-cookie";
+import BucketButton from "../../src/components/BucketButton";
 import Layout from "../../src/components/Layout";
-import Field from "../../src/notices/Field";
-import LinkedNotices from "../../src/notices/LinkedNotices";
-import Title from "../../src/notices/Title";
+import { pop_url } from "../../src/config";
 import ContactUs from "../../src/notices/ContactUs";
+import Field from "../../src/notices/Field";
 import FieldImages from "../../src/notices/FieldImages";
-import { bucket_url } from "./../../src/config";
+import LinkedNotices from "../../src/notices/LinkedNotices";
 import MapComponent from "../../src/notices/Map";
+import noticeStyle from "../../src/notices/NoticeStyle";
+import Title from "../../src/notices/Title";
 import {
-	schema,
 	findCollection,
-	postFixedLink,
 	getParamsFromUrl,
+	getUrlArchive,
 	highlighting,
 	lastSearch,
-	getUrlArchive,
+	postFixedLink,
+	schema,
 } from "../../src/notices/utils";
-import noticeStyle from "../../src/notices/NoticeStyle";
-import BucketButton from "../../src/components/BucketButton";
-import Cookies from "universal-cookie";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { PalissyPdf } from "../../src/pdf/pdfNotice/palissyPdf";
-import { pop_url } from "../../src/config";
+import API from "../../src/services/api";
 import EAnalytics from "../../src/services/eurelian";
+import mapping from "../../src/services/mapping";
+import throw404 from "../../src/services/throw404";
+import { generateLinks, getNoticeInfo, trackDownload } from "../../src/utils";
+import { bucket_url } from "./../../src/config";
 
 export default class extends React.Component {
 	state = { display: false, prevLink: undefined, nextLink: undefined };
@@ -108,8 +108,9 @@ export default class extends React.Component {
 					listRefs[indexOfCurrentNotice - 1],
 				);
 				if (previousCollection !== "") {
-					prevLink =
-						`notice/${previousCollection}/${listRefs[indexOfCurrentNotice - 1]}?${this.props.searchParamsUrl}`;
+					prevLink = `notice/${previousCollection}/${
+						listRefs[indexOfCurrentNotice - 1]
+					}?${this.props.searchParamsUrl}`;
 				}
 			}
 			if (indexOfCurrentNotice < listRefs.length - 1) {
@@ -117,8 +118,9 @@ export default class extends React.Component {
 					listRefs[indexOfCurrentNotice + 1],
 				);
 				if (nextCollection !== "") {
-					nextLink =
-						`notice/${nextCollection}/${listRefs[indexOfCurrentNotice + 1]}?${this.props.searchParamsUrl}`;
+					nextLink = `notice/${nextCollection}/${
+						listRefs[indexOfCurrentNotice + 1]
+					}?${this.props.searchParamsUrl}`;
 				}
 			}
 			this.setState({ prevLink, nextLink });
@@ -143,7 +145,7 @@ export default class extends React.Component {
 				</a>
 			);
 		}
-			return null;
+		return null;
 	}
 
 	renderNextButton() {
@@ -158,7 +160,7 @@ export default class extends React.Component {
 				</a>
 			);
 		}
-			return null;
+		return null;
 	}
 
 	fieldImage(notice) {
@@ -848,7 +850,11 @@ const SeeMore = ({ notice }) => {
 				title={mapping.palissy.DOSURL.label}
 				content={
 					<Link href={notice.DOSURL}>
-						<a href={notice.DOSURL} target="_blank" rel="noreferrer">
+						<a
+							href={notice.DOSURL}
+							target="_blank"
+							rel="noreferrer"
+						>
 							Voir le dossier complet sur le site de la région
 						</a>
 					</Link>
@@ -866,7 +872,8 @@ const SeeMore = ({ notice }) => {
 					<Link href={postFixedLink(notice.DOSURLPDF)}>
 						<a
 							href={postFixedLink(notice.DOSURLPDF)}
-							target="_blank" rel="noreferrer"
+							target="_blank"
+							rel="noreferrer"
 						>
 							Voir le dossier d'origine numérisé
 						</a>
@@ -885,7 +892,8 @@ const SeeMore = ({ notice }) => {
 					<Link href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}>
 						<a
 							href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
-							target="_blank" rel="noreferrer"
+							target="_blank"
+							rel="noreferrer"
 						>
 							Voir le dossier d'origine numérisé
 						</a>
@@ -909,7 +917,8 @@ const SeeMore = ({ notice }) => {
 				>
 					<a
 						href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}
-						target="_blank" rel="noreferrer"
+						target="_blank"
+						rel="noreferrer"
 					>
 						{filename}
 					</a>
@@ -942,7 +951,8 @@ const SeeMore = ({ notice }) => {
 				>
 					<a
 						href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}
-						target="_blank" rel="noreferrer"
+						target="_blank"
+						rel="noreferrer"
 					>
 						{filename}
 					</a>
@@ -969,7 +979,11 @@ const SeeMore = ({ notice }) => {
 					title={mapping.palissy.LIENS.label}
 					content={
 						<Link href={notice.LIENS[i]}>
-							<a href={notice.LIENS[i]} target="_blank" rel="noreferrer">
+							<a
+								href={notice.LIENS[i]}
+								target="_blank"
+								rel="noreferrer"
+							>
 								{notice.LIENS[i]}
 							</a>
 						</Link>
@@ -987,7 +1001,11 @@ const SeeMore = ({ notice }) => {
 					title={mapping.merimee.LINHA.label}
 					content={
 						<Link href={notice.LINHA[0]}>
-							<a href={notice.LINHA[0]} target="_blank" rel="noreferrer">
+							<a
+								href={notice.LINHA[0]}
+								target="_blank"
+								rel="noreferrer"
+							>
 								{notice.LINHA[0]}
 							</a>
 						</Link>
@@ -1001,7 +1019,11 @@ const SeeMore = ({ notice }) => {
 					<Field
 						content={
 							<Link href={notice.LINHA[i]}>
-								<a href={notice.LINHA[i]} target="_blank" rel="noreferrer">
+								<a
+									href={notice.LINHA[i]}
+									target="_blank"
+									rel="noreferrer"
+								>
 									{notice.LINHA[i]}
 								</a>
 							</Link>
@@ -1020,7 +1042,11 @@ const SeeMore = ({ notice }) => {
 					title={mapping.merimee.LREG.label}
 					content={
 						<Link href={notice.LREG[0]}>
-							<a href={notice.LREG[0]} target="_blank" rel="noreferrer">
+							<a
+								href={notice.LREG[0]}
+								target="_blank"
+								rel="noreferrer"
+							>
 								{notice.LREG[0]}
 							</a>
 						</Link>
@@ -1034,7 +1060,11 @@ const SeeMore = ({ notice }) => {
 					<Field
 						content={
 							<Link href={notice.LREG[i]}>
-								<a href={notice.LREG[i]} target="_blank" rel="noreferrer">
+								<a
+									href={notice.LREG[i]}
+									target="_blank"
+									rel="noreferrer"
+								>
 									{notice.LREG[i]}
 								</a>
 							</Link>
@@ -1051,7 +1081,11 @@ const SeeMore = ({ notice }) => {
 			<Field
 				content={
 					<Link href={getUrlArchive(notice.REF)}>
-						<a href={getUrlArchive(notice.REF)} target="_blank" rel="noreferrer">
+						<a
+							href={getUrlArchive(notice.REF)}
+							target="_blank"
+							rel="noreferrer"
+						>
 							Les archives conservées à la Médiathèque du
 							patrimoine et de la photographie
 						</a>

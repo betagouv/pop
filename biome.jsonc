@@ -1,55 +1,53 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.6.4/schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
-  "files": {
-    "ignore": [
-      ".next/*",
-      "build/*",
-      "coverage/*",
-      "diffusion/static/*",
-      "diffusion/public/*"
-    ]
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true,
-      "complexity": {
-        "noForEach": "warn",
-        "useOptionalChain": "off", // Need compat with some older navs
-        "useLiteralKeys": "warn",
-        "noThisInStatic": "warn"
-      },
-      "correctness": {
-        "useExhaustiveDependencies": "warn"
-      },
-      "style": {
-        "noParameterAssign": "warn",
-        "useSingleVarDeclarator": "off", // Used in the project
-        "noUnusedTemplateLiteral": "warn", // Too much in the project
-        "useTemplate": "warn",
-        "useSelfClosingElements": "warn",
-        "noUselessElse": "warn"
-      },
-      "a11y": {
-        "useAltText": "warn",
-        "useValidAnchor": "warn",
-        "useKeyWithClickEvents": "warn",
-        "useButtonType": "warn",
-        "noRedundantAlt": "warn"
-      },
-      "suspicious": {
-        "noArrayIndexKey": "warn"
-      }
-    },
-    "ignore": [
-      "apps/api/**/scripts/*"
-    ]
-  },
-  "formatter": {
-    "indentWidth": 4,
-    "formatWithErrors": true
-  }
+	"$schema": "https://biomejs.dev/schemas/1.6.4/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"files": {
+		"ignore": [
+			".next/*",
+			"build/*",
+			"coverage/*",
+			"diffusion/static/*",
+			"diffusion/public/*"
+		]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"complexity": {
+				"noForEach": "warn",
+				"useOptionalChain": "off", // Need compat with some older navs
+				"useLiteralKeys": "warn",
+				"noThisInStatic": "warn"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "warn"
+			},
+			"style": {
+				"noParameterAssign": "warn",
+				"useSingleVarDeclarator": "off", // Used in the project
+				"noUnusedTemplateLiteral": "warn", // Too much in the project
+				"useTemplate": "warn",
+				"useSelfClosingElements": "warn",
+				"noUselessElse": "warn"
+			},
+			"a11y": {
+				"useAltText": "warn",
+				"useValidAnchor": "warn",
+				"useKeyWithClickEvents": "warn",
+				"useButtonType": "warn",
+				"noRedundantAlt": "warn"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "warn"
+			}
+		},
+		"ignore": ["apps/api/**/scripts/*"]
+	},
+	"formatter": {
+		"indentWidth": 4,
+		"formatWithErrors": true
+	}
 }

@@ -1,8 +1,8 @@
-import React from "react";
 import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
+import React from "react";
 import Cookies from "universal-cookie";
 
 export default class MyApp extends App {

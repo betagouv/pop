@@ -1,7 +1,7 @@
-import React from "react";
 import queryString from "query-string";
-import API from "../services/api";
+import React from "react";
 import { bucket_url } from "../config";
+import API from "../services/api";
 
 class Header extends React.Component {
 	state = {
@@ -28,7 +28,8 @@ class Header extends React.Component {
 
 		if (museo) {
 			return <Museo museo={museo} />;
-		}if (gallery && gallery.name && gallery.description) {
+		}
+		if (gallery && gallery.name && gallery.description) {
 			return <Gallery gallery={gallery} />;
 		}
 

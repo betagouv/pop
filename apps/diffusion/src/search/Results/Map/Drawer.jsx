@@ -1,5 +1,5 @@
-import React, { Component } from "react";
 import Link from "next/link";
+import React, { Component } from "react";
 import { Col, Row } from "reactstrap";
 import { getNoticeInfo } from "../../../utils";
 

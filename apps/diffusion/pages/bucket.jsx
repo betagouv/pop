@@ -1,23 +1,23 @@
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import Head from "next/head";
 import React from "react";
 import { Button } from "reactstrap";
-import Layout from "../src/components/Layout";
 import Cookies from "universal-cookie";
+import Layout from "../src/components/Layout";
+import { BucketPdf } from "../src/pdf/pdfNoticeAbregees/BucketPdf";
 import {
+	Autor,
+	Enluminures,
 	Joconde,
 	Memoire,
-	Palissy,
 	Merimee,
-	Museo,
 	Mnr,
-	Enluminures,
-	Autor,
+	Museo,
+	Palissy,
 } from "../src/search/Results/CardList";
 import API from "../src/services/api";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { BucketPdf } from "../src/pdf/pdfNoticeAbregees/BucketPdf";
-import { trackDownload } from "../src/utils";
 import EAnalytics from "../src/services/eurelian";
+import { trackDownload } from "../src/utils";
 
 export default class Bucket extends React.Component {
 	state = {

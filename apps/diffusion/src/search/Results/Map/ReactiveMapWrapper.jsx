@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
 import { CustomWidget, msearch } from "@popproject/pop-react-elasticsearch";
-import MapComponent from "./Map";
+import React, { useEffect, useState } from "react";
 import { es_url } from "../../../config";
+import MapComponent from "./Map";
 
 function esQuery(
 	queries,

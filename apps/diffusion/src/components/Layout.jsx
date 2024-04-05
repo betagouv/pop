@@ -1,8 +1,8 @@
-import React from "react";
 import Link from "next/link";
-import { Container, Alert } from "reactstrap";
-import Package from "../../package.json";
+import React from "react";
+import { Alert, Container } from "reactstrap";
 import Cookies from "universal-cookie";
+import Package from "../../package.json";
 import API from "../../src/services/api";
 
 const message_maintenance =

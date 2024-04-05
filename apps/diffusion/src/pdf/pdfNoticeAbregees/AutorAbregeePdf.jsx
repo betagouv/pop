@@ -1,7 +1,7 @@
-import { bucket_url, pop_url } from "./../../config";
-import { View, Text, Image, Link } from "@react-pdf/renderer";
+import { Image, Link, Text, View } from "@react-pdf/renderer";
 import { styles } from "../../pdf/pdfNotice/styles";
 import { getNoticeInfo } from "../../utils";
+import { bucket_url, pop_url } from "./../../config";
 
 export function AutorAbregeePdf(notice) {
 	const { logo, nom, description, fonction, symbole } = getNoticeInfo(notice);
@@ -12,10 +12,9 @@ export function AutorAbregeePdf(notice) {
 				<View style={styles.imageAbregee}>
 					{notice.MEMOIRE.length > 0 ? (
 						<Image
-							src={
-								`${bucket_url +
-								notice.MEMOIRE[0].url}?${new Date().getTime()}`
-							}
+							src={`${
+								bucket_url + notice.MEMOIRE[0].url
+							}?${new Date().getTime()}`}
 						/>
 					) : (
 						<Image src={"/static/noimage.png"} />

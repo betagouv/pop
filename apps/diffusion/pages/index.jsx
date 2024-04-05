@@ -1,19 +1,19 @@
 import Head from "next/head";
-import Slider from "react-slick";
-import React from "react";
 import Link from "next/link";
-import {
-	Button,
-	Input,
-	Container,
-	Row,
-	Col,
-	Card,
-	CardTitle,
-	CardBody,
-	Alert,
-} from "reactstrap";
 import Router from "next/router";
+import React from "react";
+import Slider from "react-slick";
+import {
+	Alert,
+	Button,
+	Card,
+	CardBody,
+	CardTitle,
+	Col,
+	Container,
+	Input,
+	Row,
+} from "reactstrap";
 import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
 import TopicCard from "../src/topics/TopicCard";

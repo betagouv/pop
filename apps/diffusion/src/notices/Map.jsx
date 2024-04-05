@@ -1,5 +1,5 @@
-import React from "react";
 import Head from "next/head";
+import React from "react";
 import api from "../services/api";
 
 class MapComponent extends React.Component {
@@ -136,7 +136,8 @@ function getGeoJson(notice) {
 				},
 			},
 		};
-	}if (POP_COORDONNEES && POP_COORDONNEES.lat) {
+	}
+	if (POP_COORDONNEES && POP_COORDONNEES.lat) {
 		return {
 			center: { lng: POP_COORDONNEES.lon, lat: POP_COORDONNEES.lat },
 			geometry: {

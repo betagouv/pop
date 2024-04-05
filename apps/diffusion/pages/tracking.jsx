@@ -1,5 +1,5 @@
-import React from "react";
 import Head from "next/head";
+import React from "react";
 import { Container } from "reactstrap";
 import Layout from "../src/components/Layout";
 import EAnalytics from "../src/services/eurelian";

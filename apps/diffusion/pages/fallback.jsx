@@ -1,7 +1,7 @@
-import React from "react";
-import Layout from "../src/components/Layout";
-import { Container, Row, Col } from "reactstrap";
 import Head from "next/head";
+import React from "react";
+import { Col, Container, Row } from "reactstrap";
+import Layout from "../src/components/Layout";
 
 const fallback = () => (
 	<Layout>

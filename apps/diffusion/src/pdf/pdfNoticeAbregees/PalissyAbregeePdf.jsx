@@ -1,4 +1,4 @@
-import { View, Text, Image, Link } from "@react-pdf/renderer";
+import { Image, Link, Text, View } from "@react-pdf/renderer";
 import { styles } from "../../pdf/pdfNotice/styles";
 import { getNoticeInfo } from "../../utils";
 import { bucket_url, pop_url } from "./../../config";

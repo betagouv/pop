@@ -1,5 +1,5 @@
-import React from "react";
 import dynamic from "next/dynamic";
+import React from "react";
 // import Viewer from "react-viewer";
 import Slider from "react-slick";
 const Viewer = dynamic(() => import("react-viewer"), { ssr: false });

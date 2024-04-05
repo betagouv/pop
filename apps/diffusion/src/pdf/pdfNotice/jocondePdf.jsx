@@ -1,13 +1,13 @@
-import Field from "../../notices/Field";
+import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer";
+import isEmail from "validator/lib/isEmail";
+import isURL from "validator/lib/isURL";
+import { bucket_url } from "../../config";
 import { TextFieldReprPdf } from "../../notices/CustomField";
+import Field from "../../notices/Field";
+import { pdfLinks } from "../../notices/utils";
 import mapping from "../../services/mapping";
-import { Document, Page, View, Text, Image, Link } from "@react-pdf/renderer";
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
-import { pdfLinks } from "../../notices/utils";
-import { bucket_url } from "../../config";
-import isURL from "validator/lib/isURL";
-import isEmail from "validator/lib/isEmail";
 
 export function JocondePdf(notice, title, links, museo) {
 	return (
@@ -17,9 +17,7 @@ export function JocondePdf(notice, title, links, museo) {
 					{" "}
 				</Text>
 				{/* M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice */}
-				<Text style={styles.title}>
-					{title.replace(/#/g, "\n")}
-				</Text>
+				<Text style={styles.title}>{title.replace(/#/g, "\n")}</Text>
 
 				<View style={styles.content}>
 					<View style={styles.body}>
@@ -408,10 +406,9 @@ export function JocondePdf(notice, title, links, museo) {
 						<View>
 							<Image
 								style={styles.image}
-								src={
-									`${bucket_url +
-									notice.IMG[0]}?${new Date().getTime()}`
-								}
+								src={`${
+									bucket_url + notice.IMG[0]
+								}?${new Date().getTime()}`}
 							/>
 						</View>
 						{links.length > 0 ? (

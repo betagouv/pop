@@ -83,8 +83,7 @@ class api {
 						return;
 					}
 
-					const message =
-						`Un probleme a été detecté lors de la récupération de données via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`;
+					const message = `Un probleme a été detecté lors de la récupération de données via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`;
 					Sentry.captureException(message);
 					reject(message);
 					return;
@@ -98,8 +97,7 @@ class api {
 
 	getMuseoCollection(ref) {
 		// Attenttion ! La requete dans "query" est sensible aux retours chariots et aux espaces, y compris ceux de l'indentation
-		const query =
-			`{"preference":"res"}
+		const query = `{"preference":"res"}
     {"query":{"bool":{"must":[{"bool":{"should":[{"term":{"MUSEO.keyword":"${ref}"}}]}},{"match_all":{}}]}},"size":25,"from":0}
 `;
 

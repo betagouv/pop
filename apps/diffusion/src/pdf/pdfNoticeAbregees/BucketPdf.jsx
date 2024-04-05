@@ -1,13 +1,13 @@
-import { Document, Page, View, Text } from "@react-pdf/renderer";
+import { Document, Page, Text, View } from "@react-pdf/renderer";
 import { styles } from "../../pdf/pdfNotice/styles";
-import { JocondeAbregeePdf } from "./JocondeAbregeePdf";
-import { PalissyAbregeePdf } from "./PalissyAbregeePdf";
-import { MerimeeAbregeePdf } from "./MerimeeAbregeePdf";
-import { MuseoAbregeePdf } from "./MuseoAbregeePdf";
-import { MnrAbregeePdf } from "./MnrAbregeePdf";
-import { MemoireAbregeePdf } from "./MemoireAbregeePdf";
-import { EnluminuresAbregeePdf } from "./EnluminuresAbregeePdf";
 import { AutorAbregeePdf } from "./AutorAbregeePdf";
+import { EnluminuresAbregeePdf } from "./EnluminuresAbregeePdf";
+import { JocondeAbregeePdf } from "./JocondeAbregeePdf";
+import { MemoireAbregeePdf } from "./MemoireAbregeePdf";
+import { MerimeeAbregeePdf } from "./MerimeeAbregeePdf";
+import { MnrAbregeePdf } from "./MnrAbregeePdf";
+import { MuseoAbregeePdf } from "./MuseoAbregeePdf";
+import { PalissyAbregeePdf } from "./PalissyAbregeePdf";
 
 export function BucketPdf(bucket) {
 	return (
@@ -24,7 +24,9 @@ export function BucketPdf(bucket) {
 					/>
 					<Text style={styles.noticeNumber}>
 						{bucket.length
-							? `${bucket.length} notice${bucket.length > 1 ? "s" : ""}`
+							? `${bucket.length} notice${
+									bucket.length > 1 ? "s" : ""
+								}`
 							: "Le panier est vide"}
 					</Text>
 					<View style={styles.bucketContainer}>

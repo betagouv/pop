@@ -1,11 +1,11 @@
-import React from "react";
 import Head from "next/head";
-import { toGeoJson, getPrecision } from "./utils";
-import Location from "./Location";
-import Drawer from "./Drawer";
-import Marker from "./Marker";
+import React from "react";
 import Loader from "../../../components/Loader";
 import api from "../../../services/api";
+import Drawer from "./Drawer";
+import Location from "./Location";
+import Marker from "./Marker";
+import { getPrecision, toGeoJson } from "./utils";
 
 export default class MapComponent extends React.Component {
 	state = {

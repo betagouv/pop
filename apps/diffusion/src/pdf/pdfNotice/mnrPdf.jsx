@@ -1,10 +1,10 @@
+import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer";
+import { bucket_url, emailContactMnr } from "../../config";
 import Field from "../../notices/Field";
+import { pdfLinks } from "../../notices/utils";
 import mapping from "../../services/mapping";
-import { Document, Page, View, Text, Image, Link } from "@react-pdf/renderer";
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
-import { pdfLinks } from "../../notices/utils";
-import { bucket_url, emailContactMnr } from "../../config";
 
 export function MnrPdf(notice, title, links) {
 	return (
@@ -15,10 +15,7 @@ export function MnrPdf(notice, title, links) {
 				</Text>
 				{/* M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice */}
 				<Text style={styles.title}>
-					{(notice.TICO || notice.TITR).replace(
-						/#/g,
-						"\n",
-					)}
+					{(notice.TICO || notice.TITR).replace(/#/g, "\n")}
 				</Text>
 
 				<View style={styles.content}>
@@ -318,10 +315,9 @@ export function MnrPdf(notice, title, links) {
 							<View>
 								<Image
 									style={styles.image}
-									src={
-										`${bucket_url +
-										notice.VIDEO[0]}?${new Date().getTime()}`
-									}
+									src={`${
+										bucket_url + notice.VIDEO[0]
+									}?${new Date().getTime()}`}
 								/>
 							</View>
 						) : null}

@@ -1,10 +1,10 @@
+import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer";
+import { bucket_url } from "../../config";
 import Field from "../../notices/Field";
+import { getUrlArchive, pdfLinks, postFixedLink } from "../../notices/utils";
 import mapping from "../../services/mapping";
-import { Document, Page, View, Text, Image, Link } from "@react-pdf/renderer";
 import { LinkedNoticesPdf } from "./components/LinkedNoticesPdf";
 import { styles } from "./styles";
-import { bucket_url } from "../../config";
-import { pdfLinks, postFixedLink, getUrlArchive } from "../../notices/utils";
 
 export function PalissyPdf(notice, title, localisation, links) {
 	return (
@@ -481,10 +481,9 @@ export function PalissyPdf(notice, title, localisation, links) {
 							<View>
 								<Image
 									style={styles.image}
-									src={
-										`${bucket_url +
-										notice.MEMOIRE[0].url}?${new Date().getTime()}`
-									}
+									src={`${
+										bucket_url + notice.MEMOIRE[0].url
+									}?${new Date().getTime()}`}
 								/>
 							</View>
 						) : null}

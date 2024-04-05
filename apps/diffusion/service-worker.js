@@ -1,21 +1,21 @@
-import { skipWaiting, clientsClaim } from "workbox-core";
+import { clientsClaim, skipWaiting } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import {
-	NetworkOnly,
-	NetworkFirst,
-	CacheFirst,
-	StaleWhileRevalidate,
-} from "workbox-strategies";
-import {
-	registerRoute,
-	setDefaultHandler,
-	setCatchHandler,
-} from "workbox-routing";
-import {
+	cleanupOutdatedCaches,
 	matchPrecache,
 	precacheAndRoute,
-	cleanupOutdatedCaches,
 } from "workbox-precaching";
+import {
+	registerRoute,
+	setCatchHandler,
+	setDefaultHandler,
+} from "workbox-routing";
+import {
+	CacheFirst,
+	NetworkFirst,
+	NetworkOnly,
+	StaleWhileRevalidate,
+} from "workbox-strategies";
 
 skipWaiting();
 clientsClaim();

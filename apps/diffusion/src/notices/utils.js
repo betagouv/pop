@@ -1,6 +1,6 @@
-import API from "../../src/services/api";
 import { fromUrlQueryString } from "@popproject/pop-react-elasticsearch";
 import queryString from "query-string";
+import API from "../../src/services/api";
 
 // Get collection by ref prefix.
 export async function findCollection(ref = "") {

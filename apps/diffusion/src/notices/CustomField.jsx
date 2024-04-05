@@ -1,7 +1,7 @@
-import { styles } from "../pdf/pdfNotice/styles";
+import { Link, Text, View } from "@react-pdf/renderer";
 import queryString from "query-string";
-import { View, Text, Link } from "@react-pdf/renderer";
 import React from "react";
+import { styles } from "../pdf/pdfNotice/styles";
 
 export function renderFieldRepr(title, str) {
 	return (

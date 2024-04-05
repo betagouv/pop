@@ -1,7 +1,7 @@
-import { View, Text, Image, Link } from "@react-pdf/renderer";
-import { bucket_url, pop_url } from "./../../config";
+import { Image, Link, Text, View } from "@react-pdf/renderer";
 import { styles } from "../../pdf/pdfNotice/styles";
 import { getNoticeInfo } from "../../utils";
+import { bucket_url, pop_url } from "./../../config";
 
 export function MerimeeAbregeePdf(notice) {
 	const { title, logo, localisation } = getNoticeInfo(notice);
@@ -15,10 +15,9 @@ export function MerimeeAbregeePdf(notice) {
 				<View style={styles.imageAbregee}>
 					{notice.MEMOIRE.length > 0 ? (
 						<Image
-							src={
-								`${bucket_url +
-								notice.MEMOIRE[0].url}?${new Date().getTime()}`
-							}
+							src={`${
+								bucket_url + notice.MEMOIRE[0].url
+							}?${new Date().getTime()}`}
 						/>
 					) : (
 						<Image src={"/static/noimage.png"} />
