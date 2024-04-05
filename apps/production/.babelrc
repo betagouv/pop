@@ -1,10 +1,13 @@
 {
-  "presets": ["@babel/preset-react", "@babel/preset-env"],
-  "plugins": [
-    ["@babel/plugin-transform-runtime", { "corejs": { "version": 3, "proposals": true } }],
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-object-rest-spread",
-    "@babel/plugin-proposal-async-generator-functions",
-    "@babel/plugin-transform-parameters"
-  ]
+	"presets": ["@babel/preset-react", "@babel/preset-env"],
+	"plugins": [
+		[
+			"@babel/plugin-transform-runtime",
+			{ "corejs": { "version": 3, "proposals": true } }
+		],
+		"@babel/plugin-proposal-class-properties",
+		"@babel/plugin-proposal-object-rest-spread",
+		"@babel/plugin-proposal-async-generator-functions",
+		"@babel/plugin-transform-parameters"
+	]
 }

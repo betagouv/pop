@@ -1,110 +1,120 @@
 import React from "react";
-import { Table } from "reactstrap";
-import CreateUser from "./createUser";
-import UpdateUser from "./UpdateUser";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Table } from "reactstrap";
 import api from "../../services/api";
+import UpdateUser from "./UpdateUser";
+import CreateUser from "./createUser";
 
 import "./index.css";
 
 class Admin extends React.Component {
-  state = { users: [], baseGroups: [], loading: true };
+	state = { users: [], baseGroups: [], loading: true };
 
-  fetchUsers = async () => {
-    this.setState({ loading: true });
-    try {
-      const response = await api.getUsers();
-      this.setState({ users: response.users || [], loading: false });
-    } catch (e) { }
-  };
+	fetchUsers = async () => {
+		this.setState({ loading: true });
+		try {
+			const response = await api.getUsers();
+			this.setState({ users: response.users || [], loading: false });
+		} catch (e) {}
+	};
 
-  fetchGroups = async () => {
-    this.setState({ loading: true });
-    const response = await api.getGroups();
-    this.setState({ baseGroups: response.groups || [], loading: false });
-  };
+	fetchGroups = async () => {
+		this.setState({ loading: true });
+		const response = await api.getGroups();
+		this.setState({ baseGroups: response.groups || [], loading: false });
+	};
 
-  componentDidMount() {
-    this.fetchUsers();
-    this.fetchGroups();
-  }
+	componentDidMount() {
+		this.fetchUsers();
+		this.fetchGroups();
+	}
 
-  renderUsers() {
-    return (
-      <Table>
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Email</th>
-            <th>Groupe</th>
-            <th>Institution</th>
-            <th>Role</th>
-            <th>Dernière connexion</th>
-            <th>Compte bloqué</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.users.map(user => {
-            const {
-              email,
-              prenom,
-              nom,
-              role,
-              lastConnectedAt,
-              institution,
-              group,
-              museofile,
-              isBloqued
-            } = user;
-            const date = new Date(lastConnectedAt);
-            const lastCo = lastConnectedAt
-              ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-              : "jamais";
-            const locked = isBloqued ? 'Oui' : 'Non';
-            return (
-              <tr key={email}>
-                <td>{nom}</td>
-                <td>{prenom}</td>
-                <td className="admin-email">{email}</td>
-                <td>
-                  {group === "joconde" && museofile ? `${group} ${museofile.join(", ")}` : group}
-                </td>
-                <td>{institution}</td>
-                <td>{role}</td>
-                <td>{lastCo}</td>
-                <td><strong>{locked}</strong></td>
-                <td>
-                  <UpdateUser user={user} baseGroups={this.state.baseGroups} callback={this.fetchUsers} />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    );
-  }
+	renderUsers() {
+		return (
+			<Table>
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Email</th>
+						<th>Groupe</th>
+						<th>Institution</th>
+						<th>Role</th>
+						<th>Dernière connexion</th>
+						<th>Compte bloqué</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{this.state.users.map((user) => {
+						const {
+							email,
+							prenom,
+							nom,
+							role,
+							lastConnectedAt,
+							institution,
+							group,
+							museofile,
+							isBloqued,
+						} = user;
+						const date = new Date(lastConnectedAt);
+						const lastCo = lastConnectedAt
+							? `${date.getDate()}/${
+									date.getMonth() + 1
+								}/${date.getFullYear()}`
+							: "jamais";
+						const locked = isBloqued ? "Oui" : "Non";
+						return (
+							<tr key={email}>
+								<td>{nom}</td>
+								<td>{prenom}</td>
+								<td className="admin-email">{email}</td>
+								<td>
+									{group === "joconde" && museofile
+										? `${group} ${museofile.join(", ")}`
+										: group}
+								</td>
+								<td>{institution}</td>
+								<td>{role}</td>
+								<td>{lastCo}</td>
+								<td>
+									<strong>{locked}</strong>
+								</td>
+								<td>
+									<UpdateUser
+										user={user}
+										baseGroups={this.state.baseGroups}
+										callback={this.fetchUsers}
+									/>
+								</td>
+							</tr>
+						);
+					})}
+				</tbody>
+			</Table>
+		);
+	}
 
-  render() {
-    if (this.props.role !== "administrateur") {
-      return <Redirect to="/recherche" />;
-    }
-    return (
-      <div className="admin">
-        <CreateUser baseGroups={this.state.baseGroups} callback={this.fetchUsers} />
-        <div className="usersList">{this.renderUsers()}</div>
-      </div>
-    );
-  }
+	render() {
+		if (this.props.role !== "administrateur") {
+			return <Redirect to="/recherche" />;
+		}
+		return (
+			<div className="admin">
+				<CreateUser
+					baseGroups={this.state.baseGroups}
+					callback={this.fetchUsers}
+				/>
+				<div className="usersList">{this.renderUsers()}</div>
+			</div>
+		);
+	}
 }
 
 const mapStateToProps = ({ Auth }) => {
-  return { role: Auth.user ? Auth.user.role : "" };
+	return { role: Auth.user ? Auth.user.role : "" };
 };
 
-export default connect(
-  mapStateToProps,
-  {}
-)(Admin);
+export default connect(mapStateToProps, {})(Admin);
