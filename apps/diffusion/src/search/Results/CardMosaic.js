@@ -2,27 +2,38 @@ import React from "react";
 import Link from "next/link";
 import { Col } from "reactstrap";
 import { getNoticeInfo, saveListRef } from "../../utils";
-import {toUrlQueryString} from "@popproject/pop-react-elasticsearch";
-
+import { toUrlQueryString } from "@popproject/pop-react-elasticsearch";
 
 export default ({ index, data, searchParams, listRefs, idQuery }) => {
-  const { title, image_preview } = getNoticeInfo(data);
-  searchParams.set("idQuery", idQuery);
+	const { title, image_preview } = getNoticeInfo(data);
+	searchParams.set("idQuery", idQuery);
 
-  return (
-    <Col>
-      <a className="list-card" style={{ textDecoration: "none" }} onMouseDown={() => saveListRef(listRefs, searchParams, null)} >
-        {/* <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}> */}
-          <a href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF} style={{ textDecoration: "none" }} className="mosaique-card">
-            <div className="thumbnail">
-              <img src={image_preview} alt={title} />
-            </div>
-            <div className="content">
-              <span>{title}</span>
-            </div>
-          </a>
-        {/* </Link> */}
-        <style jsx global>{`
+	return (
+		<Col>
+			<a
+				className="list-card"
+				style={{ textDecoration: "none" }}
+				onMouseDown={() => saveListRef(listRefs, searchParams, null)}
+			>
+				{/* <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}> */}
+				<a
+					href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${
+						searchParams ? "?" + toUrlQueryString(searchParams) : ""
+					}`}
+					key={data.REF}
+					style={{ textDecoration: "none" }}
+					className="mosaique-card"
+				>
+					<div className="thumbnail">
+						<img src={image_preview} alt={title} />
+					</div>
+					<div className="content">
+						<span>{title}</span>
+					</div>
+				</a>
+				{/* </Link> */}
+				<style jsx global>
+					{`
           .mosaique-card {
             display: flex;
             flex-direction: column;
@@ -95,8 +106,8 @@ export default ({ index, data, searchParams, listRefs, idQuery }) => {
             }
           }
         `}
-        </style>
-      </a>
-    </Col>
-  );
+				</style>
+			</a>
+		</Col>
+	);
 };

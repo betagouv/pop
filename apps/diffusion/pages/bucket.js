@@ -2,240 +2,316 @@ import Head from "next/head";
 import React from "react";
 import { Button } from "reactstrap";
 import Layout from "../src/components/Layout";
-import Cookies from 'universal-cookie';
-import { Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor } from "../src/search/Results/CardList";
+import Cookies from "universal-cookie";
+import {
+	Joconde,
+	Memoire,
+	Palissy,
+	Merimee,
+	Museo,
+	Mnr,
+	Enluminures,
+	Autor,
+} from "../src/search/Results/CardList";
 import API from "../src/services/api";
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { BucketPdf } from "../src/pdf/pdfNoticeAbregees/BucketPdf";
 import { trackDownload } from "../src/utils";
 import EAnalytics from "./../src/services/eurelian";
 
 export default class Bucket extends React.Component {
-  state = { 
-    bucket: [], 
-    loading: true, 
-    display: false,
-    dataLayer: [
-      "path", "Consulter le panier",
-      'pagegroup', 'Panier'
-    ]
-  };
+	state = {
+		bucket: [],
+		loading: true,
+		display: false,
+		dataLayer: ["path", "Consulter le panier", "pagegroup", "Panier"],
+	};
 
-  //Méthode permettant de supprimer du panier
-  removeFromBucket = (ref) => {
+	//Méthode permettant de supprimer du panier
+	removeFromBucket = (ref) => {
+		//Récupération du panier actuel dans les cookies
+		const cookies = new Cookies();
+		let currentBucket = cookies.get("currentBucket") || [];
+		//Filtre en fonction de la notice que l'on veut enlever
+		currentBucket = currentBucket.filter((item) => {
+			return item.ref !== ref;
+		});
 
-    //Récupération du panier actuel dans les cookies
-    const cookies = new Cookies();
-    let currentBucket = cookies.get("currentBucket") || [];
-    //Filtre en fonction de la notice que l'on veut enlever
-    currentBucket = currentBucket.filter(item => {
-      return item.ref !== ref;
-    });
+		//Transformation de la liste de notice au format json et modification du cookie
+		//Ainsi que le state contenant la liste des notices
+		var jsonCurrentBucket = JSON.stringify(currentBucket);
+		cookies.set("currentBucket", jsonCurrentBucket, {
+			path: "/",
+			overwrite: true,
+		});
+		this.setState({
+			bucket: this.state.bucket.filter((notice) => {
+				return notice.REF !== ref;
+			}),
+		});
+	};
 
-    //Transformation de la liste de notice au format json et modification du cookie
-    //Ainsi que le state contenant la liste des notices
-    var jsonCurrentBucket = JSON.stringify(currentBucket);
-    cookies.set("currentBucket", jsonCurrentBucket, { path: '/', overwrite: true });
-    this.setState({
-      bucket: this.state.bucket.filter(notice => { return notice.REF !== ref })
-    });
-  }
+	componentDidMount() {
+		this.fillBucket();
+		this.setState({ display: true });
 
-  componentDidMount() {
-    this.fillBucket();
-    this.setState({ display: true });
-    
-    // Tracking Eurelian
-    EAnalytics.initialize();
-    EAnalytics.track(this.state.dataLayer);
-  }
+		// Tracking Eurelian
+		EAnalytics.initialize();
+		EAnalytics.track(this.state.dataLayer);
+	}
 
-  fillBucket = async () => {
-    let cookies = new Cookies();
-    const bucket = cookies.get("currentBucket");
-    try {
-      let newBucket = await Promise.all(
-        bucket.map(async item => {
-          let notice = await API.getNotice(item.base, item.ref);
-          return notice;
-        })
-      )
-      this.setState({ bucket: newBucket });
-    }
-    catch (e) {
-      return [];
-    }
-  }
+	fillBucket = async () => {
+		let cookies = new Cookies();
+		const bucket = cookies.get("currentBucket");
+		try {
+			let newBucket = await Promise.all(
+				bucket.map(async (item) => {
+					let notice = await API.getNotice(item.base, item.ref);
+					return notice;
+				}),
+			);
+			this.setState({ bucket: newBucket });
+		} catch (e) {
+			return [];
+		}
+	};
 
-  displayCard(notice) {
-    if (notice) {
-      switch (notice.collection) {
-        case "joconde":
-          return <Joconde data={notice} removeFromBucket={this.removeFromBucket} />
-        case "memoire":
-          return <Memoire data={notice} removeFromBucket={this.removeFromBucket} />
-        case "palissy":
-          return <Palissy data={notice} removeFromBucket={this.removeFromBucket} />
-        case "merimee":
-          return <Merimee data={notice} removeFromBucket={this.removeFromBucket} />
-        case "museo":
-          return <Museo data={notice} removeFromBucket={this.removeFromBucket} />
-        case "mnr":
-          return <Mnr data={notice} removeFromBucket={this.removeFromBucket} />
-        case "enluminures":
-          return <Enluminures data={notice} removeFromBucket={this.removeFromBucket} />
-        case "autor":
-          return <Autor data={notice} removeFromBucket={this.removeFromBucket} />
-        default:
-          return null;
-      }
-    }
-  }
+	displayCard(notice) {
+		if (notice) {
+			switch (notice.collection) {
+				case "joconde":
+					return (
+						<Joconde
+							data={notice}
+							removeFromBucket={this.removeFromBucket}
+						/>
+					);
+				case "memoire":
+					return (
+						<Memoire
+							data={notice}
+							removeFromBucket={this.removeFromBucket}
+						/>
+					);
+				case "palissy":
+					return (
+						<Palissy
+							data={notice}
+							removeFromBucket={this.removeFromBucket}
+						/>
+					);
+				case "merimee":
+					return (
+						<Merimee
+							data={notice}
+							removeFromBucket={this.removeFromBucket}
+						/>
+					);
+				case "museo":
+					return (
+						<Museo
+							data={notice}
+							removeFromBucket={this.removeFromBucket}
+						/>
+					);
+				case "mnr":
+					return (
+						<Mnr
+							data={notice}
+							removeFromBucket={this.removeFromBucket}
+						/>
+					);
+				case "enluminures":
+					return (
+						<Enluminures
+							data={notice}
+							removeFromBucket={this.removeFromBucket}
+						/>
+					);
+				case "autor":
+					return (
+						<Autor
+							data={notice}
+							removeFromBucket={this.removeFromBucket}
+						/>
+					);
+				default:
+					return null;
+			}
+		}
+	}
 
-  //Détermine le nom du fichier téléchargé pour le pdf
-  PdfFileName() {
-    var today = new Date();
-    var month = (today.getMonth() + 1) == 13 ? 1 : (today.getMonth() + 1);
-    var data = today.getFullYear() + '-' + ((month < 10) ? "0" : "") + month.toString() + '-' + ((today.getDate() < 10) ? "0" : "") + today.getDate();
-    return "panier_de_notices_" + data + ".pdf";
-  }
+	//Détermine le nom du fichier téléchargé pour le pdf
+	PdfFileName() {
+		var today = new Date();
+		var month = today.getMonth() + 1 == 13 ? 1 : today.getMonth() + 1;
+		var data =
+			today.getFullYear() +
+			"-" +
+			(month < 10 ? "0" : "") +
+			month.toString() +
+			"-" +
+			(today.getDate() < 10 ? "0" : "") +
+			today.getDate();
+		return "panier_de_notices_" + data + ".pdf";
+	}
 
-  //Vide le panier de notices
-  EmptyBucket() {
-    const cookies = new Cookies();
-    let currentBucket = cookies.get("currentBucket");
-    // Obliger d'imiter la méthode de removebucket sinon les champs n'existent pas
-    //Filtre en fonction de la notice que l'on veut enlever
-    currentBucket = currentBucket.filter(item => {
-      return item.ref === null;
-    });
+	//Vide le panier de notices
+	EmptyBucket() {
+		const cookies = new Cookies();
+		let currentBucket = cookies.get("currentBucket");
+		// Obliger d'imiter la méthode de removebucket sinon les champs n'existent pas
+		//Filtre en fonction de la notice que l'on veut enlever
+		currentBucket = currentBucket.filter((item) => {
+			return item.ref === null;
+		});
 
-    //Transformation de la liste de notice au format json et modification du cookie
-    //Ainsi que le state contenant la liste des notices
-    var jsonCurrentBucket = JSON.stringify(currentBucket);
-    cookies.set("currentBucket", jsonCurrentBucket, { path: '/', overwrite: true });
-    this.setState({
-      bucket: this.state.bucket.filter(notice => { return notice.REF === null })
-    });
-  }
+		//Transformation de la liste de notice au format json et modification du cookie
+		//Ainsi que le state contenant la liste des notices
+		var jsonCurrentBucket = JSON.stringify(currentBucket);
+		cookies.set("currentBucket", jsonCurrentBucket, {
+			path: "/",
+			overwrite: true,
+		});
+		this.setState({
+			bucket: this.state.bucket.filter((notice) => {
+				return notice.REF === null;
+			}),
+		});
+	}
 
-  render() {
-    const formatedDate = (new Intl.DateTimeFormat('en-GB').format(new Date())).replace("/", "_");
-    let blocIndex = 0;
+	render() {
+		const formatedDate = new Intl.DateTimeFormat("en-GB")
+			.format(new Date())
+			.replace("/", "_");
+		let blocIndex = 0;
 
-    const listOfNotices = this.state.bucket;
-    let blocList = [];
-    let tempList = [];
+		const listOfNotices = this.state.bucket;
+		let blocList = [];
+		let tempList = [];
 
-    listOfNotices.map((notice, index) => {
-      tempList.push(notice)
+		listOfNotices.map((notice, index) => {
+			tempList.push(notice);
 
-      //multiple = x % y;
-      var multiple = (index + 1) % 7;
-      if ((multiple === 0 && index !== 0) || listOfNotices.length === index + 1) {
-        //x is a multiple of y
-        blocList.push({ list: tempList, bloc: blocIndex });
-        tempList = [];
-        blocIndex++;
-      }
-    });
+			//multiple = x % y;
+			var multiple = (index + 1) % 7;
+			if (
+				(multiple === 0 && index !== 0) ||
+				listOfNotices.length === index + 1
+			) {
+				//x is a multiple of y
+				blocList.push({ list: tempList, bloc: blocIndex });
+				tempList = [];
+				blocIndex++;
+			}
+		});
 
+		const pdf = BucketPdf(this.state.bucket);
+		const PDFLink = () => (
+			<div>
+				<PDFDownloadLink
+					className="btn btn-secondary"
+					document={pdf}
+					fileName={this.PdfFileName()}
+					style={{
+						backgroundColor: "#377d87",
+						border: 0,
+						color: "#fff",
+						maxWidth: "250px",
+						width: "100%",
+						height: "31px",
+						paddingLeft: "10px",
+						paddingRight: "10px",
+						paddingTop: "5px",
+						paddingBottom: "5px",
+						textAlign: "center",
+						borderRadius: "5px",
+					}}
+					onClick={() => trackDownload(this.PdfFileName())}
+				>
+					{({ blob, url, loading, error }) =>
+						loading
+							? "Construction du pdf..."
+							: "Télécharger le panier"
+					}
+				</PDFDownloadLink>
+			</div>
+		);
 
-    const pdf = BucketPdf(this.state.bucket);
-    const PDFLink = () => (
-      <div>
-        <PDFDownloadLink
-        className="btn btn-secondary"
-          document={pdf}
-          fileName={this.PdfFileName()}
-          style={{
-            backgroundColor: "#377d87",
-            border: 0,
-            color: "#fff",
-            maxWidth: "250px",
-            width: "100%",
-            height: "31px",
-            paddingLeft: "10px",
-            paddingRight: "10px",
-            paddingTop: "5px",
-            paddingBottom: "5px",
-            textAlign: "center",
-            borderRadius: "5px"
-          }}
-          onClick={() => trackDownload(this.PdfFileName()) }>
-          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Télécharger le panier')}
-        </PDFDownloadLink>
-      </div>
-    )
+		const EmptyBucketButton = () => (
+			<div>
+				<Button
+					style={{
+						backgroundColor: "transparent",
+						border: "1px solid #377d87",
+						color: "#377d87",
+						maxWidth: "250px",
+						height: "31px",
+						width: "100%",
+						lineHeight: "0px",
+						textAlign: "center",
+						borderRadius: "5px",
+					}}
+					onClick={() => this.EmptyBucket()}
+				>
+					Vider le panier
+				</Button>
+			</div>
+		);
 
-    const EmptyBucketButton = () => (
-      <div><Button style={{
-        backgroundColor: "transparent",
-        border: "1px solid #377d87",
-        color: "#377d87",
-        maxWidth: "250px",
-        height: "31px",
-        width: "100%",
-        lineHeight: "0px",
-        textAlign: "center",
-        borderRadius: "5px"
-      }}
-        onClick={() => this.EmptyBucket()}>Vider le panier</Button>
-      </div>
-    )
+		return (
+			<div className="bucketList">
+				<Layout>
+					<div className="home">
+						<Head>
+							<title>Panier de notices</title>
+						</Head>
+					</div>
+					<div className="bucketContainer">
+						<h1 className="bucketTitle">Panier de notices</h1>
+						<div className="notices">
+							<div className="download-container">
+								{this.state.bucket.length > 0 &&
+								this.state.display == true
+									? EmptyBucketButton()
+									: ""}
 
-    return (
-      <div className="bucketList">
-        <Layout>
-          <div className="home">
-            <Head>
-              <title >Panier de notices</title>
-            </Head>
-          </div>
-          <div className="bucketContainer">
-            <h1 className="bucketTitle">Panier de notices</h1>
-            <div className="notices">
-              <div className="download-container">
-                {
-                  (this.state.bucket.length > 0 && this.state.display == true) ?
-                    EmptyBucketButton() : ""
-                }
+								{this.state.bucket.length > 0 &&
+								this.state.display == true
+									? PDFLink()
+									: ""}
+							</div>
+							<div className="notice-number">
+								{this.state.bucket.length === 0
+									? "Aucune notice dans le panier"
+									: this.state.bucket.length +
+										" résultat" +
+										(this.state.bucket.length > 1
+											? "s"
+											: "")}
+							</div>
 
-                {
-                  (this.state.bucket.length > 0 && this.state.display == true) ?
-                    PDFLink() : ""
-                }
-
-              </div>
-              <div className="notice-number">
-                    {this.state.bucket.length === 0 ?
-                      "Aucune notice dans le panier" :
-                      (this.state.bucket.length + " résultat" + (this.state.bucket.length > 1 ? "s" : ""))
-                    }
-              </div>
-
-              {/* {this.state.bucket.map( notice, index =>
+							{/* {this.state.bucket.map( notice, index =>
                 <div>
                   {this.displayCard(notice)}
                 </div>
               )} */}
 
-              {
-                blocList.map(item =>
-                  <div id={`bloc_${item.bloc}`} className="notices-wrapper">
-                    {item.list.map(notice =>
+							{blocList.map((item) => (
+								<div
+									id={`bloc_${item.bloc}`}
+									className="notices-wrapper"
+								>
+									{item.list.map((notice) =>
+										this.displayCard(notice),
+									)}
+								</div>
+							))}
+						</div>
+					</div>
+				</Layout>
 
-                        this.displayCard(notice)
-
-                    )}
-                  </div>
-                )
-              }
-            </div>
-          </div>
-        </Layout>
-
-        <style jsx global>{`
+				<style jsx global>{`
             .home {
               height: 100%;
             }
@@ -476,8 +552,7 @@ export default class Bucket extends React.Component {
               }
             }            
           `}</style>
-      </div>
-
-    );
-  }
+			</div>
+		);
+	}
 }

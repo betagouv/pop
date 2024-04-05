@@ -8,259 +8,272 @@ import Loader from "../../../components/Loader";
 import api from "../../../services/api";
 
 export default class Map extends React.Component {
-  state = {
-    loaded: false,
-    popup: null,
-    style: "mapbox://styles/mapbox/streets-v9",
-    drawerContent: null,
-    selectedMarker: null,
-    selectedPositionMarker: null
-  };
+	state = {
+		loaded: false,
+		popup: null,
+		style: "mapbox://styles/mapbox/streets-v9",
+		drawerContent: null,
+		selectedMarker: null,
+		selectedPositionMarker: null,
+	};
 
-  mapRef = null;
-  map = null;
-  markers = {};
+	mapRef = null;
+	map = null;
+	markers = {};
 
-  constructor(props) {
-    super(props);
-    this.mapRef = React.createRef();
-    this.reload = this.reload.bind(this)
-  }
+	constructor(props) {
+		super(props);
+		this.mapRef = React.createRef();
+		this.reload = this.reload.bind(this);
+	}
 
-  async loadMapBox() {
+	async loadMapBox() {
+		const mapboxgl = require("mapbox-gl");
+		mapboxgl.accessToken = await api.getMapboxToken();
+		this.map = new mapboxgl.Map({
+			container: "map",
+			style: this.state.style,
+		});
 
-    const mapboxgl = require("mapbox-gl");
-    mapboxgl.accessToken = await api.getMapboxToken();
-    this.map = new mapboxgl.Map({
-      container: "map",
-      style: this.state.style
-    });
+		const handleMapLoad = () => {
+			this.mapInitialPosition(this.map);
+			this.setState({ loaded: true });
+			this.updateQuery();
+		};
+		this.map.on("load", handleMapLoad);
 
-    const handleMapLoad = () => {
-      this.mapInitialPosition(this.map);
-      this.setState({ loaded: true });
-      this.updateQuery();
-    };
-    this.map.on("load", handleMapLoad);
+		const handleMapMoveend = () => {
+			if (this.state.loaded) {
+				this.updateQuery();
+			}
+		};
+		this.map.on("moveend", handleMapMoveend);
 
-    const handleMapMoveend = () => {
-      if (this.state.loaded) {
-        this.updateQuery();
-      }
-    };
-    this.map.on("moveend", handleMapMoveend);
+		const handleMapClick = () => {
+			this.selectMarker(null);
+		};
+		this.map.on("click", handleMapClick);
 
-    const handleMapClick = () => {
-      this.selectMarker(null);
-    };
-    this.map.on("click", handleMapClick);
+		this.map.addControl(new mapboxgl.NavigationControl());
 
-    this.map.addControl(new mapboxgl.NavigationControl());
+		const handleMapError = (event) => {
+			if (event.error && event.error.status === 401) {
+				this.setState({ loaded: false }, () => {
+					this.map.off("load", handleMapLoad);
+					this.map.off("moveend", handleMapMoveend);
+					this.map.off("click", handleMapClick);
+					this.map.off("error", handleMapError);
+					this.loadMapBox();
+				});
+			}
+		};
+		this.map.on("error", handleMapError);
+	}
 
-    const handleMapError = event => {
-      if (event.error && event.error.status === 401) {
-        this.setState({ loaded: false }, () => {
-          this.map.off("load", handleMapLoad);
-          this.map.off("moveend", handleMapMoveend);
-          this.map.off("click", handleMapClick);
-          this.map.off("error", handleMapError);
-          this.loadMapBox();
-        });
-      }
-    };
-    this.map.on("error", handleMapError);
-  }
+	reload() {
+		this.setState({ loaded: false }, () => {
+			this.loadMapBox();
+		});
+	}
 
-  reload() {
-    this.setState({ loaded: false }, () => {
-      this.loadMapBox();
-    });
-  }
+	componentDidMount() {
+		this.loadMapBox();
+	}
 
-  componentDidMount() {
+	updateQuery() {
+		const mapBounds = this.map.getBounds();
+		const currentZoom = this.map.getZoom();
+		const precision = getPrecision(currentZoom);
 
-    this.loadMapBox();
-  }
+		this.props.onChange(
+			mapBounds._ne.lat,
+			mapBounds._sw.lng,
+			mapBounds._sw.lat,
+			mapBounds._ne.lng,
+			precision,
+		);
+	}
 
-  updateQuery() {
-    const mapBounds = this.map.getBounds();
-    const currentZoom = this.map.getZoom();
-    const precision = getPrecision(currentZoom);
+	componentWillReceiveProps(nextProps) {
+		if (!this.map) {
+			return;
+		}
 
-    this.props.onChange(
-      mapBounds._ne.lat,
-      mapBounds._sw.lng,
-      mapBounds._sw.lat,
-      mapBounds._ne.lng,
-      precision
-    );
-  }
+		if (!nextProps.aggregations) {
+			return;
+		}
 
-  componentWillReceiveProps(nextProps) {
+		if (!this.props.aggregations) {
+			this.renderMarkers(nextProps);
+			return;
+		}
 
-    if (!this.map) {
-      return;
-    }
+		// This is call 6 times per changement
+		const nextBuckets = nextProps.aggregations.france.buckets;
+		const prevBuckets = this.props.aggregations.france.buckets;
 
-    if (!nextProps.aggregations) {
-      return;
-    }
+		if (prevBuckets.length !== nextBuckets.length) {
+			this.renderMarkers(nextProps);
+			return;
+		}
 
-    if (!this.props.aggregations) {
-      this.renderMarkers(nextProps);
-      return;
-    }
+		const shouldnotrefresh = nextBuckets.every((e, i) => {
+			return (
+				e.key === prevBuckets[i].key &&
+				e.count === prevBuckets[i].count &&
+				e.top_hits.hits.hits[0]._id ===
+					prevBuckets[i].top_hits.hits.hits[0]._id
+			);
+		});
 
-    // This is call 6 times per changement
-    const nextBuckets = nextProps.aggregations.france.buckets;
-    const prevBuckets = this.props.aggregations.france.buckets;
+		if (shouldnotrefresh) {
+			return;
+		}
 
-    if (prevBuckets.length !== nextBuckets.length) {
-      this.renderMarkers(nextProps);
-      return;
-    }
+		this.renderMarkers(nextProps);
+	}
 
-    const shouldnotrefresh = nextBuckets.every((e, i) => {
-      return (
-        e.key === prevBuckets[i].key &&
-        e.count === prevBuckets[i].count &&
-        e.top_hits.hits.hits[0]._id === prevBuckets[i].top_hits.hits.hits[0]._id
-      );
-    });
+	setPosition(position, zoom = 13, showMarker = true) {
+		const mapboxgl = require("mapbox-gl");
+		if (this.state.selectedPositionMarker) {
+			this.state.selectedPositionMarker.remove();
+		}
+		if (position && showMarker) {
+			const marker = new mapboxgl.Marker();
+			marker.setLngLat(position);
+			this.setState({ selectedPositionMarker: marker });
+			marker.addTo(this.map);
+		}
 
-    if (shouldnotrefresh) {
-      return;
-    }
+		if (position) {
+			this.map.flyTo({
+				center: position,
+				zoom,
+			});
+		}
+	}
 
-    this.renderMarkers(nextProps);
-  }
+	selectMarker(marker) {
+		if (this.state.selectedMarker && this.state.selectedMarker != marker) {
+			this.state.selectedMarker.unselect();
+		}
+		if (marker) {
+			marker.select();
+		}
+		this.setState({ selectedMarker: marker });
+	}
 
-  setPosition(position, zoom = 13, showMarker = true) {
-    const mapboxgl = require("mapbox-gl");
-    if (this.state.selectedPositionMarker) {
-      this.state.selectedPositionMarker.remove();
-    }
-    if (position && showMarker) {
-      const marker = new mapboxgl.Marker();
-      marker.setLngLat(position);
-      this.setState({ selectedPositionMarker: marker });
-      marker.addTo(this.map);
-    }
+	renderMarkers(props) {
+		const removeList = { ...this.markers };
+		const newMarkers = {};
 
-    if (position) {
-      this.map.flyTo({
-        center: position,
-        zoom
-      });
-    }
-  }
+		if (props.aggregations) {
+			const geojson = toGeoJson(props.aggregations.france.buckets);
 
-  selectMarker(marker) {
-    if (this.state.selectedMarker && this.state.selectedMarker != marker) {
-      this.state.selectedMarker.unselect();
-    }
-    if (marker) {
-      marker.select();
-    }
-    this.setState({ selectedMarker: marker });
-  }
+			geojson.features.forEach((feature) => {
+				const key = feature.properties.id;
+				// If the marker is a single notice, always the same, then we do not rebuild it
+				if (
+					this.markers[key] &&
+					this.markers[key]._type === "notice" &&
+					this.markers[key].getHits()[0]._source.REF ===
+						feature.properties.hits[0]._source.REF
+				) {
+					delete removeList[key];
+					return;
+				}
+				const zoom = Math.min(this.map.getZoom() + 1, 24);
 
-  renderMarkers(props) {
-    const removeList = { ...this.markers };
-    const newMarkers = {};
+				const marker = new Marker(
+					feature,
+					zoom >= 15 ? "#fc5e2a" : "#007bff",
+				);
+				marker.onClick((marker) => {
+					let zoom = this.map.getZoom();
+					if (marker._type == "cluster") {
+						zoom++;
+					}
+					const center = marker.getCoordinates();
+					this.map.flyTo({ center, zoom: Math.min(zoom, 24) });
+					if (zoom >= 15 || marker._type === "notice") {
+						this.selectMarker(marker);
+					}
+				});
 
-    if (props.aggregations) {
-      const geojson = toGeoJson(props.aggregations.france.buckets);
+				newMarkers[key] = marker;
+			});
+		}
 
-      geojson.features.forEach(feature => {
-        const key = feature.properties.id;
-        // If the marker is a single notice, always the same, then we do not rebuild it
-        if (
-          this.markers[key] &&
-          this.markers[key]._type === "notice" &&
-          this.markers[key].getHits()[0]._source.REF === feature.properties.hits[0]._source.REF
-        ) {
-          delete removeList[key];
-          return;
-        }
-        const zoom = Math.min(this.map.getZoom() + 1, 24);
+		for (let key in removeList) {
+			if (!this.markers[key]._isSelected) {
+				this.markers[key].remove();
+				delete this.markers[key];
+			}
+		}
 
-        const marker = new Marker(feature, zoom >= 15 ? "#fc5e2a" : "#007bff");
-        marker.onClick(marker => {
-          let zoom = this.map.getZoom();
-          if (marker._type == "cluster") {
-            zoom++;
-          }
-          const center = marker.getCoordinates();
-          this.map.flyTo({ center, zoom: Math.min(zoom, 24) });
-          if (zoom >= 15 || marker._type === "notice") {
-            this.selectMarker(marker);
-          }
-        });
+		for (let key in newMarkers) {
+			newMarkers[key].addTo(this.map);
+			this.markers[key] = newMarkers[key];
+		}
+	}
 
-        newMarkers[key] = marker;
-      });
-    }
+	mapInitialPosition = (map) => {
+		if (map) {
+			map.resize();
+			map.setZoom(5);
+			map.setCenter({ lng: 2.515597, lat: 46.856731 });
+		}
+	};
 
-    for (let key in removeList) {
-      if (!this.markers[key]._isSelected) {
-        this.markers[key].remove();
-        delete this.markers[key];
-      }
-    }
-
-    for (let key in newMarkers) {
-      newMarkers[key].addTo(this.map);
-      this.markers[key] = newMarkers[key];
-    }
-  }
-
-  mapInitialPosition = map => {
-    if (map) {
-      map.resize();
-      map.setZoom(5);
-      map.setCenter({ lng: 2.515597, lat: 46.856731 });
-    }
-  };
-
-  render() {
-    return (
-      <div style={{ width: "100%", height: "600px" }} className="search-map view">
-        <Head>
-          <link
-            href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css"
-            rel="stylesheet"
-          />
-          <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.4/mapbox-gl-geocoder.min.js" />
-          <link
-            rel="stylesheet"
-            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.4/mapbox-gl-geocoder.css"
-            type="text/css"
-          />
-        </Head>
-        <Location
-          ready={this.state.loaded}
-          map={this.map}
-          setPosition={this.setPosition.bind(this)}
-          onReload={this.reload}
-        />
-        <Drawer
-          notices={this.state.selectedMarker ? this.state.selectedMarker.getHits() : null}
-          onClose={() => {
-            this.selectMarker(null);
-          }}
-        />
-        <Loader isOpen={!this.state.loaded} />
-        <div id="map" ref={this.mapRef} style={{ width: "100%", height: "600px" }}>
-          <SwitchStyleButton
-            value={this.state.style}
-            onChange={style => {
-              this.setState({ style });
-              this.map.setStyle(style);
-            }}
-          />
-        </div>
-        <style jsx global>{`
+	render() {
+		return (
+			<div
+				style={{ width: "100%", height: "600px" }}
+				className="search-map view"
+			>
+				<Head>
+					<link
+						href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css"
+						rel="stylesheet"
+					/>
+					<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.4/mapbox-gl-geocoder.min.js" />
+					<link
+						rel="stylesheet"
+						href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.4/mapbox-gl-geocoder.css"
+						type="text/css"
+					/>
+				</Head>
+				<Location
+					ready={this.state.loaded}
+					map={this.map}
+					setPosition={this.setPosition.bind(this)}
+					onReload={this.reload}
+				/>
+				<Drawer
+					notices={
+						this.state.selectedMarker
+							? this.state.selectedMarker.getHits()
+							: null
+					}
+					onClose={() => {
+						this.selectMarker(null);
+					}}
+				/>
+				<Loader isOpen={!this.state.loaded} />
+				<div
+					id="map"
+					ref={this.mapRef}
+					style={{ width: "100%", height: "600px" }}
+				>
+					<SwitchStyleButton
+						value={this.state.style}
+						onChange={(style) => {
+							this.setState({ style });
+							this.map.setStyle(style);
+						}}
+					/>
+				</div>
+				<style jsx global>{`
           .search-map .switch-view {
             width: 60px;
             height: 60px;
@@ -550,28 +563,36 @@ export default class Map extends React.Component {
             padding: 0;
           }
         `}</style>
-      </div>
-    );
-  }
+			</div>
+		);
+	}
 }
 
 const SwitchStyleButton = ({ onChange, value }) => {
-  return (
-    <div
-      className="switch-view"
-      onClick={() =>
-        onChange(
-          value === "mapbox://styles/mapbox/streets-v9"
-            ? "mapbox://styles/mapbox/satellite-streets-v9"
-            : "mapbox://styles/mapbox/streets-v9"
-        )
-      }
-    >
-      {value === "mapbox://styles/mapbox/streets-v9" ? (
-        <img src="/static/satelite.png" className="thumbnailStyle" alt="style" />
-      ) : (
-        <img src="/static/street.png" className="thumbnailStyle" alt="style" />
-      )}
-    </div>
-  );
+	return (
+		<div
+			className="switch-view"
+			onClick={() =>
+				onChange(
+					value === "mapbox://styles/mapbox/streets-v9"
+						? "mapbox://styles/mapbox/satellite-streets-v9"
+						: "mapbox://styles/mapbox/streets-v9",
+				)
+			}
+		>
+			{value === "mapbox://styles/mapbox/streets-v9" ? (
+				<img
+					src="/static/satelite.png"
+					className="thumbnailStyle"
+					alt="style"
+				/>
+			) : (
+				<img
+					src="/static/street.png"
+					className="thumbnailStyle"
+					alt="style"
+				/>
+			)}
+		</div>
+	);
 };

@@ -1,10 +1,10 @@
 import React from "react";
 
 export default ({ isOpen = true }) =>
-  isOpen ? (
-    <div className="loader-container">
-      <div id="loader" />
-      <style jsx>{`
+	isOpen ? (
+		<div className="loader-container">
+			<div id="loader" />
+			<style jsx>{`
         #loader {
           border: 16px solid #eaeaec;
           border-top: 16px solid #c43a2f;
@@ -30,5 +30,5 @@ export default ({ isOpen = true }) =>
           }
         }
       `}</style>
-    </div>
-  ) : null;
+		</div>
+	) : null;

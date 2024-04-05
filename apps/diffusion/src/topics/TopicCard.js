@@ -3,43 +3,51 @@ import Link from "next/link";
 import { Card, CardTitle, CardBody } from "reactstrap";
 import queryString from "query-string";
 
-const toReactiveSearchParams = params => {
-  return Object.assign(...Object.entries(params).map(([k, v]) => ({ [k]: JSON.stringify(v) })));
+const toReactiveSearchParams = (params) => {
+	return Object.assign(
+		...Object.entries(params).map(([k, v]) => ({ [k]: JSON.stringify(v) })),
+	);
 };
 
 class TopicCard extends React.Component {
-  render() {
-    const { img, txt } = this.props;
-    let params;
-    if(String(this.props.base) != "autor"){
-      //Ici on peux configurer les filtres par defaut:
-      //Example filtre image
-      // params = { ...this.props.params, image: ["oui"] };
-      params = { ...this.props.params, image: [] };
-    }
-    else{
-      params = { ...this.props.params };
-    }
-    const href = `/search/mosaic?${queryString.stringify({
-      view: "mosaic",
-      mode: "simple",
-      ...toReactiveSearchParams(params)
-    })}`;
-    const alias = `/search/mosaic?${queryString.stringify(toReactiveSearchParams(params))}`;
+	render() {
+		const { img, txt } = this.props;
+		let params;
+		if (String(this.props.base) != "autor") {
+			//Ici on peux configurer les filtres par defaut:
+			//Example filtre image
+			// params = { ...this.props.params, image: ["oui"] };
+			params = { ...this.props.params, image: [] };
+		} else {
+			params = { ...this.props.params };
+		}
+		const href = `/search/mosaic?${queryString.stringify({
+			view: "mosaic",
+			mode: "simple",
+			...toReactiveSearchParams(params),
+		})}`;
+		const alias = `/search/mosaic?${queryString.stringify(
+			toReactiveSearchParams(params),
+		)}`;
 
-    return (
-      <div className="topic-card">
-        {/* <Link href={href} as={alias}> */}
-          <a href={href}>
-            <Card>
-              <img src={img} alt={txt} className="card-img" height="220" />
-              <CardBody>
-                <CardTitle>{txt}</CardTitle>
-              </CardBody>
-            </Card>
-          </a>
-       { /*} </Link> */}
-        <style jsx>{`
+		return (
+			<div className="topic-card">
+				{/* <Link href={href} as={alias}> */}
+				<a href={href}>
+					<Card>
+						<img
+							src={img}
+							alt={txt}
+							className="card-img"
+							height="220"
+						/>
+						<CardBody>
+							<CardTitle>{txt}</CardTitle>
+						</CardBody>
+					</Card>
+				</a>
+				{/*} </Link> */}
+				<style jsx>{`
           .topic-card {
             padding-left: 15px;
             padding-right: 15px;
@@ -83,9 +91,9 @@ class TopicCard extends React.Component {
             box-shadow: 0 2px 4px 2px #025d592a;
           }
         `}</style>
-      </div>
-    );
-  }
+			</div>
+		);
+	}
 }
 
 export default TopicCard;

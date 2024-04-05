@@ -3,168 +3,174 @@ import { ActiveFilters, Facet } from "@popproject/pop-react-elasticsearch";
 import { CollapsableFacet } from "./utils";
 
 const Menu = ({ closeMenu, initialValues }) => (
-  <aside className="search-filters-sidebar">
-    <div className="close_mobile_menu" onClick={closeMenu}>
-      x
-    </div>
-    <ActiveFilters
-      id="af"
-      items={(activeFilters, removeFilter) => (
-        <>
-          {activeFilters.length ? <h4>Vos filtres</h4> : null}
-          <ul>
-            {activeFilters.map(({ key, value }) => {
-              return (
-                <li key={key} onClick={() => removeFilter(key)}>
-                  <span>{`${key.replace('ou','où')} : ${value}`}</span>
-                  <button>✕</button>
-                </li>
-              );
-            })}
-          </ul>
-        </>
-      )}
-    />
-    <h4>Affiner par</h4>
+	<aside className="search-filters-sidebar">
+		<div className="close_mobile_menu" onClick={closeMenu}>
+			x
+		</div>
+		<ActiveFilters
+			id="af"
+			items={(activeFilters, removeFilter) => (
+				<>
+					{activeFilters.length ? <h4>Vos filtres</h4> : null}
+					<ul>
+						{activeFilters.map(({ key, value }) => {
+							return (
+								<li key={key} onClick={() => removeFilter(key)}>
+									<span>{`${key.replace(
+										"ou",
+										"où",
+									)} : ${value}`}</span>
+									<button>✕</button>
+								</li>
+							);
+						})}
+					</ul>
+				</>
+			)}
+		/>
+		<h4>Affiner par</h4>
 
-    <CollapsableFacet
-      id="auteur"
-      initialValue={initialValues.get("auteur")}
-      fields={["AUTP.keyword", "AUTR.keyword", "NOMPRENOM.keyword"]}
-      title="Auteur"
-    />
-    <CollapsableFacet
-      id="domn"
-      initialValue={initialValues.get("domn")}
-      fields={["DOMN.keyword", "CATE.keyword", "DOMPAL.keyword"]}
-      title="Domaine"
-    />
-    <CollapsableFacet
-      id="base"
-      initialValue={initialValues.get("base")}
-      items={(data, { handleChange, isChecked }) => {
-        return data
-          .filter(
-            item =>
-              item.key !== "Photographies (Mémoires)" &&
-              item.key !== "Inventaire patrimoine mobilier (Palissy)"
-          )
-          .map(item => (
-            <label key={item.key}>
-              <input
-                type="checkbox"
-                checked={isChecked(item)}
-                onChange={e => handleChange(item, e.target.checked)}
-              />
-              {item.key} ({item.doc_count})
-            </label>
-          ));
-      }}
-      itemsModifier={items =>
-        items.filter(
-          i =>
-            i.key !== "Photographies (Mémoires)" &&
-            i.key !== "Inventaire patrimoine mobilier (Palissy)"
-        )
-      }
-      fields={["BASE.keyword"]}
-      title="Base"
-    />
-    <CollapsableFacet
-      id="ou"
-      initialValue={initialValues.get("ou")}
-      fields={[
-        "REG.keyword",
-        "COM.keyword",
-        "DPT.keyword",
-        "DPT_LETTRE.keyword",
-        "PAYS.keyword",
-        "NOMOFF.keyword",
-        "VILLE_M.keyword",
-        "REGION.keyword",
-        "NOMUSAGE.keyword",
-        "LNAISS.keyword",
-        "LMORT.keyword"
-      ]}
-      title="Localisation"
-    />
-    <CollapsableFacet
-      id="periode"
-      initialValue={initialValues.get("periode")}
-      fields={["PERI.keyword", "SCLE.keyword"]}
-      title="Période"
-    />
-    <CollapsableFacet
-      id="producteur"
-      initialValue={initialValues.get("producteur")}
-      fields={["PRODUCTEUR.keyword"]}
-      title="Producteur"
-    />
-    <CollapsableFacet
-      id="type"
-      initialValue={initialValues.get("type")}
-      fields={[
-        "EDIF.keyword",
-        "OBJT.keyword",
-        "DENO.keyword",
-        "PDEN.keyword",
-        "APPL.keyword",
-        "ACTU.keyword",
-        "PARN.keyword",
-        "UTIL.keyword"
-      ]}
-      title="Type de bien ou d'édifice"
-    />
-    <CollapsableFacet
-      id="tech"
-      initialValue={initialValues.get("tech")}
-      fields={["TECHN.keyword", "TECH.keyword", "TYPDOC.keyword"]}
-      title="Techniques"
-    />
+		<CollapsableFacet
+			id="auteur"
+			initialValue={initialValues.get("auteur")}
+			fields={["AUTP.keyword", "AUTR.keyword", "NOMPRENOM.keyword"]}
+			title="Auteur"
+		/>
+		<CollapsableFacet
+			id="domn"
+			initialValue={initialValues.get("domn")}
+			fields={["DOMN.keyword", "CATE.keyword", "DOMPAL.keyword"]}
+			title="Domaine"
+		/>
+		<CollapsableFacet
+			id="base"
+			initialValue={initialValues.get("base")}
+			items={(data, { handleChange, isChecked }) => {
+				return data
+					.filter(
+						(item) =>
+							item.key !== "Photographies (Mémoires)" &&
+							item.key !==
+								"Inventaire patrimoine mobilier (Palissy)",
+					)
+					.map((item) => (
+						<label key={item.key}>
+							<input
+								type="checkbox"
+								checked={isChecked(item)}
+								onChange={(e) =>
+									handleChange(item, e.target.checked)
+								}
+							/>
+							{item.key} ({item.doc_count})
+						</label>
+					));
+			}}
+			itemsModifier={(items) =>
+				items.filter(
+					(i) =>
+						i.key !== "Photographies (Mémoires)" &&
+						i.key !== "Inventaire patrimoine mobilier (Palissy)",
+				)
+			}
+			fields={["BASE.keyword"]}
+			title="Base"
+		/>
+		<CollapsableFacet
+			id="ou"
+			initialValue={initialValues.get("ou")}
+			fields={[
+				"REG.keyword",
+				"COM.keyword",
+				"DPT.keyword",
+				"DPT_LETTRE.keyword",
+				"PAYS.keyword",
+				"NOMOFF.keyword",
+				"VILLE_M.keyword",
+				"REGION.keyword",
+				"NOMUSAGE.keyword",
+				"LNAISS.keyword",
+				"LMORT.keyword",
+			]}
+			title="Localisation"
+		/>
+		<CollapsableFacet
+			id="periode"
+			initialValue={initialValues.get("periode")}
+			fields={["PERI.keyword", "SCLE.keyword"]}
+			title="Période"
+		/>
+		<CollapsableFacet
+			id="producteur"
+			initialValue={initialValues.get("producteur")}
+			fields={["PRODUCTEUR.keyword"]}
+			title="Producteur"
+		/>
+		<CollapsableFacet
+			id="type"
+			initialValue={initialValues.get("type")}
+			fields={[
+				"EDIF.keyword",
+				"OBJT.keyword",
+				"DENO.keyword",
+				"PDEN.keyword",
+				"APPL.keyword",
+				"ACTU.keyword",
+				"PARN.keyword",
+				"UTIL.keyword",
+			]}
+			title="Type de bien ou d'édifice"
+		/>
+		<CollapsableFacet
+			id="tech"
+			initialValue={initialValues.get("tech")}
+			fields={["TECHN.keyword", "TECH.keyword", "TYPDOC.keyword"]}
+			title="Techniques"
+		/>
 
-    <CollapsableFacet
-      id="image"
-      initialValue={initialValues.get("image")}
-      fields={["CONTIENT_IMAGE.keyword"]}
-      title="Contient une image"
-    />
-    <CollapsableFacet
-      id="geolocalisation"
-      initialValue={initialValues.get("geolocalisation")}
-      fields={["POP_CONTIENT_GEOLOCALISATION.keyword"]}
-      title="Est géolocalisée"
-    />
-    <CollapsableFacet
-      id="manquant"
-      initialValue={initialValues.get("manquant")}
-      fields={["MANQUANT.keyword"]}
-      title="Objets manquants ou volés"
-    />
-    <div style={{ display: "none" }}>
-      {[
-        ["import", "POP_IMPORT.keyword"],
-        ["museo", "MUSEO.keyword"],
-        ["ref", "REF.keyword"],
-        ["expo", "EXPO.keyword"],
-        ["deno", "DENO.keyword"],
-        ["serie", "SERIE.keyword"],
-        ["repr", "REPR.keyword"],
-        ["util", "UTIL.keyword"],
-        ["loca", "LOCA.keyword"],
-        ["etud", "ETUD.keyword"],
-      ].map(([value, field]) => {
-        return (
-          <CollapsableFacet
-            key={value}
-            id={value}
-            initialValue={initialValues.get(value)}
-            fields={[field]}
-            title={value}
-          />
-        );
-      })}
-    </div>
-    <style jsx global>{`
+		<CollapsableFacet
+			id="image"
+			initialValue={initialValues.get("image")}
+			fields={["CONTIENT_IMAGE.keyword"]}
+			title="Contient une image"
+		/>
+		<CollapsableFacet
+			id="geolocalisation"
+			initialValue={initialValues.get("geolocalisation")}
+			fields={["POP_CONTIENT_GEOLOCALISATION.keyword"]}
+			title="Est géolocalisée"
+		/>
+		<CollapsableFacet
+			id="manquant"
+			initialValue={initialValues.get("manquant")}
+			fields={["MANQUANT.keyword"]}
+			title="Objets manquants ou volés"
+		/>
+		<div style={{ display: "none" }}>
+			{[
+				["import", "POP_IMPORT.keyword"],
+				["museo", "MUSEO.keyword"],
+				["ref", "REF.keyword"],
+				["expo", "EXPO.keyword"],
+				["deno", "DENO.keyword"],
+				["serie", "SERIE.keyword"],
+				["repr", "REPR.keyword"],
+				["util", "UTIL.keyword"],
+				["loca", "LOCA.keyword"],
+				["etud", "ETUD.keyword"],
+			].map(([value, field]) => {
+				return (
+					<CollapsableFacet
+						key={value}
+						id={value}
+						initialValue={initialValues.get(value)}
+						fields={[field]}
+						title={value}
+					/>
+				);
+			})}
+		</div>
+		<style jsx global>{`
       .search-filters-sidebar {
         background-color: #fff;
         padding: 15px;
@@ -235,7 +241,7 @@ const Menu = ({ closeMenu, initialValues }) => (
         padding-left: 15px;
       }
     `}</style>
-  </aside>
+	</aside>
 );
 
 export default Menu;

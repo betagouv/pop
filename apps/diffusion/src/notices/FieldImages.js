@@ -2,88 +2,96 @@ import React from "react";
 import dynamic from "next/dynamic";
 // import Viewer from "react-viewer";
 import Slider from "react-slick";
-const Viewer = dynamic(
-  () => import("react-viewer"),
-  { ssr: false }
-);
+const Viewer = dynamic(() => import("react-viewer"), { ssr: false });
 
 class FieldImages extends React.Component {
-  state = {
-    selected: -1,
-    current: 0
-  };
+	state = {
+		selected: -1,
+		current: 0,
+	};
 
-  renderImages() {
-    if (!this.props.images.length) {
-      return <div />;
-    }
-    const arr = this.props.images.map((e, i) => {
-      return (
-        <div key={i}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center"
-            }}
-          >
-            <img src={e.src} alt={e.alt} onClick={() => this.setState({ selected: i })} />
-            {e.footer ? e.footer : <div />}
-          </div>
-        </div>
-      );
-    });
+	renderImages() {
+		if (!this.props.images.length) {
+			return <div />;
+		}
+		const arr = this.props.images.map((e, i) => {
+			return (
+				<div key={i}>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "center",
+							flexDirection: "column",
+							alignItems: "center",
+						}}
+					>
+						<img
+							src={e.src}
+							alt={e.alt}
+							onClick={() => this.setState({ selected: i })}
+						/>
+						{e.footer ? e.footer : <div />}
+					</div>
+				</div>
+			);
+		});
 
-    var settings = {
-      lazyLoad: true,
-      slidesToShow: 1,
-      speed: 0
-    };
-    return (
-      <div>
-        {this.props.images.length > 1 ? (
-          <div style={{ width: "100%", textAlign: "end", fontSize: "11px" }}>{`${this.state
-            .current + 1}/${this.props.images.length}`}</div>
-        ) : (
-          <span />
-        )}
-        <Slider
-          {...settings}
-          beforeChange={(c, n) => {
-            this.setState({ current: n });
-          }}
-        >
-          {arr}
-        </Slider>
-      </div>
-    );
-  }
+		var settings = {
+			lazyLoad: true,
+			slidesToShow: 1,
+			speed: 0,
+		};
+		return (
+			<div>
+				{this.props.images.length > 1 ? (
+					<div
+						style={{
+							width: "100%",
+							textAlign: "end",
+							fontSize: "11px",
+						}}
+					>{`${this.state.current + 1}/${
+						this.props.images.length
+					}`}</div>
+				) : (
+					<span />
+				)}
+				<Slider
+					{...settings}
+					beforeChange={(c, n) => {
+						this.setState({ current: n });
+					}}
+				>
+					{arr}
+				</Slider>
+			</div>
+		);
+	}
 
-  renderModal() {
-    if (this.state.selected === -1) {
-      return <div />;
-    }
+	renderModal() {
+		if (this.state.selected === -1) {
+			return <div />;
+		}
 
-    return (
-      <Viewer
-        visible
-        onClose={() => {
-          document.body.style.overflow = "auto";
-          this.setState({ selected: -1 });
-        }}
-        images={this.props.images}
-        activeIndex={this.state.selected}
-      />
-    );
-  }
+		return (
+			<Viewer
+				visible
+				onClose={() => {
+					document.body.style.overflow = "auto";
+					this.setState({ selected: -1 });
+				}}
+				images={this.props.images}
+				activeIndex={this.state.selected}
+			/>
+		);
+	}
 
-  render() {
-    return (
-      <div className="fieldImages">
-        {this.renderModal()}
-        {this.renderImages()}
-        <style jsx global>{`
+	render() {
+		return (
+			<div className="fieldImages">
+				{this.renderModal()}
+				{this.renderImages()}
+				<style jsx global>{`
           .fieldImages {
             width: 100%;
             max-width: 500px;
@@ -121,9 +129,9 @@ class FieldImages extends React.Component {
             color: #785d59;
           }
         `}</style>
-      </div>
-    );
-  }
+			</div>
+		);
+	}
 }
 
 export default FieldImages;

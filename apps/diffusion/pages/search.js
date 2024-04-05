@@ -1,7 +1,11 @@
 import React from "react";
 import Head from "next/head";
 import { Row, Container } from "reactstrap";
-import { Elasticsearch, toUrlQueryString, fromUrlQueryString } from "@popproject/pop-react-elasticsearch";
+import {
+	Elasticsearch,
+	toUrlQueryString,
+	fromUrlQueryString,
+} from "@popproject/pop-react-elasticsearch";
 import Switch from "react-switch";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
@@ -17,293 +21,432 @@ import { bases } from "../src/search/Search/SearchAdvanced";
 import { replaceSearchRouteWithUrl } from "../src/services/url";
 import EAnalytics from "./../src/services/eurelian";
 
-const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "museo", "enluminures", "autor"].join(",");
+const BASES = [
+	"merimee",
+	"palissy",
+	"memoire",
+	"joconde",
+	"mnr",
+	"museo",
+	"enluminures",
+	"autor",
+].join(",");
 
 import throw404 from "../src/services/throw404";
 
 export default class extends React.Component {
-  state = {
-    mobile_menu: false,
-    ready: false
-  };
+	state = {
+		mobile_menu: false,
+		ready: false,
+	};
 
-  static async getInitialProps({ asPath, query }) {
-    const { view, mode, ...rest } = query;
-    const qs = queryString.stringify(rest);
-    const dataLayer = [
-      "path", `Recherche ${mode}`,
-      'pagegroup', 'Page de recherche'
-    ];
-    return { asPath, queryString: qs, view, mode, base: query.base, query, dataLayer: dataLayer };
-  }
+	static async getInitialProps({ asPath, query }) {
+		const { view, mode, ...rest } = query;
+		const qs = queryString.stringify(rest);
+		const dataLayer = [
+			"path",
+			`Recherche ${mode}`,
+			"pagegroup",
+			"Page de recherche",
+		];
+		return {
+			asPath,
+			queryString: qs,
+			view,
+			mode,
+			base: query.base,
+			query,
+			dataLayer: dataLayer,
+		};
+	}
 
-  handleSwitchChange = checked => {
-    const hasBase = Boolean(this.props.base);
-    if (checked) {
-      if (hasBase) {
-        let myBase = this.props.base.split('"')
-        if (myBase.length > 3) {
-          Router.push("/search?view=list&mode=advanced", "/advanced-search/list/");
-        } else {
-          let key = bases.find(e => e.base === myBase[1]).key;
-          Router.push("/advanced-search/list/" + key);
-        }
-      }
-      else {
-        Router.push("/search?view=list&mode=advanced", "/advanced-search/list/");
-      }
-    } else {
-      Router.push("/search?view=list&mode=simple", "/search/list");
-    }
-  };
+	handleSwitchChange = (checked) => {
+		const hasBase = Boolean(this.props.base);
+		if (checked) {
+			if (hasBase) {
+				let myBase = this.props.base.split('"');
+				if (myBase.length > 3) {
+					Router.push(
+						"/search?view=list&mode=advanced",
+						"/advanced-search/list/",
+					);
+				} else {
+					let key = bases.find((e) => e.base === myBase[1]).key;
+					Router.push("/advanced-search/list/" + key);
+				}
+			} else {
+				Router.push(
+					"/search?view=list&mode=advanced",
+					"/advanced-search/list/",
+				);
+			}
+		} else {
+			Router.push("/search?view=list&mode=simple", "/search/list");
+		}
+	};
 
-  handleRadioBaseChange(base) {
-    const value = base;
-    Router.push(value ? `/advanced-search/list/${value}` : "/advanced-search/list");
-  }
+	handleRadioBaseChange(base) {
+		const value = base;
+		Router.push(
+			value ? `/advanced-search/list/${value}` : "/advanced-search/list",
+		);
+	}
 
-  componentDidMount() {
-    // Tracking Eurelian
-    EAnalytics.initialize();
-    EAnalytics.track(this.props.dataLayer);
-    this.state.ready = true;
-  }
+	componentDidMount() {
+		// Tracking Eurelian
+		EAnalytics.initialize();
+		EAnalytics.track(this.props.dataLayer);
+		this.state.ready = true;
+	}
 
-  /**
-   * Envoi des informations au tracking
-   * @param {Number} total 
-   */
-  sendParams(total, values){
-    const data = [
-      'isearchengine', 'moteur_recherche',
-      'type_tri', this.props.view,
-      'isearchresults', total
-    ];
+	/**
+	 * Envoi des informations au tracking
+	 * @param {Number} total
+	 */
+	sendParams(total, values) {
+		const data = [
+			"isearchengine",
+			"moteur_recherche",
+			"type_tri",
+			this.props.view,
+			"isearchresults",
+			total,
+		];
 
-    // List key not search filter
-    const keyNotFilter = ['mainSearch', 'qb', 'last_view', 'idQuery']
+		// List key not search filter
+		const keyNotFilter = ["mainSearch", "qb", "last_view", "idQuery"];
 
-    let arrayKey = {};
-    let objFilter = {}; // Objet affiner votre recherche
-    values.forEach((value, key) => { 
-      arrayKey[key] = value;
+		let arrayKey = {};
+		let objFilter = {}; // Objet affiner votre recherche
+		values.forEach((value, key) => {
+			arrayKey[key] = value;
 
-      if(!keyNotFilter.includes(key)){
-        objFilter[key] = value;
-      }
-    })
+			if (!keyNotFilter.includes(key)) {
+				objFilter[key] = value;
+			}
+		});
 
-    // Affiner votre recherche
-    if(Object.keys(objFilter).length > 0){
-      data.push('filtre');
-      data.push(JSON.stringify(objFilter));
-    }
+		// Affiner votre recherche
+		if (Object.keys(objFilter).length > 0) {
+			data.push("filtre");
+			data.push(JSON.stringify(objFilter));
+		}
 
-    if(this.props.mode === "simple"){
-      if(arrayKey['mainSearch']){
-        data.push('isearchkey')
-        data.push('mainSearch')
-        data.push('isearchdata')
-        data.push(arrayKey['mainSearch'])
-      }
-    } else {
+		if (this.props.mode === "simple") {
+			if (arrayKey["mainSearch"]) {
+				data.push("isearchkey");
+				data.push("mainSearch");
+				data.push("isearchdata");
+				data.push(arrayKey["mainSearch"]);
+			}
+		} else {
+			if (arrayKey["qb"]) {
+				data.push("isearchkey");
+				data.push("qb");
+				data.push("isearchdata");
+				data.push(JSON.stringify(arrayKey["qb"]));
+			}
+		}
+		EAnalytics.pushEvent("globalarg", data);
+		EAnalytics.pushEvent("event", ["recherche"]);
+		EAnalytics.pushEvent("globalarg", []);
+	}
 
-      if(arrayKey['qb']){
-        data.push('isearchkey')
-        data.push('qb')
-        data.push('isearchdata')
-        data.push(JSON.stringify(arrayKey['qb']))
-      }
-    }
-    EAnalytics.pushEvent('globalarg', data);
-    EAnalytics.pushEvent('event', ['recherche']);
-    EAnalytics.pushEvent('globalarg', []);
-  }
+	render = () => {
+		if (!this.props.mode || !this.props.view) {
+			return throw404();
+		}
 
-  render = () => {
-    if (!this.props.mode || !this.props.view) {
-      return throw404();
-    }
+		const queryScope =
+			this.props.mode === "simple" ? BASES : this.props.base;
+		let initialValues;
 
-    const queryScope = this.props.mode === "simple" ? BASES : this.props.base;
-    let initialValues;
+		// This whole part is about backward compatibility of old search system.
+		// If the URL has a `q[0][combinator]` param, it's the old system, so
+		// it must be updated.
+		const parsed = queryString.parse(this.props.queryString);
+		if (parsed && parsed["q[0][combinator]"]) {
+			const qb = [];
+			Object.entries(parsed)
+				// Map params from `q[0][combinator]=ET` to `{index: 0, key: combinator, value: ET}`
+				.map(([k, value]) => {
+					const matches = k.match(/\[([0-9]+)\]\[([a-z]+)\]/i);
+					if (matches && matches.length === 3) {
+						return {
+							index: Number(matches[1]),
+							key: matches[2],
+							value,
+						};
+					}
+				})
+				// Remove empty
+				.filter((a) => a)
+				// Sort by index (0, 1, 2, etc.)
+				.sort((a, b) => a.index - b.index)
+				// Create a new "qb" param with the current system
+				.forEach((e) => {
+					if (!qb[e.index]) {
+						qb.push({ index: e.index });
+					}
+					switch (e.key) {
+						case "combinator":
+							qb[e.index].combinator =
+								e.value === "OU" ? "OR" : "AND";
+							break;
+						case "key":
+							qb[e.index].field = `${e.value}.keyword`;
+							break;
+						case "operator":
+							qb[e.index].operator = e.value
+								.replace("<>", "∃")
+								.replace("><", "!∃");
+							break;
+						default:
+							qb[e.index][e.key] = e.value;
+					}
+				});
+			// Create a Map with "qb" property (which is the current system).
+			initialValues = new Map([["qb", qb]]);
+		} else {
+			initialValues = fromUrlQueryString(this.props.queryString);
+		}
 
-    // This whole part is about backward compatibility of old search system.
-    // If the URL has a `q[0][combinator]` param, it's the old system, so
-    // it must be updated.
-    const parsed = queryString.parse(this.props.queryString);
-    if (parsed && parsed["q[0][combinator]"]) {
-      const qb = [];
-      Object.entries(parsed)
-        // Map params from `q[0][combinator]=ET` to `{index: 0, key: combinator, value: ET}`
-        .map(([k, value]) => {
-          const matches = k.match(/\[([0-9]+)\]\[([a-z]+)\]/i);
-          if (matches && matches.length === 3) {
-            return { index: Number(matches[1]), key: matches[2], value };
-          }
-        })
-        // Remove empty
-        .filter(a => a)
-        // Sort by index (0, 1, 2, etc.)
-        .sort((a, b) => a.index - b.index)
-        // Create a new "qb" param with the current system
-        .forEach(e => {
-          if (!qb[e.index]) {
-            qb.push({ index: e.index });
-          }
-          switch (e.key) {
-            case "combinator":
-              qb[e.index].combinator = e.value === "OU" ? "OR" : "AND";
-              break;
-            case "key":
-              qb[e.index].field = `${e.value}.keyword`;
-              break;
-            case "operator":
-              qb[e.index].operator = e.value.replace("<>", "∃").replace("><", "!∃");
-              break;
-            default:
-              qb[e.index][e.key] = e.value;
-          }
-        });
-      // Create a Map with "qb" property (which is the current system).
-      initialValues = new Map([["qb", qb]]);
-      
-    } else {
-      initialValues = fromUrlQueryString(this.props.queryString);
-    }
+		const bases = [
+			{
+				key: "joconde",
+				base: "Collections des musées de France (Joconde)",
+				img: "/static/topics/mdf.jpg",
+			},
+			{
+				key: "mnr",
+				base: "Rose Valland (MNR-Jeu de Paume)",
+				img: "/static/topics/mnr.jpg",
+			},
+			{
+				key: "merimee",
+				base: "Patrimoine architectural (Mérimée)",
+				img: "/static/topics/mhr.jpg",
+			},
+			{
+				key: "memoire",
+				base: "Photographies (Mémoire)",
+				img: "/static/topics/memoire.jpg",
+			},
+			{
+				key: "palissy",
+				base: "Patrimoine mobilier (Palissy)",
+				img: "/static/topics/mobilier.jpg",
+			},
+			{
+				key: "enluminures",
+				base: "Enluminures (Enluminures)",
+				img: "/static/topics/enluminures.jpg",
+			},
+			{
+				key: "museo",
+				base: "Répertoire des Musées de France (Muséofile)",
+				img: "/static/topics/museo.jpg",
+			},
+			{
+				key: "autor",
+				base: "Ressources biographiques (Autor)",
+				img: "/static/topics/autor.jpeg",
+			},
+		];
 
-    const bases = [
-      { key: "joconde", base: "Collections des musées de France (Joconde)", img: "/static/topics/mdf.jpg" },
-      { key: "mnr", base: "Rose Valland (MNR-Jeu de Paume)", img: "/static/topics/mnr.jpg" },
-      { key: "merimee", base: "Patrimoine architectural (Mérimée)", img: "/static/topics/mhr.jpg" },
-      { key: "memoire", base: "Photographies (Mémoire)", img: "/static/topics/memoire.jpg" },
-      { key: "palissy", base: "Patrimoine mobilier (Palissy)", img: "/static/topics/mobilier.jpg" },
-      { key: "enluminures", base: "Enluminures (Enluminures)", img: "/static/topics/enluminures.jpg" },
-      { key: "museo", base: "Répertoire des Musées de France (Muséofile)", img: "/static/topics/museo.jpg" },
-      { key: "autor", base: "Ressources biographiques (Autor)", img: "/static/topics/autor.jpeg" }
-    ];
+		return (
+			<Layout>
+				<div className="search">
+					<Head>
+						<title>Recherche - POP</title>
+						<meta
+							name="description"
+							content="Rechercher des œuvres, des monuments, ou tout autre bien culturel dans la base de donnée du ministère de la culture française."
+						/>
+					</Head>
+					<Container fluid style={{ maxWidth: 1860 }}>
+						<label className="react-switch">
+							<Switch
+								onChange={this.handleSwitchChange}
+								checked={this.props.mode !== "simple"}
+							/>
+							<span>Recherche avancée</span>
+						</label>
+						<Permalink query={this.props.query} />
+						<h1 className="title">Votre recherche</h1>
+						<Header location={this.props.asPath} />
+						<Elasticsearch
+							url={`${es_url}${queryScope}`}
+							key={`${this.props.mode}-${this.props.view}`}
+							onChange={(params) => {
+								const { mode, view, base } = this.props;
+								replaceSearchRouteWithUrl({
+									mode,
+									view,
+									base,
+									url: `?${toUrlQueryString(params)}`,
+								});
+							}}
+						>
+							<Row className="search-row">
+								{this.props.mode === "simple" ? (
+									<div
+										className={`search-sidebar ${
+											this.state.mobile_menu || ""
+										}`}
+									>
+										<Menu
+											closeMenu={() =>
+												this.setState({
+													mobile_menu: false,
+												})
+											}
+											initialValues={initialValues}
+										/>
+									</div>
+								) : null}
 
-    return (
-      <Layout>
-        <div className="search">
-          <Head>
-            <title>Recherche - POP</title>
-            <meta
-              name="description"
-              content="Rechercher des œuvres, des monuments, ou tout autre bien culturel dans la base de donnée du ministère de la culture française."
-            />
-          </Head>
-          <Container fluid style={{ maxWidth: 1860 }}>
-            <label className="react-switch">
-              <Switch onChange={this.handleSwitchChange} checked={this.props.mode !== "simple"} />
-              <span>Recherche avancée</span>
-            </label>
-            <Permalink query={this.props.query} />
-            <h1 className="title">Votre recherche</h1>
-            <Header location={this.props.asPath} />
-            <Elasticsearch
-              url={`${es_url}${queryScope}`}
-              key={`${this.props.mode}-${this.props.view}`}
-              onChange={params => {
-                const { mode, view, base } = this.props;
-                replaceSearchRouteWithUrl({
-                  mode,
-                  view,
-                  base,
-                  url: `?${toUrlQueryString(params)}`
-                });
-              }}
-            >
-              <Row className="search-row">
-                {this.props.mode === "simple" ? (
-                  <div className={`search-sidebar ${this.state.mobile_menu || ""}`}>
-                    <Menu
-                      closeMenu={() => this.setState({ mobile_menu: false })}
-                      initialValues={initialValues}
-                    />
-                  </div>
-                ) : null}
+								{this.props.mode === "simple" ? (
+									<div className="search-results">
+										<div
+											className={`search-container search-container-simple`}
+										>
+											<Search
+												mode={this.props.mode}
+												base={this.props.base}
+												initialValues={initialValues}
+											/>
+											{this.props.mode === "simple" ? (
+												<MobileFilters
+													openMenu={() =>
+														this.setState({
+															mobile_menu:
+																"mobile_open",
+														})
+													}
+												/>
+											) : null}
+										</div>
+										{!(
+											this.props.mode === "advanced" &&
+											!this.props.base
+										) ? (
+											<Results
+												mode={this.props.mode}
+												view={this.props.view}
+												base={this.props.base}
+												initialValues={initialValues}
+												nbResult={(total) => {
+													if (
+														this.state.ready == true
+													) {
+														this.sendParams(
+															total,
+															initialValues,
+														);
+													}
+												}}
+											/>
+										) : null}
+									</div>
+								) : (
+									<div className="search-main-container">
+										{this.props.base != undefined &&
+										this.props.base != "" ? (
+											<div className="search-bases-radio-buttons">
+												{bases.map((base) => (
+													<div className="radioCard">
+														<div className="radioButtonContainer">
+															<input
+																className="radioButton"
+																key={base.key}
+																type="radio"
+																value={base.key}
+																checked={
+																	this.props
+																		.base ==
+																	base.key
+																		? true
+																		: false
+																}
+																onChange={() =>
+																	this.handleRadioBaseChange(
+																		base.key,
+																	)
+																}
+															/>
+															<div className="radioName">
+																{base.base}
+															</div>
+														</div>
+													</div>
+												))}
+											</div>
+										) : null}
 
-
-
-                {this.props.mode === "simple" ?
-                  <div className="search-results">
-                    <div className={`search-container search-container-simple`}>
-                      <Search
-                        mode={this.props.mode}
-                        base={this.props.base}
-                        initialValues={initialValues}
-                      />
-                      {this.props.mode === "simple" ? (
-                        <MobileFilters
-                          openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
-                        />
-                      ) : null}
-                    </div>
-                    {!(this.props.mode === "advanced" && !this.props.base) ? (
-                      <Results
-                        mode={this.props.mode}
-                        view={this.props.view}
-                        base={this.props.base}
-                        initialValues={initialValues}
-                        nbResult={(total) => { 
-                          if(this.state.ready == true){
-                            this.sendParams(total, initialValues);
-                          }
-                        }}
-                      />
-                    ) : null}
-                  </div> :
-
-                  <div className="search-main-container">
-                    {(this.props.base != undefined && this.props.base != "") ?
-                      <div className="search-bases-radio-buttons">
-                        {bases.map(base =>
-                          <div className="radioCard">
-                            <div className="radioButtonContainer">
-                              <input className="radioButton" key={base.key} type="radio" value={base.key} checked={this.props.base == base.key ? true : false}
-                                onChange={() => this.handleRadioBaseChange(base.key)} />
-                              <div className="radioName">
-                                {base.base}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div> : null}
-
-                    <div className={`search-results-advanced${(this.props.base == undefined || this.props.base == "") ? "-choice" : ""}`}>
-                      <div className={`search-container search-container-${this.props.mode}`}>
-                        <Search
-                          mode={this.props.mode}
-                          base={this.props.base}
-                          initialValues={initialValues}
-                        />
-                        {this.props.mode === "simple" ? (
-                          <MobileFilters
-                            openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
-                          />
-                        ) : null}
-                      </div>
-                      {!(this.props.mode === "advanced" && !this.props.base) ? (
-                        <Results
-                          mode={this.props.mode}
-                          view={this.props.view}
-                          base={this.props.base}
-                          initialValues={initialValues}
-                          nbResult={(total) => { 
-                            if(this.state.ready == true){
-                              this.sendParams(total, initialValues);
-                            }
-                          }}
-                        />
-                      ) : null}
-                    </div>
-                  </div>}
-              </Row>
-            </Elasticsearch>
-          </Container>
-        </div>
-        <style jsx global>{`
+										<div
+											className={`search-results-advanced${
+												this.props.base == undefined ||
+												this.props.base == ""
+													? "-choice"
+													: ""
+											}`}
+										>
+											<div
+												className={`search-container search-container-${this.props.mode}`}
+											>
+												<Search
+													mode={this.props.mode}
+													base={this.props.base}
+													initialValues={
+														initialValues
+													}
+												/>
+												{this.props.mode ===
+												"simple" ? (
+													<MobileFilters
+														openMenu={() =>
+															this.setState({
+																mobile_menu:
+																	"mobile_open",
+															})
+														}
+													/>
+												) : null}
+											</div>
+											{!(
+												this.props.mode ===
+													"advanced" &&
+												!this.props.base
+											) ? (
+												<Results
+													mode={this.props.mode}
+													view={this.props.view}
+													base={this.props.base}
+													initialValues={
+														initialValues
+													}
+													nbResult={(total) => {
+														if (
+															this.state.ready ==
+															true
+														) {
+															this.sendParams(
+																total,
+																initialValues,
+															);
+														}
+													}}
+												/>
+											) : null}
+										</div>
+									</div>
+								)}
+							</Row>
+						</Elasticsearch>
+					</Container>
+				</div>
+				<style jsx global>{`
           .search {
             display: flex;
             height: 100%;
@@ -640,7 +783,7 @@ export default class extends React.Component {
             margin-right: 20px;
           }
         `}</style>
-      </Layout>
-    );
-  };
+			</Layout>
+		);
+	};
 }

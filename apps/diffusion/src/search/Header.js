@@ -4,50 +4,50 @@ import API from "../services/api";
 import { bucket_url } from "../config";
 
 class Header extends React.Component {
-  state = {
-    museo: null,
-    gallery: null
-  };
+	state = {
+		museo: null,
+		gallery: null,
+	};
 
-  async componentDidMount() {
-    const query = queryString.parseUrl(this.props.location).query;
-    if (query && query.museo) {
-      const museos = JSON.parse(query.museo);
-      if (museos.length) {
-        const museo = await API.getNotice("museo", museos[0]);
-        this.setState({ museo });
-      }
-    } else if (query && query.gallery) {
-      const gallery = await API.getGallery(JSON.parse(query.gallery));
-      this.setState({ gallery });
-    }
-  }
+	async componentDidMount() {
+		const query = queryString.parseUrl(this.props.location).query;
+		if (query && query.museo) {
+			const museos = JSON.parse(query.museo);
+			if (museos.length) {
+				const museo = await API.getNotice("museo", museos[0]);
+				this.setState({ museo });
+			}
+		} else if (query && query.gallery) {
+			const gallery = await API.getGallery(JSON.parse(query.gallery));
+			this.setState({ gallery });
+		}
+	}
 
-  render() {
-    const { museo, gallery } = this.state;
+	render() {
+		const { museo, gallery } = this.state;
 
-    if (museo) {
-      return <Museo museo={museo} />;
-    } else if (gallery && gallery.name && gallery.description) {
-      return <Gallery gallery={gallery} />;
-    }
+		if (museo) {
+			return <Museo museo={museo} />;
+		} else if (gallery && gallery.name && gallery.description) {
+			return <Gallery gallery={gallery} />;
+		}
 
-    return <div />;
-  }
+		return <div />;
+	}
 }
 
 export default Header;
 
 const Gallery = ({ gallery }) => {
-  const title = gallery.name;
-  const description = gallery.description;
-  return (
-    <div className="gallery-card">
-      <div className="gallery-description">
-        <h2>{title}</h2>
-        <p>{description}</p>
-      </div>
-      <style jsx>{`
+	const title = gallery.name;
+	const description = gallery.description;
+	return (
+		<div className="gallery-card">
+			<div className="gallery-description">
+				<h2>{title}</h2>
+				<p>{description}</p>
+			</div>
+			<style jsx>{`
         .gallery-card {
           background-color: #000;
           padding-bottom: 15px;
@@ -80,22 +80,22 @@ const Gallery = ({ gallery }) => {
           font-size: 22px;
         }
       `}</style>
-    </div>
-  );
+		</div>
+	);
 };
 
 const Museo = ({ museo }) => {
-  const title = museo.NOMUSAGE || museo.NOMOFF || museo.ANC;
-  return (
-    <div className="museo-card-sm">
-      <h2>
-        {title} - {museo.VILLE_M}
-      </h2>
-      <p>
-        {museo.ATOUT && museo.ATOUT.replace(/#/g, " ; ")} -{" "}
-        <a href={`/notice/museo/${museo.REF}`}>En savoir plus...</a>
-      </p>
-      <style jsx>{`
+	const title = museo.NOMUSAGE || museo.NOMOFF || museo.ANC;
+	return (
+		<div className="museo-card-sm">
+			<h2>
+				{title} - {museo.VILLE_M}
+			</h2>
+			<p>
+				{museo.ATOUT && museo.ATOUT.replace(/#/g, " ; ")} -{" "}
+				<a href={`/notice/museo/${museo.REF}`}>En savoir plus...</a>
+			</p>
+			<style jsx>{`
         .museo-card-sm {
           background-color: #fff;
           border-radius: 5px;
@@ -108,6 +108,6 @@ const Museo = ({ museo }) => {
           font-size: 22px;
         }
       `}</style>
-    </div>
-  );
+		</div>
+	);
 };

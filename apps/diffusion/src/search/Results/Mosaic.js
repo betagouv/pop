@@ -3,30 +3,39 @@ import { Results } from "@popproject/pop-react-elasticsearch";
 import { pagination } from "../utils";
 import CardMosaique from "./CardMosaic";
 
-export default function({ initialValues, setNbreResult }) {
-  return (
-    <div className="mosaic-view">
-      <Results
-        initialPage={initialValues.get("mosaicPage")}
-        id="mosaic"
-        items={(data, listRefs, idQuery) =>
-          data.map(({ _id, ...rest }) => (
-            <CardMosaique key={_id} index={rest._index} searchParams={initialValues} data={rest._source} listRefs={listRefs} idQuery={idQuery} />
-          ))
-        }
-        itemsPerPage={25}
-        pagination={pagination}
-        stats={total => {
-          const info = "La mosaïque n'affiche par défaut que les notices avec image.";
-          setNbreResult(total);
-          return (
-            <div className="result-count">
-              {total} résultat{total === 1 ? "" : "s"} <i className="text-muted">{info}</i>
-            </div>
-          );
-        }}
-      />
-      <style jsx global>{`
+export default function ({ initialValues, setNbreResult }) {
+	return (
+		<div className="mosaic-view">
+			<Results
+				initialPage={initialValues.get("mosaicPage")}
+				id="mosaic"
+				items={(data, listRefs, idQuery) =>
+					data.map(({ _id, ...rest }) => (
+						<CardMosaique
+							key={_id}
+							index={rest._index}
+							searchParams={initialValues}
+							data={rest._source}
+							listRefs={listRefs}
+							idQuery={idQuery}
+						/>
+					))
+				}
+				itemsPerPage={25}
+				pagination={pagination}
+				stats={(total) => {
+					const info =
+						"La mosaïque n'affiche par défaut que les notices avec image.";
+					setNbreResult(total);
+					return (
+						<div className="result-count">
+							{total} résultat{total === 1 ? "" : "s"}{" "}
+							<i className="text-muted">{info}</i>
+						</div>
+					);
+				}}
+			/>
+			<style jsx global>{`
         .mosaic-view {
           width: inherit;
         }
@@ -54,6 +63,6 @@ export default function({ initialValues, setNbreResult }) {
           margin-left: 15px;
         }
       `}</style>
-    </div>
-  );
+		</div>
+	);
 }

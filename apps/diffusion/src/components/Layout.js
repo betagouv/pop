@@ -2,151 +2,169 @@ import React from "react";
 import Link from "next/link";
 import { Container, Alert } from "reactstrap";
 import Package from "../../package.json";
-import Cookies from 'universal-cookie';
-import API from '../../src/services/api';
+import Cookies from "universal-cookie";
+import API from "../../src/services/api";
 
-const message_maintenance = "Une opération de maintenance est en cours. Elle peut fausser l’affichage des résultats. Nous vous présentons nos excuses pour la gêne occasionnée. L’opération devrait être finie le 12 avril 2022";
-
+const message_maintenance =
+	"Une opération de maintenance est en cours. Elle peut fausser l’affichage des résultats. Nous vous présentons nos excuses pour la gêne occasionnée. L’opération devrait être finie le 12 avril 2022";
 
 export default class Layout extends React.Component {
-  state = { maintenance: "FALSE" };
+	state = { maintenance: "FALSE" };
 
-  async getNbNoticesInBucket() {
-    //Récupération du panier actuel dans les cookies
-    const cookies = new Cookies()
-    let currentBucket = cookies.get("currentBucket") || []
-    this.setState({ countBucket: currentBucket.length });
-    return currentBucket.length
-  }
+	async getNbNoticesInBucket() {
+		//Récupération du panier actuel dans les cookies
+		const cookies = new Cookies();
+		let currentBucket = cookies.get("currentBucket") || [];
+		this.setState({ countBucket: currentBucket.length });
+		return currentBucket.length;
+	}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      countBucket: 0
-    };
-    this.isMaintenanceSite();
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			countBucket: 0,
+		};
+		this.isMaintenanceSite();
+	}
 
-  componentDidMount() {
-    this.getNbNoticesInBucket();
-  }
+	componentDidMount() {
+		this.getNbNoticesInBucket();
+	}
 
-  async isMaintenanceSite() {
-    const response = await API.getMaintenance();
-    this.setState({ maintenance: response.maintenance });
-  }
+	async isMaintenanceSite() {
+		const response = await API.getMaintenance();
+		this.setState({ maintenance: response.maintenance });
+	}
 
-  render() {
-    const { children } = this.props;
-    return (
-      <React.Fragment>
-        <div className="header desktop-only">
-          <Container className="NavContainer">
-            <Link href="/">
-              <a className="logo">
-                <img src="/static/logo_MC.jpg" alt="Logo" className="md" />
-              </a>
-            </Link>
-            <h3 className="Title">POP : la plateforme ouverte du patrimoine</h3>
-            <div className="right-container">
-              <div className="linkBucket">
-                <Link href="/bucket">
-                  <a className="btn btn-outline-danger onPrintHide">
-                    <div className="btn-bucket">
-                      <div id="nbBucket">{this.state.countBucket != 0 ? "Consulter mon panier ( " + this.state.countBucket + " )" : "Panier vide"} </div>
-                    </div>
-                  </a>
-                </Link>
-              </div>
-              {
-                <div>
-                  <a
-                    href="https://framaforms.org/ameliorez-pop-1663925372"
-                    className="btn btn-outline-danger onPrintHide"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Améliorez POP !
-                  </a>
-                </div>
-              }
-            </div>
-          </Container>
-          <Alert
-            style={{ marginBottom: "0px", textAlign: "center" }}
-            color="warning"
-            isOpen={this.state.maintenance == "TRUE"}
-          >
-            {message_maintenance}
-          </Alert>
-        </div>
-        <div className="header mobile-only">
-          <div className="header-mobile-up">
-            <Link href="/">
-              <a className="logo">
-                <img src="/static/logo_MC.jpg" alt="Logo" className="md" />
-              </a>
-            </Link>
+	render() {
+		const { children } = this.props;
+		return (
+			<React.Fragment>
+				<div className="header desktop-only">
+					<Container className="NavContainer">
+						<Link href="/">
+							<a className="logo">
+								<img
+									src="/static/logo_MC.jpg"
+									alt="Logo"
+									className="md"
+								/>
+							</a>
+						</Link>
+						<h3 className="Title">
+							POP : la plateforme ouverte du patrimoine
+						</h3>
+						<div className="right-container">
+							<div className="linkBucket">
+								<Link href="/bucket">
+									<a className="btn btn-outline-danger onPrintHide">
+										<div className="btn-bucket">
+											<div id="nbBucket">
+												{this.state.countBucket != 0
+													? "Consulter mon panier ( " +
+														this.state.countBucket +
+														" )"
+													: "Panier vide"}{" "}
+											</div>
+										</div>
+									</a>
+								</Link>
+							</div>
+							{
+								<div>
+									<a
+										href="https://framaforms.org/ameliorez-pop-1663925372"
+										className="btn btn-outline-danger onPrintHide"
+										target="_blank"
+										rel="noopener"
+									>
+										Améliorez POP !
+									</a>
+								</div>
+							}
+						</div>
+					</Container>
+					<Alert
+						style={{ marginBottom: "0px", textAlign: "center" }}
+						color="warning"
+						isOpen={this.state.maintenance == "TRUE"}
+					>
+						{message_maintenance}
+					</Alert>
+				</div>
+				<div className="header mobile-only">
+					<div className="header-mobile-up">
+						<Link href="/">
+							<a className="logo">
+								<img
+									src="/static/logo_MC.jpg"
+									alt="Logo"
+									className="md"
+								/>
+							</a>
+						</Link>
 
-            <div className="header-buttons-wrapper">
-              <div className="button-list">
-                <a
-                  href="https://framaforms.org/ameliorez-pop-1663925372"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  <img src="/static/questionnaire.svg" />
-                </a>
-                <Link href="/bucket">
-                  <img src="/static/shopping-cart-2.svg" />
-                </Link>
-              </div>
-            </div>
-            <div className="mobile-separator"></div>
-          </div>
-          <div className="header-mobile-down">
-            <h2>
-              POP
-            </h2>
-            <h3>Plateforme ouverte du patrimoine</h3>
-          </div>
-          <div className="header-mobile-down"></div>
-        </div>
-        {children}
-        <div className="footer">
-          <ul className="list-inline">
-            <li className="list-inline-item">
-              <Link href="/apropos">
-                <a>À propos</a>
-              </Link>
-            </li>
-            <li className="list-inline-item">
-              <Link href="/opendata">
-                <a>Télécharger les bases</a>
-              </Link>
-            </li>
-            <li className="list-inline-item">
-              <a href={`mailto:pop@culture.gouv.fr`} target="_blank" rel="noopener">
-                Nous contacter
-              </a>
-            </li>
-            <li className="list-inline-item">
-              <Link href="/tracking">
-                <a>Suivi d'audience et vie privée</a>
-              </Link>
-            </li>
-            <li className="list-inline-item">
-              <span className="footer-item">Accessibilité : non conforme</span>
-              <Link href="/accessibilite">
-                <a>Déclaration d’accessibilité</a>
-              </Link>
-            </li>
-          </ul>
-          <div className="version">
-            Pop version {Package.version}
-          </div>
-        </div>
-        <style jsx>{`
+						<div className="header-buttons-wrapper">
+							<div className="button-list">
+								<a
+									href="https://framaforms.org/ameliorez-pop-1663925372"
+									target="_blank"
+									rel="noopener"
+								>
+									<img src="/static/questionnaire.svg" />
+								</a>
+								<Link href="/bucket">
+									<img src="/static/shopping-cart-2.svg" />
+								</Link>
+							</div>
+						</div>
+						<div className="mobile-separator"></div>
+					</div>
+					<div className="header-mobile-down">
+						<h2>POP</h2>
+						<h3>Plateforme ouverte du patrimoine</h3>
+					</div>
+					<div className="header-mobile-down"></div>
+				</div>
+				{children}
+				<div className="footer">
+					<ul className="list-inline">
+						<li className="list-inline-item">
+							<Link href="/apropos">
+								<a>À propos</a>
+							</Link>
+						</li>
+						<li className="list-inline-item">
+							<Link href="/opendata">
+								<a>Télécharger les bases</a>
+							</Link>
+						</li>
+						<li className="list-inline-item">
+							<a
+								href={`mailto:pop@culture.gouv.fr`}
+								target="_blank"
+								rel="noopener"
+							>
+								Nous contacter
+							</a>
+						</li>
+						<li className="list-inline-item">
+							<Link href="/tracking">
+								<a>Suivi d'audience et vie privée</a>
+							</Link>
+						</li>
+						<li className="list-inline-item">
+							<span className="footer-item">
+								Accessibilité : non conforme
+							</span>
+							<Link href="/accessibilite">
+								<a>Déclaration d’accessibilité</a>
+							</Link>
+						</li>
+					</ul>
+					<div className="version">Pop version {Package.version}</div>
+				</div>
+				<style jsx>{`
           .header {
             box-shadow: 0 2px 6px 0 rgb(189, 189, 189);
             position: relative;
@@ -405,7 +423,7 @@ export default class Layout extends React.Component {
             text-align: center;
           }
         `}</style>
-      </React.Fragment>
-    );
-  }
+			</React.Fragment>
+		);
+	}
 }

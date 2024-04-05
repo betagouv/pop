@@ -1,8 +1,21 @@
-import { skipWaiting, clientsClaim } from 'workbox-core';
-import { ExpirationPlugin } from 'workbox-expiration';
-import { NetworkOnly, NetworkFirst, CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
-import { registerRoute, setDefaultHandler, setCatchHandler } from 'workbox-routing';
-import { matchPrecache, precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
+import { skipWaiting, clientsClaim } from "workbox-core";
+import { ExpirationPlugin } from "workbox-expiration";
+import {
+	NetworkOnly,
+	NetworkFirst,
+	CacheFirst,
+	StaleWhileRevalidate,
+} from "workbox-strategies";
+import {
+	registerRoute,
+	setDefaultHandler,
+	setCatchHandler,
+} from "workbox-routing";
+import {
+	matchPrecache,
+	precacheAndRoute,
+	cleanupOutdatedCaches,
+} from "workbox-precaching";
 
 skipWaiting();
 clientsClaim();
@@ -12,8 +25,8 @@ clientsClaim();
 const WB_MANIFEST = self.__WB_MANIFEST;
 // Precache fallback route and image
 WB_MANIFEST.push({
-  url: '/fallback',
-  revision: '1234567890',
+	url: "/fallback",
+	revision: "1234567890",
 });
 precacheAndRoute(WB_MANIFEST);
 
