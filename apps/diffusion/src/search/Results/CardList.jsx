@@ -78,7 +78,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	const author = data.AUTP ? data.AUTP.join(" ; ") : "";
 
 	const date = data.DATPV ? data.DATPV : data.DATOR;
-	const loc = contentLoca && contentLoca != "" ? contentLoca : data.LOCA;
+	const loc = contentLoca && contentLoca !== "" ? contentLoca : data.LOCA;
 
 	const link = `/notice/memoire/${data.REF}${
 		searchParams ? "?" + toUrlQueryString(searchParams) : ""
@@ -472,7 +472,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 												{Mapping.mnr["LOCA"].label +
 													" : "}
 											</p>
-											<>{addLineBreak(data.LOCA)}</>
+											{addLineBreak(data.LOCA)}
 										</>
 									) : null}
 									{data.AFFE && data.AFFE !== "" ? (
@@ -481,7 +481,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 												{Mapping.mnr["AFFE"].label +
 													" : "}
 											</p>
-											<>{addLineBreak(data.AFFE)}</>
+											{addLineBreak(data.AFFE)}
 										</>
 									) : null}
 									<p>{addLineBreak(data.CATE)}</p>
@@ -492,7 +492,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 												{Mapping.mnr["HIST4"].label +
 													" : "}
 											</p>
-											<>{addLineBreak(data.HIST4)}</>
+											{addLineBreak(data.HIST4)}
 										</>
 									) : null}
 								</div>
@@ -553,13 +553,13 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 							{data.LOCA && data.LOCA !== "" ? (
 								<>
 									<p>{Mapping.mnr["LOCA"].label + " : "}</p>
-									<>{addLineBreak(data.LOCA)}</>
+									{addLineBreak(data.LOCA)}
 								</>
 							) : null}
 							{data.AFFE && data.AFFE !== "" ? (
 								<>
 									<p>{Mapping.mnr["AFFE"].label + " : "}</p>
-									<>{addLineBreak(data.AFFE)}</>
+									{addLineBreak(data.AFFE)}
 								</>
 							) : null}
 							<p>{addLineBreak(data.CATE)}</p>

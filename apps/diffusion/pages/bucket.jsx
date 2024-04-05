@@ -17,7 +17,7 @@ import API from "../src/services/api";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { BucketPdf } from "../src/pdf/pdfNoticeAbregees/BucketPdf";
 import { trackDownload } from "../src/utils";
-import EAnalytics from "./../src/services/eurelian";
+import EAnalytics from "../src/services/eurelian";
 
 export default class Bucket extends React.Component {
 	state = {
@@ -39,7 +39,7 @@ export default class Bucket extends React.Component {
 
 		//Transformation de la liste de notice au format json et modification du cookie
 		//Ainsi que le state contenant la liste des notices
-		var jsonCurrentBucket = JSON.stringify(currentBucket);
+		const jsonCurrentBucket = JSON.stringify(currentBucket);
 		cookies.set("currentBucket", jsonCurrentBucket, {
 			path: "/",
 			overwrite: true,
@@ -143,9 +143,10 @@ export default class Bucket extends React.Component {
 
 	//Détermine le nom du fichier téléchargé pour le pdf
 	PdfFileName() {
-		var today = new Date();
-		var month = today.getMonth() + 1 == 13 ? 1 : today.getMonth() + 1;
-		var data =
+		const today = new Date();
+		const month = today.getMonth() + 1 === 13 ? 1 : today.getMonth() + 1;
+		const data =
+			// biome-ignore lint/style/useTemplate: <explanation>
 			today.getFullYear() +
 			"-" +
 			(month < 10 ? "0" : "") +
@@ -153,7 +154,8 @@ export default class Bucket extends React.Component {
 			"-" +
 			(today.getDate() < 10 ? "0" : "") +
 			today.getDate();
-		return "panier_de_notices_" + data + ".pdf";
+
+		return `panier_de_notices_${data}.pdf`;
 	}
 
 	//Vide le panier de notices
@@ -168,7 +170,7 @@ export default class Bucket extends React.Component {
 
 		//Transformation de la liste de notice au format json et modification du cookie
 		//Ainsi que le state contenant la liste des notices
-		var jsonCurrentBucket = JSON.stringify(currentBucket);
+		const jsonCurrentBucket = JSON.stringify(currentBucket);
 		cookies.set("currentBucket", jsonCurrentBucket, {
 			path: "/",
 			overwrite: true,
@@ -194,7 +196,7 @@ export default class Bucket extends React.Component {
 			tempList.push(notice);
 
 			//multiple = x % y;
-			var multiple = (index + 1) % 7;
+			const multiple = (index + 1) % 7;
 			if (
 				(multiple === 0 && index !== 0) ||
 				listOfNotices.length === index + 1
@@ -272,23 +274,23 @@ export default class Bucket extends React.Component {
 						<div className="notices">
 							<div className="download-container">
 								{this.state.bucket.length > 0 &&
-								this.state.display == true
+								this.state.display
 									? EmptyBucketButton()
 									: ""}
 
 								{this.state.bucket.length > 0 &&
-								this.state.display == true
+								this.state.display
 									? PDFLink()
 									: ""}
 							</div>
 							<div className="notice-number">
 								{this.state.bucket.length === 0
 									? "Aucune notice dans le panier"
-									: this.state.bucket.length +
-										" résultat" +
-										(this.state.bucket.length > 1
-											? "s"
-											: "")}
+									: `${this.state.bucket.length} résultat${
+											this.state.bucket.length > 1
+												? "s"
+												: ""
+										}`}
 							</div>
 
 							{/* {this.state.bucket.map( notice, index =>

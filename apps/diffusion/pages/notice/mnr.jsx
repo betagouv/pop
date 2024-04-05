@@ -84,7 +84,7 @@ export default class extends React.Component {
 		//Construction des liens précédents/suivants
 		const cookies = new Cookies();
 		const listRefs = cookies.get(
-			"listRefs-" + this.props.searchParams.idQuery,
+			`listRefs-${this.props.searchParams.idQuery}`,
 		);
 		if (listRefs) {
 			const indexOfCurrentNotice = listRefs.indexOf(
@@ -122,16 +122,16 @@ export default class extends React.Component {
 			}
 			this.setState({ prevLink, nextLink });
 		} else {
-			this.state.display == false && this.setState({ display: true });
+			!this.state.display && this.setState({ display: true });
 		}
 	}
 
 	componentDidUpdate() {
-		this.state.display == false && this.setState({ display: true });
+		!this.state.display && this.setState({ display: true });
 	}
 
 	renderPrevButton() {
-		if (this.state.prevLink != undefined) {
+		if (this.state.prevLink !== undefined) {
 			return (
 				<a
 					title="Notice précédente"
@@ -147,7 +147,7 @@ export default class extends React.Component {
 	}
 
 	renderNextButton() {
-		if (this.state.nextLink != undefined) {
+		if (this.state.nextLink !== undefined) {
 			return (
 				<a
 					title="Notice suivante"
@@ -190,7 +190,7 @@ export default class extends React.Component {
 				return [p, ", ", c];
 			}, "");
 
-		return <React.Fragment>{links}</React.Fragment>;
+		return <>{links}</>;
 	}
 
 	render() {
@@ -251,7 +251,7 @@ export default class extends React.Component {
 
 		let title_component = title;
 		// M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice
-		if (typeof title == "string" && title.indexOf("#") > -1) {
+		if (typeof title === "string" && title.indexOf("#") > -1) {
 			title_component = title
 				.split("#")
 				.map((element) => <p>{element}</p>);
@@ -627,7 +627,8 @@ const SeeMore = () => {
 					<Link href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945">
 						<a
 							href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945"
-							target="_blank" rel="noreferrer"
+							target="_blank"
+							rel="noreferrer"
 						>
 							www.culture.gouv.fr/spoliations-restitutions-1933-1945
 						</a>

@@ -12,70 +12,101 @@ import LinkedNotices from "../../src/notices/LinkedNotices";
 import Title from "../../src/notices/Title";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
-import { bucket_url } from "./../../src/config";
-import Map from "../../src/notices/Map";
+import MapComponent from "../../src/notices/Map";
 import {
-	schema,
-	findCollection,
 	postFixedLink,
+	schema,
 	getParamsFromUrl,
+	findCollection,
 	highlighting,
 	lastSearch,
 	getUrlArchive,
 } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import { bucket_url } from "./../../src/config";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from "universal-cookie";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { PalissyPdf } from "../../src/pdf/pdfNotice/palissyPdf";
+import { MerimeePdf } from "../../src/pdf/pdfNotice/merimeePdf";
 import { pop_url } from "../../src/config";
 import EAnalytics from "../../src/services/eurelian";
+
+const pushLinkedNotices = (a, d, base) => {
+	for (let i = 0; Array.isArray(d) && i < d.length; i++) {
+		a.push(API.getNotice(base, d[i]));
+		if (a.length > 65) break;
+	}
+};
 
 export default class extends React.Component {
 	state = { display: false, prevLink: undefined, nextLink: undefined };
 
 	static async getInitialProps({ query: { id }, asPath }) {
-		const notice = await API.getNotice("palissy", id);
+		const notice = await API.getNotice("merimee", id);
+		const arr = [];
 		const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
 		const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
 
-		let arr = [];
-		let links = [];
-
 		if (notice) {
-			const { RENV, REFP, REFE, REFA, LBASE2, REF } = notice;
-			arr = [...RENV, ...REFP, ...REFE, ...REFA, LBASE2].filter(
-				(e) => e && e != REF,
-			);
-			for (let elem in arr) {
-				const collection = await findCollection(arr[elem]);
-				const linkedNotice = await API.getNotice(collection, arr[elem]);
-				if (linkedNotice != null) {
-					links.push(linkedNotice);
-				}
-			}
-
-			for (let i = 0; i < notice.REFJOC.length; i++) {
-				const linkedJoconde = await API.getNotice(
-					"joconde",
-					notice.REFJOC[i],
-				);
-				if (linkedJoconde) {
-					links.push(linkedJoconde);
-				}
-			}
-
-			for (let i = 0; i < notice.REFMUS.length; i++) {
-				const linkedMuseo = await API.getNotice(
-					"museo",
-					notice.REFMUS[i],
-				);
-				if (linkedMuseo) {
-					links.push(linkedMuseo);
-				}
-			}
+			const { RENV, REFP, REFE, REFO, REFJOC, REFMUS } = notice;
+			pushLinkedNotices(arr, RENV, "merimee");
+			pushLinkedNotices(arr, REFP, "merimee");
+			pushLinkedNotices(arr, REFE, "merimee");
+			pushLinkedNotices(arr, REFO, "palissy");
+			pushLinkedNotices(arr, RENV, "palissy");
+			pushLinkedNotices(arr, REFJOC, "joconde");
+			pushLinkedNotices(arr, REFMUS, "museo");
 		}
+
+		const links = (await Promise.all(arr)).filter((l) => l);
 		return { notice, links, searchParams, searchParamsUrl };
+	}
+
+	fieldImage(notice) {
+		const { images } = getNoticeInfo(notice);
+		const imageComponents = images
+			.map((e) => ({
+				src: e.src,
+				alt: e.name,
+				marq: e.marq,
+				footer: (
+					<div style={{ marginTop: "5px" }}>
+						<div
+							style={{ textAlign: "center", fontWeight: "bold" }}
+						>
+							{e.name}
+						</div>
+						<div style={{ fontSize: "13px" }}>{e.copy}</div>
+						<a
+							style={{ fontSize: "13px" }}
+							target="_blank"
+							rel="noreferrer noopener"
+							href={`/notice/memoire/${e.ref}`}
+						>
+							Voir la notice image
+						</a>
+					</div>
+				),
+			}))
+			.sort((a, b) => {
+				const aMarq = typeof a.marq !== "undefined" ? a.marq : "";
+				const bMarq = typeof b.marq !== "undefined" ? b.marq : "";
+
+				if (aMarq !== "" && bMarq === "") {
+					return -1;
+				}
+				if (aMarq === "" && bMarq !== "") {
+					return 1;
+				}
+				if (aMarq === "" && bMarq === "") {
+					return 0;
+				}
+				return Number.parseInt(a.marq) - Number.parseInt(b.marq);
+			});
+
+		if (imageComponents.length) {
+			return <FieldImages images={imageComponents} />;
+		}
 	}
 
 	async componentDidMount() {
@@ -84,9 +115,9 @@ export default class extends React.Component {
 		EAnalytics.initialize();
 		EAnalytics.track([
 			"path",
-			`Notice Palissy ${this.props.notice?.REF}`,
+			`Notice Mérimée ${this.props.notice?.REF}`,
 			"pagegroup",
-			"Patrimoine mobilier (Palissy)",
+			"Patrimoine architectural (Mérimée)",
 		]);
 
 		//highlighting
@@ -133,16 +164,16 @@ export default class extends React.Component {
 			}
 			this.setState({ prevLink, nextLink });
 		} else {
-			this.state.display == false && this.setState({ display: true });
+			!this.state.display && this.setState({ display: true });
 		}
 	}
 
 	componentDidUpdate() {
-		this.state.display == false && this.setState({ display: true });
+		!this.state.display && this.setState({ display: true });
 	}
 
 	renderPrevButton() {
-		if (this.state.prevLink != undefined) {
+		if (this.state.prevLink !== undefined) {
 			return (
 				<a
 					title="Notice précédente"
@@ -158,7 +189,7 @@ export default class extends React.Component {
 	}
 
 	renderNextButton() {
-		if (this.state.nextLink != undefined) {
+		if (this.state.nextLink !== undefined) {
 			return (
 				<a
 					title="Notice suivante"
@@ -170,53 +201,6 @@ export default class extends React.Component {
 			);
 		} else {
 			return null;
-		}
-	}
-
-	fieldImage(notice) {
-		const { images } = getNoticeInfo(notice);
-		const imageComponents = images
-			.map((e) => ({
-				src: e.src,
-				alt: e.name,
-				marq: e.marq,
-				footer: (
-					<div style={{ marginTop: "5px" }}>
-						<div
-							style={{ textAlign: "center", fontWeight: "bold" }}
-						>
-							{e.name}
-						</div>
-						<div style={{ fontSize: "13px" }}>{e.copy}</div>
-						<a
-							style={{ fontSize: "13px" }}
-							target="_blank"
-							rel="noopener"
-							href={`/notice/memoire/${e.ref}`}
-						>
-							Voir la notice image
-						</a>
-					</div>
-				),
-			}))
-			.sort((a, b) => {
-				let aMarq = typeof a.marq != "undefined" ? a.marq : "";
-				let bMarq = typeof b.marq != "undefined" ? b.marq : "";
-
-				if (aMarq != "" && bMarq == "") {
-					return -1;
-				}
-				if (aMarq == "" && bMarq != "") {
-					return 1;
-				}
-				if (aMarq == "" && bMarq == "") {
-					return 0;
-				}
-				return Number.parseInt(a.marq) - Number.parseInt(b.marq);
-			});
-
-		if (imageComponents.length) {
-			return <FieldImages images={imageComponents} />;
 		}
 	}
 
@@ -233,21 +217,9 @@ export default class extends React.Component {
 	etudeField() {
 		return this.props.notice.ETUD && this.props.notice.ETUD.length > 0 ? (
 			<React.Fragment>
-				{generateLinks(this.props.notice.ETUD.split(";"), "etud")}
+				{generateLinks(this.props.notice.ETUD, "etud")}
 			</React.Fragment>
 		) : null;
-	}
-
-	// Display label by producteur
-	getLabel(field) {
-		let label = mapping.palissy[field].label;
-		if (
-			"monuments historiques" ===
-			String(this.props.notice.PRODUCTEUR).toLocaleLowerCase()
-		) {
-			label = mapping.palissy[field].label_mh;
-		}
-		return label;
 	}
 
 	render() {
@@ -255,26 +227,26 @@ export default class extends React.Component {
 			return throw404();
 		}
 		const notice = this.props.notice;
-		const { title, metaDescription, image, localisation } =
+
+		const { title, image, metaDescription, localisation } =
 			getNoticeInfo(notice);
 
 		const obj = {
 			name: title,
-			created_at: notice.SCLE.length ? notice.SCLE[0] : "",
+			created_at: notice.SCLE && notice.SCLE.length ? notice.SCLE[0] : "",
 			artform: "Architecture",
 			image: image,
 			description: metaDescription,
 			contentLocation: localisation,
 			creator: notice.AUTR,
-			artMedium: notice.MATR.join(", "),
 		};
 
-		const pdf = PalissyPdf(notice, title, localisation, this.props.links);
+		const pdf = MerimeePdf(notice, title, localisation, this.props.links);
 		const App = () => (
 			<div>
 				<PDFDownloadLink
 					document={pdf}
-					fileName={"palissy_" + notice.REF + ".pdf"}
+					fileName={"merimee_" + notice.REF + ".pdf"}
 					style={{
 						backgroundColor: "#377d87",
 						border: 0,
@@ -288,7 +260,7 @@ export default class extends React.Component {
 						textAlign: "center",
 						borderRadius: "5px",
 					}}
-					onClick={() => trackDownload(`palissy_${notice.REF}.pdf`)}
+					onClick={() => trackDownload(`merimee_${notice.REF}.pdf`)}
 				>
 					{({ blob, url, loading, error }) =>
 						loading
@@ -327,7 +299,7 @@ export default class extends React.Component {
 						<div>
 							<div className="heading heading-center">
 								{this.renderPrevButton()}
-								<h1 className="heading-title">{notice.TICO}</h1>
+								<h1 className="heading-title">{title}</h1>
 								{this.renderNextButton()}
 							</div>
 						</div>
@@ -345,10 +317,10 @@ export default class extends React.Component {
 								)}
 							</div>
 							<div className="rightContainer-buttons">
-								<div className="addBucket onPrintHide desktop-only">
+								<div className="addBucket onPrintHide  desktop-only">
 									{this.state.display && (
 										<BucketButton
-											base="palissy"
+											base="merimee"
 											reference={notice.REF}
 										/>
 									)}
@@ -365,53 +337,60 @@ export default class extends React.Component {
 										notice={notice}
 										fields={[
 											"DENO",
+											"GENR",
 											"PDEN",
-											"NART",
+											"VOCA",
 											"APPL",
+											"ACTU",
 											"TICO",
 										]}
 									/>
 									<Field
-										title={mapping.palissy.DENO.label}
+										title={mapping.merimee.DENO.label}
 										content={notice.DENO}
 										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.PDEN.label}
-										content={notice.PDEN}
+										title={mapping.merimee.GENR.label}
+										content={notice.GENR}
 										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.NART.label}
-										content={notice.NART}
+										title={mapping.merimee.PDEN.label}
+										content={notice.PDEN}
 									/>
 									<Field
-										title={mapping.palissy.APPL.label}
+										title={mapping.merimee.VOCA.label}
+										content={notice.VOCA}
+									/>
+									<Field
+										title={mapping.merimee.APPL.label}
 										content={notice.APPL}
 									/>
 									<Field
-										title={mapping.palissy.TICO.label}
+										title={mapping.merimee.ACTU.label}
+										content={notice.ACTU}
+									/>
+									<Field
+										title={mapping.merimee.TICO.label}
 										content={notice.TICO}
 									/>
 									<Title
 										content="Localisation"
 										notice={notice}
 										fields={[
-											"REG",
-											"DPT",
-											"COM",
-											"INSEE",
 											"PLOC",
 											"AIRE",
 											"CANT",
 											"LIEU",
 											"ADRS",
-											"EDIF",
-											"REFA",
+											"CADA",
 											"IMPL",
-											"EMPL",
-											"DEPL",
-											"VOLS",
+											"HYDR",
+											"PARN",
+											"EDIF",
+											"REFE",
+											"COLL",
 										]}
 									/>
 									<Field
@@ -419,410 +398,428 @@ export default class extends React.Component {
 										content={localisation}
 									/>
 									<Field
-										title={this.getLabel("INSEE")}
-										content={notice.INSEE}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.PLOC.label}
+										title={mapping.merimee.PLOC.label}
 										content={notice.PLOC}
 									/>
 									<Field
-										title={mapping.palissy.AIRE.label}
+										title={mapping.merimee.AIRE.label}
 										content={notice.AIRE}
 									/>
 									<Field
-										title={mapping.palissy.CANT.label}
+										title={mapping.merimee.CANT.label}
 										content={notice.CANT}
 									/>
 									<Field
-										title={mapping.palissy.LIEU.label}
+										title={mapping.merimee.LIEU.label}
 										content={notice.LIEU}
 									/>
 									<Field
-										title={mapping.palissy.ADRS.label}
+										title={mapping.merimee.ADRS.label}
 										content={notice.ADRS}
 									/>
 									<Field
-										title={mapping.palissy.EDIF.label}
+										title={mapping.merimee.CADA.label}
+										content={notice.CADA}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.IMPL.label}
+										content={notice.IMPL}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.HYDR.label}
+										content={notice.HYDR}
+									/>
+									<Field
+										title={mapping.merimee.PARN.label}
+										content={notice.PARN}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.EDIF.label}
 										content={notice.EDIF}
 									/>
 									<Field
-										title={mapping.palissy.REFA.label}
-										content={notice.REFA}
+										title={mapping.merimee.REFE.label}
+										content={notice.REFE}
 										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.IMPL.label}
-										content={notice.IMPL}
-									/>
-									<Field
-										title={mapping.palissy.EMPL.label}
-										content={notice.EMPL}
-									/>
-									<Field
-										title={mapping.palissy.DEPL.label}
-										content={notice.DEPL}
-									/>
-									<Field
-										title={mapping.palissy.VOLS.label}
-										content={notice.VOLS}
-									/>
-
-									<Title
-										content="Description"
-										notice={notice}
-										fields={[
-											"CATE",
-											"STRU",
-											"MATR",
-											"DESC",
-											"REPR",
-											"PREP",
-											"DIMS",
-											"PDIM",
-											"ETAT",
-											"PETA",
-											"INSC",
-											"PINS",
-										]}
-									/>
-									<Field
-										title={mapping.palissy.CATE.label}
-										content={notice.CATE}
+										title={mapping.merimee.COLL.label}
+										content={notice.COLL}
 										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.STRU.label}
-										content={notice.STRU}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.MATR.label}
-										content={notice.MATR}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.DESC.label}
-										content={notice.DESC}
-										separator="£"
-										addLink="true"
-									/>
-									<Field
-										title={mapping.palissy.REPR.label}
-										content={notice.REPR}
-										separator="£"
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.PREP.label}
-										content={notice.PREP}
-									/>
-									<Field
-										title={mapping.palissy.DIMS.label}
-										content={notice.DIMS}
-										separator="£"
-									/>
-									<Field
-										title={mapping.palissy.PDIM.label}
-										content={notice.PDIM}
-									/>
-									<Field
-										title={mapping.palissy.ETAT.label}
-										content={notice.ETAT}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.PETA.label}
-										content={notice.PETA}
-									/>
-									<Field
-										title={mapping.palissy.INSC.label}
-										content={notice.INSC}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.PINS.label}
-										content={notice.PINS}
 									/>
 									<Title
 										content="Historique"
 										notice={notice}
 										fields={[
-											"AUTR",
-											"AFIG",
-											"ATEL",
-											"REFM",
-											"PERS",
-											"EXEC",
-											"ORIG",
-											"STAD",
 											"SCLE",
+											"SCLD",
 											"DATE",
 											"JDAT",
+											"AUTR",
+											"REFM",
+											"JATT",
+											"PERS",
+											"REMP",
+											"DEPL",
 											"HIST",
 										]}
 									/>
 									<Field
-										title={mapping.palissy.AUTR.label}
+										title={mapping.merimee.SCLE.label}
+										content={notice.SCLE}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.SCLD.label}
+										content={notice.SCLD}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.DATE.label}
+										content={notice.DATE}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.JDAT.label}
+										content={notice.JDAT}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.AUTR.label}
 										content={this.authorsField()}
 									/>
 									<Field
-										title={mapping.palissy.AFIG.label}
-										content={notice.AFIG}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.ATEL.label}
-										content={notice.ATEL}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.REFM.label}
+										title={mapping.merimee.REFM.label}
 										content={notice.REFM}
 									/>
 									<Field
-										title={mapping.palissy.PERS.label}
+										title={mapping.merimee.JATT.label}
+										content={notice.JATT}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.PERS.label}
 										content={notice.PERS}
 										separator="£"
 										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.EXEC.label}
-										content={notice.EXEC}
+										title={mapping.merimee.REMP.label}
+										content={notice.REMP}
 									/>
 									<Field
-										title={mapping.palissy.ORIG.label}
-										content={notice.ORIG}
+										title={mapping.merimee.DEPL.label}
+										content={notice.DEPL}
 									/>
 									<Field
-										title={mapping.palissy.STAD.label}
-										content={notice.STAD}
-										join={" ; "}
-									/>
-
-									<Field
-										title={mapping.palissy.SCLE.label}
-										content={notice.SCLE}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.DATE.label}
-										content={notice.DATE}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.JDAT.label}
-										content={notice.JDAT}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.HIST.label}
+										title={mapping.merimee.HIST.label}
 										content={notice.HIST}
 										separator="£"
 										addLink="true"
 									/>
 									<Title
-										content="Statut juridique et protection"
+										content="Description"
 										notice={notice}
 										fields={[
-											"STAT",
-											"PROT",
-											"DPRO",
-											"PPRO",
-											"NUMA",
-											"NINV",
-											"OBS",
-											"INTE",
-											"PINT",
-											"ACQU",
-											"EXPO",
-											"BIBL",
-											"SOUR",
-											"PHOTO",
+											"MURS",
+											"TOIT",
+											"PLAN",
+											"ETAG",
+											"VOUT",
+											"ELEV",
+											"COUV",
+											"ESCA",
+											"ENER",
+											"VERT",
+											"DESC",
+											"TECH",
+											"REPR",
+											"PREP",
+											"DIMS",
+											"TYPO",
+											"ETAT",
 										]}
 									/>
 									<Field
-										title={mapping.palissy.STAT.label}
-										content={notice.STAT}
+										title={mapping.merimee.MURS.label}
+										content={notice.MURS}
 										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.PROT.label}
-										content={notice.PROT}
+										title={mapping.merimee.TOIT.label}
+										content={notice.TOIT}
+										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.DPRO.label}
+										title={mapping.merimee.PLAN.label}
+										content={notice.PLAN}
+									/>
+									<Field
+										title={mapping.merimee.ETAG.label}
+										content={notice.ETAG}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.VOUT.label}
+										content={notice.VOUT}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.ELEV.label}
+										content={notice.ELEV}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.COUV.label}
+										content={notice.COUV}
+										join={" ; "}
+									/>
+									<Field
+										title="Emplacement, forme et structure de l’escalier"
+										content={notice.ESCA}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.ENER.label}
+										content={notice.ENER}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.VERT.label}
+										content={notice.VERT}
+									/>
+									<Field
+										title={mapping.merimee.DESC.label}
+										content={notice.DESC}
+										separator="£"
+										addLink="true"
+									/>
+									<Field
+										title="Technique du décor des immeubles par nature"
+										content={notice.TECH}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.REPR.label}
+										content={notice.REPR}
+									/>
+									<Field
+										title={mapping.merimee.PREP.label}
+										content={notice.PREP}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.DIMS.label}
+										content={notice.DIMS}
+									/>
+									<Field
+										title={mapping.merimee.TYPO.label}
+										content={notice.TYPO}
+									/>
+									<Field
+										title={mapping.merimee.ETAT.label}
+										content={notice.ETAT}
+										join={" ; "}
+									/>
+									<Title
+										content="Protection et label"
+										notice={notice}
+										fields={[
+											"PROT",
+											"DPRO",
+											"PPRO",
+											"APRO",
+											"MHPP",
+											"REFO",
+											"SITE",
+											"INTE",
+											"PINT",
+											"REMA",
+											"DLAB",
+											"OBS",
+										]}
+									/>
+									<Field
+										title={mapping.merimee.PROT.label}
+										content={notice.PROT}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.DPRO.label}
 										content={notice.DPRO}
 									/>
 									<Field
-										title={mapping.palissy.PPRO.label}
+										title={mapping.merimee.PPRO.label}
 										content={notice.PPRO}
 									/>
 									<Field
-										title={mapping.palissy.NUMA.label}
-										content={notice.NUMA}
+										title={mapping.merimee.APRO.label}
+										content={notice.APRO}
+										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.NINV.label}
-										content={notice.NINV}
-									/>
-
-									<Field
-										title={mapping.palissy.OBS.label}
-										content={notice.OBS}
+										title={mapping.merimee.MHPP.label}
+										content={notice.MHPP}
 									/>
 									<Field
-										title={mapping.palissy.INTE.label}
+										title={mapping.merimee.REFO.label}
+										content={notice.REFO}
+										join={" ; "}
+									/>
+									<Field
+										title={mapping.merimee.SITE.label}
+										content={notice.SITE}
+									/>
+									<Field
+										title={mapping.merimee.INTE.label}
 										content={notice.INTE}
+										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.PINT.label}
+										title={mapping.merimee.PINT.label}
 										content={notice.PINT}
 									/>
 									<Field
-										title={mapping.palissy.ACQU.label}
-										content={notice.ACQU}
+										title={mapping.merimee.REMA.label}
+										content={notice.REMA}
 									/>
 									<Field
-										title={mapping.palissy.EXPO.label}
-										content={notice.EXPO}
-										separator="£"
-										addLink="true"
+										title={mapping.merimee.DLAB.label}
+										content={notice.DLAB}
 									/>
 									<Field
-										title={mapping.palissy.BIBL.label}
-										content={notice.BIBL}
-										separator="£"
-										addLink="true"
+										title={mapping.merimee.OBS.label}
+										content={notice.OBS}
+									/>
+									<Title
+										content="Statut juridique"
+										notice={notice}
+										fields={[
+											"STAT",
+											"PSTA",
+											"AFFE",
+											"PAFF",
+											"VISI",
+										]}
 									/>
 									<Field
-										title={mapping.palissy.SOUR.label}
-										content={notice.SOUR}
-										separator="£"
-										addLink="true"
+										title={mapping.merimee.STAT.label}
+										content={notice.STAT}
 									/>
 									<Field
-										title={mapping.palissy.PHOTO.label}
-										content={notice.PHOTO}
+										title={mapping.merimee.PSTA.label}
+										content={notice.PSTA}
 									/>
-
+									<Field
+										title={mapping.merimee.AFFE.label}
+										content={notice.AFFE}
+									/>
+									<Field
+										title={mapping.merimee.PAFF.label}
+										content={notice.PAFF}
+									/>
+									<Field
+										title={mapping.merimee.VISI.label}
+										content={notice.VISI}
+										join={" ; "}
+									/>
 									<Title
 										content="Références documentaires"
 										notice={notice}
 										fields={[
+											"DENQ",
+											"COPY",
+											"DBOR",
+											"NOMS",
 											"ETUD",
 											"DOSS",
-											"PART",
-											"REFP",
-											"PARN",
-											"PAPP",
-											"REFE",
-											"DENQ",
-											"DBOR",
-											"RENP",
-											"DOSADRS",
-											"IMAGE",
+											"REFIM",
 											"WEB",
+											"ARCHEO",
+											"DOSADRS",
 										]}
 									/>
 									<Field
-										title={mapping.palissy.ETUD.label}
-										content={this.etudeField()}
-									/>
-									<Field
-										title={mapping.palissy.DOSS.label}
-										content={notice.DOSS}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.PART.label}
-										content={notice.PART}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.REFP.label}
-										content={notice.REFP}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.PARN.label}
-										content={notice.PARN}
-										join={" ; "}
-									/>
-									<Field
-										title={mapping.palissy.PAPP.label}
-										content={notice.PAPP}
-									/>
-									<Field
-										title={mapping.palissy.REFE.label}
-										content={notice.REFE}
-										join={" ; "}
-									/>
-									<Field
-										title={this.getLabel("DENQ")}
+										title={mapping.merimee.DENQ.label}
 										content={notice.DENQ}
+									/>
+									<Field
+										title={mapping.merimee.COPY.label}
+										content={notice.COPY}
 										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.DBOR.label}
+										title={mapping.merimee.DBOR.label}
 										content={notice.DBOR}
+									/>
+									<Field
+										title="Noms des rédacteurs de la notice et du dossier"
+										content={notice.NOMS}
 										join={" ; "}
 									/>
 									<Field
-										title={mapping.palissy.RENP.label}
-										content={notice.RENP}
+										title={mapping.merimee.ETUD.label}
+										content={this.etudeField()}
 										join={" ; "}
 									/>
-
 									<Field
-										title={mapping.palissy.DOSADRS.label}
+										title={mapping.merimee.DOSS.label}
+										content={notice.DOSS}
+									/>
+									<Field
+										title={mapping.merimee.REFIM.label}
+										content={notice.REFIM}
+									/>
+									<Field
+										title={mapping.merimee.WEB.label}
+										content={notice.WEB}
+									/>
+									<Field
+										title={mapping.merimee.ARCHEO.label}
+										content={notice.ARCHEO}
+									/>
+									<Field
+										title={mapping.merimee.DOSADRS.label}
 										content={notice.DOSADRS}
 										separator="£"
 									/>
-									<Field
-										title={mapping.palissy.IMAGE.label}
-										content={notice.IMAGE}
-									/>
-									<Field
-										title={this.getLabel("WEB")}
-										content={notice.WEB}
-									/>
 								</div>
 							</Col>
-							<Col md="4">
+							<Col sm="4">
 								{this.fieldImage(notice)}
 								<LinkedNotices links={this.props.links} />
 								<div className="sidebar-section info">
 									<h2>À propos de la notice</h2>
 									<div>
 										<Field
-											title={mapping.palissy.REF.label}
+											title={mapping.merimee.REF.label}
 											content={notice.REF}
 										/>
 										<Field
-											title={mapping.palissy.BASE.label}
+											title={mapping.merimee.BASE.label}
 											content={notice.BASE}
 										/>
 										<Field
-											title={mapping.palissy.DMIS.label}
+											title={mapping.merimee.DMIS.label}
 											content={notice.DMIS}
 										/>
 										<Field
-											title={mapping.palissy.DMAJ.label}
+											title={mapping.merimee.DMAJ.label}
 											content={notice.DMAJ}
 										/>
 										<Field
-											title={mapping.palissy.NOMS.label}
+											title={mapping.merimee.NOMS.label}
 											content={notice.NOMS}
-											join={" ; "}
 										/>
 										<Field
-											title={mapping.palissy.COPY.label}
+											title={mapping.merimee.COPY.label}
 											content={notice.COPY}
 										/>
 									</div>
-									{notice.PRODUCTEUR ==
+									{notice.PRODUCTEUR ===
 									"Monuments Historiques" ? (
 										<ContactUs
 											contact={notice.CONTACT}
@@ -840,7 +837,7 @@ export default class extends React.Component {
 									)}
 								</div>
 								<SeeMore notice={notice} />
-								<Map notice={notice} />
+								<MapComponent notice={notice} />
 							</Col>
 						</Row>
 					</Container>
@@ -857,10 +854,14 @@ const SeeMore = ({ notice }) => {
 	if (notice.DOSURL) {
 		arr.push(
 			<Field
-				title={mapping.palissy.DOSURL.label}
+				title={mapping.merimee.DOSURL.label}
 				content={
 					<Link href={notice.DOSURL}>
-						<a href={notice.DOSURL} target="_blank">
+						<a
+							href={notice.DOSURL}
+							target="_blank"
+							rel="noreferrer"
+						>
 							Voir le dossier complet sur le site de la région
 						</a>
 					</Link>
@@ -873,12 +874,13 @@ const SeeMore = ({ notice }) => {
 	if (notice.DOSURLPDF) {
 		arr.push(
 			<Field
-				title={mapping.palissy.DOSURLPDF.label}
+				title={mapping.merimee.DOSURLPDF.label}
 				content={
 					<Link href={postFixedLink(notice.DOSURLPDF)}>
 						<a
 							href={postFixedLink(notice.DOSURLPDF)}
 							target="_blank"
+							rel="noreferrer"
 						>
 							Voir le dossier d'origine numérisé
 						</a>
@@ -898,6 +900,7 @@ const SeeMore = ({ notice }) => {
 						<a
 							href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
 							target="_blank"
+							rel="noreferrer"
 						>
 							Voir le dossier d'origine numérisé
 						</a>
@@ -922,6 +925,7 @@ const SeeMore = ({ notice }) => {
 					<a
 						href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}
 						target="_blank"
+						rel="noreferrer"
 					>
 						{filename}
 					</a>
@@ -931,7 +935,7 @@ const SeeMore = ({ notice }) => {
 		arr.push(
 			<Field
 				key="notice.POP_ARRETE_PROTECTION"
-				title={mapping.palissy.POP_ARRETE_PROTECTION.label}
+				title={mapping.merimee.POP_ARRETE_PROTECTION.label}
 				content={
 					<div style={{ display: "flex", flexDirection: "column" }}>
 						{urls}
@@ -955,6 +959,7 @@ const SeeMore = ({ notice }) => {
 					<a
 						href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}
 						target="_blank"
+						rel="noreferrer"
 					>
 						{filename}
 					</a>
@@ -964,7 +969,7 @@ const SeeMore = ({ notice }) => {
 		arr.push(
 			<Field
 				key="notice.POP_DOSSIER_PROTECTION"
-				title={mapping.palissy.POP_DOSSIER_PROTECTION.label}
+				title={mapping.merimee.POP_DOSSIER_PROTECTION.label}
 				content={
 					<div style={{ display: "flex", flexDirection: "column" }}>
 						{urls}
@@ -978,10 +983,14 @@ const SeeMore = ({ notice }) => {
 		for (let i = 0; i < notice.LIENS.length; i++) {
 			arr.push(
 				<Field
-					title={mapping.palissy.LIENS.label}
+					title={mapping.merimee.LIENS.label}
 					content={
 						<Link href={notice.LIENS[i]}>
-							<a href={notice.LIENS[i]} target="_blank">
+							<a
+								href={notice.LIENS[i]}
+								target="_blank"
+								rel="noreferrer"
+							>
 								{notice.LIENS[i]}
 							</a>
 						</Link>
@@ -999,7 +1008,11 @@ const SeeMore = ({ notice }) => {
 					title={mapping.merimee.LINHA.label}
 					content={
 						<Link href={notice.LINHA[0]}>
-							<a href={notice.LINHA[0]} target="_blank">
+							<a
+								href={notice.LINHA[0]}
+								target="_blank"
+								rel="noreferrer"
+							>
 								{notice.LINHA[0]}
 							</a>
 						</Link>
@@ -1013,7 +1026,11 @@ const SeeMore = ({ notice }) => {
 					<Field
 						content={
 							<Link href={notice.LINHA[i]}>
-								<a href={notice.LINHA[i]} target="_blank">
+								<a
+									href={notice.LINHA[i]}
+									target="_blank"
+									rel="noreferrer"
+								>
 									{notice.LINHA[i]}
 								</a>
 							</Link>
@@ -1032,7 +1049,11 @@ const SeeMore = ({ notice }) => {
 					title={mapping.merimee.LREG.label}
 					content={
 						<Link href={notice.LREG[0]}>
-							<a href={notice.LREG[0]} target="_blank">
+							<a
+								href={notice.LREG[0]}
+								target="_blank"
+								rel="noreferrer"
+							>
 								{notice.LREG[0]}
 							</a>
 						</Link>
@@ -1046,7 +1067,11 @@ const SeeMore = ({ notice }) => {
 					<Field
 						content={
 							<Link href={notice.LREG[i]}>
-								<a href={notice.LREG[i]} target="_blank">
+								<a
+									href={notice.LREG[i]}
+									target="_blank"
+									rel="noreferrer"
+								>
 									{notice.LREG[i]}
 								</a>
 							</Link>
@@ -1063,7 +1088,11 @@ const SeeMore = ({ notice }) => {
 			<Field
 				content={
 					<Link href={getUrlArchive(notice.REF)}>
-						<a href={getUrlArchive(notice.REF)} target="_blank">
+						<a
+							href={getUrlArchive(notice.REF)}
+							target="_blank"
+							rel="noreferrer"
+						>
 							Les archives conservées à la Médiathèque du
 							patrimoine et de la photographie
 						</a>

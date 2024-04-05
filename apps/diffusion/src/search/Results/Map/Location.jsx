@@ -12,7 +12,7 @@ class Location extends Component {
 	}
 
 	async load(map) {
-		var geocoder = new MapboxGeocoder({
+		const geocoder = new MapboxGeocoder({
 			accessToken: await api.getMapboxToken(),
 			countries: "fr", // limit results to France,
 			placeholder: "Entrez une ville ou une adresse",

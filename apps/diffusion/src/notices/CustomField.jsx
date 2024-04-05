@@ -75,7 +75,7 @@ export function TextFieldReprPdf(value) {
 	// Création des liens pour chaque valeur
 	if (Array.isArray(links)) {
 		links.forEach((item, index) => {
-			if (item?.val && item.val.trim() != "") {
+			if (item?.val && item.val.trim() !== "") {
 				objVal[item.val.replace("#", "").trim()] = (
 					<View style={styles.listReprLinked} debug={true}>
 						<Link

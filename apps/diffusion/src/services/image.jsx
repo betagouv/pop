@@ -9,9 +9,8 @@ export function image(data) {
 		if (img) {
 			if (img.match(/^http/)) {
 				return <img src={img} alt={alt} />;
-			} else {
-				return <img src={`${bucket_url}${img}`} alt={alt} />;
 			}
+			return <img src={`${bucket_url}${img}`} alt={alt} />;
 		}
 	} else {
 		const imgProp = data.IMG || data.VIDEO;
@@ -20,9 +19,8 @@ export function image(data) {
 			if (img) {
 				if (img.match(/^http/)) {
 					return <img src={img} alt={alt} />;
-				} else {
-					return <img src={`${bucket_url}${img}`} alt={alt} />;
 				}
+				return <img src={`${bucket_url}${img}`} alt={alt} />;
 			}
 		}
 	}

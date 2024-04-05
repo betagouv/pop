@@ -408,7 +408,7 @@ export function getNoticeInfo(notice) {
 				(notice.NOMPRENOM
 					? notice.NOMPRENOM
 					: notice.PREN + " " + notice.NOM) +
-				(notice.ALIAS != "" ? " - " + notice.ALIAS : "");
+				(notice.ALIAS !== "" ? " - " + notice.ALIAS : "");
 
 			//Description
 			let life = "";
@@ -434,10 +434,10 @@ export function getNoticeInfo(notice) {
 			let isOrfevre = false;
 			let fonction = "";
 			notice.FONC.map((fonc, index) => {
-				if (fonc == "Orfèvre") {
+				if (fonc === "Orfèvre") {
 					isOrfevre = true;
 				}
-				fonction += index == 0 ? fonc : ", " + fonc;
+				fonction += index === 0 ? fonc : ", " + fonc;
 			});
 
 			//Symbole

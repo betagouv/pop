@@ -15,7 +15,7 @@ const notifySentry = (err) => {
 	Sentry.captureException(err);
 };
 
-export default class Error extends React.Component {
+export default class ErrorPage extends React.Component {
 	componentDidMount() {
 		const { statusCode } = this.props;
 		if (statusCode && statusCode > 200 && statusCode !== 404) {

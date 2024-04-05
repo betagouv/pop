@@ -36,7 +36,7 @@ class FieldImages extends React.Component {
 			);
 		});
 
-		var settings = {
+		const settings = {
 			lazyLoad: true,
 			slidesToShow: 1,
 			speed: 0,

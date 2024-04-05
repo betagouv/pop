@@ -26,7 +26,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { MuseoPdf } from "../../src/pdf/pdfNotice/museoPdf";
 import LinkedNotices from "../../src/notices/LinkedNotices";
 import { pop_url } from "../../src/config";
-import Map from "../../src/notices/Map";
+import MapComponent from "../../src/notices/Map";
 import EAnalytics from "../../src/services/eurelian";
 
 const pushLinkedNotices = (a, d, base) => {
@@ -51,7 +51,7 @@ export default class extends React.Component {
 		let hideButton = false;
 		const noticesLiees = await API.getMuseoCollection(notice.REF);
 
-		if (noticesLiees == 0) {
+		if (noticesLiees === 0) {
 			hideButton = true;
 		}
 
@@ -122,16 +122,16 @@ export default class extends React.Component {
 			}
 			this.setState({ prevLink, nextLink });
 		} else {
-			this.state.display == false && this.setState({ display: true });
+			!this.state.display && this.setState({ display: true });
 		}
 	}
 
 	componentDidUpdate() {
-		this.state.display == false && this.setState({ display: true });
+		!this.state.display && this.setState({ display: true });
 	}
 
 	renderPrevButton() {
-		if (this.state.prevLink != undefined) {
+		if (this.state.prevLink !== undefined) {
 			return (
 				<a
 					title="Notice précédente"
@@ -147,7 +147,7 @@ export default class extends React.Component {
 	}
 
 	renderNextButton() {
-		if (this.state.nextLink != undefined) {
+		if (this.state.nextLink !== undefined) {
 			return (
 				<a
 					title="Notice suivante"
@@ -358,7 +358,8 @@ export default class extends React.Component {
 										content={
 											<a
 												href={"https://" + notice.URL_M}
-												target="_blank" rel="noreferrer"
+												target="_blank"
+												rel="noreferrer"
 											>
 												{notice.URL_M}
 											</a>
@@ -500,7 +501,7 @@ export default class extends React.Component {
 										</a>
 									</Link>
 								</div>
-								<Map notice={notice} />
+								<MapComponent notice={notice} />
 							</Col>
 						</Row>
 					</Container>

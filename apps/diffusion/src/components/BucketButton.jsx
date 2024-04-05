@@ -31,7 +31,7 @@ export default class BucketButton extends React.Component {
 				document.getElementById("nbBucket").innerHTML =
 					"Consulter mon panier ( " + currentBucket.length + " )";
 				//Transformation de la liste de notice au format json et modification du cookie
-				var jsonCurrentBucket = JSON.stringify(currentBucket);
+				const jsonCurrentBucket = JSON.stringify(currentBucket);
 				cookies.set("currentBucket", jsonCurrentBucket, {
 					path: "/",
 					overwrite: true,

@@ -42,7 +42,7 @@ const differsByOneCharInMainSearch = (previous, current) => {
 export function paramsToUrlAlias(mode, view, base, qs) {
 	return `/${modeToRoute(mode)}/${view}${
 		mode === "advanced" && base ? `/${base}` : ""
-	}${qs ? "?" + qs : ""}`;
+	}${qs ? `?${qs}` : ""}`;
 }
 
 export function replaceSearchRouteWithUrl(options = {}) {
@@ -63,7 +63,7 @@ export function replaceSearchRouteWithUrl(options = {}) {
 		return Router.replace(
 			`/search${
 				searchFullParams
-					? "?" + queryString.stringify(searchFullParams)
+					? `?${queryString.stringify(searchFullParams)}`
 					: ""
 			}`,
 			urlAlias,
@@ -108,7 +108,7 @@ export function pushSearchRoute(options = {}) {
 	return method(
 		`/search${
 			searchFullParams
-				? "?" + queryString.stringify(searchFullParams)
+				? `?${queryString.stringify(searchFullParams)}`
 				: ""
 		}`,
 		paramsToUrlAlias(

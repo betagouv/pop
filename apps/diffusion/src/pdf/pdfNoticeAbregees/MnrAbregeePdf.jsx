@@ -9,12 +9,13 @@ export function MnrAbregeePdf(notice) {
 	const author = String(notice.AUTR).replace("#", " ");
 
 	return (
-		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
+		<Link src={`${pop_url}notice/${notice.collection}/${notice.REF}`}>
 			<View style={styles.noticeAbregeeContainer}>
 				<View style={styles.imageAbregee}>
 					{notice.VIDEO.length > 0 ? (
 						<Image
 							src={
+								// biome-ignore lint/style/useTemplate: <explanation>
 								bucket_url +
 								notice.VIDEO[0] +
 								"?" +
@@ -38,10 +39,10 @@ export function MnrAbregeePdf(notice) {
 						</Text>
 						<Text style={styles.abregeeContentTextMnr}>{domn}</Text>
 						<Text style={styles.abregeeContentTextMnr}>
-							{"Localisation : " + notice.LOCA}
+							{`Localisation : ${notice.LOCA}`}
 						</Text>
 						<Text style={styles.abregeeContentTextMnr}>
-							{"Etablissement affectaire : " + notice.AFFE}
+							{`Etablissement affectaire : ${notice.AFFE}`}
 						</Text>
 						<Text style={styles.abregeeContentTextMnr}>
 							{notice.CATE}

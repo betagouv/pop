@@ -11,7 +11,6 @@ import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import {
-	schema,
 	getParamsFromUrl,
 	findCollection,
 	highlighting,
@@ -54,7 +53,7 @@ export default class extends React.Component {
 		//Construction des liens précédents/suivants
 		const cookies = new Cookies();
 		const listRefs = cookies.get(
-			"listRefs-" + this.props.searchParams.idQuery,
+			`listRefs-${this.props.searchParams.idQuery}`,
 		);
 		if (listRefs) {
 			const indexOfCurrentNotice = listRefs.indexOf(
@@ -67,13 +66,9 @@ export default class extends React.Component {
 					listRefs[indexOfCurrentNotice - 1],
 				);
 				if (previousCollection !== "") {
-					prevLink =
-						"notice/" +
-						previousCollection +
-						"/" +
-						listRefs[indexOfCurrentNotice - 1] +
-						"?" +
-						this.props.searchParamsUrl;
+					prevLink = `notice/${previousCollection}/${
+						listRefs[indexOfCurrentNotice - 1]
+					}?${this.props.searchParamsUrl}`;
 				}
 			}
 			if (indexOfCurrentNotice < listRefs.length - 1) {
@@ -81,27 +76,23 @@ export default class extends React.Component {
 					listRefs[indexOfCurrentNotice + 1],
 				);
 				if (nextCollection !== "") {
-					nextLink =
-						"notice/" +
-						nextCollection +
-						"/" +
-						listRefs[indexOfCurrentNotice + 1] +
-						"?" +
-						this.props.searchParamsUrl;
+					nextLink = `notice/${nextCollection}/${
+						listRefs[indexOfCurrentNotice + 1]
+					}?${this.props.searchParamsUrl}`;
 				}
 			}
 			this.setState({ prevLink, nextLink });
 		} else {
-			this.state.display == false && this.setState({ display: true });
+			!this.state.display && this.setState({ display: true });
 		}
 	}
 
 	componentDidUpdate() {
-		this.state.display == false && this.setState({ display: true });
+		!this.state.display && this.setState({ display: true });
 	}
 
 	renderPrevButton() {
-		if (this.state.prevLink != undefined) {
+		if (this.state.prevLink !== undefined) {
 			return (
 				<a
 					title="Notice précédente"
@@ -111,13 +102,12 @@ export default class extends React.Component {
 					&lsaquo;
 				</a>
 			);
-		} else {
-			return null;
 		}
+		return null;
 	}
 
 	renderNextButton() {
-		if (this.state.nextLink != undefined) {
+		if (this.state.nextLink !== undefined) {
 			return (
 				<a
 					title="Notice suivante"
@@ -127,9 +117,8 @@ export default class extends React.Component {
 					&rsaquo;
 				</a>
 			);
-		} else {
-			return null;
 		}
+		return null;
 	}
 
 	fieldImage(notice) {
@@ -146,7 +135,7 @@ export default class extends React.Component {
 					<a
 						style={{ fontSize: "13px" }}
 						target="_blank"
-						rel="noopener"
+						rel="noreferrer noopener"
 						href={`/notice/memoire/${e.ref}`}
 					>
 						Voir la notice image
@@ -177,7 +166,7 @@ export default class extends React.Component {
 			<div>
 				<PDFDownloadLink
 					document={pdf}
-					fileName={"autor_" + notice.REF + ".pdf"}
+					fileName={`autor_${notice.REF}.pdf`}
 					style={{
 						backgroundColor: "#377d87",
 						border: 0,

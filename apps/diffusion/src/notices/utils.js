@@ -23,7 +23,7 @@ export async function findCollection(ref = "") {
 		});
 	});
 	//Pour chaque base n'ayant pas de préfixe, on test si la notice provient d'une de ces bases
-	if (collection == "" && possibleBases.length > 0) {
+	if (collection === "" && possibleBases.length > 0) {
 		for (let i = 0; i < possibleBases.length; i++) {
 			const notice = await API.getNotice(possibleBases[i], ref);
 			if (notice) {

@@ -13,14 +13,14 @@ export function EnluminuresPdf(notice, title, typeNotice, links) {
 					{" "}
 				</Text>
 				<Text style={styles.title}>
-					{notice.TITR + " - " + notice.SUJET}
+					{`${notice.TITR} - ${notice.SUJET}`}
 				</Text>
 
 				<View style={styles.content}>
 					<View style={styles.body}>
-						{"INI-D" == typeNotice
+						{"INI-D" === typeNotice
 							? renderPdfNoticesINID(notice)
-							: "INI-CM" == typeNotice
+							: "INI-CM" === typeNotice
 								? renderPdfNoticesINICM(notice)
 								: renderPdfNoticesOthers(notice)}
 					</View>
@@ -30,6 +30,7 @@ export function EnluminuresPdf(notice, title, typeNotice, links) {
 								<Image
 									style={styles.image}
 									src={
+										// biome-ignore lint/style/useTemplate: <explanation>
 										bucket_url +
 										notice.VIDEO[0] +
 										"?" +
@@ -62,7 +63,7 @@ export function EnluminuresPdf(notice, title, typeNotice, links) {
 							<Text style={styles.subtitle}>
 								À propos de la notice
 							</Text>
-							{"INI-D" == typeNotice || "INI-CM" == typeNotice
+							{"INI-D" === typeNotice || "INI-CM" === typeNotice
 								? renderPdfSideBarNotices(notice)
 								: renderPdfSideBarOthersNotices(notice)}
 							<Field
@@ -88,7 +89,8 @@ export function EnluminuresPdf(notice, title, typeNotice, links) {
 									>
 										<a
 											href={notice.LIENS[0]}
-											target="_blank" rel="noreferrer"
+											target="_blank"
+											rel="noreferrer"
 										>
 											<Text>
 												Voir la notice de la base
@@ -105,7 +107,8 @@ export function EnluminuresPdf(notice, title, typeNotice, links) {
 												>
 													<a
 														href={lien}
-														target="_blank" rel="noreferrer"
+														target="_blank"
+														rel="noreferrer"
 													>
 														<Text>
 															Voir la notice de la
@@ -141,6 +144,7 @@ const renderLinkPdf = (notice) => {
 		<Link
 			style={styles.linkEnluminures}
 			src={
+				// biome-ignore lint/style/useTemplate: <explanation>
 				"https://www.pop.culture.gouv.fr/notice/" +
 				notice.collection +
 				"/" +

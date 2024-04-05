@@ -1,5 +1,5 @@
 import React, { Children, isValidElement, cloneElement } from "react";
-import { Row, Col, Container, Button } from "reactstrap";
+import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import Link from "next/link";
 import isURL from "validator/lib/isURL";
@@ -14,7 +14,6 @@ import Field from "../../src/notices/Field";
 import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
-import Map from "../../src/notices/Map";
 import {
 	schema,
 	getParamsFromUrl,
@@ -130,20 +129,20 @@ export default class extends React.Component {
 			}
 			this.setState({ prevLink, nextLink });
 		} else {
-			this.state.display == false && this.setState({ display: true });
+			!this.state.display && this.setState({ display: true });
 		}
 	}
 
 	componentDidUpdate() {
-		this.state.display == false && this.setState({ display: true });
+		!this.state.display && this.setState({ display: true });
 	}
 
 	buildUrl(name, chaine) {
-		let url = `/search/list?${queryString.stringify({
+		const url = `/search/list?${queryString.stringify({
 			[name]: JSON.stringify([chaine]),
 		})}`;
 		return (
-			<a href={url} key={chaine} target="_blank">
+			<a href={url} key={chaine} target="_blank" rel="noreferrer">
 				{chaine}
 			</a>
 		);
@@ -194,7 +193,7 @@ export default class extends React.Component {
 			if (regexPattern.test(value[i])) {
 				const arraySplit = value[i]
 					.split(/[(),:;]/)
-					.filter((e) => e != "");
+					.filter((e) => e !== "");
 				arraySplit.forEach((v) =>
 					arrayContent.push(this.buildLinkRepr(v)),
 				);
@@ -204,6 +203,7 @@ export default class extends React.Component {
 		}
 		const res = this.intersperseReact(
 			arrayContent,
+			// biome-ignore lint/complexity/noUselessFragments: <explanation>
 			<React.Fragment> ; </React.Fragment>,
 		);
 		return res;
@@ -216,12 +216,12 @@ export default class extends React.Component {
 			return null;
 		}
 		if (!value || !Array.isArray(value) || !value.length) {
-			if (String(value) === value && !String(value) == "") {
+			if (String(value) === value && !String(value) === "") {
 				const url = `/search/list?${queryString.stringify({
 					[name]: JSON.stringify([value]),
 				})}`;
 				return (
-					<a href={url} target="_blank">
+					<a href={url} target="_blank" rel="noreferrer">
 						{value}
 					</a>
 				);
@@ -242,7 +242,12 @@ export default class extends React.Component {
 
 						links.push(
 							<div className="div-links">
-								<a href={url} key={el} target="_blank">
+								<a
+									href={url}
+									key={el}
+									target="_blank"
+									rel="noreferrer"
+								>
 									{el}
 								</a>
 							</div>,
@@ -250,24 +255,24 @@ export default class extends React.Component {
 					}
 				});
 			} else {
-				let url = `/search/list?${queryString.stringify({
+				const url = `/search/list?${queryString.stringify({
 					[name]: JSON.stringify([val]),
 				})}`;
 				if (links.length > 0) {
 					links.push(", ");
 				}
 				links.push(
-					<a href={url} key={val} target="_blank">
+					<a href={url} key={val} target="_blank" rel="noreferrer">
 						{val}
 					</a>,
 				);
 			}
 		});
-		return <React.Fragment>{links}</React.Fragment>;
+		return <>{links}</>;
 	}
 
 	renderPrevButton() {
-		if (this.state.prevLink != undefined) {
+		if (this.state.prevLink !== undefined) {
 			return (
 				<a
 					title="Notice précédente"
@@ -283,7 +288,7 @@ export default class extends React.Component {
 	}
 
 	renderNextButton() {
-		if (this.state.nextLink != undefined) {
+		if (this.state.nextLink !== undefined) {
 			return (
 				<a
 					title="Notice suivante"
@@ -325,7 +330,7 @@ export default class extends React.Component {
 		let title_component = title;
 
 		// M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice
-		if (typeof title == "string" && title.indexOf("#") > -1) {
+		if (typeof title === "string" && title.indexOf("#") > -1) {
 			title_component = title
 				.split("#")
 				.map((element) => <p>{element}</p>);
@@ -905,7 +910,11 @@ const SeeMore = ({ notice, museo }) => {
 				title={mapping.joconde.LVID.label}
 				content={
 					<Link href={notice.LVID}>
-						<a target="_blank" rel="noopener" href={notice.LVID}>
+						<a
+							target="_blank"
+							rel="noreferrer noopener"
+							href={notice.LVID}
+						>
 							{notice.LVID}
 						</a>
 					</Link>
@@ -922,7 +931,11 @@ const SeeMore = ({ notice, museo }) => {
 					title={mapping.joconde.WWW.label}
 					content={
 						<Link href={notice.WWW[0]}>
-							<a href={notice.WWW[0]} target="_blank">
+							<a
+								href={notice.WWW[0]}
+								target="_blank"
+								rel="noreferrer"
+							>
 								{notice.WWW[0]}
 							</a>
 						</Link>
@@ -936,7 +949,11 @@ const SeeMore = ({ notice, museo }) => {
 					<Field
 						content={
 							<Link href={notice.WWW[i]}>
-								<a href={notice.WWW[i]} target="_blank">
+								<a
+									href={notice.WWW[i]}
+									target="_blank"
+									rel="noreferrer"
+								>
 									{notice.WWW[i]}
 								</a>
 							</Link>
@@ -964,6 +981,7 @@ const SeeMore = ({ notice, museo }) => {
 						<a
 							href={`/notice/museo/${notice.MUSEO}`}
 							target="_blank"
+							rel="noreferrer"
 						>
 							{text}
 						</a>
@@ -980,7 +998,7 @@ const SeeMore = ({ notice, museo }) => {
 				title={mapping.joconde.RETIF.label}
 				content={
 					<Link href={notice.RETIF}>
-						<a href={notice.RETIF} target="_blank">
+						<a href={notice.RETIF} target="_blank" rel="noreferrer">
 							INHA
 						</a>
 					</Link>

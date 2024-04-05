@@ -8,20 +8,17 @@ export function PalissyAbregeePdf(notice) {
 	const line3 = concatTabs(notice.CATE, notice.MATR);
 	const line4 = concatTabs(notice.AUTR, notice.SCLE);
 	const line5 =
-		notice.STAT.join(" , ") + (notice.DPRO ? " ; " + notice.DPRO : "");
+		notice.STAT.join(" , ") + (notice.DPRO ? ` ; ${notice.DPRO}` : "");
 
 	return (
-		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
+		<Link src={`${pop_url}notice/${notice.collection}/${notice.REF}`}>
 			<View style={styles.noticeAbregeeContainer}>
 				<View style={styles.imageAbregee}>
 					{notice.MEMOIRE.length > 0 ? (
 						<Image
-							src={
-								bucket_url +
-								notice.MEMOIRE[0].url +
-								"?" +
-								new Date().getTime()
-							}
+							src={`${
+								bucket_url + notice.MEMOIRE[0].url
+							}?${new Date().getTime()}`}
 						/>
 					) : (
 						<Image src={"/static/noimage.png"} />
@@ -46,7 +43,7 @@ export function PalissyAbregeePdf(notice) {
 						{logo != null && logo !== "" ? (
 							<Image style={styles.logo} src={logo} />
 						) : (
-							<Text></Text>
+							<Text />
 						)}
 					</View>
 				</View>

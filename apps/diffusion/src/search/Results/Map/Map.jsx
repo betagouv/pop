@@ -7,7 +7,7 @@ import Marker from "./Marker";
 import Loader from "../../../components/Loader";
 import api from "../../../services/api";
 
-export default class Map extends React.Component {
+export default class MapComponent extends React.Component {
 	state = {
 		loaded: false,
 		popup: null,
@@ -154,7 +154,7 @@ export default class Map extends React.Component {
 	}
 
 	selectMarker(marker) {
-		if (this.state.selectedMarker && this.state.selectedMarker != marker) {
+		if (this.state.selectedMarker && this.state.selectedMarker !== marker) {
 			this.state.selectedMarker.unselect();
 		}
 		if (marker) {
@@ -190,7 +190,7 @@ export default class Map extends React.Component {
 				);
 				marker.onClick((marker) => {
 					let zoom = this.map.getZoom();
-					if (marker._type == "cluster") {
+					if (marker._type === "cluster") {
 						zoom++;
 					}
 					const center = marker.getCoordinates();

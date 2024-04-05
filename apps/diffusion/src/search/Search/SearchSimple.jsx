@@ -62,7 +62,7 @@ const customSearchBtn = ({ onClickCall }) => {
 };
 
 function handler({ key }) {
-	if (String(key) == "Enter") {
+	if (String(key) === "Enter") {
 		onKeyDownCall();
 	}
 }

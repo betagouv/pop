@@ -14,7 +14,7 @@ export default class Layout extends React.Component {
 	async getNbNoticesInBucket() {
 		//Récupération du panier actuel dans les cookies
 		const cookies = new Cookies();
-		let currentBucket = cookies.get("currentBucket") || [];
+		const currentBucket = cookies.get("currentBucket") || [];
 		this.setState({ countBucket: currentBucket.length });
 		return currentBucket.length;
 	}
@@ -60,10 +60,8 @@ export default class Layout extends React.Component {
 									<a className="btn btn-outline-danger onPrintHide">
 										<div className="btn-bucket">
 											<div id="nbBucket">
-												{this.state.countBucket != 0
-													? "Consulter mon panier ( " +
-														this.state.countBucket +
-														" )"
+												{this.state.countBucket !== 0
+													? `Consulter mon panier ( ${this.state.countBucket} )`
 													: "Panier vide"}{" "}
 											</div>
 										</div>
@@ -76,7 +74,7 @@ export default class Layout extends React.Component {
 										href="https://framaforms.org/ameliorez-pop-1663925372"
 										className="btn btn-outline-danger onPrintHide"
 										target="_blank"
-										rel="noopener"
+										rel="noreferrer noopener"
 									>
 										Améliorez POP !
 									</a>
@@ -87,7 +85,7 @@ export default class Layout extends React.Component {
 					<Alert
 						style={{ marginBottom: "0px", textAlign: "center" }}
 						color="warning"
-						isOpen={this.state.maintenance == "TRUE"}
+						isOpen={this.state.maintenance === "TRUE"}
 					>
 						{message_maintenance}
 					</Alert>
@@ -109,7 +107,7 @@ export default class Layout extends React.Component {
 								<a
 									href="https://framaforms.org/ameliorez-pop-1663925372"
 									target="_blank"
-									rel="noopener"
+									rel="noreferrer noopener"
 								>
 									<img src="/static/questionnaire.svg" />
 								</a>
@@ -118,13 +116,13 @@ export default class Layout extends React.Component {
 								</Link>
 							</div>
 						</div>
-						<div className="mobile-separator"></div>
+						<div className="mobile-separator" />
 					</div>
 					<div className="header-mobile-down">
 						<h2>POP</h2>
 						<h3>Plateforme ouverte du patrimoine</h3>
 					</div>
-					<div className="header-mobile-down"></div>
+					<div className="header-mobile-down" />
 				</div>
 				{children}
 				<div className="footer">
@@ -143,7 +141,7 @@ export default class Layout extends React.Component {
 							<a
 								href={`mailto:pop@culture.gouv.fr`}
 								target="_blank"
-								rel="noopener"
+								rel="noreferrer noopener"
 							>
 								Nous contacter
 							</a>

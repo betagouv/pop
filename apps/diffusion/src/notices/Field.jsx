@@ -38,7 +38,7 @@ export default ({
 
 			if (
 				separator &&
-				typeof str == "string" &&
+				typeof str === "string" &&
 				str.indexOf(separator) > -1
 			) {
 				str = str.replace(new RegExp(separator, "g"), "\n");
@@ -46,12 +46,12 @@ export default ({
 		}
 	}
 
-	if (addLink != "undefined" && addLink) {
-		if (typeof str == "string") {
+	if (addLink !== "undefined" && addLink) {
+		if (typeof str === "string") {
 			str = addLinkToText(str);
 		} else if (Array.isArray(str)) {
 			str = str.map((element) => {
-				if (typeof element == "string") {
+				if (typeof element === "string") {
 					element = addLinkToText(element);
 				} else {
 					// element = <p>{element}</p>
@@ -225,13 +225,17 @@ function addLinkToText(str) {
 	const content = [];
 
 	for (let j = 1; j <= i; j++) {
-		if (typeof obj["text_" + j] != "undefined") {
+		if (typeof obj["text_" + j] !== "undefined") {
 			content.push(obj["text_" + j]);
 		}
-		if (typeof obj["link_" + j] != "undefined") {
+		if (typeof obj["link_" + j] !== "undefined") {
 			if (obj["link_" + j].toLowerCase().indexOf("www") === 0) {
 				content.push(
-					<a href={"http://" + obj["link_" + j]} target="_blank" rel="noreferrer">
+					<a
+						href={"http://" + obj["link_" + j]}
+						target="_blank"
+						rel="noreferrer"
+					>
 						{obj["link_" + j]}
 					</a>,
 				);

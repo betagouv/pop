@@ -1,5 +1,5 @@
-const { createServer } = require("http");
-const { parse } = require("url");
+const { createServer } = require("node:http");
+const { parse } = require("node:url");
 const next = require("next");
 const { join } = require("node:path");
 const Sentry = require("@sentry/node");
