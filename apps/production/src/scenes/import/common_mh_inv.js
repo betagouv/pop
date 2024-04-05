@@ -6,149 +6,142 @@ import api from "../../services/api";
 import Mapping from "../../services/mapping";
 import utils from "./utils";
 
-function parseFilesCsv(files, encoding, typeImport) {
-	return new Promise(async (resolve, reject) => {
-		const objectFile = files.find((file) => file.name.includes(".csv"));
-		if (!objectFile) {
-			reject("Pas de fichiers .csv detecté");
-			return;
+async function parseFilesCsv(files, encoding, typeImport) {
+	const objectFile = files.find((file) => file.name.includes(".csv"));
+	if (!objectFile) {
+		reject("Pas de fichiers .csv detecté");
+		return;
+	}
+	const objs = await utils.readCSV(objectFile, "|", encoding);
+	const importedNotices = [];
+	const filesMap = {};
+	for (let i = 0; i < files.length; i++) {
+		filesMap[files[i].name] = files[i];
+	}
+
+	// Réupération des producteurs
+	const response = await api.getProducteurs();
+
+	for (let i = 0; i < objs.length; i++) {
+		const obj = objs[i];
+
+		if (!obj.REF) {
+			throw Error(
+				`Problème détecté ligne ${
+					i + 2
+				}. Impossible de détecter les notices. Vérifiez que le séparateur est bien | et que chaque notice possède une référence`,
+			);
 		}
-		const objs = await utils.readCSV(objectFile, "|", encoding);
-		const importedNotices = [];
-		const filesMap = {};
-		for (let i = 0; i < files.length; i++) {
-			filesMap[files[i].name] = files[i];
+
+		// Create new notices.
+		if (obj.REF === "PM") {
+			if (!obj.DPT) {
+				throw Error("DPT est vide. Impossible de générer un id");
+			}
+			const ref = await api.getNewId("palissy", "PM", obj.DPT);
+			obj.REF = ref.id;
+		} else if (obj.REF === "PA") {
+			if (!obj.DPT) {
+				throw Error("DPT est vide. Impossible de générer un id");
+			}
+			const ref = await api.getNewId("merimee", "PA", obj.DPT);
+			obj.REF = ref.id;
 		}
 
-		// Réupération des producteurs
-		const response = await api.getProducteurs();
+		// On parcourt les producteurs pour savoir si le préfixe de la notice correspond à un des préfixes des producteurs mérimée, palissy ou mémoire
+		let collection = "";
+		let producteurs = [];
 
-		for (let i = 0; i < objs.length; i++) {
-			const obj = objs[i];
+		if (response) {
+			producteurs = response.producteurs;
 
-			if (!obj.REF) {
-				reject(
-					`Problème détecté ligne ${
-						i + 2
-					}. Impossible de détecter les notices. Vérifiez que le séparateur est bien | et que chaque notice possède une référence`,
-				);
-				return;
-			}
-
-			// Create new notices.
-			if (obj.REF === "PM") {
-				if (!obj.DPT) {
-					reject("DPT est vide. Impossible de générer un id");
-					return;
-				}
-				const ref = await api.getNewId("palissy", "PM", obj.DPT);
-				obj.REF = ref.id;
-			} else if (obj.REF === "PA") {
-				if (!obj.DPT) {
-					reject("DPT est vide. Impossible de générer un id");
-					return;
-				}
-				const ref = await api.getNewId("merimee", "PA", obj.DPT);
-				obj.REF = ref.id;
-			}
-
-			// On parcourt les producteurs pour savoir si le préfixe de la notice correspond à un des préfixes des producteurs mérimée, palissy ou mémoire
-			let collection = "";
-			let producteurs = [];
-
-			if (response) {
-				producteurs = response.producteurs;
-
-				producteurs.map((producteur) => {
-					producteur.BASE.map((BASE) => {
-						BASE.prefixes.map((prefix) => {
-							if (String(obj.REF).startsWith(String(prefix))) {
-								collection = BASE.base;
-							}
-						});
+			producteurs.map((producteur) => {
+				producteur.BASE.map((BASE) => {
+					BASE.prefixes.map((prefix) => {
+						if (String(obj.REF).startsWith(String(prefix))) {
+							collection = BASE.base;
+						}
 					});
 				});
-			}
-
-			// Définition des messages d'erreur pour chaque type d'import MH et INV
-			const messages = {
-				MH: `La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire, ni autor`,
-				INV: `La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire`,
-			};
-
-			let newNotice;
-
-			if ("palissy" === collection) {
-				newNotice = new Palissy(obj);
-				addFile(
-					"POP_DOSSIER_PROTECTION",
-					"POP_DOSSIER_PROTECTION",
-					obj,
-					newNotice,
-					filesMap,
-				);
-				addFile(
-					"POP_ARRETE_PROTECTION",
-					"POP_ARRETE_PROTECTION",
-					obj,
-					newNotice,
-					filesMap,
-				);
-				addFile(
-					"POP_DOSSIER_VERT",
-					"POP_DOSSIER_VERT",
-					obj,
-					newNotice,
-					filesMap,
-				);
-			} else if ("merimee" === collection) {
-				newNotice = new Merimee(obj);
-				addFile(
-					"POP_DOSSIER_PROTECTION",
-					"POP_DOSSIER_PROTECTION",
-					obj,
-					newNotice,
-					filesMap,
-				);
-				addFile(
-					"POP_ARRETE_PROTECTION",
-					"POP_ARRETE_PROTECTION",
-					obj,
-					newNotice,
-					filesMap,
-				);
-				addFile(
-					"POP_DOSSIER_VERT",
-					"POP_DOSSIER_VERT",
-					obj,
-					newNotice,
-					filesMap,
-				);
-			} else if ("memoire" === collection) {
-				// M45867 - Ajout de la condition sur la vérification de région pour le producteur MPP
-				if ("MH" === typeImport) {
-					const producteurMPP =
-						(obj.PRODUCTEUR && "MPP" === obj.PRODUCTEUR) ||
-						(null !== obj.IDPROD &&
-							String(obj.IDPROD).startsWith("SAP")) ||
-						(null !== obj.EMET &&
-							String(obj.EMET).startsWith("SAP"));
-					obj._foreign_region = producteurMPP;
-				}
-				newNotice = new Memoire(obj);
-				addFile("REFIMG", "IMG", obj, newNotice, filesMap);
-			} else if ("autor" === collection) {
-				newNotice = new Autor(obj);
-			} else {
-				reject(messages[typeImport]);
-				return;
-			}
-
-			importedNotices.push(newNotice);
-			controlREFIMG(importedNotices);
+			});
 		}
-		resolve({ importedNotices, fileNames: [objectFile.name] });
-	});
+
+		// Définition des messages d'erreur pour chaque type d'import MH et INV
+		const messages = {
+			MH: `La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire, ni autor`,
+			INV: `La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire`,
+		};
+
+		let newNotice;
+
+		if ("palissy" === collection) {
+			newNotice = new Palissy(obj);
+			addFile(
+				"POP_DOSSIER_PROTECTION",
+				"POP_DOSSIER_PROTECTION",
+				obj,
+				newNotice,
+				filesMap,
+			);
+			addFile(
+				"POP_ARRETE_PROTECTION",
+				"POP_ARRETE_PROTECTION",
+				obj,
+				newNotice,
+				filesMap,
+			);
+			addFile(
+				"POP_DOSSIER_VERT",
+				"POP_DOSSIER_VERT",
+				obj,
+				newNotice,
+				filesMap,
+			);
+		} else if ("merimee" === collection) {
+			newNotice = new Merimee(obj);
+			addFile(
+				"POP_DOSSIER_PROTECTION",
+				"POP_DOSSIER_PROTECTION",
+				obj,
+				newNotice,
+				filesMap,
+			);
+			addFile(
+				"POP_ARRETE_PROTECTION",
+				"POP_ARRETE_PROTECTION",
+				obj,
+				newNotice,
+				filesMap,
+			);
+			addFile(
+				"POP_DOSSIER_VERT",
+				"POP_DOSSIER_VERT",
+				obj,
+				newNotice,
+				filesMap,
+			);
+		} else if ("memoire" === collection) {
+			// M45867 - Ajout de la condition sur la vérification de région pour le producteur MPP
+			if ("MH" === typeImport) {
+				const producteurMPP =
+					(obj.PRODUCTEUR && "MPP" === obj.PRODUCTEUR) ||
+					(null !== obj.IDPROD &&
+						String(obj.IDPROD).startsWith("SAP")) ||
+					(null !== obj.EMET && String(obj.EMET).startsWith("SAP"));
+				obj._foreign_region = producteurMPP;
+			}
+			newNotice = new Memoire(obj);
+			addFile("REFIMG", "IMG", obj, newNotice, filesMap);
+		} else if ("autor" === collection) {
+			newNotice = new Autor(obj);
+		} else {
+			throw Error(messages[typeImport]);
+		}
+
+		importedNotices.push(newNotice);
+		controlREFIMG(importedNotices);
+	}
+	return { importedNotices, fileNames: [objectFile.name] };
 }
 
 function controlREFIMG(importedNotices) {

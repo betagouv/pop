@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import Dropzone from "react-dropzone";
 import { Progress, Row } from "reactstrap";
 import Loader from "../../../components/Loader";
-import { slugifyFilename } from "../../notice/components/utils";
 
 import "./dropZone.css";
 
@@ -138,24 +137,21 @@ export default class ImportDropComponent extends Component {
 }
 
 function getExtension(name) {
-	return (`${name.split(".").pop()}`).toLowerCase();
+	return `${name.split(".").pop()}`.toLowerCase();
 }
 
-function convertToFile(obj) {
-	return new Promise(async (resolve, reject) => {
-		const ext = getExtension(obj.name);
-		const type =
-			ext === "txt" || ext === "csv" ? "text/plain" : "image/jpeg";
-		const data = await obj.async("blob");
-		let f = null;
-		try {
-			f = new File([data], obj.name, { type });
-		} catch (e) {
-			f = new Blob([data], { type: "image/jpeg" });
-			f.name = obj.name;
-		}
-		resolve(f);
-	});
+async function convertToFile(obj) {
+	const ext = getExtension(obj.name);
+	const type = ext === "txt" || ext === "csv" ? "text/plain" : "image/jpeg";
+	const data = await obj.async("blob");
+	let f = null;
+	try {
+		f = new File([data], obj.name, { type });
+	} catch (e) {
+		f = new Blob([data], { type: "image/jpeg" });
+		f.name = obj.name;
+	}
+	return f;
 }
 
 function getListEncoding(collection) {

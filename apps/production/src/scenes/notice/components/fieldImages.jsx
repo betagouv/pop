@@ -11,7 +11,7 @@ import {
 	UncontrolledDropdown,
 } from "reactstrap";
 import { Field } from "redux-form";
-import { slugifyFilename } from "../components/utils";
+import { slugifyFilename } from "./utils";
 
 import "./fieldImages.css";
 
@@ -76,12 +76,12 @@ class FieldImages extends React.Component {
 				name: e,
 			};
 		}
-			return {
-				source: URL.createObjectURL(this.state.imageFiles[index]),
-				name: this.props.createUrlFromName(
-					this.state.imageFiles[index].name,
-				),
-			};
+		return {
+			source: URL.createObjectURL(this.state.imageFiles[index]),
+			name: this.props.createUrlFromName(
+				this.state.imageFiles[index].name,
+			),
+		};
 	}
 
 	getImages() {

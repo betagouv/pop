@@ -7,19 +7,18 @@ import Mapping from "../../services/mapping";
 import { Link } from "react-router-dom";
 import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";
-import Field from "./components/field.js";
+import Field from "./components/field";
 import FieldImages from "./components/fieldImages";
-import InputFiles from "./components/InputFiles";
 import Section from "./components/section.js";
-import Map from "./components/map.js";
 import Comments from "./components/comments.js";
+import MapComponent from "./components/map.js";
 import { bucket_url, pop_url } from "../../config.js";
-import Merimee from "../../entities/Merimee";
 import Loader from "../../components/Loader";
+import InputFiles from "./components/InputFiles";
 import API from "../../services/api";
-import AccordionHistorique from "./components/AccordionHistorique";
-
+import Palissy from "../../entities/Palissy";
 import "./index.css";
+import AccordionHistorique from "./components/AccordionHistorique";
 
 class Notice extends React.Component {
 	state = {
@@ -27,7 +26,6 @@ class Notice extends React.Component {
 		error: "",
 		loading: true,
 		editable: true,
-		files: [],
 	};
 
 	componentWillMount() {
@@ -43,9 +41,21 @@ class Notice extends React.Component {
 		}
 	}
 
+	// Display label by producteur
+	getLabel(field) {
+		let label = Mapping.palissy[field].label;
+		if (
+			"monuments historiques" ===
+			String(this.state.notice.PRODUCTEUR).toLocaleLowerCase()
+		) {
+			label = Mapping.palissy[field].label_mh;
+		}
+		return label;
+	}
+
 	async load(ref) {
 		this.setState({ loading: true });
-		const notice = await API.getNotice("merimee", ref);
+		const notice = await API.getNotice("palissy", ref);
 		if (!notice) {
 			this.setState({
 				loading: false,
@@ -56,7 +66,7 @@ class Notice extends React.Component {
 		this.props.initialize(notice);
 		//const editable = this.canEdit(notice);
 		let editable = false;
-		API.canEdit(notice.REF, "", notice.PRODUCTEUR, "merimee").then(
+		API.canEdit(notice.REF, "", notice.PRODUCTEUR, "palissy").then(
 			(result) => {
 				editable = result.validate;
 				this.setState({ editable: editable });
@@ -81,39 +91,38 @@ class Notice extends React.Component {
 				].includes(notice.PRODUCTEUR)
 			);
 		}
-
 		return false;
 	}
 
 	async onSubmit(values) {
 		const files = [];
 
-		for (let i = 0; i < values["POP_ARRETE_PROTECTION"].length; i++) {
-			if (typeof values["POP_ARRETE_PROTECTION"][i] === "object") {
-				const file = values["POP_ARRETE_PROTECTION"][i];
+		for (let i = 0; i < values.POP_ARRETE_PROTECTION.length; i++) {
+			if (typeof values.POP_ARRETE_PROTECTION[i] === "object") {
+				const file = values.POP_ARRETE_PROTECTION[i];
 				files.push(file);
-				values["POP_ARRETE_PROTECTION"][i] =
-					`merimee/${values.REF}/${file.name}`;
+				values.POP_ARRETE_PROTECTION[i] =
+					`palissy/${values.REF}/${file.name}`;
 			}
 		}
 
-		for (let i = 0; i < values["POP_DOSSIER_PROTECTION"].length; i++) {
-			if (typeof values["POP_DOSSIER_PROTECTION"][i] === "object") {
-				const file = values["POP_DOSSIER_PROTECTION"][i];
+		for (let i = 0; i < values.POP_DOSSIER_PROTECTION.length; i++) {
+			if (typeof values.POP_DOSSIER_PROTECTION[i] === "object") {
+				const file = values.POP_DOSSIER_PROTECTION[i];
 				files.push(file);
-				values["POP_DOSSIER_PROTECTION"][i] =
-					`merimee/${values.REF}/${file.name}`;
+				values.POP_DOSSIER_PROTECTION[i] =
+					`palissy/${values.REF}/${file.name}`;
 			}
 		}
 
-		if (typeof values["POP_DOSSIER_VERT"] === "object") {
-			const file = values["POP_DOSSIER_VERT"];
+		if (typeof values.POP_DOSSIER_VERT === "object") {
+			const file = values.POP_DOSSIER_VERT;
 			files.push(file);
-			values["POP_DOSSIER_VERT"] = `merimee/${values.REF}/${file.name}`;
+			values.POP_DOSSIER_VERT = `palissy/${values.REF}/${file.name}`;
 		}
 
 		this.setState({ saving: true });
-		const notice = new Merimee(values);
+		const notice = new Palissy(values);
 		if (notice._errors.length) {
 			toastr.error("La modification n'a pas été enregistrée", "", {
 				component: () => (
@@ -128,7 +137,7 @@ class Notice extends React.Component {
 			try {
 				await API.updateNotice(
 					this.state.notice.REF,
-					"merimee",
+					"palissy",
 					values,
 					files,
 					"manuel",
@@ -157,7 +166,7 @@ class Notice extends React.Component {
 		}
 
 		const arr = [];
-		for (var key in this.state.notice) {
+		for (const key in this.state.notice) {
 			if (this.state.notice[key]) {
 				arr.push(
 					<span key={key}>{`${key}:${this.state.notice[key]}`}</span>,
@@ -173,8 +182,8 @@ class Notice extends React.Component {
 					<a
 						style={{ fontSize: "small" }}
 						target="_blank"
-						rel="noopener"
-						href={`${pop_url}/notice/merimee/${this.state.notice.REF}`}
+						rel="noreferrer noopener"
+						href={`${pop_url}/notice/palissy/${this.state.notice.REF}`}
 					>
 						voir en diffusion
 					</a>
@@ -188,17 +197,16 @@ class Notice extends React.Component {
 					<FieldImages
 						name="MEMOIRE"
 						canOrder={this.state.editable} // We can ordering images only if we have the proper rights on the notice
-						canEdit={false} // As image come from memoire, we can't delete or update an image from merimee
+						canEdit={false} // As image come from memoire, we can't delete or update an image from palissy
 						external={true}
 						getAbsoluteUrl={(e) => {
 							if (!e.url) {
 								return "";
 							}
-							if (e.url.indexOf("memoire/") === 0) {
+							if (e.url && e.url.indexOf("memoire/") === 0) {
 								return `${bucket_url}${e.url}`;
-							} else {
-								return e.url;
 							}
+							return e.url;
 						}}
 						footer={(e) => {
 							return (
@@ -232,30 +240,29 @@ class Notice extends React.Component {
 
 					<Section
 						title="Références documentaires"
-						icon={require("../../assets/law.png")}
-						color="#FE997B"
+						icon={require("../../assets/info.png")}
+						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
 								<CustomField name="REF" disabled={true} />
 								<CustomField
+									name="PRODUCTEUR"
+									disabled={true}
+								/>
+								<CustomField
 									name="DOMN"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"
 									name="RENV"
-									createUrl={(e) => `/notice/merimee/${e}`}
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="REFO"
 									createUrl={(e) => `/notice/palissy/${e}`}
 									disabled={!this.state.editable}
 								/>
 								<CustomField
 									name="DENQ"
 									disabled={!this.state.editable}
+									customLabel={this.getLabel("DENQ")}
 								/>
 								<CustomField
 									name="DBOR"
@@ -300,16 +307,12 @@ class Notice extends React.Component {
 					</Section>
 
 					<Section
-						title="Désignation de l'édifice"
-						icon={require("../../assets/law.png")}
-						color="#FE997B"
+						title="Désignation de l'objet"
+						icon={require("../../assets/info.png")}
+						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
-								<CustomField
-									name="GENR"
-									disabled={!this.state.editable}
-								/>
 								<CustomField
 									name="DENO"
 									disabled={!this.state.editable}
@@ -319,7 +322,11 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="VOCA"
+									name="TITR"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NART"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -327,22 +334,18 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="ACTU"
+									name="TICO"
 									disabled={!this.state.editable}
 								/>
 							</Col>
 							<Col sm={6}>
-								<CustomField
-									name="TICO"
-									disabled={!this.state.editable}
-								/>
 								<CustomField
 									name="PART"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
 									name="REFP"
-									createUrl={(e) => `/notice/merimee/${e}`}
+									createUrl={(e) => `/notice/palissy/${e}`}
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -350,7 +353,13 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="COLL"
+									name="PAPP"
+									disabled={!this.state.editable}
+								/>
+
+								<CustomField
+									name="REFE"
+									createUrl={(e) => `/notice/palissy/${e}`}
 									disabled={!this.state.editable}
 								/>
 							</Col>
@@ -358,9 +367,9 @@ class Notice extends React.Component {
 					</Section>
 
 					<Section
-						title="Localisation de l'édifice"
-						icon={require("../../assets/law.png")}
-						color="#FE997B"
+						title="Localisation de l'objet"
+						icon={require("../../assets/info.png")}
+						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
@@ -387,6 +396,7 @@ class Notice extends React.Component {
 								<CustomField
 									name="INSEE"
 									disabled={!this.state.editable}
+									customLabel={this.getLabel("INSEE")}
 								/>
 								<CustomField
 									name="PLOC"
@@ -412,30 +422,17 @@ class Notice extends React.Component {
 									name="WADRS"
 									disabled={!this.state.editable}
 								/>
-							</Col>
-							<Col sm={6}>
 								<CustomField
 									name="EDIF"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="REFE"
+									name="REFA"
 									createUrl={(e) => `/notice/merimee/${e}`}
 									disabled={!this.state.editable}
-									footer={(key) => {
-										<Link
-											to={`/notice/memoire/${key}`}
-											target="_blank"
-											rel="noopener"
-										>
-											{key}
-										</Link>;
-									}}
 								/>
-								<CustomField
-									name="CADA"
-									disabled={!this.state.editable}
-								/>
+							</Col>
+							<Col sm={6}>
 								<CustomField
 									name="ZONE"
 									disabled={!this.state.editable}
@@ -461,7 +458,38 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="HYDR"
+									name="EMPL"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DEPL"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="VOLS"
+									disabled={!this.state.editable}
+								/>
+								<div className="subtitle">
+									Pour certains objets privés
+								</div>
+								<CustomField
+									name="COM2"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="INSEE2"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="EDIF2"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="ADRS2"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="EMPL2"
 									disabled={!this.state.editable}
 								/>
 							</Col>
@@ -469,60 +497,26 @@ class Notice extends React.Component {
 					</Section>
 
 					<Section
-						title="Description de l'édifice"
-						icon={require("../../assets/law.png")}
-						color="#FE997B"
+						title="Description de l'objet"
+						icon={require("../../assets/info.png")}
+						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
 								<CustomField
-									name="MURS"
+									name="CATE"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="TOIT"
+									name="STRU"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="PLAN"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ETAG"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="VOUT"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ELEV"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="COUV"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ESCA"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ENER"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="VERT"
+									name="MATR"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
 									name="DESC"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="TECH"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -537,12 +531,26 @@ class Notice extends React.Component {
 									name="DIMS"
 									disabled={!this.state.editable}
 								/>
+							</Col>
+							<Col sm={6}>
 								<CustomField
-									name="TYPO"
+									name="PDIM"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
 									name="ETAT"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="PETA"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="INSC"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="PINS"
 									disabled={!this.state.editable}
 								/>
 							</Col>
@@ -550,9 +558,9 @@ class Notice extends React.Component {
 					</Section>
 
 					<Section
-						title="Historique de l'édifice"
-						icon={require("../../assets/law.png")}
-						color="#FE997B"
+						title="Historique de l'objet"
+						icon={require("../../assets/info.png")}
+						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
@@ -561,7 +569,7 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="SCLD"
+									name="SCLX"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -569,17 +577,7 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="JDAT"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
 									name="AUTR"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="JATT"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -587,11 +585,25 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="REMP"
+									name="AFIG"
+									disabled={!this.state.editable}
+								/>
+							</Col>
+							<Col sm={6}>
+								<CustomField
+									name="ATEL"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="DEPL"
+									name="EXEC"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="ORIG"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="STAD"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -601,13 +613,18 @@ class Notice extends React.Component {
 							</Col>
 						</Row>
 					</Section>
+
 					<Section
-						title="Protection Monument historique de l'édifice"
-						icon={require("../../assets/law.png")}
-						color="#FE997B"
+						title="Statut juridique de l'objet"
+						icon={require("../../assets/info.png")}
+						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
+								<CustomField
+									name="STAT"
+									disabled={!this.state.editable}
+								/>
 								<CustomField
 									name="PROT"
 									disabled={!this.state.editable}
@@ -621,33 +638,21 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="APRO"
+									name="INTE"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="MHPP"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="SITE"
+									name="MANQUANT"
 									disabled={!this.state.editable}
 								/>
 							</Col>
 							<Col sm={6}>
 								<CustomField
-									name="DLAB"
+									name="NINV"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="INTE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PINT"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="REMA"
+									name="NUMA"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -655,7 +660,7 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="ARCHEO"
+									name="PRECISION_JURIDIQUE"
 									disabled={!this.state.editable}
 								/>
 							</Col>
@@ -663,41 +668,42 @@ class Notice extends React.Component {
 					</Section>
 
 					<Section
-						title="Statut juridique de l'édifice"
-						icon={require("../../assets/law.png")}
-						color="#FE997B"
+						title="Références documentaires de l'objet"
+						icon={require("../../assets/info.png")}
+						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
 								<CustomField
-									name="STAT"
+									name="ACQU"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="PSTA"
+									name="EXPO"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="AFFE"
+									name="BIBL"
 									disabled={!this.state.editable}
 								/>
 							</Col>
 							<Col sm={6}>
 								<CustomField
-									name="PAFF"
+									name="SOUR"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="VISI"
+									name="PHOTO"
 									disabled={!this.state.editable}
 								/>
 							</Col>
 						</Row>
 					</Section>
+
 					<Section
 						title="Gestion de la base de données"
-						icon={require("../../assets/law.png")}
-						color="#FE997B"
+						icon={require("../../assets/info.png")}
+						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
@@ -718,17 +724,38 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
+									name="NUMP"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
 									name="AUTP"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DIFF"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
 									name="IMAGE"
 									disabled={!this.state.editable}
 								/>
-								<CustomField
-									name="IMG"
+								<InputFiles
+									name="POP_ARRETE_PROTECTION"
 									disabled={!this.state.editable}
+									{...Mapping.palissy.POP_ARRETE_PROTECTION}
 								/>
+								<InputFiles
+									name="POP_DOSSIER_VERT"
+									disabled={!this.state.editable}
+									{...Mapping.palissy.POP_DOSSIER_VERT}
+								/>
+								<InputFiles
+									name="POP_DOSSIER_PROTECTION"
+									disabled={!this.state.editable}
+									{...Mapping.palissy.POP_DOSSIER_PROTECTION}
+								/>
+							</Col>
+							<Col sm={6}>
 								<CustomField
 									name="LBASE2"
 									disabled={!this.state.editable}
@@ -736,40 +763,17 @@ class Notice extends React.Component {
 								<CustomField
 									name="WEB"
 									disabled={!this.state.editable}
+									customLabel={this.getLabel("WEB")}
 								/>
 								<CustomField
 									name="DOSADRS"
 									disabled={!this.state.editable}
 								/>
-								<InputFiles
-									name="POP_ARRETE_PROTECTION"
-									disabled={!this.state.editable}
-									{...Mapping.merimee[
-										"POP_ARRETE_PROTECTION"
-									]}
-								/>
-								<InputFiles
-									name="POP_DOSSIER_VERT"
-									disabled={!this.state.editable}
-									{...Mapping.merimee["POP_DOSSIER_VERT"]}
-								/>
-								<InputFiles
-									name="POP_DOSSIER_PROTECTION"
-									disabled={!this.state.editable}
-									{...Mapping.merimee[
-										"POP_DOSSIER_PROTECTION"
-									]}
-								/>
-							</Col>
-							<Col sm={6}>
 								<CustomField
 									name="DOSURL"
 									disabled={!this.state.editable}
 								/>
-								<CustomField
-									name="DOSURLPDF"
-									disabled={!this.state.editable}
-								/>
+								<CustomField name="DOSURLPDF" disabled={true} />
 								<CustomField
 									name="LIENS"
 									disabled={!this.state.editable}
@@ -779,27 +783,7 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="WRENV"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ACMH"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ACURL"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="LMDP"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="RFPA"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="NBOR"
+									name="RENP"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -813,11 +797,15 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="LREG"
+									name="LARC"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
 									name="LINHA"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LREG"
 									disabled={!this.state.editable}
 								/>
 							</Col>
@@ -826,34 +814,46 @@ class Notice extends React.Component {
 							historique={this.state.notice.HISTORIQUE || []}
 						/>
 					</Section>
-
-					<Map notice={this.state.notice} />
-					{this.state.editable ? (
-						<div className="buttons">
-							<BackButton history={this.props.history} />
-							<DeleteButton
-								noticeType="merimee"
-								noticeRef={this.state.notice.REF}
-							/>
-							<Button color="primary" type="submit">
-								Sauvegarder
-							</Button>
-						</div>
-					) : (
-						<div />
-					)}
+					<MapComponent notice={this.state.notice} />
+					<div className="buttons">
+						<BackButton history={this.props.history} />
+						{this.state.editable ? (
+							<React.Fragment>
+								<DeleteButton
+									noticeType="palissy"
+									noticeRef={this.state.notice.REF}
+								/>
+								<Button
+									disabled={!this.state.editable}
+									color="primary"
+									type="submit"
+								>
+									Sauvegarder
+								</Button>
+							</React.Fragment>
+						) : (
+							<div />
+						)}
+					</div>
 				</Form>
 			</Container>
 		);
 	}
 }
+
 const CustomField = ({ name, disabled, ...rest }) => {
+	if (!Mapping.palissy[name]) {
+		console.log(name, " n'existe pas");
+		return <div />;
+	}
+	if (rest.customLabel) {
+		Mapping.palissy[name].label = rest.customLabel;
+	}
 	return (
 		<Field
-			key={name}
+			{...Mapping.palissy[name]}
+			disabled={Mapping.palissy[name].generated || disabled}
 			name={name}
-			disabled={Mapping.merimee[name].generated == true || disabled}
-			{...Mapping.merimee[name]}
 			{...rest}
 		/>
 	);

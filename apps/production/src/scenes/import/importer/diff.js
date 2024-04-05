@@ -30,7 +30,7 @@ export function compare(importedObject, existed) {
 	d = d.filter((e) => {
 		// Remove if the actual notice has more info that the new one.
 		// I.e: the current file does not contains all the modified values.
-		if (e.kind === "N" && e.hasOwnProperty("rhs")) {
+		if (e.kind === "N" && Object.hasOwn(e, "rhs")) {
 			return false;
 		}
 		return true;

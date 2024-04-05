@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import API from "../../services/api";
 
 import Home from "./home";
@@ -33,18 +32,18 @@ class Import extends React.Component {
 			let allProducteurs = [];
 			//On récupère tous les producteurs
 			const responseProd = await API.getProducteurs();
-			if (responseProd && responseProd.producteurs) {
+			if (responseProd?.producteurs) {
 				allProducteurs = responseProd.producteurs;
 			}
 
 			//Liste des producteurs rattachés à l'utilisateur
-			let userProducteurs = [];
+			const userProducteurs = [];
 			//Liste des bases rattachées au producteur de l'utilisateur
-			let userBases = [];
+			const userBases = [];
 			//Liste des imports autorisés pour l'utilisateur
-			let authorizedImports = [];
+			const authorizedImports = [];
 			//Liste des routes vers les imports autorisés
-			let routes = [];
+			const routes = [];
 			let routeJoconde,
 				routeMnr,
 				routeInv,
@@ -54,12 +53,12 @@ class Import extends React.Component {
 				routeListe;
 
 			//On récupère le groupe de l'utilisateur pour identifier les bases qu'il peut alimenter
-			if (this.props.group != "admin") {
+			if (this.props.group !== "admin") {
 				const responseGroup = await API.getGroupByLabel(
 					String(this.props.group),
 				);
-				if (responseGroup && responseGroup.group) {
-					let userGroup = responseGroup.group;
+				if (responseGroup?.group) {
+					const userGroup = responseGroup.group;
 					//Pour chaque producteur du groupe, on alimente la liste des producteurs de l'utilisateur
 					userGroup.PRODUCTEURS.map((producteur) => {
 						userProducteurs.push(producteur);
@@ -81,13 +80,13 @@ class Import extends React.Component {
 
 			// Pour chaque import, on identifie si oui ou non l'utilisateur peut l'utiliser
 			// à partir de son groupe
-			let group = this.props.group;
-			let role = this.props.role;
+			const group = this.props.group;
+			const role = this.props.role;
 			if (group.toUpperCase() === "JOCONDE" || group === "admin") {
 				authorizedImports.push("joconde");
 				routeJoconde = (
 					<Route
-						path={`/import/joconde`}
+						path={"/import/joconde"}
 						component={Joconde}
 						key={""}
 					/>
@@ -98,7 +97,7 @@ class Import extends React.Component {
 				authorizedImports.push("mnr");
 				routeMnr = (
 					<Route
-						path={`/import/mnr`}
+						path={"/import/mnr"}
 						component={Mnr}
 						key={"/import/mnr"}
 					/>
@@ -109,7 +108,7 @@ class Import extends React.Component {
 				authorizedImports.push("inv");
 				routeInv = (
 					<Route
-						path={`/import/inv`}
+						path={"/import/inv"}
 						component={Inv}
 						key={"/import/inv"}
 					/>
@@ -120,7 +119,7 @@ class Import extends React.Component {
 				authorizedImports.push("mh");
 				routeMh = (
 					<Route
-						path={`/import/mh`}
+						path={"/import/mh"}
 						component={Mh}
 						key={"/import/mh"}
 					/>
@@ -131,7 +130,7 @@ class Import extends React.Component {
 				authorizedImports.push("map");
 				routeMap = (
 					<Route
-						path={`/import/memoire`}
+						path={"/import/memoire"}
 						component={Memoire}
 						key={"/import/memoire"}
 					/>
@@ -142,7 +141,7 @@ class Import extends React.Component {
 				authorizedImports.push("museo");
 				routeMuseo = (
 					<Route
-						path={`/import/museo`}
+						path={"/import/museo"}
 						component={Museo}
 						key={"/import/museo"}
 					/>
@@ -153,7 +152,7 @@ class Import extends React.Component {
 				authorizedImports.push("enluminures");
 				routeMuseo = (
 					<Route
-						path={`/import/enluminures`}
+						path={"/import/enluminures"}
 						component={Enluminures}
 						key={"/import/enluminures"}
 					/>
@@ -163,7 +162,7 @@ class Import extends React.Component {
 			if (role === "administrateur" || role === "producteur") {
 				routeListe = (
 					<Route
-						path={`/import/list`}
+						path={"/import/list"}
 						component={List}
 						key={"/import/list"}
 					/>
@@ -187,7 +186,7 @@ class Import extends React.Component {
 				<Switch>
 					<Route
 						exact
-						path={`/import/`}
+						path={"/import/"}
 						render={(props) => (
 							<Home
 								{...props}

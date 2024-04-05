@@ -30,13 +30,12 @@ class Signin extends Component {
 					))}
 				</React.Fragment>
 			);
-		} else {
-			return (
-				<React.Fragment>
-					<p className="sign-text-error">{error}</p>
-				</React.Fragment>
-			);
 		}
+		return (
+			<React.Fragment>
+				<p className="sign-text-error">{error}</p>
+			</React.Fragment>
+		);
 	}
 
 	render() {
@@ -91,7 +90,7 @@ class Signin extends Component {
 										J'accepte les{" "}
 										<a
 											target="_blank"
-											rel="noopener"
+											rel="noreferrer noopener"
 											href="https://s3.eu-west-3.amazonaws.com/pop-general/cgu/cgu.pdf"
 										>
 											CGU

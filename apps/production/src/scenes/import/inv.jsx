@@ -35,258 +35,253 @@ export default class Import extends React.Component {
 	}
 }
 
-function parseFiles(files, encoding) {
-	return new Promise(async (resolve, reject) => {
-		// GERTRUDE
-		const gertrude = files.some((e) => {
-			return [
-				"GERTRUDE_xmlToPALISSY_lexicovide.txt",
-				"GERTRUDE_xmlToMEMOIRE_lexicovide.txt",
-				"GERTRUDE_xmlToMERIMEE_lexicovide.txt",
-			].includes(e.name);
-		});
+async function parseFiles(files, encoding) {
+	// GERTRUDE
+	const gertrude = files.some((e) => {
+		return [
+			"GERTRUDE_xmlToPALISSY_lexicovide.txt",
+			"GERTRUDE_xmlToMEMOIRE_lexicovide.txt",
+			"GERTRUDE_xmlToMERIMEE_lexicovide.txt",
+		].includes(e.name);
+	});
 
-		if (gertrude) {
-			const PalissyFile = files.find((file) =>
-				file.name.includes("GERTRUDE_xmlToPALISSY_lexicovide.txt"),
-			);
-			const MemoireFile = files.find((file) =>
-				file.name.includes("GERTRUDE_xmlToMEMOIRE_lexicovide.txt"),
-			);
-			const MerimeeFile = files.find((file) =>
-				file.name.includes("GERTRUDE_xmlToMERIMEE_lexicovide.txt"),
-			);
-
-			const otherFiles = files.filter(
-				(file) => file.name.indexOf(".xml") === -1,
-			);
-			const importedNotices = await ParseGertrude(
-				PalissyFile,
-				MemoireFile,
-				MerimeeFile,
-				otherFiles,
-				encoding,
-			);
-
-			for (let i = 0; i < importedNotices.length; i++) {
-				checkReference(importedNotices[i]);
-			}
-
-			resolve({
-				importedNotices,
-				fileNames: [
-					"GERTRUDE_xmlToPALISSY_lexicovide.txt",
-					"GERTRUDE_xmlToMEMOIRE_lexicovide.txt",
-					"GERTRUDE_xmlToMERIMEE_lexicovide.txt",
-				],
-			});
-			return;
-		}
-
-		// RENABL
-		const xmlFiles = files.filter(
-			(file) => file.name.indexOf(".xml") !== -1,
+	if (gertrude) {
+		const PalissyFile = files.find((file) =>
+			file.name.includes("GERTRUDE_xmlToPALISSY_lexicovide.txt"),
 		);
+		const MemoireFile = files.find((file) =>
+			file.name.includes("GERTRUDE_xmlToMEMOIRE_lexicovide.txt"),
+		);
+		const MerimeeFile = files.find((file) =>
+			file.name.includes("GERTRUDE_xmlToMERIMEE_lexicovide.txt"),
+		);
+
 		const otherFiles = files.filter(
 			(file) => file.name.indexOf(".xml") === -1,
 		);
-		if (xmlFiles.length) {
-			const importedNotices = await ParseRenabl(
-				otherFiles,
-				xmlFiles,
-				encoding,
-			);
+		const importedNotices = await ParseGertrude(
+			PalissyFile,
+			MemoireFile,
+			MerimeeFile,
+			otherFiles,
+			encoding,
+		);
 
-			let fileNames = xmlFiles.map((e) => e.name);
-			if (fileNames.length > 10) {
-				fileNames = fileNames.slice(1, 10);
-				fileNames.push(` ${xmlFiles.length - 10} supplémentaires`);
-			}
-
-			for (let i = 0; i < importedNotices.length; i++) {
-				checkReference(importedNotices[i]);
-			}
-			resolve({ importedNotices, fileNames });
-			return;
+		for (let i = 0; i < importedNotices.length; i++) {
+			checkReference(importedNotices[i]);
 		}
 
-		// Import CSV type (MH)
-		await common_mh_inv
-			.parseFilesCsv(files, encoding, "INV")
-			.then((resp) => {
-				// Vérification des références
-				for (let i = 0; i < resp.importedNotices.length; i++) {
-					checkReference(resp.importedNotices[i]);
-				}
-				resolve(resp);
-			})
-			.catch((err) => {
-				if (err !== "Pas de fichiers .csv detecté") {
-					reject(err);
-				}
-			});
+		resolve({
+			importedNotices,
+			fileNames: [
+				"GERTRUDE_xmlToPALISSY_lexicovide.txt",
+				"GERTRUDE_xmlToMEMOIRE_lexicovide.txt",
+				"GERTRUDE_xmlToMERIMEE_lexicovide.txt",
+			],
+		});
+		return;
+	}
 
-		// ERROR
-		reject(
-			"Impossible d'importer le(s) fichier(s). Aucun fichier Renabl, Csv ou Gertrude détecté",
+	// RENABL
+	const xmlFiles = files.filter((file) => file.name.indexOf(".xml") !== -1);
+	const otherFiles = files.filter((file) => file.name.indexOf(".xml") === -1);
+	if (xmlFiles.length) {
+		const importedNotices = await ParseRenabl(
+			otherFiles,
+			xmlFiles,
+			encoding,
 		);
-	});
+
+		let fileNames = xmlFiles.map((e) => e.name);
+		if (fileNames.length > 10) {
+			fileNames = fileNames.slice(1, 10);
+			fileNames.push(` ${xmlFiles.length - 10} supplémentaires`);
+		}
+
+		for (let i = 0; i < importedNotices.length; i++) {
+			checkReference(importedNotices[i]);
+		}
+		resolve({ importedNotices, fileNames });
+		return;
+	}
+
+	// Import CSV type (MH)
+	await common_mh_inv
+		.parseFilesCsv(files, encoding, "INV")
+		.then((resp) => {
+			// Vérification des références
+			for (let i = 0; i < resp.importedNotices.length; i++) {
+				checkReference(resp.importedNotices[i]);
+			}
+			resolve(resp);
+		})
+		.catch((err) => {
+			if (err !== "Pas de fichiers .csv detecté") {
+				reject(err);
+			}
+		});
+
+	// ERROR
+	throw Error(
+		"Impossible d'importer le(s) fichier(s). Aucun fichier Renabl, Csv ou Gertrude détecté",
+	);
 }
 
-function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
-	return new Promise(async (resolve, reject) => {
-		const notices = [];
-		const arr = [
-			utils.readCSV(PalissyFile, "|", encoding),
-			utils.readCSV(MerimeeFile, "|", encoding),
-			utils.readCSV(MemoireFile, "|", encoding),
-		];
+async function ParseGertrude(
+	PalissyFile,
+	MemoireFile,
+	MerimeeFile,
+	files,
+	encoding,
+) {
+	const notices = [];
+	const arr = [
+		utils.readCSV(PalissyFile, "|", encoding),
+		utils.readCSV(MerimeeFile, "|", encoding),
+		utils.readCSV(MemoireFile, "|", encoding),
+	];
 
-		const values = await Promise.all(arr);
+	const values = await Promise.all(arr);
 
-		notices.push(...values[0].map((e) => new Palissy(e)));
-		notices.push(
-			...values[1].map((e) => {
-				const merimeeObj = new Merimee(e);
+	notices.push(...values[0].map((e) => new Palissy(e)));
+	notices.push(
+		...values[1].map((e) => {
+			const merimeeObj = new Merimee(e);
 
-				if (e.POP_DOSSIER_VERT !== undefined) {
-					const pdfPath = e.POP_DOSSIER_VERT || "";
-					const pdfFile = files.find(
-						(e) =>
-							convertLongNameToShort(e.name)
-								.toUpperCase()
-								.indexOf(pdfPath.toUpperCase()) !== -1,
+			if (e.POP_DOSSIER_VERT !== undefined) {
+				const pdfPath = e.POP_DOSSIER_VERT || "";
+				const pdfFile = files.find(
+					(e) =>
+						convertLongNameToShort(e.name)
+							.toUpperCase()
+							.indexOf(pdfPath.toUpperCase()) !== -1,
+				);
+				if (pdfFile) {
+					const shortname = convertLongNameToShort(pdfFile.name);
+					const newPdf = utils.renameFile(
+						pdfFile,
+						slugifyFilename(shortname),
 					);
-					if (pdfFile) {
-						const shortname = convertLongNameToShort(pdfFile.name);
-						const newPdf = utils.renameFile(
-							pdfFile,
-							slugifyFilename(shortname),
-						);
-						merimeeObj._files.push(newPdf);
-						merimeeObj.POP_DOSSIER_VERT = `merimee/${e.REF}/${e.POP_DOSSIER_VERT}`;
-					} else {
-						merimeeObj._errors.push(
-							`Impossible de trouver le pdf ${pdfPath}`,
-						);
-					}
-				}
-				return merimeeObj;
-			}),
-		);
-
-		// COORWGS84
-
-		notices.push(
-			...values[2].map((e) => {
-				// Change data model from gertrude to pop
-				if (e.AUT !== undefined) {
-					e.AUTP = [e.AUT];
-				}
-				if (e.EMET !== undefined) {
-					e.IDPROD = e.EMET;
-				}
-				if (e.AUTR !== undefined) {
-					e.AUTOEU = e.AUTR;
-				}
-				if (e.DOC !== undefined) {
-					e.PRECOR = e.DOC;
-				}
-
-				if (e.LIEU !== undefined || e.ADRS !== undefined) {
-					const ADRESSEARR = [];
-					if (e.LIEU) ADRESSEARR.push(e.LIEU);
-					if (e.ADRS) ADRESSEARR.push(e.ADRS);
-					e.ADRESSE = ADRESSEARR.join(";");
-				}
-
-				const memoireObj = new Memoire(e);
-
-				if (e.NOMI !== undefined || e.NUMI !== undefined) {
-					const imagePath = e.NOMI || e.NUMI || "";
-					const imageFile = files.find(
-						(e) =>
-							convertLongNameToShort(e.name)
-								.toUpperCase()
-								.indexOf(imagePath.toUpperCase()) !== -1,
+					merimeeObj._files.push(newPdf);
+					merimeeObj.POP_DOSSIER_VERT = `merimee/${e.REF}/${e.POP_DOSSIER_VERT}`;
+				} else {
+					merimeeObj._errors.push(
+						`Impossible de trouver le pdf ${pdfPath}`,
 					);
-					if (imageFile) {
-						const shortname = convertLongNameToShort(
-							imageFile.name,
-						);
-						const newImage = utils.renameFile(imageFile, shortname);
-						memoireObj._files.push(newImage);
-						memoireObj.IMG = `memoire/${e.REF}/${shortname}`;
-					} else {
-						memoireObj._errors.push(
-							`Impossible de trouver l'image ${imagePath}`,
-						);
-					}
-				}
-
-				return memoireObj;
-			}),
-		);
-		resolve(notices);
-	});
-}
-
-function ParseRenabl(files, xmlFiles, encoding) {
-	return new Promise(async (resolve, reject) => {
-		const notices = [];
-		for (var j = 0; j < xmlFiles.length; j++) {
-			const xmlDoc = await utils.readXML(xmlFiles[j], encoding);
-			var tags = xmlDoc.childNodes[0].childNodes;
-			for (var i = 0; i < tags.length; i++) {
-				if (tags[i].nodeName === "MERIMEE") {
-					const obj = RenablXMLToObj(tags[i]);
-					convertGPS(obj);
-					notices.push(new Merimee(obj));
-				} else if (tags[i].nodeName === "PALISSY") {
-					const obj = RenablXMLToObj(tags[i]);
-					convertGPS(obj);
-					notices.push(new Palissy(obj));
-				} else if (tags[i].nodeName === "ILLUSTRATION") {
-					const obj = RenablXMLToObj(tags[i]);
-					const EMET = tags[i].getAttribute("EMET");
-					const NUMI = tags[i].getAttribute("NUMI");
-					obj.REF = EMET + "_" + NUMI;
-
-					// we redirect AUT field to AUTP
-					obj.AUTP = [obj.AUT];
-
-					const memoireObj = new Memoire(obj);
-					const image = convertLongNameToShort(obj.FNU2, "\\");
-					const imageFile = files.find(
-						(e) =>
-							convertLongNameToShort(e.name).toUpperCase() ===
-							image.toUpperCase(),
-					);
-					if (imageFile) {
-						const shortname = convertLongNameToShort(
-							imageFile.name,
-						);
-						const newImage = utils.renameFile(imageFile, shortname);
-						memoireObj._files.push(newImage);
-						memoireObj.IMG = `memoire/${obj.REF}/${shortname}`;
-					} else {
-						memoireObj._errors.push(
-							`Impossible de trouver l'image ${image}`,
-						);
-					}
-					notices.push(memoireObj);
 				}
 			}
+			return merimeeObj;
+		}),
+	);
+
+	// COORWGS84
+
+	notices.push(
+		...values[2].map((e) => {
+			// Change data model from gertrude to pop
+			if (e.AUT !== undefined) {
+				e.AUTP = [e.AUT];
+			}
+			if (e.EMET !== undefined) {
+				e.IDPROD = e.EMET;
+			}
+			if (e.AUTR !== undefined) {
+				e.AUTOEU = e.AUTR;
+			}
+			if (e.DOC !== undefined) {
+				e.PRECOR = e.DOC;
+			}
+
+			if (e.LIEU !== undefined || e.ADRS !== undefined) {
+				const ADRESSEARR = [];
+				if (e.LIEU) ADRESSEARR.push(e.LIEU);
+				if (e.ADRS) ADRESSEARR.push(e.ADRS);
+				e.ADRESSE = ADRESSEARR.join(";");
+			}
+
+			const memoireObj = new Memoire(e);
+
+			if (e.NOMI !== undefined || e.NUMI !== undefined) {
+				const imagePath = e.NOMI || e.NUMI || "";
+				const imageFile = files.find(
+					(e) =>
+						convertLongNameToShort(e.name)
+							.toUpperCase()
+							.indexOf(imagePath.toUpperCase()) !== -1,
+				);
+				if (imageFile) {
+					const shortname = convertLongNameToShort(imageFile.name);
+					const newImage = utils.renameFile(imageFile, shortname);
+					memoireObj._files.push(newImage);
+					memoireObj.IMG = `memoire/${e.REF}/${shortname}`;
+				} else {
+					memoireObj._errors.push(
+						`Impossible de trouver l'image ${imagePath}`,
+					);
+				}
+			}
+
+			return memoireObj;
+		}),
+	);
+	return notices;
+}
+
+async function ParseRenabl(files, xmlFiles, encoding) {
+	const notices = [];
+	for (let j = 0; j < xmlFiles.length; j++) {
+		const xmlDoc = await utils.readXML(xmlFiles[j], encoding);
+		const tags = xmlDoc.childNodes[0].childNodes;
+		for (let i = 0; i < tags.length; i++) {
+			if (tags[i].nodeName === "MERIMEE") {
+				const obj = RenablXMLToObj(tags[i]);
+				convertGPS(obj);
+				notices.push(new Merimee(obj));
+			} else if (tags[i].nodeName === "PALISSY") {
+				const obj = RenablXMLToObj(tags[i]);
+				convertGPS(obj);
+				notices.push(new Palissy(obj));
+			} else if (tags[i].nodeName === "ILLUSTRATION") {
+				const obj = RenablXMLToObj(tags[i]);
+				const EMET = tags[i].getAttribute("EMET");
+				const NUMI = tags[i].getAttribute("NUMI");
+				obj.REF = `${EMET}_${NUMI}`;
+
+				// we redirect AUT field to AUTP
+				obj.AUTP = [obj.AUT];
+
+				const memoireObj = new Memoire(obj);
+				const image = convertLongNameToShort(obj.FNU2, "\\");
+				const imageFile = files.find(
+					(e) =>
+						convertLongNameToShort(e.name).toUpperCase() ===
+						image.toUpperCase(),
+				);
+				if (imageFile) {
+					const shortname = convertLongNameToShort(imageFile.name);
+					const newImage = utils.renameFile(imageFile, shortname);
+					memoireObj._files.push(newImage);
+					memoireObj.IMG = `memoire/${obj.REF}/${shortname}`;
+				} else {
+					memoireObj._errors.push(
+						`Impossible de trouver l'image ${image}`,
+					);
+				}
+				notices.push(memoireObj);
+			}
 		}
-		resolve(notices);
-	});
+	}
+	return notices;
 }
 
 function convertGPS(e) {
 	if (e.COORWGS84) {
 		const arr = e.COORWGS84.split(",");
 		if (arr.length === 2) {
-			e.COORWGS84 = { lat: parseFloat(arr[0]), lon: parseFloat(arr[1]) };
+			e.COORWGS84 = {
+				lat: Number.parseFloat(arr[0]),
+				lon: Number.parseFloat(arr[1]),
+			};
 		} else {
 			e._errors.push(`Can't convert ${e.COORWGS84} to GPS `);
 			e.COORWGS84 = null;
@@ -296,7 +291,7 @@ function convertGPS(e) {
 
 function checkReference(notice) {
 	if (notice._type === "memoire") {
-		var regex1 =
+		const regex1 =
 			/^IV(N00|R[0-9]{2}|D[0-9]{2}|C[0-9]{5}|[0-9]{5})_[0-9]{4}([0-9][0-9]|2A|2B|97[0-9]{1})([0-9]{5})[NUCXVLPNGMFBKHTZAD012345]{0,4}[ABYESGFHOMIRTPDUWQCI]{0,3}$/g;
 		if (!notice.REF.match(regex1)) {
 			notice._errors.push(
@@ -305,7 +300,7 @@ function checkReference(notice) {
 		}
 	}
 	if (notice._type === "merimee") {
-		var regex2 = /^IA/;
+		const regex2 = /^IA/;
 		if (!notice.REF.match(regex2)) {
 			notice._errors.push(
 				"La référence n'est pas conforme à la base de l'import",
@@ -313,7 +308,7 @@ function checkReference(notice) {
 		}
 	}
 	if (notice._type === "palissy") {
-		var regex3 = /^IM/;
+		const regex3 = /^IM/;
 		if (!notice.REF.match(regex3)) {
 			notice._errors.push(
 				"La référence n'est pas conforme à la base de l'import",
@@ -323,14 +318,13 @@ function checkReference(notice) {
 }
 
 function convertLongNameToShort(str, delim = "/") {
-	let name = str.substring(str.lastIndexOf(delim) + 1);
-	return name;
+	return str.substring(str.lastIndexOf(delim) + 1);
 }
 
 function RenablXMLToObj(node) {
 	const obj = {};
 	obj.REF = node.getAttribute("REF");
-	for (var i = 0; i < node.childNodes.length; i++) {
+	for (let i = 0; i < node.childNodes.length; i++) {
 		if (node.childNodes[i].nodeName !== "#text") {
 			obj[node.childNodes[i].nodeName] = node.childNodes[i].textContent;
 		}
@@ -533,7 +527,7 @@ function readme() {
 				<a
 					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/memoire.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Lien vers le modèle de donnée Mémoire
 				</a>
@@ -541,7 +535,7 @@ function readme() {
 				<a
 					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/palissy.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Lien vers le modèle de donnée Palissy
 				</a>
@@ -549,7 +543,7 @@ function readme() {
 				<a
 					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/merimee.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Lien vers le modèle de donnée Mérimée
 				</a>

@@ -71,9 +71,7 @@ function DeleteComponent({ role, group, collection }) {
 // The delete button component. Handles confirmaton and some autorizations checks.
 function DeleteButton({ onConfirm, ctx, group, collection }) {
 	const widgetResult = ctx.widgets.get("result");
-	if (
-		!(widgetResult?.result && widgetResult.result.total > 0)
-	) {
+	if (!(widgetResult?.result && widgetResult.result.total > 0)) {
 		return null;
 	}
 	// Confirmation handler.
@@ -109,14 +107,12 @@ function DeleteButton({ onConfirm, ctx, group, collection }) {
 
 		// Can not delete if there is more than 100 items.
 		if (widgetResult.result.total > 1000) {
-			const alertText =
-				`Vous ne pouvez pas supprimer plus de 1000 notices à la fois. ${widgetResult.result.total} notices sont actuellement sélectionnées.`;
+			const alertText = `Vous ne pouvez pas supprimer plus de 1000 notices à la fois. ${widgetResult.result.total} notices sont actuellement sélectionnées.`;
 			toastr.error(alertText);
 			return;
 		}
 		// Return the confirmation message.
-		const confirmText =
-			`Vous êtes sur le point de supprimer définitivement ${widgetResult.result.total} notices. Êtes-vous certain·e de vouloir continuer ?`;
+		const confirmText = `Vous êtes sur le point de supprimer définitivement ${widgetResult.result.total} notices. Êtes-vous certain·e de vouloir continuer ?`;
 		toastr.confirm(confirmText, { onOk: () => onConfirm() });
 	}
 	return (
@@ -129,6 +125,7 @@ function DeleteButton({ onConfirm, ctx, group, collection }) {
 // The actual deletion module.
 function DeleteProcessor({ ctx, onFinish, collection }) {
 	const total = ctx.widgets.get("result").result.total;
+	// biome-ignore lint/correctness/useExhaustiveDependencies: bad code
 	useEffect(() => {
 		// Delete data with query, using scroll API.
 		async function deleteData(query) {

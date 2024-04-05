@@ -45,7 +45,7 @@ export default class Notice {
 		const flat = {};
 		for (const property in this) {
 			if (
-				this.hasOwnProperty(property) &&
+				Object.hasOwn(this, property) &&
 				property.indexOf("_") !== 0 &&
 				typeof this[property] !== "function" &&
 				this._mapping[property] &&
@@ -125,6 +125,7 @@ function _regex(str, reg) {
 	const regex = new RegExp(reg);
 	const arr = [];
 	let m;
+	// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
 	while ((m = regex.exec(str)) !== null) {
 		if (m.index === regex.lastIndex) {
 			// This is necessary to avoid infinite loops with zero-width matches

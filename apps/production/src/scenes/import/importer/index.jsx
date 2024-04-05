@@ -634,6 +634,7 @@ class Importer extends Component {
 				</h2>
 				<div>
 					{errors.split("\n").map((e, i) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 						<div key={i}>{e}</div>
 					))}
 				</div>

@@ -1,24 +1,24 @@
 import React from "react";
+import { bucket_url, pop_url } from "../../config.js";
 import { Col, Container, Button, Form, Row } from "reactstrap";
 import { reduxForm } from "redux-form";
+import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
-import Mapping from "../../services/mapping";
-import DeleteButton from "./components/DeleteButton";
-import BackButton from "./components/BackButton";
+import Mapping from "../../services/mapping.js";
+import FieldImages from "./components/fieldImages.js";
+import { Link } from "react-router-dom";
+import BackButton from "./components/BackButton.js";
+import DeleteButton from "./components/DeleteButton.js";
 import Field from "./components/field.js";
 import Section from "./components/section.js";
-import Comments from "./components/comments.js";
-import Map from "./components/map.js";
-import Loader from "../../components/Loader";
-import FieldImages from "./components/fieldImages";
-import EnluminuresEntity from "../../entities/Enluminures";
-import API from "../../services/api";
-import AccordionHistorique from "./components/AccordionHistorique";
-import { bucket_url, pop_url } from "../../config";
-import { toastr } from "react-redux-toastr";
+import Loader from "../../components/Loader/index.js";
+import API from "../../services/api.js";
+import Autor from "../../entities/Autor.js";
+import AccordionHistorique from "./components/AccordionHistorique.js";
+
 import "./index.css";
 
-class Enluminures extends React.Component {
+class Notice extends React.Component {
 	state = {
 		notice: null,
 		error: "",
@@ -41,32 +41,32 @@ class Enluminures extends React.Component {
 
 	async load(ref) {
 		this.setState({ loading: true });
-		API.getNotice("enluminures", ref).then((notice) => {
-			if (!notice) {
-				this.setState({
-					loading: false,
-					error: `Impossible de charger la notice ${ref}`,
-				});
-				return;
-			}
+		const notice = await API.getNotice("autor", ref);
+		if (!notice) {
+			this.setState({
+				error: `Notice introuvable ${ref}`,
+				loading: false,
+			});
+			return;
+		}
+		this.props.initialize(notice);
 
-			this.props.initialize(notice);
-			//const editable = false;
-			let editable = false;
-			API.canEdit(notice.REF, "", notice.PRODUCTEUR, "enluminures").then(
-				(result) => {
-					editable = result.validate;
-					this.setState({ editable: editable });
-				},
-			);
+		// Mantis 38639 - ajout vérification edition
+		let editable = false;
+		API.canEdit(notice.REF, notice.MUSEO, notice.PRODUCTEUR, "autor").then(
+			(result) => {
+				editable = result.validate;
+				this.setState({ editable: editable });
+			},
+		);
 
-			this.setState({ loading: false, notice, editable });
-		});
+		this.setState({ loading: false, notice, editable });
 	}
 
+	// Not implemented yet (not editable)
 	async onSubmit(values) {
 		this.setState({ saving: true });
-		const notice = new EnluminuresEntity(values);
+		const notice = new Autor(values);
 		if (notice._errors.length) {
 			toastr.error("La modification n'a pas été enregistrée", "", {
 				component: () => (
@@ -81,7 +81,7 @@ class Enluminures extends React.Component {
 			try {
 				await API.updateNotice(
 					this.state.notice.REF,
-					"enluminures",
+					"autor",
 					values,
 					this.state.imagesFiles,
 					"manuel",
@@ -109,16 +109,18 @@ class Enluminures extends React.Component {
 			return <div className="error">{this.state.error}</div>;
 		}
 
+		console.log("this.state.notice", this.state.notice);
+
 		return (
 			<Container className="notice">
 				<BackButton left history={this.props.history} />
 				<h2 className="main-title">
-					Notice {this.state.notice.REF}{" "}
+					Notice {this.state.notice.REF}
 					<a
 						style={{ fontSize: "small" }}
 						target="_blank"
-						rel="noopener"
-						href={`${pop_url}/notice/enluminures/${this.state.notice.REF}`}
+						rel="noreferrer noopener"
+						href={`${pop_url}/notice/autor/${this.state.notice.REF}`}
 					>
 						voir en diffusion
 					</a>
@@ -127,18 +129,32 @@ class Enluminures extends React.Component {
 					onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
 					className="main-body"
 				>
-					<Comments POP_FLAGS={this.state.notice.POP_FLAGS} />
 					<FieldImages
-						name="VIDEO"
-						createUrlFromName={(e) =>
-							`enluminures/${this.state.notice.REF}/${e}`
-						}
-						canOrder={this.state.editable}
-						canEdit={this.state.editable}
-						getAbsoluteUrl={(e) => `${bucket_url}${e}`}
-						filesToUpload={(imagesFiles) =>
-							this.setState({ imagesFiles })
-						}
+						name="MEMOIRE"
+						canOrder={this.state.editable} // We can ordering images only if we have the proper rights on the notice
+						canEdit={false} // As image come from memoire, we can't delete or update an image from autor
+						external={true}
+						hideButton={true} // As image come from memoire, we can't delete or update an image from autor
+						getAbsoluteUrl={(e) => {
+							if (!e.url) {
+								return "";
+							}
+							if (e.url && e.url.indexOf("memoire/") === 0) {
+								return `${bucket_url}${e.url}`;
+							}
+							return e.url;
+						}}
+						footer={(e) => {
+							return (
+								<Link
+									to={`/notice/memoire/${e.ref}`}
+									target="_blank"
+									rel="noopener"
+								>
+									{e.ref}
+								</Link>
+							);
+						}}
 					/>
 					<Section
 						title="Identification"
@@ -149,214 +165,265 @@ class Enluminures extends React.Component {
 							<Col sm={6}>
 								<CustomField
 									name="REF"
-									disabled={!this.state.editable}
+									disabled
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="ATTRIB"
+									name="ISNI"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="APPL"
+									name="ISNI_VERIFIEE"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="AUTR"
+									name="ALIAS"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="AUTS"
-									disabled={!this.state.editable}
+									name="BASE"
+									disabled
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="CONSERV"
+									name="BIBLIO"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="CONTXT"
+									name="BIO"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="COTE"
+									name="CONTACT"
 									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DATE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DATDEB"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DATFIN"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DIMS"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ETAB"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="FOPG"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="FOLIOS"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="LANGOUV"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="NFICH"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="NVUE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="NOMENC"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="NOTES"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="NOTDEC"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="RENV"
-									createUrl={(e) =>
-										`/notice/enluminures/${e}`
-									}
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="REFC"
-									createUrl={(e) =>
-										`/notice/enluminures/${e}`
-									}
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="REFDE"
-									createUrl={(e) =>
-										`/notice/enluminures/${e}`
-									}
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="LIENS"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="OPHOT"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ORIGG"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ORIGH"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ORIGP"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DOMN"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="POP_COORDONNEES.lat"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="POP_COORDONNEES.lon"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="TYPE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="POSS"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="REFD"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="REFIM"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ENRGFP"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ENRGMS"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DROIT"
-									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
 									name="COPY"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="SUJET"
+									name="DMORT"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="SUPP"
+									name="DNAISS"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="TITR"
+									name="EXPO"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="TYPDEC"
+									name="INI"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="TYPCOD"
+									name="FONC"
 									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="LOCA"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="LOCA2"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="VISITE"
-									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
 									name="VIDEO"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 								<CustomField
-									name="TOUT"
+									name="LIENS"
 									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="LMDP"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="LMORT"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="AUTORLOCA"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="LNAISS"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="NATIO"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="IDENT"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="ARK"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="OBS"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="DMAJ"
+									disabled
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="DMIS"
+									disabled
+									hidedescriptionifempty={true}
+								/>
+							</Col>
+							<Col sm={6}>
+								<CustomField
+									name="NOM"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="PREN"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="PNOM"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="ADRS"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="TYPAPE"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="SCLE"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="DATES"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="REJET"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="OEUVR"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="PUBLI"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="PRODUCTEUR"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="ALAMAP"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="PREF"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="LOCACT"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="LBASE"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="BIF"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="REDAC"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="LRELA"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="FORM"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="SOURCES"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="STAT"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="SYMB"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="INS"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="TITR"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="GAR"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
+								/>
+								<CustomField
+									name="TYPID"
+									disabled={!this.state.editable}
+									hidedescriptionifempty={true}
 								/>
 							</Col>
 						</Row>
@@ -364,12 +431,11 @@ class Enluminures extends React.Component {
 							historique={this.state.notice.HISTORIQUE || []}
 						/>
 					</Section>
-					<Map notice={this.state.notice} />
 					<div className="buttons">
 						<BackButton history={this.props.history} />
 						{this.props.canDelete ? (
 							<DeleteButton
-								noticeType="enluminures"
+								noticeType="autor"
 								noticeRef={this.state.notice.REF}
 							/>
 						) : (
@@ -390,15 +456,15 @@ class Enluminures extends React.Component {
 }
 
 const CustomField = ({ name, disabled, ...rest }) => {
-	if (!Mapping.enluminures[name]) {
+	if (!Mapping.autor[name]) {
 		return null;
 	}
 	return (
 		<Field
-			{...Mapping.enluminures[name]}
+			{...Mapping.autor[name]}
 			disabled={
-				Mapping.enluminures[name].generated == true ||
-				Mapping.enluminures[name].deprecated == true ||
+				Mapping.autor[name].generated ||
+				Mapping.autor[name].deprecated ||
 				disabled
 			}
 			name={name}
@@ -408,26 +474,24 @@ const CustomField = ({ name, disabled, ...rest }) => {
 };
 
 const mapStateToProps = ({ Auth }) => {
-	const { role, group, museofile } = Auth.user;
-	// An "administrateur" (from "enluminures" or "admin" group) can delete.
+	const { role, group } = Auth.user;
+	// An "administrateur" (from "autor" or "admin" group) can delete.
 	const canDelete =
 		Auth.user &&
 		role === "administrateur" &&
-		(group === "Enluminures" || group === "admin");
+		(group === "autor" || group === "admin");
 	// If you can delete, you can update (see above).
-	// Also, you can update if you are a "producteur" from "joconde"
-	// (assuming user.museofile === notice.museofile, see "editable" state)
+	// Also, you can update if you are a "producteur" from "autor"
 	const canUpdate =
-		canDelete ||
-		(Auth.user && role === "producteur" && group === "Enluminures");
+		canDelete || (Auth.user && role === "producteur" && group === "autor");
 	return {
 		canDelete,
 		canUpdate,
-		user: { museofile, role, group },
+		user: { role, group },
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	{},
-)(reduxForm({ form: "notice" })(Enluminures));
+)(reduxForm({ form: "notice" })(Notice));

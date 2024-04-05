@@ -58,116 +58,111 @@ const THESAURUS_CONTROLE = {
 	},
 };
 
-export function checkOpenTheso(notice) {
-	return new Promise(async (resolve, _reject) => {
-		const optimMap = {};
+export async function checkOpenTheso(notice) {
+	const optimMap = {};
 
-		for (const field in notice) {
-			const noticeField = notice[field];
+	for (const field in notice) {
+		const noticeField = notice[field];
 
-			// Ne pas vérifier les propriétés qui ne concernent pas les champs de la notice
-			if (
-				typeof noticeField === "function" ||
-				field.indexOf("_") === 0 ||
-				field === "POP_IMPORT"
-			) {
+		// Ne pas vérifier les propriétés qui ne concernent pas les champs de la notice
+		if (
+			typeof noticeField === "function" ||
+			field.indexOf("_") === 0 ||
+			field === "POP_IMPORT"
+		) {
+			continue;
+		}
+
+		let values = [];
+		const thesaurus = notice._mapping[field]?.thesaurus;
+
+		const thesaurus_separator = notice._mapping[field]?.thesaurus_separator;
+
+		// Controle vocabulaire sur Opentheso si les bases sont concernées
+		if (THESAURUS_CONTROLE.base_list.includes(notice._type)) {
+			// Si les champs ne sont pas déclarer dans la liste, le traitement est stoppé
+			if (!THESAURUS_CONTROLE[notice._type].fields.includes(field)) {
 				continue;
 			}
 
-			let values = [];
-			const thesaurus =
-				notice._mapping[field]?.thesaurus;
-
-			const thesaurus_separator =
-				notice._mapping[field]?.thesaurus_separator;
-
-			// Controle vocabulaire sur Opentheso si les bases sont concernées
-			if (THESAURUS_CONTROLE.base_list.includes(notice._type)) {
-				// Si les champs ne sont pas déclarer dans la liste, le traitement est stoppé
-				if (!THESAURUS_CONTROLE[notice._type].fields.includes(field)) {
-					continue;
-				}
-
-				values = [];
-				// Préparation du tableau de valeur, split des valeurs par le séparateur définit dans l'entité de la base.
-				if (thesaurus_separator) {
-					if (typeof noticeField === "object") {
-						noticeField.forEach((element) => {
-							const elSplit = element.split(thesaurus_separator);
-
-							if (Array.isArray(elSplit)) {
-								elSplit.forEach((el) => values.push(el));
-							} else {
-								values.push(element);
-							}
-						});
-					} else {
-						values = noticeField.split(thesaurus_separator);
-					}
-				} else {
-					values = [].concat(noticeField);
-				}
-
-				// Nettoyage des valeurs vident
-				values = values
-					.map((e) => e.trim())
-					.filter((element) => element !== "");
-
-				for (let k = 0; k < values.length; k++) {
-					const message = await checkVocabulaireThesaurus(
-						notice._mapping[field],
-						values[k],
-						notice._type,
-					);
-					if (message !== "") {
-						notice._warnings.push(message);
-					}
-				}
-				continue;
-			}
-
-			// Ancien contrôle, à supprimer dès que toutes les bases seront sur OpenTheso
-			if (!thesaurus) {
-				continue;
-			}
-
-			values = [].concat(noticeField);
+			values = [];
+			// Préparation du tableau de valeur, split des valeurs par le séparateur définit dans l'entité de la base.
 			if (thesaurus_separator) {
-				values = values.reduce(
-					(acc, val) => acc.concat(val.split(thesaurus_separator)),
-					[],
-				);
+				if (typeof noticeField === "object") {
+					noticeField.forEach((element) => {
+						const elSplit = element.split(thesaurus_separator);
+
+						if (Array.isArray(elSplit)) {
+							elSplit.forEach((el) => values.push(el));
+						} else {
+							values.push(element);
+						}
+					});
+				} else {
+					values = noticeField.split(thesaurus_separator);
+				}
+			} else {
+				values = [].concat(noticeField);
 			}
-			values = values.map((e) => e.trim());
+
+			// Nettoyage des valeurs vident
+			values = values
+				.map((e) => e.trim())
+				.filter((element) => element !== "");
 
 			for (let k = 0; k < values.length; k++) {
-				const value = values[k];
-				if (value) {
-					let val = null;
-					if (
-						optimMap[thesaurus] &&
-						optimMap[thesaurus][value] !== undefined
-					) {
-						val = optimMap[thesaurus][value];
-					} else {
-						val = await api.validateWithThesaurus(thesaurus, value);
-					}
-
-					if (!val) {
-						const text = `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`;
-						if (noticeField.thesaurus_strict === true) {
-							notice._errors.push(text);
-						} else {
-							notice._warnings.push(text);
-						}
-					}
-					if (!optimMap[thesaurus]) optimMap[thesaurus] = {};
-					optimMap[thesaurus][value] = val;
+				const message = await checkVocabulaireThesaurus(
+					notice._mapping[field],
+					values[k],
+					notice._type,
+				);
+				if (message !== "") {
+					notice._warnings.push(message);
 				}
 			}
+			continue;
 		}
-		resolve();
-	});
+
+		// Ancien contrôle, à supprimer dès que toutes les bases seront sur OpenTheso
+		if (!thesaurus) {
+			continue;
+		}
+
+		values = [].concat(noticeField);
+		if (thesaurus_separator) {
+			values = values.reduce(
+				(acc, val) => acc.concat(val.split(thesaurus_separator)),
+				[],
+			);
+		}
+		values = values.map((e) => e.trim());
+
+		for (let k = 0; k < values.length; k++) {
+			const value = values[k];
+			if (value) {
+				let val = null;
+				if (
+					optimMap[thesaurus] &&
+					optimMap[thesaurus][value] !== undefined
+				) {
+					val = optimMap[thesaurus][value];
+				} else {
+					val = await api.validateWithThesaurus(thesaurus, value);
+				}
+
+				if (!val) {
+					const text = `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`;
+					if (noticeField.thesaurus_strict === true) {
+						notice._errors.push(text);
+					} else {
+						notice._warnings.push(text);
+					}
+				}
+				if (!optimMap[thesaurus]) optimMap[thesaurus] = {};
+				optimMap[thesaurus][value] = val;
+			}
+		}
+	}
 }
 
 const storageExceptionThesaurus = [];

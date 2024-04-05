@@ -28,18 +28,9 @@ export default class Import extends React.Component {
 	}
 }
 
-function parseFiles(files, encoding) {
-	return new Promise(async (resolve, reject) => {
-		// Import CSV type (MH)
-		await common_mh_inv
-			.parseFilesCsv(files, encoding, "MH")
-			.then((resp) => {
-				resolve(resp);
-			})
-			.catch((err) => {
-				reject(err);
-			});
-	});
+async function parseFiles(files, encoding) {
+	// Import CSV type (MH)
+	return await common_mh_inv.parseFilesCsv(files, encoding, "MH");
 }
 
 function readme() {
@@ -271,7 +262,7 @@ function readme() {
 				<a
 					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/memoire.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Lien vers le modèle de donnée Mémoire
 				</a>
@@ -279,7 +270,7 @@ function readme() {
 				<a
 					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/palissy.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Lien vers le modèle de donnée Palissy
 				</a>
@@ -287,7 +278,7 @@ function readme() {
 				<a
 					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/merimee.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Lien vers le modèle de donnée Mérimée
 				</a>

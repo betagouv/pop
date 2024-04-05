@@ -8,11 +8,11 @@ import {
 	ActiveFilters,
 } from "@popproject/pop-react-elasticsearch";
 import { Row, Col } from "reactstrap";
-import CollapsableFacet from "../search/components/CollapsableFacet";
+import CollapsableFacet from "../search/components/CollapsableFacet.js";
 import utils from "./utils.js";
 import "./list.css";
 import { es_url, bucket_url, pop_url } from "../../config.js";
-import p_utils from "../search/components/utils";
+import p_utils from "../search/components/utils.js";
 
 export default function List() {
 	const initialValues = fromUrlQueryString(
@@ -26,9 +26,11 @@ export default function List() {
 		{ [sortKey]: { order: sortOrder } },
 	]);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: sortKey is used has key
 	useEffect(() => {
 		setSortQuery([{ [sortKey]: { order: sortOrder } }]);
 	}, [sortKey, sortOrder]);
+
 	return (
 		<div className="list-import">
 			<Elasticsearch
@@ -127,7 +129,7 @@ const Card = ({ data, id }) => {
 							<a
 								href={preview_url}
 								target="_blank"
-								rel="noopener"
+								rel="noreferrer noopener"
 							>
 								Voir en diffusion
 							</a>
@@ -137,7 +139,7 @@ const Card = ({ data, id }) => {
 							<a
 								href={details_url}
 								target="_blank"
-								rel="noopener"
+								rel="noreferrer noopener"
 							>
 								Fichier de détail
 							</a>

@@ -43,17 +43,17 @@ class Import extends React.Component {
 					</Col>
 				</div>
 			);
-		} else {
-			return (
-				<div>
-					<Col className="m-4 text-center">
-						<Link to="/deletedNotices">
-							Consultez l'historique de suppression
-						</Link>
-					</Col>
-				</div>
-			);
 		}
+
+		return (
+			<div>
+				<Col className="m-4 text-center">
+					<Link to="/deletedNotices">
+						Consultez l'historique de suppression
+					</Link>
+				</Col>
+			</div>
+		);
 	}
 
 	render() {
@@ -78,7 +78,7 @@ class Import extends React.Component {
 			];
 		} else {
 			if (this.props.authorizedImports) {
-				let authorizedImports = this.props.authorizedImports;
+				const authorizedImports = this.props.authorizedImports;
 				if (authorizedImports.includes("joconde")) {
 					listRoutes.push({
 						url: "/import/joconde",

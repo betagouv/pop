@@ -1,25 +1,24 @@
 import React from "react";
-import { Col, Row, Container, Button, Form } from "reactstrap";
+import { Col, Container, Button, Form, Row } from "reactstrap";
 import { reduxForm } from "redux-form";
-import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import MuseoEntity from "../../entities/Museo";
 import Mapping from "../../services/mapping";
+import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
-import FieldImages from "./components/fieldImages.js";
-import DeleteButton from "./components/DeleteButton";
 import Section from "./components/section.js";
 import Comments from "./components/comments.js";
+import MapComponent from "./components/map.js";
 import Loader from "../../components/Loader";
+import FieldImages from "./components/fieldImages";
+import EnluminuresEntity from "../../entities/Enluminures";
 import API from "../../services/api";
-import { bucket_url, pop_url } from "../../config";
 import AccordionHistorique from "./components/AccordionHistorique";
-
+import { bucket_url, pop_url } from "../../config";
+import { toastr } from "react-redux-toastr";
 import "./index.css";
 
-class Museo extends React.Component {
+class Enluminures extends React.Component {
 	state = {
 		notice: null,
 		error: "",
@@ -42,32 +41,32 @@ class Museo extends React.Component {
 
 	async load(ref) {
 		this.setState({ loading: true });
-		const notice = await API.getNotice("museo", ref);
+		API.getNotice("enluminures", ref).then((notice) => {
+			if (!notice) {
+				this.setState({
+					loading: false,
+					error: `Impossible de charger la notice ${ref}`,
+				});
+				return;
+			}
 
-		if (!notice) {
-			this.setState({
-				error: `Fiche museo ${ref} introuvable`,
-				loading: false,
-			});
-			return;
-		}
-		this.props.initialize(notice);
-		// As a "producteur", I can edit if "museofile" matches with notice.
-		//const editable = this.props.canUpdate && (this.props.user.role === "administrateur" || this.props.user.museofile.includes(notice.REF));
-		let editable = false;
-		API.canEdit(notice.REF, notice.REF, notice.PRODUCTEUR, "museo").then(
-			(result) => {
-				editable = result.validate;
-				this.setState({ editable: editable });
-			},
-		);
+			this.props.initialize(notice);
+			//const editable = false;
+			let editable = false;
+			API.canEdit(notice.REF, "", notice.PRODUCTEUR, "enluminures").then(
+				(result) => {
+					editable = result.validate;
+					this.setState({ editable: editable });
+				},
+			);
 
-		this.setState({ loading: false, notice, editable });
+			this.setState({ loading: false, notice, editable });
+		});
 	}
 
 	async onSubmit(values) {
 		this.setState({ saving: true });
-		const notice = new MuseoEntity(values);
+		const notice = new EnluminuresEntity(values);
 		if (notice._errors.length) {
 			toastr.error("La modification n'a pas été enregistrée", "", {
 				component: () => (
@@ -82,7 +81,7 @@ class Museo extends React.Component {
 			try {
 				await API.updateNotice(
 					this.state.notice.REF,
-					"museo",
+					"enluminures",
 					values,
 					this.state.imagesFiles,
 					"manuel",
@@ -107,19 +106,7 @@ class Museo extends React.Component {
 		}
 
 		if (this.state.error) {
-			return (
-				<div
-					className="error"
-					style={{
-						display: "flex",
-						justifyContent: "center",
-						alignItems: "center",
-						paddingTop: "50px",
-					}}
-				>
-					{this.state.error}
-				</div>
-			);
+			return <div className="error">{this.state.error}</div>;
 		}
 
 		return (
@@ -130,8 +117,8 @@ class Museo extends React.Component {
 					<a
 						style={{ fontSize: "small" }}
 						target="_blank"
-						rel="noopener"
-						href={`${pop_url}/notice/museo/${this.state.notice.REF}`}
+						rel="noreferrer noopener"
+						href={`${pop_url}/notice/enluminures/${this.state.notice.REF}`}
 					>
 						voir en diffusion
 					</a>
@@ -142,224 +129,189 @@ class Museo extends React.Component {
 				>
 					<Comments POP_FLAGS={this.state.notice.POP_FLAGS} />
 					<FieldImages
-						name="PHOTO"
+						name="VIDEO"
+						createUrlFromName={(e) =>
+							`enluminures/${this.state.notice.REF}/${e}`
+						}
 						canOrder={this.state.editable}
 						canEdit={this.state.editable}
-						createUrlFromName={(e) =>
-							`museo/${this.state.notice.REF}/${e}`
-						}
 						getAbsoluteUrl={(e) => `${bucket_url}${e}`}
 						filesToUpload={(imagesFiles) =>
 							this.setState({ imagesFiles })
 						}
 					/>
-					<Link
-						to={`/recherche-avancee/joconde?qb=%5B%7B%22field%22%3A%22MUSEO.keyword%22%2C%22operator%22%3A%22%3D%3D%3D%22%2C%22value%22%3A%22${this.state.notice.REF}%22%2C%22combinator%22%3A%22AND%22%2C%22index%22%3A0%7D%5D&sortKey=%22REF.keyword%22&sortOrder=%22desc%22`}
-					>
-						Voir les oeuvres dans la base joconde
-					</Link>
 					<Section
-						title="Nom du musée"
+						title="Identification"
 						icon={require("../../assets/info.png")}
 						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
 								<CustomField
-									name="NOMOFF"
+									name="REF"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="NOMUSAGE"
+									name="ATTRIB"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="APPL"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="AUTR"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="AUTS"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="CONSERV"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="CONTXT"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="COTE"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DATE"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DATDEB"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DATFIN"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DIMS"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="ETAB"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="FOPG"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="FOLIOS"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LANGOUV"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NFICH"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NVUE"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NOMENC"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NOTES"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NOTDEC"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="RENV"
+									createUrl={(e) =>
+										`/notice/enluminures/${e}`
+									}
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="REFC"
+									createUrl={(e) =>
+										`/notice/enluminures/${e}`
+									}
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="REFDE"
+									createUrl={(e) =>
+										`/notice/enluminures/${e}`
+									}
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LIENS"
 									disabled={!this.state.editable}
 								/>
 							</Col>
 							<Col sm={6}>
 								<CustomField
-									name="AUTNOM"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-						</Row>
-					</Section>
-					<Section
-						title="Adresse"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
-								<CustomField
-									name="ADRL1_M"
+									name="OPHOT"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="LIEU_M"
+									name="ORIGG"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="CP_M"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="VILLE_M"
+									name="ORIGH"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="DPT"
+									name="ORIGP"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="REGION"
+									name="DOMN"
 									disabled={!this.state.editable}
 								/>
-							</Col>
-						</Row>
-						<Row>
-							<Col sm={6}>
 								<CustomField
 									name="POP_COORDONNEES.lat"
 									disabled={!this.state.editable}
 								/>
-							</Col>
-							<Col sm={6}>
 								<CustomField
 									name="POP_COORDONNEES.lon"
 									disabled={!this.state.editable}
 								/>
-							</Col>
-						</Row>
-					</Section>
-					<Section
-						title="Contact"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
 								<CustomField
-									name="TEL_M"
+									name="TYPE"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="CONTACT_GENERIQUE"
+									name="POSS"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="CONTACT_MUSEO"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="URL_M"
+									name="REFD"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="ACCES"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-						</Row>
-					</Section>
-					<Section
-						title="Collection"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
-								<CustomField
-									name="CATEG"
+									name="REFIM"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="DOMPAL"
+									name="ENRGFP"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="HIST"
+									name="ENRGMS"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="ATOUT"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="THEMES"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="ARTISTE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PHARE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="AN_CREAT"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="INTERET"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-						</Row>
-					</Section>
-					<Section
-						title="Appellation/protection"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
-								<CustomField
-									name="LABEL"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PROT-BAT"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="PROT-ESP"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-						</Row>
-					</Section>
-					<Section
-						title="A propos de la notice"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
-								<CustomField name="REF" disabled={true} />
-								<CustomField name="DMIS" disabled={true} />
-								<CustomField name="DMAJ" disabled={true} />
-								<CustomField
-									name="REFMER"
-									createUrl={(e) => `/notice/merimee/${e}`}
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="REFPAL"
-									createUrl={(e) => `/notice/palissy/${e}`}
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="DT_SAISI"
+									name="DROIT"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -367,8 +319,43 @@ class Museo extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="REFMEM"
-									createUrl={(e) => `/notice/memoire/${e}`}
+									name="SUJET"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="SUPP"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="TITR"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="TYPDEC"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="TYPCOD"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LOCA"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LOCA2"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="VISITE"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="VIDEO"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="TOUT"
 									disabled={!this.state.editable}
 								/>
 							</Col>
@@ -377,13 +364,17 @@ class Museo extends React.Component {
 							historique={this.state.notice.HISTORIQUE || []}
 						/>
 					</Section>
+					<MapComponent notice={this.state.notice} />
 					<div className="buttons">
 						<BackButton history={this.props.history} />
-						<DeleteButton
-							disabled={!this.state.editable}
-							noticeType="museo"
-							noticeRef={this.state.notice.REF}
-						/>
+						{this.props.canDelete ? (
+							<DeleteButton
+								noticeType="enluminures"
+								noticeRef={this.state.notice.REF}
+							/>
+						) : (
+							<div />
+						)}
 						<Button
 							disabled={!this.state.editable}
 							color="primary"
@@ -399,15 +390,15 @@ class Museo extends React.Component {
 }
 
 const CustomField = ({ name, disabled, ...rest }) => {
-	if (!Mapping.museo[name]) {
+	if (!Mapping.enluminures[name]) {
 		return null;
 	}
 	return (
 		<Field
-			{...Mapping.museo[name]}
+			{...Mapping.enluminures[name]}
 			disabled={
-				Mapping.museo[name].generated == true ||
-				Mapping.museo[name].deprecated == true ||
+				Mapping.enluminures[name].generated ||
+				Mapping.enluminures[name].deprecated ||
 				disabled
 			}
 			name={name}
@@ -418,15 +409,19 @@ const CustomField = ({ name, disabled, ...rest }) => {
 
 const mapStateToProps = ({ Auth }) => {
 	const { role, group, museofile } = Auth.user;
+	// An "administrateur" (from "enluminures" or "admin" group) can delete.
+	const canDelete =
+		Auth.user &&
+		role === "administrateur" &&
+		(group === "Enluminures" || group === "admin");
+	// If you can delete, you can update (see above).
+	// Also, you can update if you are a "producteur" from "joconde"
+	// (assuming user.museofile === notice.museofile, see "editable" state)
 	const canUpdate =
-		(Auth.user &&
-			role === "administrateur" &&
-			(group === "joconde" || group === "museo" || group === "admin")) ||
-		(Auth.user &&
-			role === "producteur" &&
-			(group === "joconde" || group === "museo"));
-
+		canDelete ||
+		(Auth.user && role === "producteur" && group === "Enluminures");
 	return {
+		canDelete,
 		canUpdate,
 		user: { museofile, role, group },
 	};
@@ -435,4 +430,4 @@ const mapStateToProps = ({ Auth }) => {
 export default connect(
 	mapStateToProps,
 	{},
-)(reduxForm({ form: "notice" })(Museo));
+)(reduxForm({ form: "notice" })(Enluminures));

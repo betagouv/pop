@@ -77,7 +77,7 @@ class TagsInput extends React.Component {
 												<a
 													href={url}
 													target="_blank"
-													rel="noopener"
+													rel="noreferrer noopener"
 												>
 													{e}
 												</a>
@@ -162,7 +162,9 @@ class TextInput extends React.Component {
 		return (
 			<div className="input">
 				<textarea
-					ref={(c) => (this.textarea = c)}
+					ref={(c) => {
+						this.textarea = c;
+					}}
 					{...this.props}
 					value={this.props.input.value}
 					onChange={(e) => {
@@ -327,25 +329,22 @@ export default class AbstractField extends React.Component {
 					{Child}
 				</div>
 			);
-		} else {
-			return (
-				<div key={`div-field-${name}`} className="field">
-					{title && (
-						<div id={`Tooltip_${name.replace(".", "")}`}>
-							{title}
-						</div>
-					)}
-					<TooltipComp
-						key={`tooltip-${name}`}
-						deprecated={deprecated}
-						description={description}
-						generated={generated}
-						name={name}
-						hidedescriptionifempty={hidedescriptionifempty}
-					/>
-					{Child}
-				</div>
-			);
 		}
+		return (
+			<div key={`div-field-${name}`} className="field">
+				{title && (
+					<div id={`Tooltip_${name.replace(".", "")}`}>{title}</div>
+				)}
+				<TooltipComp
+					key={`tooltip-${name}`}
+					deprecated={deprecated}
+					description={description}
+					generated={generated}
+					name={name}
+					hidedescriptionifempty={hidedescriptionifempty}
+				/>
+				{Child}
+			</div>
+		);
 	}
 }

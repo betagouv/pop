@@ -12,62 +12,50 @@ class Import extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			museofile:
-				this.props.museofile && this.props.museofile.length
-					? this.props.museofile[0]
-					: "",
+			museofile: this.props.museofile?.length
+				? this.props.museofile[0]
+				: "",
 		};
 	}
-	parseFiles(files, encoding) {
-		return new Promise(async (resolve, reject) => {
-			// Test "ajout piloté" format
-			let rootFile = files.find(
-				(file) =>
-					("" + file.name.split(".").pop()).toLowerCase() === "txt",
+
+	async parseFiles(files, encoding) {
+		// Test "ajout piloté" format
+		let rootFile = files.find(
+			(file) => `${file.name.split(".").pop()}`.toLowerCase() === "txt",
+		);
+		if (rootFile) {
+			const res = await utils.asyncReadFile(rootFile, encoding);
+			const importedNotices = await importAjoutPiloté(
+				res,
+				files,
+				this.state.museofile,
 			);
-			if (rootFile) {
-				const res = await utils.asyncReadFile(rootFile, encoding);
-				const importedNotices = await importAjoutPiloté(
+			resolve({ importedNotices, fileNames: [rootFile.name] });
+			return;
+		}
+
+		// Test Excel format
+		rootFile = files.find(
+			(file) => `${file.name.split(".").pop()}`.toLowerCase() === "csv",
+		);
+		if (rootFile) {
+			try {
+				const res = await utils.readCSV(rootFile, ";", encoding, '"');
+				const importedNotices = await importCSV(
 					res,
 					files,
 					this.state.museofile,
 				);
-				resolve({ importedNotices, fileNames: [rootFile.name] });
-				return;
+				return { importedNotices, fileNames: [rootFile.name] };
+			} catch (e) {
+				console.log("error", e);
+				throw Error(
+					"Fichier .csv mal formaté ( vérifiez que le séparateur est ';' ) ",
+				);
 			}
+		}
 
-			// Test Excel format
-			rootFile = files.find(
-				(file) =>
-					("" + file.name.split(".").pop()).toLowerCase() === "csv",
-			);
-			if (rootFile) {
-				try {
-					const res = await utils.readCSV(
-						rootFile,
-						";",
-						encoding,
-						'"',
-					);
-					const importedNotices = await importCSV(
-						res,
-						files,
-						this.state.museofile,
-					);
-					resolve({ importedNotices, fileNames: [rootFile.name] });
-					return;
-				} catch (e) {
-					console.log("error", e);
-					reject(
-						"Fichier .csv mal formaté ( vérifiez que le séparateur est ';' ) ",
-					);
-					return;
-				}
-			}
-
-			reject("Fichier .csv ou .txt absent");
-			return;
-		});
+		throw Error("Fichier .csv ou .txt absent");
 	}
 
 	renderMuseoFiles() {
@@ -118,8 +106,9 @@ class Import extends React.Component {
 							format <code>.jpg</code>) dans cette zone
 						</span>
 					}
-					children={this.renderMuseoFiles()}
-				/>
+				>
+					{this.renderMuseoFiles()}
+				</Importer>
 			</Container>
 		);
 	}
@@ -135,100 +124,96 @@ const mapstatetoprops = ({ Auth }) => {
 
 export default connect(mapstatetoprops, {})(Import);
 
-function importCSV(res, files, museofile) {
-	return new Promise(async (resolve, reject) => {
-		const importedNotices = res
-			.map((value) => {
-				value.MUSEO = value.MUSEO || museofile || "";
-				value.REF = String(value.REF).trim();
-				// Add 0 in front of REF when we import csv file
-				if (value.REF.length < 11) {
-					value.REF = addZeros(value.REF, 11);
-				}
-				return value;
-			})
-			.map((value) => new Joconde(value));
-
-		const filesMap = {};
-		for (var i = 0; i < files.length; i++) {
-			// Sometimes, name is the long name with museum code, sometimes its not...
-			// The easiest way I found was to transform long name to short name each time I get a file name.
-			filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
-		}
-
-		// ADD IMAGES
-		for (var i = 0; i < importedNotices.length; i++) {
-			const names = importedNotices[i].IMG;
-
-			if (!names) {
-				continue;
+async function importCSV(res, files, museofile) {
+	const importedNotices = res
+		.map((value) => {
+			value.MUSEO = value.MUSEO || museofile || "";
+			value.REF = String(value.REF).trim();
+			// Add 0 in front of REF when we import csv file
+			if (value.REF.length < 11) {
+				value.REF = addZeros(value.REF, 11);
 			}
-			for (var j = 0; j < names.length; j++) {
-				let img = filesMap[Joconde.convertLongNameToShort(names[j])];
-				if (!img) {
-					importedNotices[i]._errors.push(
-						`Image ${Joconde.convertLongNameToShort(
-							names[j],
-						)} introuvable`,
-					);
-				} else {
-					const shortname = Joconde.convertLongNameToShort(img.name);
-					let newImage = utils.renameFile(
-						img,
-						slugifyFilename(shortname),
-					);
-					importedNotices[i]._files.push(newImage);
-				}
+			return value;
+		})
+		.map((value) => new Joconde(value));
+
+	const filesMap = {};
+	for (let i = 0; i < files.length; i++) {
+		// Sometimes, name is the long name with museum code, sometimes its not...
+		// The easiest way I found was to transform long name to short name each time I get a file name.
+		filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
+	}
+
+	// ADD IMAGES
+	for (let i = 0; i < importedNotices.length; i++) {
+		const names = importedNotices[i].IMG;
+
+		if (!names) {
+			continue;
+		}
+		for (let j = 0; j < names.length; j++) {
+			const img = filesMap[Joconde.convertLongNameToShort(names[j])];
+			if (!img) {
+				importedNotices[i]._errors.push(
+					`Image ${Joconde.convertLongNameToShort(
+						names[j],
+					)} introuvable`,
+				);
+			} else {
+				const shortname = Joconde.convertLongNameToShort(img.name);
+				const newImage = utils.renameFile(
+					img,
+					slugifyFilename(shortname),
+				);
+				importedNotices[i]._files.push(newImage);
 			}
 		}
+	}
 
-		resolve(importedNotices);
-	});
+	return importedNotices;
 }
 
-function importAjoutPiloté(res, files, museofile) {
-	return new Promise(async (resolve, reject) => {
-		const importedNotices = utils
-			.parseAjoutPilote(res, Joconde)
-			.map((value) => {
-				value.MUSEO = value.MUSEO || museofile || "";
-				return value;
-			})
-			.map((value) => new Joconde(value));
+async function importAjoutPiloté(res, files, museofile) {
+	const importedNotices = utils
+		.parseAjoutPilote(res, Joconde)
+		.map((value) => {
+			value.MUSEO = value.MUSEO || museofile || "";
+			return value;
+		})
+		.map((value) => new Joconde(value));
 
-		const filesMap = {};
-		for (var i = 0; i < files.length; i++) {
-			// Sometimes, name is the long name with museum code, sometimes its not...
-			// The easiest way I found was to transform long name to short name each time I get a file name
-			filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
+	const filesMap = {};
+	for (let i = 0; i < files.length; i++) {
+		// Sometimes, name is the long name with museum code, sometimes its not...
+		// The easiest way I found was to transform long name to short name each time I get a file name
+		filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
+	}
+
+	// ADD IMAGES
+	for (let i = 0; i < importedNotices.length; i++) {
+		const names = importedNotices[i].IMG;
+		if (!names) {
+			continue;
 		}
-
-		// ADD IMAGES
-		for (var i = 0; i < importedNotices.length; i++) {
-			const names = importedNotices[i].IMG;
-			if (!names) {
-				continue;
-			}
-			for (var j = 0; j < names.length; j++) {
-				let img = filesMap[Joconde.convertLongNameToShort(names[j])];
-				if (!img) {
-					importedNotices[i]._errors.push(
-						`Image ${Joconde.convertLongNameToShort(
-							names[j],
-						)} introuvable`,
-					);
-				} else {
-					const shortname = Joconde.convertLongNameToShort(img.name);
-					let newImage = utils.renameFile(
-						img,
-						slugifyFilename(shortname),
-					);
-					importedNotices[i]._files.push(newImage);
-				}
+		for (let j = 0; j < names.length; j++) {
+			const img = filesMap[Joconde.convertLongNameToShort(names[j])];
+			if (!img) {
+				importedNotices[i]._errors.push(
+					`Image ${Joconde.convertLongNameToShort(
+						names[j],
+					)} introuvable`,
+				);
+			} else {
+				const shortname = Joconde.convertLongNameToShort(img.name);
+				const newImage = utils.renameFile(
+					img,
+					slugifyFilename(shortname),
+				);
+				importedNotices[i]._files.push(newImage);
 			}
 		}
-		resolve(importedNotices);
-	});
+	}
+	return importedNotices;
 }
 
 function report(notices, collection, email, institution, importId) {
@@ -251,7 +236,7 @@ function report(notices, collection, email, institution, importId) {
 		return acc;
 	}, 0);
 
-	let contact =
+	const contact =
 		"sophie.daenens@culture.gouv.fr et angelina.meslem@culture.gouv.fr";
 
 	arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
@@ -300,11 +285,11 @@ function report(notices, collection, email, institution, importId) {
 					],
 				};
 
-				let idThesaurus = notices[i]._warnings[j].substr(
+				const idThesaurus = notices[i]._warnings[j].substr(
 					notices[i]._warnings[j].indexOf(")]") - 3,
 					3,
 				);
-				if (!Number.isNaN(parseInt(idThesaurus))) {
+				if (!Number.isNaN(Number.parseInt(idThesaurus))) {
 					obj[notices[i]._warnings[j]].idThesaurus = idThesaurus;
 				}
 			}
@@ -312,7 +297,7 @@ function report(notices, collection, email, institution, importId) {
 	}
 
 	const newObj = Object.entries(obj)
-		.sort(function (a, b) {
+		.sort((a, b) => {
 			// Compare
 			if (a[1].idThesaurus < b[1].idThesaurus) return -1;
 			if (a[1].idThesaurus > b[1].idThesaurus) return 1;
@@ -384,13 +369,11 @@ function report(notices, collection, email, institution, importId) {
 	}
 	arr.push(`</ul>`);
 
-	{
-		arr.push(`<h1>Liens</h1>`);
-		arr.push(
-			`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`,
-		);
-		arr.push(`<a href='${fileUrl}'>Télécharger le détail de l'import</a>`);
-	}
+	arr.push(`<h1>Liens</h1>`);
+	arr.push(
+		`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`,
+	);
+	arr.push(`<a href='${fileUrl}'>Télécharger le détail de l'import</a>`);
 	return arr.join("");
 }
 
@@ -400,6 +383,7 @@ function regexIt(str) {
 		/Le champ (.+) avec la valeur (.+) n'est pas conforme avec le thesaurus http:\/\/data\.culture\.fr\/thesaurus\/resource\/ark:\/(.+)/gm;
 	let m;
 
+	// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
 	while ((m = regex.exec(str)) !== null) {
 		// This is necessary to avoid infinite loops with zero-width matches
 		if (m.index === regex.lastIndex) {
@@ -438,7 +422,7 @@ function readme() {
 				<a
 					href="https://s3.eu-west-3.amazonaws.com/pop-general/POP_Joconde_engagements_VD.pdf"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Charte d'engagement
 				</a>{" "}
@@ -543,7 +527,7 @@ function readme() {
 				<a
 					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/joconde.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Lien vers le modèle de donnée Joconde
 				</a>

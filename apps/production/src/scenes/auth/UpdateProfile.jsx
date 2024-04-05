@@ -6,7 +6,7 @@ import { Button, Container, Input } from "reactstrap";
 
 import Loader from "../../components/Loader";
 import api from "../../services/api";
-import authAction from "./../../redux/auth/actions";
+import authAction from "../../redux/auth/actions";
 const { logout, signinByToken } = authAction;
 import { message_info_password } from "../../config";
 

@@ -112,10 +112,7 @@ class api {
 
 	// Get prefix list from producteur list
 	async getPrefixesFromProducteurs(producteurs) {
-		const producteurList = producteurs.reduce(
-			(result, list) =>
-				(result = result == null ? list : `${result},${list}`),
-		);
+		const producteurList = producteurs.join(",");
 		return request.fetchJSON(
 			"GET",
 			`/producteur/prefixesFromProducteurs?producteurs=${producteurList}`,
@@ -193,102 +190,160 @@ class api {
 	}
 
 	// Update and create N notices (via import).
-	bulkUpdateAndCreate(arr, cb) {
-		return new Promise(async (resolve, reject) => {
-			const MAX_ATTEMPTS = 2;
-			const TIME_BEFORE_RETRY = 3000;
-			let attempts = 0;
-			const total = arr.length;
-			const progress = (100 * (total - arr.length)) / total;
-			const BULK_SIZE = 5;
-			const BULK_SIZE_AUTOR = 200;
+	async bulkUpdateAndCreate(arr, cb) {
+		const MAX_ATTEMPTS = 2;
+		const TIME_BEFORE_RETRY = 3000;
+		let attempts = 0;
+		const total = arr.length;
+		const progress = (100 * (total - arr.length)) / total;
+		const BULK_SIZE = 5;
+		const BULK_SIZE_AUTOR = 200;
 
-			// Lists for "autor" notices
-			let autorCurrentNoticesCreate = [];
-			let autorCurrentNoticesUpdate = [];
-			let currentNoticesCreate = [];
-			let currentNoticesUpdate = [];
-			const listNoticesError = [];
+		// Lists for "autor" notices
+		let autorCurrentNoticesCreate = [];
+		let autorCurrentNoticesUpdate = [];
+		let currentNoticesCreate = [];
+		let currentNoticesUpdate = [];
+		const listNoticesError = [];
 
-			// Get All "autor" notices for CREATE if it exists
-			autorCurrentNoticesCreate = arr.reduce(
-				(accumulatorNotices, currentNotice) => {
-					if (
-						currentNotice.collection === "autor" &&
-						currentNotice.action === "created"
-					) {
-						accumulatorNotices.push(currentNotice);
-					}
-					return accumulatorNotices;
-				},
-				[],
-			);
+		// Get All "autor" notices for CREATE if it exists
+		autorCurrentNoticesCreate = arr.reduce(
+			(accumulatorNotices, currentNotice) => {
+				if (
+					currentNotice.collection === "autor" &&
+					currentNotice.action === "created"
+				) {
+					accumulatorNotices.push(currentNotice);
+				}
+				return accumulatorNotices;
+			},
+			[],
+		);
 
-			// Get All "autor" notices for UPDATE if it exists
-			autorCurrentNoticesUpdate = arr.reduce(
-				(accumulatorNotices, currentNotice) => {
-					if (
-						currentNotice.collection === "autor" &&
-						currentNotice.action === "updated"
-					) {
-						accumulatorNotices.push(currentNotice);
-					}
-					return accumulatorNotices;
-				},
-				[],
-			);
+		// Get All "autor" notices for UPDATE if it exists
+		autorCurrentNoticesUpdate = arr.reduce(
+			(accumulatorNotices, currentNotice) => {
+				if (
+					currentNotice.collection === "autor" &&
+					currentNotice.action === "updated"
+				) {
+					accumulatorNotices.push(currentNotice);
+				}
+				return accumulatorNotices;
+			},
+			[],
+		);
 
-			// DELETE those "autor" notices from currentNotices
-			arr = arr.filter(
-				(notice) =>
-					!autorCurrentNoticesCreate.includes(notice) &&
-					!autorCurrentNoticesUpdate.includes(notice),
-			);
+		// DELETE those "autor" notices from currentNotices
+		arr = arr.filter(
+			(notice) =>
+				!autorCurrentNoticesCreate.includes(notice) &&
+				!autorCurrentNoticesUpdate.includes(notice),
+		);
 
-			while (
-				autorCurrentNoticesCreate.length ||
-				autorCurrentNoticesUpdate.length
-			) {
-				try {
-					// CREATE "autor" notices
-					if (autorCurrentNoticesCreate.length > 0) {
-						currentNoticesCreate = autorCurrentNoticesCreate.splice(
-							0,
-							BULK_SIZE_AUTOR,
-						);
-						await this.createNoticeAutor(currentNoticesCreate);
-					}
-					// UPDATE "autor" notices
-					if (autorCurrentNoticesUpdate.length > 0) {
-						currentNoticesUpdate = autorCurrentNoticesUpdate.splice(
-							0,
-							BULK_SIZE_AUTOR,
-						);
-						await this.updateNoticeAutor(currentNoticesUpdate);
-					}
-					cb(
-						progress,
-						`Notices restantes  ${
-							total -
-							(autorCurrentNoticesUpdate.length +
-								autorCurrentNoticesCreate.length)
-						}/${total}`,
+		while (
+			autorCurrentNoticesCreate.length ||
+			autorCurrentNoticesUpdate.length
+		) {
+			try {
+				// CREATE "autor" notices
+				if (autorCurrentNoticesCreate.length > 0) {
+					currentNoticesCreate = autorCurrentNoticesCreate.splice(
+						0,
+						BULK_SIZE_AUTOR,
 					);
-				} catch (e) {
-					// I add the currents one back to the list.
-					// I put it at the beginning because if there is a server error on this one,
-					// I dont want to wait the end to know (but maybe I should)
-					let currentNoticesAutor = autorCurrentNoticesCreate;
-					currentNoticesAutor = currentNoticesAutor.concat(
-						autorCurrentNoticesUpdate,
+					await this.createNoticeAutor(currentNoticesCreate);
+				}
+				// UPDATE "autor" notices
+				if (autorCurrentNoticesUpdate.length > 0) {
+					currentNoticesUpdate = autorCurrentNoticesUpdate.splice(
+						0,
+						BULK_SIZE_AUTOR,
 					);
-					arr.splice(0, 0, ...currentNoticesAutor);
-					if (++attempts >= MAX_ATTEMPTS) {
-						reject(
-							"Import échoué. Trop d'erreurs ont été détectées",
-						);
-						return;
+					await this.updateNoticeAutor(currentNoticesUpdate);
+				}
+				cb(
+					progress,
+					`Notices restantes  ${
+						total -
+						(autorCurrentNoticesUpdate.length +
+							autorCurrentNoticesCreate.length)
+					}/${total}`,
+				);
+			} catch (e) {
+				// I add the currents one back to the list.
+				// I put it at the beginning because if there is a server error on this one,
+				// I dont want to wait the end to know (but maybe I should)
+				let currentNoticesAutor = autorCurrentNoticesCreate;
+				currentNoticesAutor = currentNoticesAutor.concat(
+					autorCurrentNoticesUpdate,
+				);
+				arr.splice(0, 0, ...currentNoticesAutor);
+				if (++attempts >= MAX_ATTEMPTS) {
+					reject("Import échoué. Trop d'erreurs ont été détectées");
+					return;
+				}
+				cb(
+					progress,
+					`Un problème a été détecté : ${
+						e.msg || "Erreur de connexion à l'API."
+					} ` + `Tentative : ${attempts}/${MAX_ATTEMPTS}`,
+				);
+				await timeout(TIME_BEFORE_RETRY);
+			}
+		}
+
+		while (arr.length) {
+			const currentNotices = arr.splice(0, BULK_SIZE);
+			let element = "";
+			let index = 0;
+			try {
+				// add other bases
+				if (currentNotices.length > 0) {
+					for (let i = 0; i < currentNotices.length; i++) {
+						element = currentNotices[i];
+						if (element.action === "updated") {
+							await this.updateNotice(
+								element.notice.REF,
+								element.collection,
+								element.notice,
+								element.files,
+								"import",
+							);
+						} else {
+							await this.createNotice(
+								element.collection,
+								element.notice,
+								element.files,
+							);
+						}
+						index = i;
 					}
+				}
+				cb(
+					progress,
+					`Notices restantes  ${total - arr.length}/${total}`,
+				);
+			} catch (e) {
+				// I add the currents one back to the list.
+				// I put it at the beginning because if there is a server error on this one,
+				// I dont want to wait the end to know (but maybe I should)
+				arr.splice(0, 0, ...currentNotices);
+				if (++attempts >= MAX_ATTEMPTS) {
+					// reject("Import échoué. Trop d'erreurs ont été détectées");
+					// Création ligne d'erreur pour le fichier de log
+					const error = {};
+					error[element.notice.REF] = {
+						notice: element.notice,
+						message: e,
+					};
+					listNoticesError.push(error);
+					// Suppression de la ligne dans les imports
+					arr = arr.filter(
+						(el) => el.notice.REF !== element.notice.REF,
+					);
+					// return;
+				} else {
 					cb(
 						progress,
 						`Un problème a été détecté : ${
@@ -298,70 +353,8 @@ class api {
 					await timeout(TIME_BEFORE_RETRY);
 				}
 			}
-
-			while (arr.length) {
-				const currentNotices = arr.splice(0, BULK_SIZE);
-				let element = "";
-				let index = 0;
-				try {
-					// add other bases
-					if (currentNotices.length > 0) {
-						for (let i = 0; i < currentNotices.length; i++) {
-							element = currentNotices[i];
-							if (element.action === "updated") {
-								await this.updateNotice(
-									element.notice.REF,
-									element.collection,
-									element.notice,
-									element.files,
-									"import",
-								);
-							} else {
-								await this.createNotice(
-									element.collection,
-									element.notice,
-									element.files,
-								);
-							}
-							index = i;
-						}
-					}
-					cb(
-						progress,
-						`Notices restantes  ${total - arr.length}/${total}`,
-					);
-				} catch (e) {
-					// I add the currents one back to the list.
-					// I put it at the beginning because if there is a server error on this one,
-					// I dont want to wait the end to know (but maybe I should)
-					arr.splice(0, 0, ...currentNotices);
-					if (++attempts >= MAX_ATTEMPTS) {
-						// reject("Import échoué. Trop d'erreurs ont été détectées");
-						// Création ligne d'erreur pour le fichier de log
-						const error = {};
-						error[element.notice.REF] = {
-							notice: element.notice,
-							message: e,
-						};
-						listNoticesError.push(error);
-						// Suppression de la ligne dans les imports
-						arr = arr.filter(
-							(el) => el.notice.REF !== element.notice.REF,
-						);
-						// return;
-					} else {
-						cb(
-							progress,
-							`Un problème a été détecté : ${
-								e.msg || "Erreur de connexion à l'API."
-							} ` + `Tentative : ${attempts}/${MAX_ATTEMPTS}`,
-						);
-						await timeout(TIME_BEFORE_RETRY);
-					}
-				}
-			}
-			resolve(listNoticesError);
-		});
+		}
+		return listNoticesError;
 	}
 
 	// Create a gallery.

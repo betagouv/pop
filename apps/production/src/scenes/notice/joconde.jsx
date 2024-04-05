@@ -11,7 +11,7 @@ import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 import Comments from "./components/comments.js";
-import Map from "./components/map.js";
+import MapComponent from "./components/map.js";
 import Joconde from "../../entities/Joconde";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
@@ -127,7 +127,7 @@ class Notice extends React.Component {
 					<a
 						style={{ fontSize: "small" }}
 						target="_blank"
-						rel="noopener"
+						rel="noreferrer noopener"
 						href={`${pop_url}/notice/joconde/${this.state.notice.REF}`}
 					>
 						voir en diffusion
@@ -508,7 +508,7 @@ class Notice extends React.Component {
 							historique={this.state.notice.HISTORIQUE || []}
 						/>
 					</Section>
-					<Map notice={this.state.notice} />
+					<MapComponent notice={this.state.notice} />
 					<div className="buttons">
 						<BackButton history={this.props.history} />
 						{this.props.canDelete ? (
@@ -542,8 +542,8 @@ const CustomField = ({ name, disabled, ...rest }) => {
 		<Field
 			{...Mapping.joconde[name]}
 			disabled={
-				Mapping.joconde[name].generated == true ||
-				Mapping.joconde[name].deprecated == true ||
+				Mapping.joconde[name].generated ||
+				Mapping.joconde[name].deprecated ||
 				disabled
 			}
 			name={name}

@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "reactstrap";
 import Mapping from "../../services/mapping";
 import Importer from "./importer";
-import Museo from "../../entities/Museo";
+import Mnr from "../../entities/Mnr";
 
 import utils from "./utils";
 
@@ -11,10 +11,10 @@ export default class Import extends React.Component {
 		return (
 			<Container className="import">
 				<Importer
-					collection="museo"
+					collection="mnr"
 					parseFiles={parseFiles}
 					readme={readme}
-					recipient="museo"
+					recipient="mnr"
 					defaultEncoding="UTF-8"
 				/>
 			</Container>
@@ -22,46 +22,44 @@ export default class Import extends React.Component {
 	}
 }
 
-function parseFiles(files, encoding) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			var file = files.find(
-				(file) =>
-					("" + file.name.split(".").pop()).toLowerCase() === "csv",
-			);
-			if (!file) {
-				reject("Fichier .csv absent");
-				return;
-			}
-			const notices = await utils.readCSV(file, ";", encoding, '"');
-			const importedNotices = notices.map((e) => new Museo(e));
-			resolve({ importedNotices, fileNames: [file.name] });
-		} catch (e) {
-			reject(
-				`Erreur détectée. Vérifiez le format de votre fichier. (${JSON.stringify(
-					e,
-				)} )`,
-			);
+async function parseFiles(files, encoding) {
+	try {
+		const file = files.find(
+			(file) => `${file.name.split(".").pop()}`.toLowerCase() === "csv",
+		);
+		if (!file) {
+			reject("Fichier .csv absent");
+			return;
 		}
-	});
+		const notices = await utils.readCSV(file, ";", encoding, '"');
+		const importedNotices = notices.map((e) => new Mnr(e));
+		return { importedNotices, fileNames: [file.name] };
+	} catch (e) {
+		throw Error(
+			`Erreur détectée. Vérifiez le format de votre fichier. (${JSON.stringify(
+				e,
+			)} )`,
+		);
+	}
 }
 
 function readme() {
-	const generatedFields = Object.keys(Mapping.museo).filter((e) => {
-		return Mapping.museo[e].generated;
+	const generatedFields = Object.keys(Mapping.mnr).filter((e) => {
+		return Mapping.mnr[e].generated;
 	});
-	const controlsFields = Object.keys(Mapping.museo).filter((e) => {
-		return Mapping.museo[e].validation;
+	const controlsFields = Object.keys(Mapping.mnr).filter((e) => {
+		return Mapping.mnr[e].validation;
 	});
-	const requiredFields = Object.keys(Mapping.museo).filter((e) => {
-		return Mapping.museo[e].required;
+	const requiredFields = Object.keys(Mapping.mnr).filter((e) => {
+		return Mapping.mnr[e].required;
 	});
 
 	return (
 		<div>
-			<h5>Museo</h5>
+			<h5>Mnr</h5>
 			<div>
-				Cet onglet permet d’alimenter la base Museo. <br /> <br />
+				Cet onglet permet d’alimenter la base MNR-Rose Valland. <br />{" "}
+				<br />
 				<h6>Formats d’import </h6>
 				Les formats de données pris en charge sont les suivants&nbsp;:{" "}
 				<br />
@@ -83,6 +81,10 @@ function readme() {
 						<li key={e}>{e}</li>
 					))}
 				</ul>
+				<br />
+				Les champs REFIM et VIDEO ne doivent pas être réimporter après
+				leur export de POP
+				<br />
 				<br />
 				<h6>Test de validation des champs : </h6>
 				Les tests suivants sont effectués lors des imports
@@ -120,7 +122,7 @@ function readme() {
 				<h6>Je veux ajouter une image :</h6>
 				1) Sur une notice déjà existante, je peux cliquer sur "Ajouter
 				une image" et télécharger une image depuis mon ordinateur. Le
-				champ PHOTO contiendra le lien de l'image ainsi téléchargée.
+				champ VIDEO contiendra le lien de l'image ainsi téléchargée.
 				<br />
 				<br />
 				NB : à la création d'une notice, POP génère automatiquement
@@ -135,11 +137,11 @@ function readme() {
 				<br />
 				<br />
 				<a
-					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/museo.md"
+					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/mnr.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
-					Lien vers le modèle de donnée museo
+					Lien vers le modèle de donnée Mnr
 				</a>
 				<br />
 			</div>

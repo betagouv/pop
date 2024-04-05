@@ -32,7 +32,7 @@ class App extends React.Component {
 					"Application",
 					localStorage.getItem("application"),
 				);
-				origSend.apply(this, arguments);
+				origSend.apply(this, data);
 			};
 		})();
 	}

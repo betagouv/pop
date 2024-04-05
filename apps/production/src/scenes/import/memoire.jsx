@@ -33,14 +33,14 @@ function parseFiles(files, encoding) {
 	return new Promise((resolve, reject) => {
 		const errors = [];
 
-		var objectFile = files.find((file) => file.name.includes(".ods"));
+		const objectFile = files.find((file) => file.name.includes(".ods"));
 		if (!objectFile) {
 			reject("Pas de fichiers .ods detecté");
 			return;
 		}
 
 		const filesMap = {};
-		for (var i = 0; i < files.length; i++) {
+		for (let i = 0; i < files.length; i++) {
 			filesMap[convertLongNameToShort(files[i].name)] = files[i];
 		}
 
@@ -67,7 +67,7 @@ function parseFiles(files, encoding) {
 					} else {
 						let fileName = String(obj.REFIMG);
 						fileName = convertLongNameToShort(fileName);
-						let img = filesMap[fileName];
+						const img = filesMap[fileName];
 						if (img) {
 							notice.IMG = `memoire/${notice.REF}/${fileName}`;
 							notice._files.push(img);
@@ -198,7 +198,7 @@ function readme() {
 				<a
 					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/memoire.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Lien vers le modèle de donnée Mémoire
 				</a>

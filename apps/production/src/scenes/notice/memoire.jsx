@@ -1,24 +1,22 @@
-import React from "react";
+import React, { createRef, forwardRef } from "react";
 import { Row, Col, Container, Button, Form } from "reactstrap";
-import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import { reduxForm, change } from "redux-form";
 import Mapping from "../../services/mapping";
-import { Link } from "react-router-dom";
 import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";
-import Field from "./components/field";
+import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 import Comments from "./components/comments.js";
-import Map from "./components/map.js";
-import { bucket_url, pop_url } from "../../config.js";
+import Memoire from "../../entities/Memoire";
 import Loader from "../../components/Loader";
-import InputFiles from "./components/InputFiles";
 import API from "../../services/api";
-import Palissy from "../../entities/Palissy";
-import "./index.css";
+import { bucket_url, pop_url } from "../../config";
 import AccordionHistorique from "./components/AccordionHistorique";
+
+import "./index.css";
 
 class Notice extends React.Component {
 	state = {
@@ -26,6 +24,7 @@ class Notice extends React.Component {
 		error: "",
 		loading: true,
 		editable: true,
+		imagesFiles: [],
 	};
 
 	componentWillMount() {
@@ -41,88 +40,67 @@ class Notice extends React.Component {
 		}
 	}
 
-	// Display label by producteur
-	getLabel(field) {
-		let label = Mapping.palissy[field].label;
-		if (
-			"monuments historiques" ===
-			String(this.state.notice.PRODUCTEUR).toLocaleLowerCase()
-		) {
-			label = Mapping.palissy[field].label_mh;
+	canUpdate(PRODUCTEUR) {
+		const { role, group } = this.props;
+		const roles = ["producteur", "administrateur"];
+		if (group === "mh") {
+			return (
+				["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "MAP"].includes(
+					PRODUCTEUR,
+				) && roles.includes(role)
+			);
 		}
-		return label;
+		if (group === "memoire") {
+			return (
+				["MAP", "AUTRE"].includes(PRODUCTEUR) && roles.includes(role)
+			);
+		}
+		if (group === "admin") {
+			return (
+				[
+					"CRMH",
+					"CAOA",
+					"UDAP",
+					"INV",
+					"ETAT",
+					"AUTRE",
+					"MAP",
+					"SDAP",
+					"ARCH",
+					"",
+				].includes(PRODUCTEUR) && roles.includes(role)
+			);
+		}
+		return false;
 	}
 
 	async load(ref) {
 		this.setState({ loading: true });
-		const notice = await API.getNotice("palissy", ref);
+		const notice = await API.getNotice("memoire", ref);
 		if (!notice) {
 			this.setState({
 				loading: false,
-				error: "Cette notice n'existe pas",
+				error: `Impossible de charger la notice ${ref}`,
 			});
+			console.error(`Impossible de charger la notice ${ref}`);
 			return;
 		}
-		this.props.initialize(notice);
-		//const editable = this.canEdit(notice);
+		//const editable = this.canUpdate(notice.PRODUCTEUR);
 		let editable = false;
-		API.canEdit(notice.REF, "", notice.PRODUCTEUR, "palissy").then(
+		API.canEdit(notice.REF, "", notice.PRODUCTEUR, "memoire").then(
 			(result) => {
 				editable = result.validate;
 				this.setState({ editable: editable });
 			},
 		);
 
+		this.props.initialize(notice);
 		this.setState({ loading: false, notice, editable });
 	}
 
-	canEdit(notice) {
-		if (this.props.group === "admin") {
-			return true;
-		}
-		if (this.props.group === "mh") {
-			return (
-				["producteur", "administrateur"].includes(this.props.role) &&
-				[
-					"Monuments Historiques",
-					"Architecture",
-					"État",
-					"Autre",
-				].includes(notice.PRODUCTEUR)
-			);
-		}
-		return false;
-	}
-
 	async onSubmit(values) {
-		const files = [];
-
-		for (let i = 0; i < values["POP_ARRETE_PROTECTION"].length; i++) {
-			if (typeof values["POP_ARRETE_PROTECTION"][i] === "object") {
-				const file = values["POP_ARRETE_PROTECTION"][i];
-				files.push(file);
-				values["POP_ARRETE_PROTECTION"][i] =
-					`palissy/${values.REF}/${file.name}`;
-			}
-		}
-
-		for (let i = 0; i < values["POP_DOSSIER_PROTECTION"].length; i++) {
-			if (typeof values["POP_DOSSIER_PROTECTION"][i] === "object") {
-				const file = values["POP_DOSSIER_PROTECTION"][i];
-				files.push(file);
-				values["POP_DOSSIER_PROTECTION"][i] =
-					`palissy/${values.REF}/${file.name}`;
-			}
-		}
-
-		if (typeof values["POP_DOSSIER_VERT"] === "object") {
-			const file = values["POP_DOSSIER_VERT"];
-			files.push(file);
-			values["POP_DOSSIER_VERT"] = `palissy/${values.REF}/${file.name}`;
-		}
-
 		this.setState({ saving: true });
-		const notice = new Palissy(values);
+		const notice = new Memoire(values);
 		if (notice._errors.length) {
 			toastr.error("La modification n'a pas été enregistrée", "", {
 				component: () => (
@@ -137,9 +115,9 @@ class Notice extends React.Component {
 			try {
 				await API.updateNotice(
 					this.state.notice.REF,
-					"palissy",
+					"memoire",
 					values,
-					files,
+					this.state.imagesFiles,
 					"manuel",
 				);
 				toastr.success(
@@ -156,6 +134,35 @@ class Notice extends React.Component {
 		this.setState({ saving: false });
 	}
 
+	// Référence sur le champ REFIMG pour la synchronisation avec IMG
+	inputREFIMG = createRef();
+
+	// Mise à jour du champ REFIMG en fonction de IMG
+	setInputREFIMG(v) {
+		this.props.dispatch(change("notice", this.inputREFIMG.current.name, v));
+	}
+
+	// Champ personnalisé REFIMG pour ajout de la référence
+	renderRefIMG() {
+		const RenderREFIMG = forwardRef((props, ref) => {
+			const name = "REFIMG";
+			return (
+				<Field
+					{...Mapping.memoire[name]}
+					disabled={
+						Mapping.memoire[name].generated ||
+						Mapping.memoire[name].deprecated ||
+						!this.state.editable
+					}
+					addRef={ref}
+					name={name}
+					{...props}
+				/>
+			);
+		});
+		return <RenderREFIMG ref={this.inputREFIMG} />;
+	}
+
 	render() {
 		if (this.state.loading) {
 			return <Loader />;
@@ -166,7 +173,7 @@ class Notice extends React.Component {
 		}
 
 		const arr = [];
-		for (var key in this.state.notice) {
+		for (const key in this.state.notice) {
 			if (this.state.notice[key]) {
 				arr.push(
 					<span key={key}>{`${key}:${this.state.notice[key]}`}</span>,
@@ -178,12 +185,12 @@ class Notice extends React.Component {
 			<Container className="notice">
 				<BackButton left history={this.props.history} />
 				<h2 className="main-title">
-					{`${this.state.notice.TICO} (${this.state.notice.REF})`}{" "}
+					Notice {this.state.notice.REF}{" "}
 					<a
 						style={{ fontSize: "small" }}
 						target="_blank"
-						rel="noopener"
-						href={`${pop_url}/notice/palissy/${this.state.notice.REF}`}
+						rel="noreferrer noopener"
+						href={`${pop_url}/notice/memoire/${this.state.notice.REF}`}
 					>
 						voir en diffusion
 					</a>
@@ -195,185 +202,33 @@ class Notice extends React.Component {
 					<Comments POP_FLAGS={this.state.notice.POP_FLAGS} />
 
 					<FieldImages
-						name="MEMOIRE"
-						canOrder={this.state.editable} // We can ordering images only if we have the proper rights on the notice
-						canEdit={false} // As image come from memoire, we can't delete or update an image from palissy
-						external={true}
-						getAbsoluteUrl={(e) => {
-							if (!e.url) {
-								return "";
-							}
-							if (e.url && e.url.indexOf("memoire/") === 0) {
-								return `${bucket_url}${e.url}`;
-							} else {
-								return e.url;
-							}
-						}}
-						footer={(e) => {
-							return (
-								<Link
-									to={`/notice/memoire/${e.ref}`}
-									target="_blank"
-									rel="noopener"
-								>
-									{e.ref}
-								</Link>
-							);
-						}}
+						name="IMG"
+						canOrder={this.state.editable}
+						canEdit={this.state.editable}
+						createUrlFromName={(e) =>
+							`memoire/${this.state.notice.REF}/${e}`
+						}
+						getAbsoluteUrl={(e) =>
+							e.indexOf("www") === -1 ? `${bucket_url}${e}` : e
+						}
+						filesToUpload={(imagesFiles) =>
+							this.setState({ imagesFiles })
+						}
+						setREFIMG={(v) => this.setInputREFIMG(v)}
 					/>
-					<div className="imageLinks">
-						<div>
-							<span>
-								Pour ajouter une image, il faut enregistrer la
-								référence {this.state.notice.REF} dans le champ
-								LBASE des notices de la base Mémoire :{" "}
-							</span>
-							<Link
-								to={`/recherche-avancee/memoire?qb=%5B%7B%22field%22%3A%22COM.keyword%22%2C%22operator%22%3A%22%2A%22%2C%22value%22%3A%22${this.state.notice.COM}%22%2C%22combinator%22%3A%22AND%22%2C%22index%22%3A0%7D%2C%7B%22field%22%3A%22DPT.keyword%22%2C%22operator%22%3A%22%2A%22%2C%22value%22%3A%22${this.state.notice.DPT}%22%2C%22combinator%22%3A%22AND%22%2C%22index%22%3A1%7D%5D&sortKey=%22REF.keyword%22&sortOrder=%22desc%22`}
-								target="_blank"
-								rel="noopener"
-							>
-								Voir les images de la base Mémoire correspondant
-								à la même localisation
-							</Link>
-						</div>
-					</div>
-
 					<Section
-						title="Références documentaires"
+						title="1. Sujet de la photographie ou du document graphique"
 						icon={require("../../assets/info.png")}
 						color="#FF7676"
 					>
+						<div className="subtitle">1.1. Localisation</div>
 						<Row>
 							<Col sm={6}>
 								<CustomField name="REF" disabled={true} />
 								<CustomField
-									name="PRODUCTEUR"
-									disabled={true}
-								/>
-								<CustomField
-									name="DOMN"
+									name="PAYS"
 									disabled={!this.state.editable}
 								/>
-								<CustomField
-									name="RENV"
-									createUrl={(e) => `/notice/palissy/${e}`}
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DENQ"
-									disabled={!this.state.editable}
-									customLabel={this.getLabel("DENQ")}
-								/>
-								<CustomField
-									name="DBOR"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="NOMS"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DMIS"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DMAJ"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="THEM"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ETUD"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DOSS"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="COPY"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="CONTACT"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-						</Row>
-					</Section>
-
-					<Section
-						title="Désignation de l'objet"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
-								<CustomField
-									name="DENO"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PDEN"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="TITR"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="NART"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="APPL"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="TICO"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="PART"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="REFP"
-									createUrl={(e) => `/notice/palissy/${e}`}
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PARN"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PAPP"
-									disabled={!this.state.editable}
-								/>
-
-								<CustomField
-									name="REFE"
-									createUrl={(e) => `/notice/palissy/${e}`}
-									disabled={!this.state.editable}
-								/>
-							</Col>
-						</Row>
-					</Section>
-
-					<Section
-						title="Localisation de l'objet"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
 								<CustomField
 									name="REG"
 									disabled={!this.state.editable}
@@ -394,29 +249,14 @@ class Notice extends React.Component {
 									name="WCOM"
 									disabled={!this.state.editable}
 								/>
+							</Col>
+							<Col sm={6}>
 								<CustomField
 									name="INSEE"
 									disabled={!this.state.editable}
-									customLabel={this.getLabel("INSEE")}
 								/>
 								<CustomField
-									name="PLOC"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="AIRE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="CANT"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="LIEU"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ADRS"
+									name="ADRESSE"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -424,304 +264,209 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
+									name="LIEU"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="PLOC"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LOCA"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="MCGEO"
+									disabled={!this.state.editable}
+								/>
+							</Col>
+						</Row>
+						<div className="subtitle">1.2. Description</div>
+						<Row>
+							<Col sm={6}>
+								<CustomField
 									name="EDIF"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="REFA"
-									createUrl={(e) => `/notice/merimee/${e}`}
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="ZONE"
+									name="LEG"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="COOR"
+									name="OBJT"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="COORM"
+									name="DENO"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="POP_COORDONNEES.lat"
+									name="TICO"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="POP_COORDONNEES.lon"
+									name="SUJET"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="IMPL"
+									name="TITRE"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="EMPL"
+									name="THEATRE"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="DEPL"
+									name="CINEPROD"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="VOLS"
-									disabled={!this.state.editable}
-								/>
-								<div className="subtitle">
-									Pour certains objets privés
-								</div>
-								<CustomField
-									name="COM2"
+									name="ROLE"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="INSEE2"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="EDIF2"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ADRS2"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="EMPL2"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-						</Row>
-					</Section>
-
-					<Section
-						title="Description de l'objet"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
-								<CustomField
-									name="CATE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="STRU"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="MATR"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DESC"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="REPR"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PREP"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DIMS"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="PDIM"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="ETAT"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PETA"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="INSC"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PINS"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-						</Row>
-					</Section>
-
-					<Section
-						title="Historique de l'objet"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
-								<CustomField
-									name="SCLE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="SCLX"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DATE"
+									name="AUTOEU"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
 									name="AUTR"
 									disabled={!this.state.editable}
 								/>
+							</Col>
+							<Col sm={6}>
 								<CustomField
-									name="PERS"
+									name="SCLE"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="AFIG"
+									name="DATOEU"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LIEUORIG"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LBASE"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LBASE2"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="SERIE"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="MCL"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="MCPER"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DOM"
+									disabled={!this.state.editable}
+								/>
+							</Col>
+						</Row>
+						<div className="subtitle">
+							1.3. Références des documents reproduits et des
+							objets photographiés
+						</div>
+						<Row>
+							<Col sm={6}>
+								<CustomField
+									name="AUTG"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="AUTOR"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="COTECOR"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NUMOR"
 									disabled={!this.state.editable}
 								/>
 							</Col>
 							<Col sm={6}>
 								<CustomField
-									name="ATEL"
+									name="ANUMOR"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="EXEC"
+									name="ANUMP"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="ORIG"
+									name="DOC"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="STAD"
+									name="TIREDE"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="HIST"
+									name="LIEUCOR"
 									disabled={!this.state.editable}
 								/>
 							</Col>
 						</Row>
 					</Section>
-
 					<Section
-						title="Statut juridique de l'objet"
+						title="2. Auteur"
 						icon={require("../../assets/info.png")}
 						color="#FF7676"
 					>
 						<Row>
 							<Col sm={6}>
 								<CustomField
-									name="STAT"
+									name="AUT"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="PROT"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="DPRO"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PPRO"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="INTE"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="MANQUANT"
+									name="AUTP"
 									disabled={!this.state.editable}
 								/>
 							</Col>
 							<Col sm={6}>
 								<CustomField
-									name="NINV"
+									name="AUTTI"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="NUMA"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="OBS"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PRECISION_JURIDIQUE"
+									name="LAUTP"
 									disabled={!this.state.editable}
 								/>
 							</Col>
 						</Row>
 					</Section>
-
 					<Section
-						title="Références documentaires de l'objet"
+						title="3. Description de la photographie ou du document graphique"
 						icon={require("../../assets/info.png")}
 						color="#FF7676"
 					>
+						<div className="subtitle">
+							3.1. Éléments d’identification
+						</div>
 						<Row>
 							<Col sm={6}>
 								<CustomField
-									name="ACQU"
+									name="TYPDOC"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="EXPO"
+									name="NEGPOS"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="BIBL"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CustomField
-									name="SOUR"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="PHOTO"
-									disabled={!this.state.editable}
-								/>
-							</Col>
-						</Row>
-					</Section>
-
-					<Section
-						title="Gestion de la base de données"
-						icon={require("../../assets/info.png")}
-						color="#FF7676"
-					>
-						<Row>
-							<Col sm={6}>
-								<CustomField
-									name="IDAGR"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="MICR"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="MFICH"
-									disabled={!this.state.editable}
-								/>
-								<CustomField
-									name="VIDEO"
+									name="NUMI"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -729,71 +474,207 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="AUTP"
+									name="NUMTI"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="ANUMTI"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NUMAUTP"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NUMVERS"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="REPRO"
+									disabled={!this.state.editable}
+								/>
+							</Col>
+							<Col sm={6}>
+								<CustomField
+									name="RENV"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="LIEUCTI"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="COTECTI"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="PRECOR"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DATIMM"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="ACQU"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="COPY"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
 									name="DIFF"
 									disabled={!this.state.editable}
 								/>
+							</Col>
+						</Row>
+						<div className="subtitle">
+							3.2. Description technique du phototype ou du
+							document graphique
+						</div>
+						<Row>
+							<Col sm={6}>
 								<CustomField
-									name="IMAGE"
+									name="TECHN"
 									disabled={!this.state.editable}
 								/>
-								<InputFiles
-									name="POP_ARRETE_PROTECTION"
+								<CustomField
+									name="FORMAT"
 									disabled={!this.state.editable}
-									{...Mapping.palissy[
-										"POP_ARRETE_PROTECTION"
-									]}
 								/>
-								<InputFiles
-									name="POP_DOSSIER_VERT"
+								<CustomField
+									name="TECHTI"
 									disabled={!this.state.editable}
-									{...Mapping.palissy["POP_DOSSIER_VERT"]}
 								/>
-								<InputFiles
-									name="POP_DOSSIER_PROTECTION"
+								<CustomField
+									name="FORMATTI"
 									disabled={!this.state.editable}
-									{...Mapping.palissy[
-										"POP_DOSSIER_PROTECTION"
-									]}
+								/>
+								<CustomField
+									name="TECHOR"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="FORMATOR"
+									disabled={!this.state.editable}
 								/>
 							</Col>
 							<Col sm={6}>
 								<CustomField
-									name="LBASE2"
+									name="MENTIONS"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="WEB"
-									disabled={!this.state.editable}
-									customLabel={this.getLabel("WEB")}
-								/>
-								<CustomField
-									name="DOSADRS"
+									name="MENTTI"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="DOSURL"
-									disabled={!this.state.editable}
-								/>
-								<CustomField name="DOSURLPDF" disabled={true} />
-								<CustomField
-									name="LIENS"
+									name="MENTOR"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="MOSA"
+									name="COULEUR"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="RENP"
+									name="TRL"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="REFJOC"
-									createUrl={(e) => `/notice/joconde/${e}`}
+									name="ECH"
+									disabled={!this.state.editable}
+								/>
+							</Col>
+						</Row>
+						<div className="subtitle">
+							3.3. Datation et événements liés à l’image
+						</div>
+						<Row>
+							<Col sm={6}>
+								<CustomField
+									name="DATPV"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="JDATPV"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DATOR"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DATTI"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="EXPO"
+									disabled={!this.state.editable}
+								/>
+							</Col>
+							<Col sm={6}>
+								<CustomField
+									name="PUBLI"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="OBS"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="OBSTI"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="OBSOR"
+									disabled={!this.state.editable}
+								/>
+							</Col>
+						</Row>
+					</Section>
+					<Section
+						title="4. Gestion de la base de données"
+						icon={require("../../assets/info.png")}
+						color="#FF7676"
+					>
+						<Row>
+							<Col sm={6}>
+								<CustomField
+									name="REF"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DMIS"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="DMAJ"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="CONTACT"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="PRODUCTEUR"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="IDPROD"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="EMET"
+									disabled={!this.state.editable}
+								/>
+								{this.renderRefIMG()}
+								<CustomField
+									name="MARQ"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="TYPSUPP"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
@@ -802,15 +683,50 @@ class Notice extends React.Component {
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="LARC"
+									name="LIENS"
+									disabled={!this.state.editable}
+								/>
+							</Col>
+							<Col sm={6}>
+								<CustomField
+									name="TYPEIMG"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="LINHA"
+									name="REFIM"
 									disabled={!this.state.editable}
 								/>
 								<CustomField
-									name="LREG"
+									name="VIDEO"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="NVD"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="VUECD"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="IMG"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="WEB"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="SENS"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="ADPHOT"
+									disabled={!this.state.editable}
+								/>
+								<CustomField
+									name="REFJOC"
+									createUrl={(e) => `/notice/joconde/${e}`}
 									disabled={!this.state.editable}
 								/>
 							</Col>
@@ -819,27 +735,21 @@ class Notice extends React.Component {
 							historique={this.state.notice.HISTORIQUE || []}
 						/>
 					</Section>
-					<Map notice={this.state.notice} />
-					<div className="buttons">
-						<BackButton history={this.props.history} />
-						{this.state.editable ? (
-							<React.Fragment>
-								<DeleteButton
-									noticeType="palissy"
-									noticeRef={this.state.notice.REF}
-								/>
-								<Button
-									disabled={!this.state.editable}
-									color="primary"
-									type="submit"
-								>
-									Sauvegarder
-								</Button>
-							</React.Fragment>
-						) : (
-							<div />
-						)}
-					</div>
+
+					{this.state.editable ? (
+						<div className="buttons">
+							<BackButton history={this.props.history} />
+							<DeleteButton
+								noticeType="memoire"
+								noticeRef={this.state.notice.REF}
+							/>
+							<Button color="primary" type="submit">
+								Sauvegarder
+							</Button>
+						</div>
+					) : (
+						<div />
+					)}
 				</Form>
 			</Container>
 		);
@@ -847,17 +757,17 @@ class Notice extends React.Component {
 }
 
 const CustomField = ({ name, disabled, ...rest }) => {
-	if (!Mapping.palissy[name]) {
-		console.log(name, " n'existe pas");
-		return <div />;
-	}
-	if (rest["customLabel"]) {
-		Mapping.palissy[name].label = rest["customLabel"];
+	if (!Mapping.memoire[name]) {
+		console.log("ERROR with ", name);
 	}
 	return (
 		<Field
-			{...Mapping.palissy[name]}
-			disabled={Mapping.palissy[name].generated == true || disabled}
+			{...Mapping.memoire[name]}
+			disabled={
+				Mapping.memoire[name].generated ||
+				Mapping.memoire[name].deprecated ||
+				disabled
+			}
 			name={name}
 			{...rest}
 		/>
@@ -866,10 +776,10 @@ const CustomField = ({ name, disabled, ...rest }) => {
 
 const mapStateToProps = ({ Auth }) => {
 	const { role, group } = Auth.user;
-	return { role, group };
+	return {
+		role,
+		group,
+	};
 };
 
-export default connect(
-	mapStateToProps,
-	{},
-)(reduxForm({ form: "notice" })(Notice));
+export default connect(mapStateToProps)(reduxForm({ form: "notice" })(Notice));

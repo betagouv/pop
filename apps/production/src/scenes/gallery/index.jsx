@@ -10,9 +10,9 @@ import {
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
-import CollapsableFacet from "../search/components/CollapsableFacet";
+import CollapsableFacet from "../search/components/CollapsableFacet.js";
 import { es_url, bucket_url } from "../../config.js";
-import utils from "../search/components/utils";
+import utils from "../search/components/utils.js";
 import "./index.css";
 
 function Gallery({ role, group }) {
@@ -119,7 +119,7 @@ const Card = ({ data }) => {
 					<div>
 						<a
 							target="_blank"
-							rel="noopener"
+							rel="noreferrer noopener"
 							href={`https://www.pop.culture.gouv.fr/gallery/${data._id}`}
 						>
 							{`https://www.pop.culture.gouv.fr/gallery/${data._id}`}

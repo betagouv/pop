@@ -127,7 +127,7 @@ class Notice extends React.Component {
 					<a
 						style={{ fontSize: "small" }}
 						target="_blank"
-						rel="noopener"
+						rel="noreferrer noopener"
 						href={`${pop_url}/notice/mnr/${this.state.notice.REF}`}
 					>
 						voir en diffusion
@@ -398,8 +398,8 @@ const CustomField = ({ name, disabled, ...rest }) => {
 		<Field
 			{...Mapping.mnr[name]}
 			disabled={
-				Mapping.mnr[name].generated == true ||
-				Mapping.mnr[name].deprecated == true ||
+				Mapping.mnr[name].generated ||
+				Mapping.mnr[name].deprecated ||
 				disabled
 			}
 			name={name}

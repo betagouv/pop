@@ -9,39 +9,25 @@ import { pop_url, bucket_url } from "../../config";
 import { slugifyFilename } from "../notice/components/utils";
 
 class Import extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	parseFiles(files, encoding) {
-		return new Promise(async (resolve, reject) => {
-			// Test Excel format
-			let rootFile = files.find(
-				(file) =>
-					("" + file.name.split(".").pop()).toLowerCase() === "csv",
-			);
-			if (rootFile) {
-				try {
-					const res = await utils.readCSV(
-						rootFile,
-						";",
-						encoding,
-						'"',
-					);
-					const importedNotices = await importCSV(res, files);
-					resolve({ importedNotices, fileNames: [rootFile.name] });
-					return;
-				} catch (e) {
-					console.log("error", e);
-					reject(
-						"Fichier .csv mal formaté ( vérifiez que le séparateur est ';' ) ",
-					);
-					return;
-				}
+	async parseFiles(files, encoding) {
+		// Test Excel format
+		const rootFile = files.find(
+			(file) => `${file.name.split(".").pop()}`.toLowerCase() === "csv",
+		);
+		if (rootFile) {
+			try {
+				const res = await utils.readCSV(rootFile, ";", encoding, '"');
+				const importedNotices = await importCSV(res, files);
+				return { importedNotices, fileNames: [rootFile.name] };
+			} catch (e) {
+				console.log("error", e);
+				throw Error(
+					"Fichier .csv mal formaté ( vérifiez que le séparateur est ';' ) ",
+				);
 			}
+		}
 
-			reject("Fichier .csv absent");
-			return;
-		});
+		throw Error("Fichier .csv absent");
 	}
 
 	render() {
@@ -79,54 +65,48 @@ const mapstatetoprops = ({ Auth }) => {
 
 export default connect(mapstatetoprops, {})(Import);
 
-function importCSV(res, files) {
-	return new Promise(async (resolve, reject) => {
-		const importedNotices = res.map((value) => new Enluminures(value));
+async function importCSV(res, files) {
+	const importedNotices = res.map((value) => new Enluminures(value));
 
-		const filesMap = {};
-		for (var i = 0; i < files.length; i++) {
-			// Sometimes, name is the long name with museum code, sometimes its not...
-			// The easiest way I found was to transform long name to short name each time I get a file name.
-			filesMap[Enluminures.convertLongNameToShort(files[i].name)] =
-				files[i];
+	const filesMap = {};
+	for (let i = 0; i < files.length; i++) {
+		// Sometimes, name is the long name with museum code, sometimes its not...
+		// The easiest way I found was to transform long name to short name each time I get a file name.
+		filesMap[Enluminures.convertLongNameToShort(files[i].name)] = files[i];
+	}
+
+	// ADD IMAGES
+	for (let i = 0; i < importedNotices.length; i++) {
+		const names = importedNotices[i].VIDEO;
+
+		if (!names) {
+			continue;
 		}
-
-		// ADD IMAGES
-		for (var i = 0; i < importedNotices.length; i++) {
-			const names = importedNotices[i].VIDEO;
-
-			if (!names) {
-				continue;
+		const arrayImg = [];
+		for (let j = 0; j < names.length; j++) {
+			const img = filesMap[Enluminures.convertLongNameToShort(names[j])];
+			if (!img) {
+				importedNotices[i]._errors.push(
+					`Image ${Enluminures.convertLongNameToShort(
+						names[j],
+					)} introuvable`,
+				);
+			} else {
+				const shortname = Enluminures.convertLongNameToShort(img.name);
+				const newImage = utils.renameFile(
+					img,
+					slugifyFilename(shortname),
+				);
+				importedNotices[i]._files.push(newImage);
+				arrayImg.push(
+					`enluminures/${importedNotices[i].REF}/${shortname}`,
+				);
 			}
-			const arrayImg = [];
-			for (var j = 0; j < names.length; j++) {
-				let img =
-					filesMap[Enluminures.convertLongNameToShort(names[j])];
-				if (!img) {
-					importedNotices[i]._errors.push(
-						`Image ${Enluminures.convertLongNameToShort(
-							names[j],
-						)} introuvable`,
-					);
-				} else {
-					const shortname = Enluminures.convertLongNameToShort(
-						img.name,
-					);
-					let newImage = utils.renameFile(
-						img,
-						slugifyFilename(shortname),
-					);
-					importedNotices[i]._files.push(newImage);
-					arrayImg.push(
-						`enluminures/${importedNotices[i].REF}/${shortname}`,
-					);
-				}
-			}
-			importedNotices[i].VIDEO = arrayImg;
 		}
+		importedNotices[i].VIDEO = arrayImg;
+	}
 
-		resolve(importedNotices);
-	});
+	return importedNotices;
 }
 
 function report(notices, collection, email, institution, importId) {
@@ -149,19 +129,19 @@ function report(notices, collection, email, institution, importId) {
 		return acc;
 	}, 0);
 
-	let contact = "wilfried.muller@culture.gouv.fr";
+	const contact = "wilfried.muller@culture.gouv.fr";
 
 	arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
 	arr.push(`<h2>Établissement : ${institution}</h2>`);
 	arr.push(`<h2>Producteur : ${email}</h2>`);
 	arr.push(`<h2>Contact : ${contact}</h2>`);
 	arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`);
-	arr.push(`<ul>`);
+	arr.push("<ul>");
 	arr.push(
 		`<li>${notices.length - rejected.length} notice(s) valide(s)</li>`,
 	);
 	arr.push(`<li style="list-style-type:none">`);
-	arr.push(`<ul>`);
+	arr.push("<ul>");
 	arr.push(`<li>${created.length} notice(s) créée(s)</li>`);
 	arr.push(`<li>${updated.length} notice(s) mise(s) à jour</li>`);
 	arr.push(
@@ -170,12 +150,12 @@ function report(notices, collection, email, institution, importId) {
 		} notice(s) importée(s) sans mise à jour</li>`,
 	);
 	arr.push(`<li>${imagesNumber} image(s) chargée(s)</li>`);
-	arr.push(`</ul>`);
-	arr.push(`</li >`);
+	arr.push("</ul>");
+	arr.push("</li >");
 	arr.push(`<li>${rejected.length} notice(s) rejetée(s)</li>`);
-	arr.push(`</ul>`);
+	arr.push("</ul>");
 
-	let obj = {};
+	const obj = {};
 	let count = 0;
 
 	const URL = `${pop_url}/notice/enluminures/`;
@@ -197,18 +177,18 @@ function report(notices, collection, email, institution, importId) {
 					],
 				};
 
-				let idThesaurus = notices[i]._warnings[j].substr(
+				const idThesaurus = notices[i]._warnings[j].substr(
 					notices[i]._warnings[j].indexOf(")]") - 3,
 					3,
 				);
-				if (!Number.isNaN(parseInt(idThesaurus))) {
+				if (!Number.isNaN(Number.parseInt(idThesaurus))) {
 					obj[notices[i]._warnings[j]].idThesaurus = idThesaurus;
 				}
 			}
 		}
 	}
 
-	arr.push(`<h1>Liens</h1>`);
+	arr.push("<h1>Liens</h1>");
 	arr.push(
 		`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`,
 	);
@@ -302,7 +282,7 @@ function readme() {
 				<a
 					href="https://github.com/betagouv/pop/tree/master/apps/api/doc/enluminures.md"
 					target="_blank"
-					rel="noopener"
+					rel="noreferrer noopener"
 				>
 					Lien vers le modèle de donnée Enluminures
 				</a>
