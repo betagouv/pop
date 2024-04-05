@@ -7,7 +7,7 @@ const Dotenv = require("dotenv-webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = (env) => {
-	const mode = env["production"] ? "production" : "staging";
+	const mode = env.production ? "production" : "staging";
 	console.log("MODE :", mode);
 	const plugins = [
 		new WebpackManifestPlugin({

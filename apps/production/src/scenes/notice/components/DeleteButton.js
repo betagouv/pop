@@ -7,8 +7,7 @@ export default class DeleteButton extends React.Component {
 	delete() {
 		const ref = this.props.noticeRef;
 		const confirmText =
-			`Vous êtes sur le point de supprimer la notice REF ${ref}. ` +
-			`Êtes-vous certain·e de vouloir continuer ?`;
+			`Vous êtes sur le point de supprimer la notice REF ${ref}. Êtes-vous certain·e de vouloir continuer ?`;
 		const toastrConfirmOptions = {
 			onOk: () => {
 				API.deleteNotice(this.props.noticeType, ref).then(() => {

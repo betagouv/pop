@@ -62,7 +62,7 @@ export function checkOpenTheso(notice) {
 	return new Promise(async (resolve, _reject) => {
 		const optimMap = {};
 
-		for (var field in notice) {
+		for (const field in notice) {
 			const noticeField = notice[field];
 
 			// Ne pas vérifier les propriétés qui ne concernent pas les champs de la notice
@@ -76,11 +76,10 @@ export function checkOpenTheso(notice) {
 
 			let values = [];
 			const thesaurus =
-				notice._mapping[field] && notice._mapping[field].thesaurus;
+				notice._mapping[field]?.thesaurus;
 
 			const thesaurus_separator =
-				notice._mapping[field] &&
-				notice._mapping[field].thesaurus_separator;
+				notice._mapping[field]?.thesaurus_separator;
 
 			// Controle vocabulaire sur Opentheso si les bases sont concernées
 			if (THESAURUS_CONTROLE.base_list.includes(notice._type)) {
@@ -114,7 +113,7 @@ export function checkOpenTheso(notice) {
 					.map((e) => e.trim())
 					.filter((element) => element !== "");
 
-				for (var k = 0; k < values.length; k++) {
+				for (let k = 0; k < values.length; k++) {
 					const message = await checkVocabulaireThesaurus(
 						notice._mapping[field],
 						values[k],
@@ -141,7 +140,7 @@ export function checkOpenTheso(notice) {
 			}
 			values = values.map((e) => e.trim());
 
-			for (var k = 0; k < values.length; k++) {
+			for (let k = 0; k < values.length; k++) {
 				const value = values[k];
 				if (value) {
 					let val = null;
@@ -186,7 +185,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 		 * Pour réduire les requêtes vers l'api, le référentiel est stocké dans le storage si celui-ci n'est pas encore présent
 		 * Exemple de clé opentheso-th305
 		 */
-		if (!localStorage.getItem("opentheso-" + mappingField.idthesaurus)) {
+		if (!localStorage.getItem(`opentheso-${mappingField.idthesaurus}`)) {
 			if (!storageExceptionThesaurus.includes(mappingField.idthesaurus)) {
 				const resp = await api.getThesaurusById(
 					mappingField.idthesaurus,
@@ -195,7 +194,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 				try {
 					// Sauvegarde du référentiel
 					localStorage.setItem(
-						"opentheso-" + mappingField.idthesaurus,
+						`opentheso-${mappingField.idthesaurus}`,
 						JSON.stringify(resp),
 					);
 				} catch (exception) {
@@ -206,7 +205,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 			}
 		} else {
 			arrayStorage = JSON.parse(
-				localStorage.getItem("opentheso-" + mappingField.idthesaurus),
+				localStorage.getItem(`opentheso-${mappingField.idthesaurus}`),
 			);
 		}
 
@@ -221,7 +220,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 			} else {
 				res = await callThesaurus(mappingField.idthesaurus, value);
 			}
-			if (res.statusCode == "200") {
+			if (res.statusCode === "200") {
 				arrayLabel = JSON.parse(res.body);
 			}
 		}
@@ -246,17 +245,17 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 		// Recherhe de la valeur exacte dans le tableau de valeur du WS
 		for (let i = 0; i < arrayLabel.length; i++) {
 			const element = arrayLabel[i];
-			if (element.label == value && !element.isAltLabel) {
+			if (element.label === value && !element.isAltLabel) {
 				// la saisie correspond à une valeur du référentiel et la valeur est un label préféré
 				foundValue = true;
 			} else if (
-				element.label == value ||
+				element.label === value ||
 				element.label.toLowerCase() === value.toLowerCase()
 			) {
 				// la saisie correspond à une valeur du référentiel mais la valeur n'est pas un label préféré
 				arrayFilterWithValue.push(element);
 			} else {
-				if (mappingField["label"] == "Auteur") {
+				if (mappingField.label === "Auteur") {
 					const newValue = value.split("(")[0].trim();
 					addMatchValue(newValue, element);
 				} else {
@@ -283,7 +282,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 							)}] peuvent correspondre`
 						: `la valeur [${arrayPrefLabel[0]}] peut correspondre`;
 				if (strVal !== null) {
-					message += ", " + strVal;
+					message += `, ${strVal}`;
 				}
 			} else {
 				message = `la valeur [${value}] est considérée comme rejetée par le thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
@@ -315,7 +314,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 							)}] peuvent correspondre`
 						: `la valeur [${arrayPrefLabel[0]}] peut correspondre`;
 				if (strVal !== null) {
-					message += ", " + strVal;
+					message += `, ${strVal}`;
 				}
 			}
 		}

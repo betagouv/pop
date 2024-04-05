@@ -56,11 +56,11 @@ export default class MapComponent extends React.Component {
 	}
 
 	isLatitude(lat) {
-		return isFinite(lat) && lat !== 0 && Math.abs(lat) <= 90;
+		return Number.isFinite(lat) && lat !== 0 && Math.abs(lat) <= 90;
 	}
 
 	isLongitude(lng) {
-		return isFinite(lng) && lng !== 0 && Math.abs(lng) <= 180;
+		return Number.isFinite(lng) && lng !== 0 && Math.abs(lng) <= 180;
 	}
 
 	render() {
@@ -84,9 +84,7 @@ export default class MapComponent extends React.Component {
 		}
 
 		if (
-			POP_COORDINATES_POLYGON &&
-			POP_COORDINATES_POLYGON.coordinates &&
-			POP_COORDINATES_POLYGON.coordinates.length
+			POP_COORDINATES_POLYGON?.coordinates?.length
 		) {
 			center = POP_COORDINATES_POLYGON.coordinates[0];
 		}

@@ -59,7 +59,7 @@ function Loading({ onFinish, collection, ctx, target, header }) {
 				docs = hits;
 
 				// Next iterations, send scroll_id, get results.
-				while (hits && hits.length) {
+				while (hits?.length) {
 					rawResponse = await fetch(
 						`${es_url}/scroll?scroll_id=${scrollId}`,
 						{
@@ -73,12 +73,12 @@ function Loading({ onFinish, collection, ctx, target, header }) {
 				}
 				// TODO: stream the result to preserve client memory and not to crash the browser.
 				const d = new Date();
-				const date = ("0" + d.getDate()).slice(-2);
-				const month = ("0" + (d.getMonth() + 1)).slice(-2);
+				const date = (`0${d.getDate()}`).slice(-2);
+				const month = (`0${d.getMonth() + 1}`).slice(-2);
 				const year = d.getFullYear();
-				const minutes = ("0" + d.getMinutes()).slice(-2);
-				const hours = ("0" + d.getHours()).slice(-2);
-				const secondes = ("0" + d.getSeconds()).slice(-2);
+				const minutes = (`0${d.getMinutes()}`).slice(-2);
+				const hours = (`0${d.getHours()}`).slice(-2);
+				const secondes = (`0${d.getSeconds()}`).slice(-2);
 				const fileName = `${collection}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
 				exportData(fileName, docs, header);
 				onFinish();
@@ -90,7 +90,7 @@ function Loading({ onFinish, collection, ctx, target, header }) {
 
 		const queries = [];
 		for (const w of ctx.widgets.values()) {
-			if (w && w.query) {
+			if (w?.query) {
 				queries.push(w.query);
 			}
 		}
@@ -135,7 +135,7 @@ async function exportData(fileName, entities, header) {
 
 	//Si export de museo, on enlève la colonne POP_COORDONNEES
 	//Pour remplacer par POP_COORDONNEES.lat et lon
-	if (entities[0].BASE == "Répertoire des Musées de France (Muséofile)") {
+	if (entities[0].BASE === "Répertoire des Musées de France (Muséofile)") {
 		columns.splice(columns.indexOf("POP_COORDONNEES"), 1);
 		columns.push("POP_COORDONNEES.lat");
 		columns.push("POP_COORDONNEES.lon");
@@ -219,22 +219,22 @@ async function exportData(fileName, entities, header) {
 			if (typeof value === "object") {
 				value = JSON.stringify(value);
 			}
-			value = ("" + value).replace(/"/g, '""');
+			value = (`${value}`).replace(/"/g, '""');
 
 			//Traitement spécifique pour la base Muséofile
 			if (
-				entities[j].BASE ==
+				entities[j].BASE ===
 				"Répertoire des Musées de France (Muséofile)"
 			) {
-				if (columns[i] == "POP_COORDONNEES.lat") {
+				if (columns[i] === "POP_COORDONNEES.lat") {
 					value = entities[j].POP_COORDONNEES.lat || "";
 				}
-				if (columns[i] == "POP_COORDONNEES.lon") {
+				if (columns[i] === "POP_COORDONNEES.lon") {
 					value = entities[j].POP_COORDONNEES.lon || "";
 				}
 			}
 
-			if (typeof value == "string") {
+			if (typeof value === "string") {
 				value = value.replace(/\0/g, "");
 			}
 

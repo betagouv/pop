@@ -36,7 +36,7 @@ export function* signinByToken() {
 	try {
 		response = yield api.getAuthUser();
 	} catch (e) {}
-	if (response && response.user) {
+	if (response?.user) {
 		if (process.env.SENTRY_DSN) {
 			Raven.setUserContext({ email: response.user.email });
 		}

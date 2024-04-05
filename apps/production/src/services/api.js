@@ -29,7 +29,7 @@ class api {
 
 	// Ask for new password.
 	forgetPassword(email) {
-		return request.fetchJSON("POST", `/auth/forgetPassword`, { email });
+		return request.fetchJSON("POST", "/auth/forgetPassword", { email });
 	}
 
 	// Create a user.
@@ -85,12 +85,12 @@ class api {
 
 	// Get all users.
 	getUsers() {
-		return request.fetchJSON("GET", `/users`);
+		return request.fetchJSON("GET", "/users");
 	}
 
 	// Get all producteurs.
 	getProducteurs() {
-		return request.fetchJSON("GET", `/producteur`);
+		return request.fetchJSON("GET", "/producteur");
 	}
 
 	//Get one producteur
@@ -114,17 +114,17 @@ class api {
 	async getPrefixesFromProducteurs(producteurs) {
 		const producteurList = producteurs.reduce(
 			(result, list) =>
-				(result = result == null ? list : result + "," + list),
+				(result = result == null ? list : `${result},${list}`),
 		);
 		return request.fetchJSON(
 			"GET",
-			"/producteur/prefixesFromProducteurs?producteurs=" + producteurList,
+			`/producteur/prefixesFromProducteurs?producteurs=${producteurList}`,
 		);
 	}
 
 	// Get all groups.
 	getGroups() {
-		return request.fetchJSON("GET", `/groups`);
+		return request.fetchJSON("GET", "/groups");
 	}
 
 	// Get all groups.
@@ -171,9 +171,9 @@ class api {
 	sendReport(subject, to, body) {
 		const data = { subject, to, body };
 		if (process.env.NODE_ENV !== "production") {
-			data.subject = "TEST " + data.subject;
+			data.subject = `TEST ${data.subject}`;
 		}
-		return request.fetchJSON("POST", `/reporting/email`, data);
+		return request.fetchJSON("POST", "/reporting/email", data);
 	}
 
 	// Create an import.
@@ -181,7 +181,7 @@ class api {
 		const formData = new FormData();
 		formData.append("import", JSON.stringify(data));
 		formData.append("file", file, "import.csv");
-		return request.fetchFormData("POST", `/import`, formData);
+		return request.fetchFormData("POST", "/import", formData);
 	}
 
 	// Update an import.
@@ -371,11 +371,11 @@ class api {
 			formData.append("files", file, file.name);
 		}
 		formData.append("gallery", JSON.stringify(obj));
-		return request.fetchFormData("POST", `/gallery`, formData);
+		return request.fetchFormData("POST", "/gallery", formData);
 	}
 
 	// Update one notice.
-	async updateNotice(ref, collection, data, files = [], updateMode) {
+	async updateNotice(ref, collection, data, files, updateMode) {
 		const formData = new FormData();
 		formData.append("notice", JSON.stringify(data));
 		for (let i = 0; i < files.length; i++) {
@@ -503,7 +503,7 @@ class api {
 	}
 
 	getMaintenance() {
-		return request.getJSON(`/maintenance`);
+		return request.getJSON("/maintenance");
 	}
 }
 

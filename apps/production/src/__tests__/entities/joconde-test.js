@@ -1,10 +1,10 @@
-import fs from "fs";
+import fs from "node:fs";
 import Joconde from "../../entities/Joconde";
 import utils from "../../scenes/import/utils";
 
 test("Create new Joconde entities without errors from file joconde-valid-UTF-8.txt", () => {
 	const contents = fs.readFileSync(
-		__dirname + "/../__notices__/joconde-valid-UTF-8.txt",
+		`${__dirname}/../__notices__/joconde-valid-UTF-8.txt`,
 		"utf-8",
 	);
 	const notices = utils.parseAjoutPilote(contents, Joconde).map((notice) => {
@@ -36,7 +36,7 @@ test("Create new Joconde entities without errors from file joconde-valid-UTF-8.t
 
 test("Create new Joconde entities with warnings from file joconde-valid-UTF-8-warnings.txt", () => {
 	const contents = fs.readFileSync(
-		__dirname + "/../__notices__/joconde-valid-UTF-8-warnings.txt",
+		`${__dirname}/../__notices__/joconde-valid-UTF-8-warnings.txt`,
 		"utf-8",
 	);
 	const notices = utils.parseAjoutPilote(contents, Joconde).map((value) => {

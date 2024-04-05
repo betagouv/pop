@@ -28,24 +28,24 @@ const customSearchBtn = ({ onClickCall }) => {
 				title="Rechercher"
 				className="btn btn-primary"
 				onClick={() => onClickCall()}
-			></SearchButton>
+			/>
 		</div>
 	);
 };
 
 function handler({ key }) {
-	if (String(key) == "Enter") {
+	if (String(key) === "Enter") {
 		onKeyDownCall();
 	}
 }
 
 const conditionRef = (element) => {
-	return element.field == "REF.keyword" && element.value.startsWith("PM");
+	return element.field === "REF.keyword" && element.value.startsWith("PM");
 };
 
 const conditionProducteur = (element) => {
 	return (
-		element.field == "PRODUCTEUR.keyword" &&
+		element.field === "PRODUCTEUR.keyword" &&
 		String(element.value).toLowerCase() === "monuments historiques"
 	);
 };
@@ -62,9 +62,8 @@ const isMhProducteur = (initialValues) => {
 			return conditionRef(element) || conditionProducteur(element);
 		});
 		return filterKey.length > 0;
-	} else {
-		return false;
 	}
+		return false;
 };
 
 /**

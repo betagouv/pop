@@ -46,7 +46,7 @@ export default class ImportComponent extends Component {
 			this.addMessage(
 				`Récupération de  ${topconctps.length} "top" concepts...`,
 			);
-			this.addMessage(`Récupération des concepts enfants`);
+			this.addMessage("Récupération des concepts enfants");
 			const allconcepts = [];
 			for (let i = 0; i < topconctps.length; i++) {
 				const childs = await api.getAllChildrenConcept(
@@ -58,7 +58,7 @@ export default class ImportComponent extends Component {
 					true,
 				);
 			}
-			this.addMessage(`Récupération des termes préférés...`);
+			this.addMessage("Récupération des termes préférés...");
 			const terms = [];
 			for (let i = 0; i < allconcepts.length; i++) {
 				const childs = await api.getPreferredTermByConceptId(
@@ -70,9 +70,9 @@ export default class ImportComponent extends Component {
 					true,
 				);
 			}
-			this.addMessage(`Suppression des anciennes valeurs thesaurus`);
+			this.addMessage("Suppression des anciennes valeurs thesaurus");
 			await api.deleteAllThesaurus(this.state.arc);
-			this.addMessage(`Ajout des thésaurus dans la base`);
+			this.addMessage("Ajout des thésaurus dans la base");
 
 			while (terms.length) {
 				const tmp = terms.splice(0, 100);
@@ -83,7 +83,7 @@ export default class ImportComponent extends Component {
 				);
 			}
 			this.setState({ loading: false, done: true });
-			this.addMessage(`FIN ! `, true);
+			this.addMessage("FIN ! ", true);
 		} catch (e) {
 			console.log("ERROR", e);
 			this.setState({ loading: false, done: true, error: "error" });

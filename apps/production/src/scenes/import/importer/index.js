@@ -70,7 +70,7 @@ class Importer extends Component {
 			let existingNotices = [];
 			const doublonNotice = [];
 			// Vérification de notice en doublon dans l'import
-			for (var i = 0; i < importedNotices.length; i++) {
+			for (let i = 0; i < importedNotices.length; i++) {
 				if (!existingNotices.includes(importedNotices[i].REF)) {
 					existingNotices.push(importedNotices[i].REF);
 				} else {
@@ -97,7 +97,7 @@ class Importer extends Component {
 
 			// Get existing notices.
 			existingNotices = {};
-			for (var i = 0; i < importedNotices.length; i++) {
+			for (let i = 0; i < importedNotices.length; i++) {
 				this.setState({
 					countRecupNotice: this.state.countRecupNotice + 1,
 				});
@@ -170,7 +170,7 @@ class Importer extends Component {
 				}
 			});
 
-			for (var i = 0; i < importedNotices.length; i++) {
+			for (let i = 0; i < importedNotices.length; i++) {
 				await checkOpenTheso(importedNotices[i]);
 				this.setState({
 					countControleNotice: this.state.countControleNotice + 1,
@@ -180,7 +180,7 @@ class Importer extends Component {
 			this.setState({ loadOpenTheso: false });
 			this.setState({ countControleNotice: 0 });
 
-			for (var i = 0; i < importedNotices.length; i++) {
+			for (let i = 0; i < importedNotices.length; i++) {
 				if (importedNotices[i]._errors.length) {
 					importedNotices[i]._status = "rejected";
 				}
@@ -393,7 +393,7 @@ class Importer extends Component {
 			this.setState({
 				loading: false,
 				step: 2,
-				loadingMessage: `Import effectué avec succès`,
+				loadingMessage: "Import effectué avec succès",
 				saveDisabled: false,
 			});
 
@@ -451,11 +451,11 @@ class Importer extends Component {
 					<div>
 						Ces fichiers{" "}
 						{noticesChargees === 1
-							? `totalisent 1 notice`
+							? "totalisent 1 notice"
 							: `totalisent ${noticesChargees} notices`}
 						, dont{" "}
 						{noticesWithImages === 1
-							? `1 est illustrée.`
+							? "1 est illustrée."
 							: `${noticesWithImages} sont illustrées.`}
 					</div>
 					<div>Parmi ces {noticesChargees} notices:</div>

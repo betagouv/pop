@@ -19,6 +19,10 @@
       },
       "style": {
         "noParameterAssign": "warn"
+      },
+      "a11y": {
+        "useAltText": "warn",
+        "useValidAnchor": "warn"
       }
     },
     "ignore": [

@@ -32,7 +32,7 @@ export default class ImportDropComponent extends Component {
 
 		if (maxSize) {
 			this.props.onFinish(
-				`Taille de fichier maximale atteinte (300Mb). Découpez votre import en plusieurs sous-parties pour importer`,
+				"Taille de fichier maximale atteinte (300Mb). Découpez votre import en plusieurs sous-parties pour importer",
 				files,
 				this.state.encoding,
 			);
@@ -138,7 +138,7 @@ export default class ImportDropComponent extends Component {
 }
 
 function getExtension(name) {
-	return ("" + name.split(".").pop()).toLowerCase();
+	return (`${name.split(".").pop()}`).toLowerCase();
 }
 
 function convertToFile(obj) {

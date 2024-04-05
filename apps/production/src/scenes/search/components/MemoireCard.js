@@ -56,7 +56,7 @@ export default ({ data }) => {
 
 	const contentSerieTitre = joinData([data.SERIE, data.TITRE]);
 
-	const loc = contentLoca && contentLoca != "" ? contentLoca : data.LOCA;
+	const loc = contentLoca && contentLoca !== "" ? contentLoca : data.LOCA;
 
 	return (
 		<Link
@@ -74,8 +74,8 @@ export default ({ data }) => {
 				<div style={{ maxWidth: "80%" }}>
 					<p style={{ whiteSpace: "initial" }}>
 						{" "}
-						{data.AUTOEU && data.AUTOEU != ""
-							? "Auteur de l’œuvre représentée : " + data.AUTOEU
+						{data.AUTOEU && data.AUTOEU !== ""
+							? `Auteur de l’œuvre représentée : ${data.AUTOEU}`
 							: ""}
 					</p>
 					<p style={{ whiteSpace: "initial" }}>{loc}</p>

@@ -22,7 +22,7 @@ const createFile = (bits, name) => {
 		return new File(bits, name);
 	} catch (e) {
 		// If we reach this point a new File could not be constructed
-		var myBlob = new Blob(bits);
+		const myBlob = new Blob(bits);
 		myBlob.lastModified = new Date();
 		myBlob.name = name;
 		return myBlob;
@@ -68,21 +68,20 @@ class FieldImages extends React.Component {
 		);
 
 		// If not file just uploaded.
-		if (index == -1) {
+		if (index === -1) {
 			return {
 				source: this.props.getAbsoluteUrl
 					? this.props.getAbsoluteUrl(e)
 					: e,
 				name: e,
 			};
-		} else {
+		}
 			return {
 				source: URL.createObjectURL(this.state.imageFiles[index]),
 				name: this.props.createUrlFromName(
 					this.state.imageFiles[index].name,
 				),
 			};
-		}
 	}
 
 	getImages() {
@@ -98,17 +97,17 @@ class FieldImages extends React.Component {
 		return this.props.input.value
 			.sort((a, b) => {
 				// Si la notice est de type Mérimée ou Palissy, l'ordre est géré avec le champ marq
-				if (typeof a == "object" && typeof b == "object") {
-					const aMarq = typeof a.marq != "undefined" ? a.marq : "";
-					const bMarq = typeof b.marq != "undefined" ? b.marq : "";
+				if (typeof a === "object" && typeof b === "object") {
+					const aMarq = typeof a.marq !== "undefined" ? a.marq : "";
+					const bMarq = typeof b.marq !== "undefined" ? b.marq : "";
 
-					if (aMarq != "" && bMarq == "") {
+					if (aMarq !== "" && bMarq === "") {
 						return -1;
 					}
-					if (aMarq == "" && bMarq != "") {
+					if (aMarq === "" && bMarq !== "") {
 						return 1;
 					}
-					if (aMarq == "" && bMarq == "") {
+					if (aMarq === "" && bMarq === "") {
 						return 0;
 					}
 					return Number.parseInt(a.marq) - Number.parseInt(b.marq);
@@ -147,7 +146,7 @@ class FieldImages extends React.Component {
 
 				// Update Image file if needed
 				const imageFiles = this.state.imageFiles.filter(
-					(e) => e.name != name,
+					(e) => e.name !== name,
 				);
 				this.props.filesToUpload(imageFiles);
 				this.setState({ imageFiles });
@@ -225,7 +224,7 @@ class FieldImages extends React.Component {
 			this.props.hideButton ||
 			(!Array.isArray(this.props.input.value) &&
 				this.props.input.value) ||
-			this.props.input.name == "MEMOIRE";
+			this.props.input.name === "MEMOIRE";
 
 		const dropZoneStyle = {
 			position: "relative",
@@ -303,16 +302,16 @@ export default ({ title, ...rest }) => {
 
 function arrayMove(arr, old_index, new_index) {
 	if (new_index >= arr.length) {
-		var k = new_index - arr.length + 1;
+		let k = new_index - arr.length + 1;
 		while (k--) {
 			arr.push(undefined);
 		}
 	}
 	arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-	var i = 0;
+	let i = 0;
 	//mise a jour du champs marq
 	while (arr[i]) {
-		if (typeof arr[i].marq != "undefined") {
+		if (typeof arr[i].marq !== "undefined") {
 			arr[i].marq = i + 1;
 		}
 		i++;

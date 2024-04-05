@@ -35,7 +35,7 @@ class DeletedNotices extends React.Component {
 			const authorizedBases = [];
 			const originalOrder = [];
 
-			if (this.props.group == "admin") {
+			if (this.props.group === "admin") {
 				group = { label: "admin" };
 			} else {
 				//Récuperation du groupe de l'utilisateur
@@ -99,7 +99,7 @@ class DeletedNotices extends React.Component {
 			const authorizedBases = [];
 			const originalOrder = [];
 
-			if (this.props.group == "admin") {
+			if (this.props.group === "admin") {
 				group = { label: "admin" };
 			} else {
 				//Récuperation du groupe de l'utilisateur
@@ -177,58 +177,52 @@ class DeletedNotices extends React.Component {
 	verifyData(data) {
 		if (data && data !== undefined && data !== null) {
 			return data;
-		} else {
-			return "";
 		}
+			return "";
 	}
 
 	triByUser(a, b) {
-		if (a.USER == undefined && b.USER !== undefined) {
+		if (a.USER === undefined && b.USER !== undefined) {
 			return 1;
-		} else if (a.USER !== undefined && b.USER == undefined) {
+		}if (a.USER !== undefined && b.USER === undefined) {
 			return -1;
-		} else {
-			return a.USER > b.USER ? 1 : -1;
 		}
+			return a.USER > b.USER ? 1 : -1;
 	}
 	triByEmail(a, b) {
-		if (a.EMAIL == undefined && b.EMAIL !== undefined) {
+		if (a.EMAIL === undefined && b.EMAIL !== undefined) {
 			return 1;
-		} else if (a.EMAIL !== undefined && b.EMAIL == undefined) {
+		}if (a.EMAIL !== undefined && b.EMAIL === undefined) {
 			return -1;
-		} else {
-			return a.EMAIL > b.EMAIL ? 1 : -1;
 		}
+			return a.EMAIL > b.EMAIL ? 1 : -1;
 	}
 	triByBase(a, b) {
-		if (a.BASE == undefined && b.BASE !== undefined) {
+		if (a.BASE === undefined && b.BASE !== undefined) {
 			return 1;
-		} else if (a.BASE !== undefined && b.BASE == undefined) {
+		}if (a.BASE !== undefined && b.BASE === undefined) {
 			return -1;
-		} else {
-			return a.BASE > b.BASE ? 1 : -1;
 		}
+			return a.BASE > b.BASE ? 1 : -1;
 	}
 	triByRef(a, b) {
-		if (a.REF == undefined && b.REF !== undefined) {
+		if (a.REF === undefined && b.REF !== undefined) {
 			return 1;
-		} else if (a.REF !== undefined && b.REF == undefined) {
+		}if (a.REF !== undefined && b.REF === undefined) {
 			return -1;
-		} else {
-			return a.REF > b.REF ? 1 : -1;
 		}
+			return a.REF > b.REF ? 1 : -1;
 	}
 	triByDate(a, b) {
 		const dateA = new Date(a.DATE);
 		const dateB = new Date(b.DATE);
 
-		if (dateA == "Invalid Date" && dateB !== "Invalid Date") {
+		if (dateA === "Invalid Date" && dateB !== "Invalid Date") {
 			return 1;
-		} else if (dateA !== "Invalid Date" && dateB == "Invalid Date") {
+		}if (dateA !== "Invalid Date" && dateB === "Invalid Date") {
 			return -1;
-		} else {
-			return dateA > dateB ? 1 : -1;
 		}
+			return dateA > dateB ? 1 : -1;
 	}
 
 	sort(mode) {

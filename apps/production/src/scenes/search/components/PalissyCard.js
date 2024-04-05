@@ -21,30 +21,30 @@ export default ({ data }) => {
 	const productorImage = (p) => {
 		if (p === "Inventaire") {
 			return <img src={inv} className="producteur" />;
-		} else if (p === "Monuments Historiques") {
+		}if (p === "Monuments Historiques") {
 			return <img src={mh} className="producteur mh" />;
 		}
 		return <div />;
 	};
 
 	const line3 = [];
-	if (data.CATE && data.CATE.length) {
+	if (data.CATE?.length) {
 		line3.push(data.CATE.join(", "));
 	}
-	if (data.MATR && data.MATR.length) {
+	if (data.MATR?.length) {
 		line3.push(data.MATR.join(", "));
 	}
 
 	const line4 = [];
-	if (data.AUTR && data.AUTR.length) {
+	if (data.AUTR?.length) {
 		line4.push(data.AUTR.join(", "));
 	}
-	if (data.SCLE && data.SCLE.length) {
+	if (data.SCLE?.length) {
 		line4.push(data.SCLE.join(", "));
 	}
 
 	const line5 = [];
-	if (data.STAT && data.STAT.length) {
+	if (data.STAT?.length) {
 		line5.push(data.STAT.join(", "));
 	}
 	if (data.DPRO) {

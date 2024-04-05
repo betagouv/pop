@@ -481,7 +481,7 @@ const operators = [
 					filter: [
 						{
 							script: {
-								script: "doc['" + k + "'].values.length <= 1",
+								script: `doc['${k}'].values.length <= 1`,
 							},
 						},
 					],
@@ -508,7 +508,7 @@ function useEventListener(eventName, handler, element) {
 		() => {
 			// Make sure element supports addEventListener
 			// On
-			const isSupported = element && element.addEventListener;
+			const isSupported = element?.addEventListener;
 			if (!isSupported) return;
 			// Create event listener that calls handler function stored in ref
 			const eventListener = (event) => savedHandler.current(event);
@@ -536,12 +536,12 @@ const customSearchBtn = ({ onClickCall }) => {
 			type="button"
 			title="Rechercher"
 			onClick={() => onClickCall()}
-		></button>
+		/>
 	);
 };
 
 function handler({ key }) {
-	if (String(key) == "Enter") {
+	if (String(key) === "Enter") {
 		onKeyDownCall();
 	}
 }

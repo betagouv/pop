@@ -9,7 +9,7 @@ import registerServiceWorker from "./registerServiceWorker";
 
 if (process.env.SENTRY_DSN) {
 	Raven.config(process.env.SENTRY_DSN, {
-		release: "pop-production-" + require("../package.json").version,
+		release: `pop-production-${require("../package.json").version}`,
 	}).install();
 }
 

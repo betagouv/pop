@@ -25,26 +25,26 @@ export default class Joconde extends Notice {
 
 		// ADD Boring stuff in order to split text to check for the thesaurus
 		const obj = {};
-		obj["AUTR"] = /[,;]/g;
-		obj["DECV"] = /[(),;]/g;
-		obj["DENO"] = /[(),;]/g;
-		obj["DOMN"] = /[(),;]/g;
-		obj["ECOL"] = /[(),;]/g;
-		obj["EPOQ"] = /[(),;]/g;
-		obj["GENE"] = /[(),;]/g;
-		obj["INSC"] = /[(),;]/g;
-		obj["LIEUX"] = /[(),;]/g;
-		obj["LOCA"] = /[(),;]/g;
-		obj["PEOC"] = /[(),;]/g;
-		obj["PERI"] = /[(),;]/g;
-		obj["PERU"] = /[(),;]/g;
-		obj["REPR"] = /[(),;:]/g;
-		obj["SREP"] = /[(),;]/g;
-		obj["TECH"] = /[(),;]/g;
-		obj["UTIL"] = /[(),;]/g;
-		obj["STAT"] = /[(),;]/g;
-		obj["LOCA"] = /[(),;]/g;
-		obj["DEPO"] = /[(),;]/g;
+		obj.AUTR = /[,;]/g;
+		obj.DECV = /[(),;]/g;
+		obj.DENO = /[(),;]/g;
+		obj.DOMN = /[(),;]/g;
+		obj.ECOL = /[(),;]/g;
+		obj.EPOQ = /[(),;]/g;
+		obj.GENE = /[(),;]/g;
+		obj.INSC = /[(),;]/g;
+		obj.LIEUX = /[(),;]/g;
+		obj.LOCA = /[(),;]/g;
+		obj.PEOC = /[(),;]/g;
+		obj.PERI = /[(),;]/g;
+		obj.PERU = /[(),;]/g;
+		obj.REPR = /[(),;:]/g;
+		obj.SREP = /[(),;]/g;
+		obj.TECH = /[(),;]/g;
+		obj.UTIL = /[(),;]/g;
+		obj.STAT = /[(),;]/g;
+		obj.LOCA = /[(),;]/g;
+		obj.DEPO = /[(),;]/g;
 
 		for (const key in obj) {
 			this._mapping[key].thesaurus_separator = obj[key];
@@ -53,11 +53,11 @@ export default class Joconde extends Notice {
 		// M46507 - Mise en forme des valeurs du champ REPR
 		if (body.REPR && Array.isArray(body.REPR)) {
 			const arrayRepr = [];
-			const regExp = new RegExp(obj["REPR"]);
+			const regExp = new RegExp(obj.REPR);
 
 			body.REPR.forEach((v) => {
 				if (regExp.test(v)) {
-					v.split(obj["REPR"]).forEach((vs) => {
+					v.split(obj.REPR).forEach((vs) => {
 						if ("" !== vs.trim()) {
 							arrayRepr.push(vs.trim());
 						}
@@ -79,7 +79,7 @@ export default class Joconde extends Notice {
 			for (let i = 0; i < arr.length; i++) {
 				if (arr[i] && !validator.isURL(arr[i])) {
 					this._warnings.push(
-						`Le champ WWW doit être une URL valide`,
+						"Le champ WWW doit être une URL valide",
 					);
 				}
 			}
@@ -203,7 +203,7 @@ export default class Joconde extends Notice {
 			};
 		}
 
-		if (manquant == "") {
+		if (manquant === "") {
 			manquant = [];
 		}
 
@@ -216,7 +216,7 @@ export default class Joconde extends Notice {
 			manquantcom !== "" &&
 			manquantcom !== " "
 		) {
-			manquantcom = manquantcom + " ; " + addon;
+			manquantcom = `${manquantcom} ; ${addon}`;
 		} else {
 			manquantcom = addon;
 		}

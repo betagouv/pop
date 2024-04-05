@@ -43,10 +43,9 @@ export default class Memoire extends Notice {
 				).length > 0
 			) {
 				this._warnings.push(
-					`Le champ LBASE doit commencer par : ` +
-						listPrefix.listePrefix.reduce((result, prefix) =>
-							result == null ? prefix : result + ", " + prefix,
-						),
+					`Le champ LBASE doit commencer par : ${listPrefix.listePrefix.reduce((result, prefix) =>
+							result == null ? prefix : `${result}, ${prefix}`,
+						)}`,
 				);
 			}
 		}
@@ -82,7 +81,7 @@ export default class Memoire extends Notice {
 		let checkRegion = true;
 		// Si le producteur existe et égale MPP (cas d'une notice existante)
 		// OU les champs PAYS et REG sont renseignés pour une nouvelle notice
-		if ((body.PRODUCTEUR && "MPP" == body.PRODUCTEUR) || foreignRegion) {
+		if ((body.PRODUCTEUR && "MPP" === body.PRODUCTEUR) || foreignRegion) {
 			checkRegion =
 				Array.isArray(body.PAYS) &&
 				body.PAYS.length < 2 &&

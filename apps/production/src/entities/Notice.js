@@ -43,7 +43,7 @@ export default class Notice {
 
 	makeItFlat = function () {
 		const flat = {};
-		for (var property in this) {
+		for (const property in this) {
 			if (
 				this.hasOwnProperty(property) &&
 				property.indexOf("_") !== 0 &&
@@ -85,9 +85,9 @@ export default class Notice {
 		if (!str) {
 			return "";
 		}
-		var regex = /([\w\d-._@]*)/;
-		var result = str.match(regex);
-		if (result && result.length == 2) {
+		const regex = /([\w\d-._@]*)/;
+		const result = str.match(regex);
+		if (result && result.length === 2) {
 			return result[1];
 		}
 		return str;
@@ -112,7 +112,7 @@ export default class Notice {
 		if (html === undefined) {
 			return html;
 		}
-		var tmp = document.createElement("DIV");
+		const tmp = document.createElement("DIV");
 		tmp.innerHTML = html;
 		return tmp.textContent || tmp.innerText || "";
 	}
@@ -122,7 +122,7 @@ function _regex(str, reg) {
 	if (!str) {
 		return [];
 	}
-	var regex = new RegExp(reg);
+	const regex = new RegExp(reg);
 	const arr = [];
 	let m;
 	while ((m = regex.exec(str)) !== null) {

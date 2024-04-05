@@ -60,7 +60,7 @@ class UpdateGroup extends React.Component {
 	deleteProducteurLine(index) {
 		this.setState({
 			producteurList: this.state.producteurList.filter(
-				(item) => item.index != index,
+				(item) => item.index !== index,
 			),
 		});
 	}

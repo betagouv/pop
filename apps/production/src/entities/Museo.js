@@ -14,7 +14,7 @@ export default class Museo extends Notice {
 			const lon = body["POP_COORDONNEES.lon"];
 			if ((lat && !lat.match(regex)) || (lon && !lon.match(regex))) {
 				this._errors.push(
-					`Les champs POP_COORDONNEES.lat et POP_COORDONNEES.lon doivent être au format numérique xx.xxxxxx`,
+					"Les champs POP_COORDONNEES.lat et POP_COORDONNEES.lon doivent être au format numérique xx.xxxxxx",
 				);
 			}
 		}

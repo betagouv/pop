@@ -158,7 +158,7 @@ class UpdateProfile extends Component {
 	};
 
 	renderMuseo() {
-		if (this.props.user.museofile && this.props.user.museofile.length) {
+		if (this.props.user.museofile?.length) {
 			return (
 				<div>
 					<h4>Mes informations Museo</h4>

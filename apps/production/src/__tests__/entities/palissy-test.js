@@ -1,11 +1,11 @@
-import fs from "fs";
+import fs from "node:fs";
 import Palissy from "../../entities/Palissy";
 import utils from "../../scenes/import/utils";
 
 test("Create new Palissy entities from file palissy-mh-valid-UTF-8.csv", async () => {
 	const contents = new Blob([
 		fs.readFileSync(
-			__dirname + "/../__notices__/palissy-mh-valid-UTF-8.csv",
+			`${__dirname}/../__notices__/palissy-mh-valid-UTF-8.csv`,
 			"utf-8",
 		),
 	]);

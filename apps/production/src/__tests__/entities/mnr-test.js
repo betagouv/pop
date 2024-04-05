@@ -1,11 +1,11 @@
-import fs from "fs";
+import fs from "node:fs";
 import Mnr from "../../entities/Mnr";
 import utils from "../../scenes/import/utils";
 
 test("Create new Mnr entity without errors from file mnr-valid-UTF-8.csv", async () => {
 	const contents = new Blob([
 		fs.readFileSync(
-			__dirname + "/../__notices__/mnr-valid-UTF-8.csv",
+			`${__dirname}/../__notices__/mnr-valid-UTF-8.csv`,
 			"utf-8",
 		),
 	]);

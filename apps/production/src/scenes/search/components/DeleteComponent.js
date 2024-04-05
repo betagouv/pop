@@ -72,7 +72,7 @@ function DeleteComponent({ role, group, collection }) {
 function DeleteButton({ onConfirm, ctx, group, collection }) {
 	const widgetResult = ctx.widgets.get("result");
 	if (
-		!(widgetResult && widgetResult.result && widgetResult.result.total > 0)
+		!(widgetResult?.result && widgetResult.result.total > 0)
 	) {
 		return null;
 	}
@@ -86,7 +86,7 @@ function DeleteButton({ onConfirm, ctx, group, collection }) {
 			// The longest "if" clause of history
 
 			//M42397 dynamisation du contrôle du producteur en fonction du group
-			if (group != "admin") {
+			if (group !== "admin") {
 				const respProducteurs = await API.getGroupByLabel(group)
 					.then((resp) => {
 						return resp.group.PRODUCTEURS;
@@ -110,15 +110,13 @@ function DeleteButton({ onConfirm, ctx, group, collection }) {
 		// Can not delete if there is more than 100 items.
 		if (widgetResult.result.total > 1000) {
 			const alertText =
-				`Vous ne pouvez pas supprimer plus de 1000 notices à la fois. ` +
-				`${widgetResult.result.total} notices sont actuellement sélectionnées.`;
+				`Vous ne pouvez pas supprimer plus de 1000 notices à la fois. ${widgetResult.result.total} notices sont actuellement sélectionnées.`;
 			toastr.error(alertText);
 			return;
 		}
 		// Return the confirmation message.
 		const confirmText =
-			`Vous êtes sur le point de supprimer définitivement ${widgetResult.result.total} notices. ` +
-			`Êtes-vous certain·e de vouloir continuer ?`;
+			`Vous êtes sur le point de supprimer définitivement ${widgetResult.result.total} notices. Êtes-vous certain·e de vouloir continuer ?`;
 		toastr.confirm(confirmText, { onOk: () => onConfirm() });
 	}
 	return (
@@ -157,7 +155,7 @@ function DeleteProcessor({ ctx, onFinish, collection }) {
 				docs = hits;
 
 				// Next iterations, send scroll_id, get results.
-				while (hits && hits.length) {
+				while (hits?.length) {
 					rawResponse = await fetch(
 						`${es_url}/scroll?scroll_id=${scrollId}`,
 						{
@@ -179,7 +177,7 @@ function DeleteProcessor({ ctx, onFinish, collection }) {
 				// Success, end process.
 				const message =
 					total === 1
-						? `1 notice a été supprimée.`
+						? "1 notice a été supprimée."
 						: `${total} notices ont été supprimées.`;
 				toastr.success(
 					`${message} Cela sera visible dans 1 à 5 min en diffusion.`,
@@ -196,7 +194,7 @@ function DeleteProcessor({ ctx, onFinish, collection }) {
 
 		const queries = [];
 		for (const w of ctx.widgets.values()) {
-			if (w && w.query) {
+			if (w?.query) {
 				queries.push(w.query);
 			}
 		}

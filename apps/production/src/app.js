@@ -69,7 +69,7 @@ class App extends React.Component {
 			<Alert
 				style={{ marginBottom: "0px", textAlign: "center" }}
 				color="warning"
-				isOpen={this.state.maintenance == "TRUE"}
+				isOpen={this.state.maintenance === "TRUE"}
 			>
 				{message_maintenance}
 			</Alert>

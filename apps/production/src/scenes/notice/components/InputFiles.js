@@ -24,9 +24,8 @@ const InputFiles = ({ input, type }) => {
 									const n = input.value.filter((f) => {
 										if (typeof f === "object") {
 											return f.name !== e.key;
-										} else {
-											return f !== e.key;
 										}
+											return f !== e.key;
 									});
 									input.onChange(n);
 								} else {

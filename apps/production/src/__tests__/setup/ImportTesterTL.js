@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import { render } from "@testing-library/react";
 import React from "react";
 import { Provider } from "react-redux";
@@ -29,7 +29,7 @@ export const loadFilesAsObjectsList = (filesnames, encoding = "utf-8") => {
 
 	const images = filesnames.filter(isImage).map((f) => {
 		const dummyImage = fs.readFileSync(
-			__dirname + "/../__notices__/image.jpg",
+			`${__dirname}/../__notices__/image.jpg`,
 			"binary",
 		);
 		return new File([new Blob([dummyImage])], f, { type: "binary" });
@@ -39,7 +39,7 @@ export const loadFilesAsObjectsList = (filesnames, encoding = "utf-8") => {
 		.filter((f) => !isImage(f))
 		.map((f) => {
 			const doc = fs.readFileSync(
-				__dirname + "/../__notices__/" + f,
+				`${__dirname}/../__notices__/${f}`,
 				encoding,
 			);
 			return new File([new Blob([doc])], f, { type: "text/plain" });

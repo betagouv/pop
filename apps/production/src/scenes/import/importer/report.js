@@ -58,17 +58,17 @@ export default function generate(
 	arr.push(`<h2>Contact : ${contact}</h2>`);
 
 	if (fileNames.length) {
-		arr.push(`<h2>Fichier(s) importé(s) :</h2>`);
-		arr.push(`<ul>`);
+		arr.push("<h2>Fichier(s) importé(s) :</h2>");
+		arr.push("<ul>");
 		arr.push(...fileNames.map((e) => `<li>${e}</li>`));
-		arr.push(`</ul>`);
+		arr.push("</ul>");
 	}
 
 	arr.push(`<p>Nombre de notices chargées : ${notices.length}</p>`);
-	arr.push(`<ul>`);
+	arr.push("<ul>");
 	arr.push(`<li>${notices.length - rejected.length} notices valides</li>`);
 	arr.push(`<li style="list-style-type:none">`);
-	arr.push(`<ul>`);
+	arr.push("<ul>");
 	arr.push(`<li>${created.length} notices créées</li>`);
 	arr.push(`<li>${updated.length} notices mises à jour</li>`);
 	arr.push(
@@ -76,13 +76,13 @@ export default function generate(
 			notices.length - rejected.length - created.length - updated.length
 		} notices importées sans mise à jour</li>`,
 	);
-	arr.push(`</ul>`);
-	arr.push(`</li >`);
+	arr.push("</ul>");
+	arr.push("</li >");
 	arr.push(`<li>${rejected.length} notices rejetées</li>`);
-	arr.push(`</ul>`);
+	arr.push("</ul>");
 	arr.push(`<p>Nombre d'images chargées : ${imagesNumber}</p>`);
 
-	arr.push(`<h1>Notices créées</h1>`);
+	arr.push("<h1>Notices créées</h1>");
 	{
 		const columns = [
 			...fieldToExport.map((e) => e.name),
@@ -90,10 +90,10 @@ export default function generate(
 			"Details",
 		];
 		const lines = [];
-		for (var i = 0; i < created.length; i++) {
+		for (let i = 0; i < created.length; i++) {
 			const fields = fieldToExport.map((e) => `"${created[i][e.key]}"`);
 			lines.push([...fields, "Création", ""]);
-			for (var j = 0; j < created[i]._warnings.length; j++) {
+			for (let j = 0; j < created[i]._warnings.length; j++) {
 				lines.push([
 					...fields,
 					"Avertissement",
@@ -105,17 +105,17 @@ export default function generate(
 		arr.push(...table);
 	}
 	{
-		arr.push(`<h1>Notices modifiées</h1>`);
+		arr.push("<h1>Notices modifiées</h1>");
 		const columns = [
 			...fieldToExport.map((e) => e.name),
 			"Etat",
 			"Details",
 		];
 		const lines = [];
-		for (var i = 0; i < updated.length; i++) {
+		for (let i = 0; i < updated.length; i++) {
 			const fields = fieldToExport.map((e) => `"${updated[i][e.key]}"`);
 			lines.push([...fields, "Modification", ""]);
-			for (var j = 0; j < updated[i]._warnings.length; j++) {
+			for (let j = 0; j < updated[i]._warnings.length; j++) {
 				lines.push([
 					...fields,
 					"Avertissement",
@@ -127,32 +127,32 @@ export default function generate(
 		arr.push(...table);
 	}
 	{
-		arr.push(`<h1>Notices rejetées</h1>`);
+		arr.push("<h1>Notices rejetées</h1>");
 		const columns = [
 			...fieldToExport.map((e) => e.name),
 			"Etat",
 			"Details",
 		];
 		const lines = [];
-		for (var i = 0; i < rejected.length; i++) {
+		for (let i = 0; i < rejected.length; i++) {
 			const fields = fieldToExport.map((e) => `"${rejected[i][e.key]}"`);
 
 			lines.push([...fields, "Rejet", ""]);
-			for (var j = 0; j < rejected[i]._warnings.length; j++) {
+			for (let j = 0; j < rejected[i]._warnings.length; j++) {
 				lines.push([
 					...fields,
 					"Avertissement",
 					rejected[i]._warnings[j],
 				]);
 			}
-			for (var j = 0; j < rejected[i]._errors.length; j++) {
+			for (let j = 0; j < rejected[i]._errors.length; j++) {
 				lines.push([...fields, "Erreur", rejected[i]._errors[j]]);
 			}
 		}
 
 		const table = createHTMLTable(columns, lines);
 		arr.push(...table);
-		arr.push(`<h1>Liens</h1>`);
+		arr.push("<h1>Liens</h1>");
 		arr.push(
 			`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`,
 		);
@@ -169,14 +169,14 @@ function createHTMLTable(columns, objs) {
 	arr.push(
 		`<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">`,
 	);
-	arr.push(`<tr>`);
+	arr.push("<tr>");
 	arr.push(
 		...columns.map(
 			(e) =>
 				`<th style="font-family:Arial, Helvetica, sans-serif; font-size:14px;border:1px solid black;">${e}</th>`,
 		),
 	);
-	arr.push(`</tr>`);
+	arr.push("</tr>");
 	arr.push(
 		...objs.map((line) => {
 			const arr2 = [];
@@ -193,6 +193,6 @@ function createHTMLTable(columns, objs) {
 			return arr2.join("");
 		}),
 	);
-	arr.push(`</table > `);
+	arr.push("</table > ");
 	return arr;
 }

@@ -4,7 +4,7 @@ const initState = {
 	error: "",
 };
 
-export default function reducer(state = initState, action) {
+export default function reducer(state, action) {
 	switch (action.type) {
 		case actions.SIGNIN_REQUEST:
 			return { ...state };

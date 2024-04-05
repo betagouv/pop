@@ -15,15 +15,15 @@ export default () => {
 	return (
 		<div>
 			<Switch>
-				<Route path={`/notice/merimee/:ref`} component={Merimee} />
-				<Route path={`/notice/palissy/:ref`} component={Palissy} />
-				<Route path={`/notice/mnr/:ref`} component={Mnr} />
-				<Route path={`/notice/joconde/:ref`} component={Joconde} />
-				<Route path={`/notice/memoire/:ref`} component={Memoire} />
-				<Route path={`/notice/museo/:ref`} component={Museo} />
-				<Route path={`/notice/autor/:ref`} component={Autor} />
+				<Route path={"/notice/merimee/:ref"} component={Merimee} />
+				<Route path={"/notice/palissy/:ref"} component={Palissy} />
+				<Route path={"/notice/mnr/:ref"} component={Mnr} />
+				<Route path={"/notice/joconde/:ref"} component={Joconde} />
+				<Route path={"/notice/memoire/:ref"} component={Memoire} />
+				<Route path={"/notice/museo/:ref"} component={Museo} />
+				<Route path={"/notice/autor/:ref"} component={Autor} />
 				<Route
-					path={`/notice/enluminures/:ref`}
+					path={"/notice/enluminures/:ref"}
 					component={Enluminures}
 				/>
 			</Switch>

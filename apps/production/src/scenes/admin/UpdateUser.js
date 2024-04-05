@@ -231,7 +231,7 @@ class UpdateUser extends React.Component {
 							width: "1.25rem",
 							height: "1.25rem",
 						}}
-					></Input>
+					/>
 				</div>
 				<div className="button-container">
 					<Button

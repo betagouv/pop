@@ -4,7 +4,7 @@ export function compare(importedObject, existed) {
 	// Make the imported object flat
 
 	const imported = importedObject.makeItFlat();
-	delete imported["POP_IMPORT"];
+	imported.POP_IMPORT = undefined;
 
 	// I had to do this because sometimes, on IE 11, some fields are not compared well.
 	// The origin of the issue could be somewhere else but I couldnt find it

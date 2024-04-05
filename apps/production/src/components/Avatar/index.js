@@ -16,11 +16,10 @@ export default ({ email, photoURL }) => {
 				<div className="Initials">{getInitials(email)}</div>
 			</span>
 		);
-	} else {
+	}
 		return (
 			<span className="avatar">
 				<img className="Logo" alt="" src={photoURL} />
 			</span>
 		);
-	}
 };

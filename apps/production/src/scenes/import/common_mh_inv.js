@@ -8,7 +8,7 @@ import utils from "./utils";
 
 function parseFilesCsv(files, encoding, typeImport) {
 	return new Promise(async (resolve, reject) => {
-		var objectFile = files.find((file) => file.name.includes(".csv"));
+		const objectFile = files.find((file) => file.name.includes(".csv"));
 		if (!objectFile) {
 			reject("Pas de fichiers .csv detecté");
 			return;
@@ -16,14 +16,14 @@ function parseFilesCsv(files, encoding, typeImport) {
 		const objs = await utils.readCSV(objectFile, "|", encoding);
 		const importedNotices = [];
 		const filesMap = {};
-		for (var i = 0; i < files.length; i++) {
+		for (let i = 0; i < files.length; i++) {
 			filesMap[files[i].name] = files[i];
 		}
 
 		// Réupération des producteurs
 		const response = await api.getProducteurs();
 
-		for (var i = 0; i < objs.length; i++) {
+		for (let i = 0; i < objs.length; i++) {
 			const obj = objs[i];
 
 			if (!obj.REF) {
@@ -126,9 +126,9 @@ function parseFilesCsv(files, encoding, typeImport) {
 				);
 			} else if ("memoire" === collection) {
 				// M45867 - Ajout de la condition sur la vérification de région pour le producteur MPP
-				if ("MH" == typeImport) {
+				if ("MH" === typeImport) {
 					const producteurMPP =
-						(obj.PRODUCTEUR && "MPP" == obj.PRODUCTEUR) ||
+						(obj.PRODUCTEUR && "MPP" === obj.PRODUCTEUR) ||
 						(null !== obj.IDPROD &&
 							String(obj.IDPROD).startsWith("SAP")) ||
 						(null !== obj.EMET &&
@@ -152,10 +152,10 @@ function parseFilesCsv(files, encoding, typeImport) {
 }
 
 function controlREFIMG(importedNotices) {
-	for (var i = 0; i < importedNotices.length; i++) {
+	for (let i = 0; i < importedNotices.length; i++) {
 		const names = importedNotices[i].IMG;
 		const refIMG = importedNotices[i].REFIMG;
-		if (names != undefined) {
+		if (names !== undefined) {
 			//Si refimg est renseigné une image avec le même nom doit être joint lors de l'import
 			if (refIMG && refIMG !== convertLongNameToShort(names)) {
 				importedNotices[i]._errors.push(

@@ -16,7 +16,7 @@ export default () => {
 		<div>
 			<Switch>
 				<Route
-					path={`/recherche-avancee/palissy`}
+					path={"/recherche-avancee/palissy"}
 					component={() => (
 						<AdvancedSearch
 							collection="palissy"
@@ -27,7 +27,7 @@ export default () => {
 					)}
 				/>
 				<Route
-					path={`/recherche-avancee/merimee`}
+					path={"/recherche-avancee/merimee"}
 					component={() => (
 						<AdvancedSearch
 							collection="merimee"
@@ -38,7 +38,7 @@ export default () => {
 					)}
 				/>
 				<Route
-					path={`/recherche-avancee/mnr`}
+					path={"/recherche-avancee/mnr"}
 					component={() => (
 						<AdvancedSearch
 							collection="mnr"
@@ -47,7 +47,7 @@ export default () => {
 					)}
 				/>
 				<Route
-					path={`/recherche-avancee/joconde`}
+					path={"/recherche-avancee/joconde"}
 					component={() => (
 						<AdvancedSearch
 							collection="joconde"
@@ -58,7 +58,7 @@ export default () => {
 					)}
 				/>
 				<Route
-					path={`/recherche-avancee/memoire`}
+					path={"/recherche-avancee/memoire"}
 					component={() => (
 						<AdvancedSearch
 							collection="memoire"
@@ -69,7 +69,7 @@ export default () => {
 					)}
 				/>
 				<Route
-					path={`/recherche-avancee/museo`}
+					path={"/recherche-avancee/museo"}
 					component={() => (
 						<AdvancedSearch
 							collection="museo"
@@ -80,7 +80,7 @@ export default () => {
 					)}
 				/>
 				<Route
-					path={`/recherche-avancee/enluminures`}
+					path={"/recherche-avancee/enluminures"}
 					component={() => (
 						<AdvancedSearch
 							collection="enluminures"
@@ -91,7 +91,7 @@ export default () => {
 					)}
 				/>
 				<Route
-					path={`/recherche-avancee/autor`}
+					path={"/recherche-avancee/autor"}
 					component={() => (
 						<AdvancedSearch
 							collection="autor"

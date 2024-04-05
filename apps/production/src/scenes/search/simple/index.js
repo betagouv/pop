@@ -20,37 +20,37 @@ export default () => {
 	return (
 		<div>
 			<Switch>
-				<Route path={`/recherche/`} exact component={Home} />
+				<Route path={"/recherche/"} exact component={Home} />
 				<Route
-					path={`/recherche/merimee`}
+					path={"/recherche/merimee"}
 					component={() => <Merimee message={search_message} />}
 				/>
 				<Route
-					path={`/recherche/palissy`}
+					path={"/recherche/palissy"}
 					component={() => <Palissy message={search_message} />}
 				/>
 				<Route
-					path={`/recherche/mnr`}
+					path={"/recherche/mnr"}
 					component={() => <Mnr message={search_message} />}
 				/>
 				<Route
-					path={`/recherche/joconde`}
+					path={"/recherche/joconde"}
 					component={() => <Joconde message={search_message} />}
 				/>
 				<Route
-					path={`/recherche/memoire`}
+					path={"/recherche/memoire"}
 					component={() => <Memoire message={search_message} />}
 				/>
 				<Route
-					path={`/recherche/museo`}
+					path={"/recherche/museo"}
 					component={() => <Museo message={search_message} />}
 				/>
 				<Route
-					path={`/recherche/autor`}
+					path={"/recherche/autor"}
 					component={() => <Autor message={search_message} />}
 				/>
 				<Route
-					path={`/recherche/enluminures`}
+					path={"/recherche/enluminures"}
 					component={() => <Enluminures message={search_message} />}
 				/>
 			</Switch>

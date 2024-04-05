@@ -15,7 +15,7 @@ function forceHttps(res, req, next) {
 	) {
 		return res.redirect(
 			302,
-			"https://production.pop.culture.gouv.fr" + req.url,
+			`https://production.pop.culture.gouv.fr${req.url}`,
 		);
 	}
 	next();

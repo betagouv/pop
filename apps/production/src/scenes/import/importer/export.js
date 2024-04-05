@@ -6,7 +6,7 @@ export function generateCSVFile(
 	let csv = "";
 	// Add columns ETAT(create, updated, rejected) and informations about warning or errors
 	const columns = [...fieldToExport.map((e) => e.name), "Etat", "Details"];
-	csv += columns.join(",") + "\n";
+	csv += `${columns.join(",")}\n`;
 
 	const created = notices.filter((e) => e._status === "created");
 	const updated = notices.filter((e) => e._status === "updated");
@@ -14,12 +14,12 @@ export function generateCSVFile(
 
 	const lines = [];
 
-	for (var i = 0; i < created.length; i++) {
+	for (let i = 0; i < created.length; i++) {
 		const fields = fieldToExport.map(
 			(e) => `"${created[i][e.key] ? created[i][e.key] : ""}"`,
 		);
 		lines.push([...fields, "Création", ""].join(","));
-		for (var j = 0; j < created[i]._warnings.length; j++) {
+		for (let j = 0; j < created[i]._warnings.length; j++) {
 			lines.push(
 				[
 					...fields,
@@ -30,12 +30,12 @@ export function generateCSVFile(
 		}
 	}
 
-	for (var i = 0; i < updated.length; i++) {
+	for (let i = 0; i < updated.length; i++) {
 		const fields = fieldToExport.map(
 			(e) => `"${updated[i][e.key] ? updated[i][e.key] : ""}"`,
 		);
 		lines.push([...fields, "Modification", ""].join(","));
-		for (var j = 0; j < updated[i]._messages.length; j++) {
+		for (let j = 0; j < updated[i]._messages.length; j++) {
 			lines.push(
 				[
 					...fields,
@@ -44,7 +44,7 @@ export function generateCSVFile(
 				].join(","),
 			);
 		}
-		for (var j = 0; j < updated[i]._warnings.length; j++) {
+		for (let j = 0; j < updated[i]._warnings.length; j++) {
 			lines.push(
 				[
 					...fields,
@@ -55,13 +55,13 @@ export function generateCSVFile(
 		}
 	}
 
-	for (var i = 0; i < rejected.length; i++) {
+	for (let i = 0; i < rejected.length; i++) {
 		const fields = fieldToExport.map(
 			(e) => `"${rejected[i][e.key] ? rejected[i][e.key] : ""}"`,
 		);
 
 		lines.push([...fields, "Rejet", ""].join(","));
-		for (var j = 0; j < rejected[i]._errors.length; j++) {
+		for (let j = 0; j < rejected[i]._errors.length; j++) {
 			lines.push(
 				[
 					...fields,
@@ -70,7 +70,7 @@ export function generateCSVFile(
 				].join(","),
 			);
 		}
-		for (var j = 0; j < rejected[i]._warnings.length; j++) {
+		for (let j = 0; j < rejected[i]._warnings.length; j++) {
 			lines.push(
 				[
 					...fields,
@@ -93,12 +93,12 @@ export function downloadDetails(
 	const file = generateCSVFile(notices, base, fieldToExport);
 
 	const d = new Date();
-	const date = ("0" + d.getDate()).slice(-2);
-	const month = ("0" + (d.getMonth() + 1)).slice(-2);
+	const date = (`0${d.getDate()}`).slice(-2);
+	const month = (`0${d.getMonth() + 1}`).slice(-2);
 	const year = d.getFullYear();
-	const minutes = ("0" + d.getMinutes()).slice(-2);
-	const hours = ("0" + d.getHours()).slice(-2);
-	const secondes = ("0" + d.getSeconds()).slice(-2);
+	const minutes = (`0${d.getMinutes()}`).slice(-2);
+	const hours = (`0${d.getHours()}`).slice(-2);
+	const secondes = (`0${d.getSeconds()}`).slice(-2);
 	const fileName = `Import${base}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
 
 	initiateFileDownload(file, fileName);
@@ -113,7 +113,7 @@ function initiateFileDownload(blob, fileName) {
 		// IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
 		window.navigator.msSaveBlob(blob, fileName);
 	else {
-		var a = window.document.createElement("a");
+		const a = window.document.createElement("a");
 		a.href = window.URL.createObjectURL(blob, {
 			type: "text/plain;charset=UTF-8",
 		});
