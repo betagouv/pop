@@ -34,16 +34,14 @@ export function JocondeAbregeePdf(notice) {
 
 	const localisation = joinData([notice.VILLE_M, notice.NOMOFF]);
 	return (
-		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
+		<Link src={`${pop_url}notice/${notice.collection}/${notice.REF}`}>
 			<View style={styles.noticeAbregeeContainer}>
 				<View style={styles.imageAbregee}>
 					{notice.IMG.length > 0 ? (
 						<Image
 							src={
-								bucket_url +
-								notice.IMG[0] +
-								"?" +
-								new Date().getTime()
+								`${bucket_url +
+								notice.IMG[0]}?${new Date().getTime()}`
 							}
 						/>
 					) : (

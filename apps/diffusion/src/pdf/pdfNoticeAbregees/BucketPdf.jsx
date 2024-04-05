@@ -18,15 +18,13 @@ export function BucketPdf(bucket) {
 					<Text
 						style={styles.title}
 						render={({ pageNumber, totalPages }) =>
-							pageNumber !== 1 ? `\n` : ``
+							pageNumber !== 1 ? "\n" : ""
 						}
 						fixed
 					/>
 					<Text style={styles.noticeNumber}>
 						{bucket.length
-							? bucket.length +
-								" notice" +
-								(bucket.length > 1 ? "s" : "")
+							? `${bucket.length} notice${bucket.length > 1 ? "s" : ""}`
 							: "Le panier est vide"}
 					</Text>
 					<View style={styles.bucketContainer}>

@@ -61,7 +61,7 @@ class SearchAdvanced extends React.Component {
 
 	// Lancement de la recherche via la touche entrée
 	handler = ({ key }) => {
-		if (String(key) == "Enter") {
+		if (String(key) === "Enter") {
 			this.onKeyDownCall();
 		}
 	};
@@ -102,9 +102,8 @@ class SearchAdvanced extends React.Component {
 						this.conditionProducteur(element),
 				);
 			return filterKey.length > 0;
-		} else {
-			return false;
 		}
+			return false;
 	}
 
 	render() {
@@ -1280,8 +1279,8 @@ class SearchAdvanced extends React.Component {
 						{
 							value: ["DENQ.keyword"],
 							text: !this.isMhProducteur()
-								? Mapping.palissy["DENQ"].label
-								: Mapping.palissy["DENQ"].label_mh,
+								? Mapping.palissy.DENQ.label
+								: Mapping.palissy.DENQ.label_mh,
 							fields: "DENQ",
 						},
 						{
@@ -1397,8 +1396,8 @@ class SearchAdvanced extends React.Component {
 						{
 							value: ["INSEE.keyword"],
 							text: !this.isMhProducteur()
-								? Mapping.palissy["INSEE"].label
-								: Mapping.palissy["INSEE"].label_mh,
+								? Mapping.palissy.INSEE.label
+								: Mapping.palissy.INSEE.label_mh,
 							fields: "INSEE",
 						},
 						{
@@ -1644,8 +1643,8 @@ class SearchAdvanced extends React.Component {
 						{
 							value: ["WEB.keyword"],
 							text: !this.isMhProducteur()
-								? Mapping.palissy["WEB"].label
-								: Mapping.palissy["WEB"].label_mh,
+								? Mapping.palissy.WEB.label
+								: Mapping.palissy.WEB.label_mh,
 							fields: "WEB",
 						},
 						{
@@ -3138,7 +3137,7 @@ class SearchAdvanced extends React.Component {
 
 		return (
 			<div className="advanced-search">
-				{(this.props.base == "" || this.props.base == null) && (
+				{(this.props.base === "" || this.props.base == null) && (
 					<div className="radioContainer">
 						{bases.map((base) => (
 							<div className="radioCard">
@@ -3149,7 +3148,7 @@ class SearchAdvanced extends React.Component {
 										type="radio"
 										value={base.key}
 										checked={
-											this.props.base == base.key
+											this.props.base === base.key
 												? true
 												: false
 										}

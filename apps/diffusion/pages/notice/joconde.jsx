@@ -91,7 +91,7 @@ export default class extends React.Component {
 		//Construction des liens précédents/suivants
 		const cookies = new Cookies();
 		const listRefs = cookies.get(
-			"listRefs-" + this.props.searchParams.idQuery,
+			`listRefs-${this.props.searchParams.idQuery}`,
 		);
 		if (listRefs) {
 			const indexOfCurrentNotice = listRefs.indexOf(
@@ -105,12 +105,7 @@ export default class extends React.Component {
 				);
 				if (previousCollection !== "") {
 					prevLink =
-						"notice/" +
-						previousCollection +
-						"/" +
-						listRefs[indexOfCurrentNotice - 1] +
-						"?" +
-						this.props.searchParamsUrl;
+						`notice/${previousCollection}/${listRefs[indexOfCurrentNotice - 1]}?${this.props.searchParamsUrl}`;
 				}
 			}
 			if (indexOfCurrentNotice < listRefs.length - 1) {
@@ -119,12 +114,7 @@ export default class extends React.Component {
 				);
 				if (nextCollection !== "") {
 					nextLink =
-						"notice/" +
-						nextCollection +
-						"/" +
-						listRefs[indexOfCurrentNotice + 1] +
-						"?" +
-						this.props.searchParamsUrl;
+						`notice/${nextCollection}/${listRefs[indexOfCurrentNotice + 1]}?${this.props.searchParamsUrl}`;
 				}
 			}
 			this.setState({ prevLink, nextLink });
@@ -282,9 +272,8 @@ export default class extends React.Component {
 					&lsaquo;
 				</a>
 			);
-		} else {
-			return null;
 		}
+			return null;
 	}
 
 	renderNextButton() {
@@ -298,9 +287,8 @@ export default class extends React.Component {
 					&rsaquo;
 				</a>
 			);
-		} else {
-			return null;
 		}
+			return null;
 	}
 
 	render() {
@@ -348,7 +336,7 @@ export default class extends React.Component {
 			<div>
 				<PDFDownloadLink
 					document={pdf}
-					fileName={"joconde_" + notice.REF + ".pdf"}
+					fileName={`joconde_${notice.REF}.pdf`}
 					style={{
 						backgroundColor: "#377d87",
 						border: 0,

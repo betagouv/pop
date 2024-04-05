@@ -280,7 +280,7 @@ export const operators = [
 					filter: [
 						{
 							script: {
-								script: "doc['" + k + "'].values.length <= 1",
+								script: `doc['${k}'].values.length <= 1`,
 							},
 						},
 					],

@@ -18,7 +18,7 @@ export default ({ index, data, searchParams, listRefs, idQuery }) => {
 				{/* <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}> */}
 				<a
 					href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${
-						searchParams ? "?" + toUrlQueryString(searchParams) : ""
+						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={data.REF}
 					style={{ textDecoration: "none" }}

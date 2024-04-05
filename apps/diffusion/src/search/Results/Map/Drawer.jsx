@@ -72,7 +72,7 @@ export default class Drawer extends Component {
 
 	renderNotices(notices) {
 		let message = "";
-		if (notices.length == 100) {
+		if (notices.length === 100) {
 			message = "Seules les 100 premières notices sont affichées";
 		}
 

@@ -44,12 +44,12 @@ export function MemoirePdf(notice, title, links) {
 								/>
 								<Field
 									title={
-										notice.ADRESSE != ""
+										notice.ADRESSE !== ""
 											? mapping.memoire.ADRESSE.label
 											: mapping.memoire.LIEU.label
 									}
 									content={
-										notice.ADRESSE != ""
+										notice.ADRESSE !== ""
 											? notice.ADRESSE
 											: notice.LIEU
 									}
@@ -159,7 +159,7 @@ export function MemoirePdf(notice, title, links) {
 								/>
 								<Field
 									title="Mots-clés"
-									content={notice.MCL + " " + notice.SUJET}
+									content={`${notice.MCL} ${notice.SUJET}`}
 									separator="#"
 									isPdf={true}
 								/>
@@ -517,10 +517,8 @@ export function MemoirePdf(notice, title, links) {
 								<Image
 									style={styles.image}
 									src={
-										bucket_url +
-										notice.IMG +
-										"?" +
-										new Date().getTime()
+										`${bucket_url +
+										notice.IMG}?${new Date().getTime()}`
 									}
 								/>
 							</View>

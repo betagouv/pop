@@ -7,16 +7,14 @@ export function AutorAbregeePdf(notice) {
 	const { logo, nom, description, fonction, symbole } = getNoticeInfo(notice);
 
 	return (
-		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
+		<Link src={`${pop_url}notice/${notice.collection}/${notice.REF}`}>
 			<View style={styles.noticeAbregeeContainer}>
 				<View style={styles.imageAbregee}>
 					{notice.MEMOIRE.length > 0 ? (
 						<Image
 							src={
-								bucket_url +
-								notice.MEMOIRE[0].url +
-								"?" +
-								new Date().getTime()
+								`${bucket_url +
+								notice.MEMOIRE[0].url}?${new Date().getTime()}`
 							}
 						/>
 					) : (

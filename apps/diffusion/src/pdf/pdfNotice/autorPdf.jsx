@@ -237,10 +237,8 @@ export function AutorPdf(notice, title, datesLieus, referenceArk) {
 								<Image
 									style={styles.image}
 									src={
-										bucket_url +
-										notice.MEMOIRE[0].url +
-										"?" +
-										new Date().getTime()
+										`${bucket_url +
+										notice.MEMOIRE[0].url}?${new Date().getTime()}`
 									}
 								/>
 							</View>

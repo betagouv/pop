@@ -28,7 +28,7 @@ class Header extends React.Component {
 
 		if (museo) {
 			return <Museo museo={museo} />;
-		} else if (gallery && gallery.name && gallery.description) {
+		}if (gallery && gallery.name && gallery.description) {
 			return <Gallery gallery={gallery} />;
 		}
 

@@ -10,7 +10,7 @@ const notifySentry = (err) => {
 		return;
 	}
 	Sentry.configureScope((scope) => {
-		scope.setTag(`ssr`, false);
+		scope.setTag("ssr", false);
 	});
 	Sentry.captureException(err);
 };

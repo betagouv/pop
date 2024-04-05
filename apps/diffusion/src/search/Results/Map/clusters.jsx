@@ -6,49 +6,49 @@ const COEFF = 2000;
 
 module.exports = {
 	data: getterSetter([], (arrayOfArrays) => {
-		var n = arrayOfArrays[0].length;
+		const n = arrayOfArrays[0].length;
 		return arrayOfArrays
-			.map((array) => array.length == n)
+			.map((array) => array.length === n)
 			.reduce((boolA, boolB) => boolA & boolB, true);
 	}),
 
 	clusters: function () {
-		var pointsAndCentroids = kmeans(this.data(), {
+		const pointsAndCentroids = kmeans(this.data(), {
 			k: this.k(),
 			iterations: this.iterations(),
 		});
-		var points = pointsAndCentroids.points;
-		var centroids = pointsAndCentroids.centroids;
+		const points = pointsAndCentroids.points;
+		const centroids = pointsAndCentroids.centroids;
 
 		return centroids.map((centroid) => ({
 				centroid: centroid.location(),
 				points: points
-					.filter((point) => point.label() == centroid.label())
+					.filter((point) => point.label() === centroid.label())
 					.map((point) => point),
 			}));
 	},
 
-	k: getterSetter(undefined, (value) => (value % 1 == 0) & (value > 0)),
+	k: getterSetter(undefined, (value) => (value % 1 === 0) & (value > 0)),
 
-	iterations: getterSetter(Math.pow(10, 3), (value) => (value % 1 == 0) & (value > 0)),
+	iterations: getterSetter(10 ** 3, (value) => (value % 1 === 0) & (value > 0)),
 };
 
 function kmeans(data, config) {
 	// default k
-	var k = config.k || Math.round(Math.sqrt(data.length / 2));
-	var iterations = config.iterations;
+	const k = config.k || Math.round(Math.sqrt(data.length / 2));
+	const iterations = config.iterations;
 
 	// initialize point objects with data
-	var points = data.map((vector) => new Point(vector));
+	const points = data.map((vector) => new Point(vector));
 
 	// intialize centroids randomly
-	var centroids = [];
-	for (var i = 0; i < k; i++) {
+	const centroids = [];
+	for (let i = 0; i < k; i++) {
 		centroids.push(new Centroid(points[i % points.length].location(), i));
 	}
 
 	// update labels and centroid locations until convergence
-	for (var iter = 0; iter < iterations; iter++) {
+	for (let iter = 0; iter < iterations; iter++) {
 		points.forEach((point) => {
 			point.updateLabel(centroids);
 		});
@@ -69,7 +69,7 @@ function Point(location) {
 	this.location = getterSetter(location.coordinates);
 	this.label = getterSetter();
 	this.updateLabel = (centroids) => {
-		var distancesSquared = centroids.map((centroid) => sumOfSquareDiffs(
+		const distancesSquared = centroids.map((centroid) => sumOfSquareDiffs(
 				this.location(),
 				centroid.location(),
 				this.meta().count / 1000,
@@ -82,7 +82,7 @@ function Centroid(initialLocation, label) {
 	this.location = getterSetter(initialLocation);
 	this.label = getterSetter(label);
 	this.updateLocation = (points) => {
-		var pointsWithThisCentroid = points.filter((point) => point.label() == this.label());
+		const pointsWithThisCentroid = points.filter((point) => point.label() === this.label());
 		if (pointsWithThisCentroid.length > 0)
 			this.location(averageLocation(pointsWithThisCentroid));
 	};
@@ -90,8 +90,8 @@ function Centroid(initialLocation, label) {
 
 // convenience functions
 function getterSetter(initialValue, validator) {
-	var thingToGetSet = initialValue;
-	var isValid =
+	let thingToGetSet = initialValue;
+	const isValid =
 		validator ||
 		((val) => true);
 	return (newValue) => {
@@ -101,18 +101,18 @@ function getterSetter(initialValue, validator) {
 }
 
 function sumOfSquareDiffs(oneVector, anotherVector, weight = 1) {
-	var squareDiffs = oneVector.map((component, i) => Math.pow(weight * (component - anotherVector[i]), 2));
+	const squareDiffs = oneVector.map((component, i) => (weight * (component - anotherVector[i])) ** 2);
 	return squareDiffs.reduce((a, b) => a + b, 0);
 }
 
 function mindex(array) {
-	var min = array.reduce((a, b) => Math.min(a, b));
+	const min = array.reduce((a, b) => Math.min(a, b));
 	return array.indexOf(min);
 }
 
 function averageLocation(points) {
 	let total = 0;
-	var vectorSum = points.reduce(
+	const vectorSum = points.reduce(
 		(a, b) => {
 			const coor = b.location();
 			const weight = Math.max(b.meta().count / COEFF, 1);

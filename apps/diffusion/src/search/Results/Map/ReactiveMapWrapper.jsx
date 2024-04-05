@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CustomWidget, msearch } from "@popproject/pop-react-elasticsearch";
-import Map from "./Map";
+import MapComponent from "./Map";
 import { es_url } from "../../../config";
 
 function esQuery(
@@ -90,7 +90,7 @@ function MyComponent({ ctx, values, setNbreResult }) {
 	}
 	return (
 		<>
-			<Map onChange={onChange} aggregations={aggregations} />
+			<MapComponent onChange={onChange} aggregations={aggregations} />
 		</>
 	);
 }

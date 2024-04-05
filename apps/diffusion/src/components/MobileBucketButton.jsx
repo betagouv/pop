@@ -33,9 +33,9 @@ export default class MobileBucketButton extends React.Component {
 			} else if (!isAlreadyInBucket) {
 				currentBucket.push({ ref: ref, base: base });
 				document.getElementById("nbBucket").innerHTML =
-					"Consulter mon panier ( " + currentBucket.length + " )";
+					`Consulter mon panier ( ${currentBucket.length} )`;
 				//Transformation de la liste de notice au format json et modification du cookie
-				var jsonCurrentBucket = JSON.stringify(currentBucket);
+				const jsonCurrentBucket = JSON.stringify(currentBucket);
 				cookies.set("currentBucket", jsonCurrentBucket, {
 					path: "/",
 					overwrite: true,
@@ -69,7 +69,7 @@ export default class MobileBucketButton extends React.Component {
 			}
 
 			// Transformation de la liste de notice au format json et modification du cookie
-			var jsonCurrentBucket = JSON.stringify(currentBucket);
+			const jsonCurrentBucket = JSON.stringify(currentBucket);
 			cookies.set("currentBucket", jsonCurrentBucket, {
 				path: "/",
 				overwrite: true,
@@ -114,7 +114,7 @@ export default class MobileBucketButton extends React.Component {
 						</Link>
 					</div>
 				</div>
-				<div className="btn-separator"></div>
+				<div className="btn-separator" />
 				{this.props.removeFromBucket ? (
 					<div
 						className="btn btn-outline-success util-pos-relat"
@@ -148,7 +148,7 @@ export default class MobileBucketButton extends React.Component {
 					</div>
 				) : (
 					<div
-						className={`btn btn-outline-success d-sm-block`}
+						className={"btn btn-outline-success d-sm-block"}
 						onClick={() =>
 							this.addToBucket(
 								this.props.base,

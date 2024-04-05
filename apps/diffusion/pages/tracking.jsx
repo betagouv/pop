@@ -47,6 +47,7 @@ export default class extends React.Component {
 							consultées.
 						</p>
 						<iframe
+							title="Stats Gouv"
 							src="https://stats.data.gouv.fr/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=fr"
 							style={{
 								borderWidth: "0px",

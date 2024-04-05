@@ -136,7 +136,7 @@ function getGeoJson(notice) {
 				},
 			},
 		};
-	} else if (POP_COORDONNEES && POP_COORDONNEES.lat) {
+	}if (POP_COORDONNEES && POP_COORDONNEES.lat) {
 		return {
 			center: { lng: POP_COORDONNEES.lon, lat: POP_COORDONNEES.lat },
 			geometry: {

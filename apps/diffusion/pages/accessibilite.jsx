@@ -30,7 +30,7 @@ export default class extends React.Component {
 		EAnalytics.initialize();
 		EAnalytics.track([
 			"path",
-			`Page déclaration accessibilité`,
+			"Page déclaration accessibilité",
 			"pagegroup",
 			"Page déclaration accessibilité",
 		]);

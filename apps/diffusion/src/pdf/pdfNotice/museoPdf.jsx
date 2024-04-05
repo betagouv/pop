@@ -103,7 +103,7 @@ export function MuseoPdf(notice, title, links) {
 								/>
 								<Field
 									title={mapping.museo.URL_M.label}
-									content={"https://" + notice.URL_M}
+									content={`https://${notice.URL_M}`}
 									isPdf={true}
 									link={true}
 								/>
@@ -190,10 +190,8 @@ export function MuseoPdf(notice, title, links) {
 								<Image
 									style={styles.image}
 									src={
-										bucket_url +
-										notice.PHOTO +
-										"?" +
-										new Date().getTime()
+										`${bucket_url +
+										notice.PHOTO}?${new Date().getTime()}`
 									}
 								/>
 							</View>

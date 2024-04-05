@@ -407,15 +407,15 @@ export function getNoticeInfo(notice) {
 			const nom =
 				(notice.NOMPRENOM
 					? notice.NOMPRENOM
-					: notice.PREN + " " + notice.NOM) +
-				(notice.ALIAS !== "" ? " - " + notice.ALIAS : "");
+					: `${notice.PREN} ${notice.NOM}`) +
+				(notice.ALIAS !== "" ? ` - ${notice.ALIAS}` : "");
 
 			//Description
 			let life = "";
 			if (notice.DNAISS && notice.DMORT) {
-				life = " (" + notice.DNAISS + " - " + notice.DMORT + ")";
+				life = ` (${notice.DNAISS} - ${notice.DMORT})`;
 			} else if (notice.DNAISS && !notice.DMORT) {
-				life = " (" + notice.DNAISS + ")";
+				life = ` (${notice.DNAISS})`;
 			}
 			const description = notice.INI + life;
 
@@ -423,11 +423,9 @@ export function getNoticeInfo(notice) {
 			let activite = "";
 			if (notice.DATES || LOCACT) {
 				activite =
-					" - (dates d'activité : " +
-					notice.DATES +
-					(notice.DATES && notice.LOCACT
-						? " - " + notice.LOCACT
-						: "");
+					` - (dates d'activité : ${notice.DATES}${notice.DATES && notice.LOCACT
+						? ` - ${notice.LOCACT}`
+						: ""}`;
 			}
 
 			//Fonction
@@ -437,7 +435,7 @@ export function getNoticeInfo(notice) {
 				if (fonc === "Orfèvre") {
 					isOrfevre = true;
 				}
-				fonction += index === 0 ? fonc : ", " + fonc;
+				fonction += index === 0 ? fonc : `, ${fonc}`;
 			});
 
 			//Symbole
@@ -447,12 +445,12 @@ export function getNoticeInfo(notice) {
 			let datesLieus = "";
 			datesLieus += notice.DNAISS
 				? notice.DNAISS +
-					(notice.LNAISS ? " (" + notice.LNAISS + ") " : "")
+					(notice.LNAISS ? ` (${notice.LNAISS}) ` : "")
 				: "";
 			datesLieus += notice.DNAISS && notice.DMORT ? " - " : "";
 			datesLieus += notice.DMORT
 				? notice.DMORT +
-					(notice.LMORT ? " (" + notice.LMORT + ") " : "")
+					(notice.LMORT ? ` (${notice.LMORT}) ` : "")
 				: "";
 
 			//Référence ISNI : ISNI_VERIFIEE / Lien ark : ARK
@@ -460,7 +458,7 @@ export function getNoticeInfo(notice) {
 			referenceArk += notice.ISNI_VERIFIEE ? notice.ISNI_VERIFIEE : "";
 			referenceArk +=
 				(notice.ISNI_VERIFIEE ? " / " : "") +
-				(notice.ARK ? "Lien ARK : " + notice.ARK : "");
+				(notice.ARK ? `Lien ARK : ${notice.ARK}` : "");
 
 			//Adresse
 			const adresse = notice?.ADRS;
@@ -496,19 +494,18 @@ function jocondeMetaDescription(n) {
 	const cleanRepr = n.REPR && String(n.REPR).replace(/\(.*\)/, "");
 	if (n.DESC && cleanAutor && n.DESC.length < 100) {
 		return `${n.DESC} par ${cleanAutor}`;
-	} else if (cleanRepr && museum && n.TECH && n.TECH.length) {
+	}if (cleanRepr && museum && n.TECH && n.TECH.length) {
 		if (cleanAutor) {
 			return `${cleanRepr} par ${cleanAutor} (${n.TECH[0]}) - ${museum}`;
-		} else {
-			return `${cleanRepr} (${n.TECH[0]}) - ${museum}`;
 		}
-	} else if (n.TITR && cleanAutor && museum) {
+			return `${cleanRepr} (${n.TECH[0]}) - ${museum}`;
+	}if (n.TITR && cleanAutor && museum) {
 		return `${cleanAutor} : ${n.TITR} - ${museum}`;
-	} else if (n.DESC.length >= 100 && cleanAutor) {
+	}if (n.DESC.length >= 100 && cleanAutor) {
 		return `${cleanAutor} : ${String(n.DESC).split(/[;.]/)[0]}`;
-	} else if (n.DESC.length < 150 && cleanAutor) {
+	}if (n.DESC.length < 150 && cleanAutor) {
 		return n.DESC;
-	} else if (n.TICO) {
+	}if (n.TICO) {
 		return museum ? `${n.TICO} - ${museum}` : n.TICO;
 	}
 	return "";
@@ -520,13 +517,13 @@ function memoireMetaDescription(n) {
 		return `${n.EDIF} à ${n.COM} - ${n.LEG}${
 			cleanAutor ? ` - Photo : ${cleanAutor}` : ""
 		}`;
-	} else if (n.LEG && n.LIEUCOR) {
+	}if (n.LEG && n.LIEUCOR) {
 		return `${n.LEG} - ${n.LIEUCOR}${
 			cleanAutor ? ` - Photo : ${cleanAutor}` : ""
 		}`;
-	} else if (n.LEG) {
+	}if (n.LEG) {
 		return `${n.LEG}${cleanAutor ? ` - Photo : ${cleanAutor}` : ""}`;
-	} else if (n.OBJT) {
+	}if (n.OBJT) {
 		return `${n.OBJT}${cleanAutor ? ` - Photo : ${cleanAutor}` : ""}`;
 	}
 	return "";
@@ -551,7 +548,7 @@ export function saveListRef(listRefs, searchParams, removeFromBucket) {
 			});
 
 		cookies.set(
-			"listRefs-" + searchParams.get("idQuery"),
+			`listRefs-${searchParams.get("idQuery")}`,
 			encodedListRefs,
 			{ path: "/", overwrite: true },
 		);

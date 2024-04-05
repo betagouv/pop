@@ -9,7 +9,7 @@ export default class extends React.Component {
 	componentDidMount() {
 		// Tracking Eurelian
 		EAnalytics.initialize();
-		EAnalytics.track(["path", `Page Galerie`, "pagegroup", "Page Galerie"]);
+		EAnalytics.track(["path", "Page Galerie", "pagegroup", "Page Galerie"]);
 	}
 
 	static async getInitialProps({ query: { id }, res }) {

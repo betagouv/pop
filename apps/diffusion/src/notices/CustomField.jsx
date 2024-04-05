@@ -117,7 +117,7 @@ export function TextFieldReprPdf(value) {
 
 	return (
 		<View style={styles.listReprLinked}>
-			<Text style={styles.fieldTitle}>{value.title + " : "}</Text>
+			<Text style={styles.fieldTitle}>{`${value.title} : `}</Text>
 			{renderField}
 		</View>
 	);

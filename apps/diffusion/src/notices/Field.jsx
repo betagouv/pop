@@ -109,12 +109,12 @@ export default ({
 		);
 	}
 	//Si on imprime un pdf d'une notice
-	else {
+	
 		//S'il s'agit de liens cliquables
 		if (link) {
 			return (
 				<View>
-					<Text style={styles.fieldTitle}>{title + " : "}</Text>
+					<Text style={styles.fieldTitle}>{`${title} : `}</Text>
 					{!isLineBreakLink ? (
 						<View style={styles.listLinked}>
 							{renderLinksPdf(content, isLineBreakLink)}
@@ -128,10 +128,10 @@ export default ({
 			);
 		}
 		//S'il s'agit de texte statique
-		else {
+		
 			return (
 				<View>
-					<Text style={styles.fieldTitle}>{title + " : "}</Text>
+					<Text style={styles.fieldTitle}>{`${title} : `}</Text>
 					{React.isValidElement(str) ? (
 						<Text style={styles.text}>{str.props.children}</Text>
 					) : (
@@ -139,8 +139,6 @@ export default ({
 					)}
 				</View>
 			);
-		}
-	}
 };
 
 /**
@@ -209,15 +207,15 @@ function addLinkToText(str) {
 	do {
 		result = splitString(str);
 
-		obj["text_" + i] = result.text1;
+		obj[`text_${i}`] = result.text1;
 
 		if (result.continue) {
-			obj["link_" + i] = result.link;
+			obj[`link_${i}`] = result.link;
 			str = result.text3;
 			i++;
 		} else {
 			if (typeof result.link !== "undefined") {
-				obj["link_" + i] = result.link;
+				obj[`link_${i}`] = result.link;
 			}
 		}
 	} while (result.continue);
@@ -225,24 +223,24 @@ function addLinkToText(str) {
 	const content = [];
 
 	for (let j = 1; j <= i; j++) {
-		if (typeof obj["text_" + j] !== "undefined") {
-			content.push(obj["text_" + j]);
+		if (typeof obj[`text_${j}`] !== "undefined") {
+			content.push(obj[`text_${j}`]);
 		}
-		if (typeof obj["link_" + j] !== "undefined") {
-			if (obj["link_" + j].toLowerCase().indexOf("www") === 0) {
+		if (typeof obj[`link_${j}`] !== "undefined") {
+			if (obj[`link_${j}`].toLowerCase().indexOf("www") === 0) {
 				content.push(
 					<a
-						href={"http://" + obj["link_" + j]}
+						href={`http://${obj[`link_${j}`]}`}
 						target="_blank"
 						rel="noreferrer"
 					>
-						{obj["link_" + j]}
+						{obj[`link_${j}`]}
 					</a>,
 				);
 			} else {
 				content.push(
-					<a href={obj["link_" + j]} target="_blank" rel="noreferrer">
-						{obj["link_" + j]}
+					<a href={obj[`link_${j}`]} target="_blank" rel="noreferrer">
+						{obj[`link_${j}`]}
 					</a>,
 				);
 			}

@@ -51,8 +51,8 @@ export default class extends React.Component {
 			wadrs.join(","),
 			notice.LIEU,
 		];
-		let content = array.filter((val) => val.trim() != "").join(", ");
-		return content != "" ? content : notice.LOCA;
+		const content = array.filter((val) => val.trim() !== "").join(", ");
+		return content !== "" ? content : notice.LOCA;
 	};
 
 	static async getInitialProps({ query: { id }, asPath }) {
@@ -86,7 +86,7 @@ export default class extends React.Component {
 			links.push(...linkedNotices);
 
 			// Préparation des liens vers les notices Mérimée et Palissy
-			let listUrl = await Promise.all(
+			const listUrl = await Promise.all(
 				notice.LBASE.map(async (ref) => {
 					const collection = await findCollection(ref);
 					return { key: ref, ref: ref, url: url(collection, ref) };
@@ -100,7 +100,7 @@ export default class extends React.Component {
 	}
 
 	photographer() {
-		let autp = this.props.notice.AUTP;
+		const autp = this.props.notice.AUTP;
 		return (
 			autp &&
 			autp.length > 0 && (
@@ -116,7 +116,11 @@ export default class extends React.Component {
 									flexDirection: "row",
 								}}
 							>
-								<a href={`/search/list?${qs}`} target="_blank">
+								<a
+									href={`/search/list?${qs}`}
+									target="_blank"
+									rel="noreferrer"
+								>
 									{photographer}
 								</a>
 								{index !== autp.length - 1 ? (
@@ -139,7 +143,7 @@ export default class extends React.Component {
 				serie: JSON.stringify([element]),
 			});
 			return (
-				<a href={`/search/list?${qs}`} target="_blank">
+				<a href={`/search/list?${qs}`} target="_blank" rel="noreferrer">
 					{element}
 				</a>
 			);
@@ -158,7 +162,7 @@ export default class extends React.Component {
 		const qs = queryString.stringify({ expo: JSON.stringify([expo]) });
 		return (
 			expo && (
-				<a href={`/search/list?${qs}`} target="_blank">
+				<a href={`/search/list?${qs}`} target="_blank" rel="noreferrer">
 					{expo}
 				</a>
 			)
@@ -171,27 +175,7 @@ export default class extends React.Component {
 				name: JSON.stringify([element]),
 			});
 			return (
-				<a href={`/search/list?${qs}`} target="_blank">
-					{element}
-				</a>
-			);
-		});
-		return (
-			fieldValues && (
-				<React.Fragment>
-					{links.reduce((a, b) => [a, " ; ", b])}
-				</React.Fragment>
-			)
-		);
-	}
-
-	addLinkFieldMultiValue(fieldValues, name) {
-		const links = fieldValues.map((element) => {
-			const qs = queryString.stringify({
-				name: JSON.stringify([element]),
-			});
-			return (
-				<a href={`/search/list?${qs}`} target="_blank">
+				<a href={`/search/list?${qs}`} target="_blank" rel="noreferrer">
 					{element}
 				</a>
 			);
@@ -222,7 +206,7 @@ export default class extends React.Component {
 		//Construction des liens précédents/suivants
 		const cookies = new Cookies();
 		const listRefs = cookies.get(
-			"listRefs-" + this.props.searchParams.idQuery,
+			`listRefs-${this.props.searchParams.idQuery}`,
 		);
 		if (listRefs) {
 			const indexOfCurrentNotice = listRefs.indexOf(
@@ -236,12 +220,7 @@ export default class extends React.Component {
 				);
 				if (previousCollection !== "") {
 					prevLink =
-						"notice/" +
-						previousCollection +
-						"/" +
-						listRefs[indexOfCurrentNotice - 1] +
-						"?" +
-						this.props.searchParamsUrl;
+						`notice/${previousCollection}/${listRefs[indexOfCurrentNotice - 1]}?${this.props.searchParamsUrl}`;
 				}
 			}
 			if (indexOfCurrentNotice < listRefs.length - 1) {
@@ -250,26 +229,21 @@ export default class extends React.Component {
 				);
 				if (nextCollection !== "") {
 					nextLink =
-						"notice/" +
-						nextCollection +
-						"/" +
-						listRefs[indexOfCurrentNotice + 1] +
-						"?" +
-						this.props.searchParamsUrl;
+						`notice/${nextCollection}/${listRefs[indexOfCurrentNotice + 1]}?${this.props.searchParamsUrl}`;
 				}
 			}
 			this.setState({ prevLink, nextLink });
 		} else {
-			this.state.display == false && this.setState({ display: true });
+			!this.state.display && this.setState({ display: true });
 		}
 	}
 
 	componentDidUpdate() {
-		this.state.display == false && this.setState({ display: true });
+		!this.state.display && this.setState({ display: true });
 	}
 
 	renderPrevButton() {
-		if (this.state.prevLink != undefined) {
+		if (this.state.prevLink !== undefined) {
 			return (
 				<a
 					title="Notice précédente"
@@ -279,13 +253,12 @@ export default class extends React.Component {
 					&lsaquo;
 				</a>
 			);
-		} else {
-			return null;
 		}
+			return null;
 	}
 
 	renderNextButton() {
-		if (this.state.nextLink != undefined) {
+		if (this.state.nextLink !== undefined) {
 			return (
 				<a
 					title="Notice suivante"
@@ -295,9 +268,8 @@ export default class extends React.Component {
 					&rsaquo;
 				</a>
 			);
-		} else {
-			return null;
 		}
+			return null;
 	}
 
 	render() {
@@ -324,7 +296,7 @@ export default class extends React.Component {
 			<div>
 				<PDFDownloadLink
 					document={pdf}
-					fileName={"memoire_" + notice.REF + ".pdf"}
+					fileName={`memoire_${notice.REF}.pdf`}
 					style={{
 						backgroundColor: "#377d87",
 						border: 0,
@@ -467,12 +439,12 @@ export default class extends React.Component {
 									/>
 									<Field
 										title={
-											notice.ADRESSE != ""
+											notice.ADRESSE !== ""
 												? mapping.memoire.ADRESSE.label
 												: mapping.memoire.LIEU.label
 										}
 										content={
-											notice.ADRESSE != ""
+											notice.ADRESSE !== ""
 												? notice.ADRESSE
 												: notice.LIEU
 										}
@@ -944,7 +916,11 @@ function link(listUrl) {
 			{listUrl.map((url) => {
 				return (
 					<React.Fragment key={url.ref}>
-						<a href={url.url || "#"} target="_blank">
+						<a
+							href={url.url || "#"}
+							target="_blank"
+							rel="noreferrer"
+						>
 							{url.ref}
 						</a>
 						<br />
@@ -972,7 +948,7 @@ const SeeMore = ({ notice, listUrl }) => {
 					>
 						<a
 							target="_blank"
-							rel="noopener"
+							rel="noreferrer noopener"
 							href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP}`}
 						>
 							{notice.LAUTP}

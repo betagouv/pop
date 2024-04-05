@@ -72,7 +72,7 @@ export default class extends React.Component {
 					);
 				} else {
 					const key = bases.find((e) => e.base === myBase[1]).key;
-					Router.push("/advanced-search/list/" + key);
+					Router.push(`/advanced-search/list/${key}`);
 				}
 			} else {
 				Router.push(
@@ -133,18 +133,18 @@ export default class extends React.Component {
 		}
 
 		if (this.props.mode === "simple") {
-			if (arrayKey["mainSearch"]) {
+			if (arrayKey.mainSearch) {
 				data.push("isearchkey");
 				data.push("mainSearch");
 				data.push("isearchdata");
-				data.push(arrayKey["mainSearch"]);
+				data.push(arrayKey.mainSearch);
 			}
 		} else {
-			if (arrayKey["qb"]) {
+			if (arrayKey.qb) {
 				data.push("isearchkey");
 				data.push("qb");
 				data.push("isearchdata");
-				data.push(JSON.stringify(arrayKey["qb"]));
+				data.push(JSON.stringify(arrayKey.qb));
 			}
 		}
 		EAnalytics.pushEvent("globalarg", data);
@@ -309,7 +309,7 @@ export default class extends React.Component {
 								{this.props.mode === "simple" ? (
 									<div className="search-results">
 										<div
-											className={`search-container search-container-simple`}
+											className={"search-container search-container-simple"}
 										>
 											<Search
 												mode={this.props.mode}
@@ -338,7 +338,7 @@ export default class extends React.Component {
 												initialValues={initialValues}
 												nbResult={(total) => {
 													if (
-														this.state.ready == true
+														this.state.ready === true
 													) {
 														this.sendParams(
 															total,
@@ -351,8 +351,8 @@ export default class extends React.Component {
 									</div>
 								) : (
 									<div className="search-main-container">
-										{this.props.base != undefined &&
-										this.props.base != "" ? (
+										{this.props.base !== undefined &&
+										this.props.base !== "" ? (
 											<div className="search-bases-radio-buttons">
 												{bases.map((base) => (
 													<div className="radioCard">
@@ -364,7 +364,7 @@ export default class extends React.Component {
 																value={base.key}
 																checked={
 																	this.props
-																		.base ==
+																		.base ===
 																	base.key
 																		? true
 																		: false
@@ -386,8 +386,8 @@ export default class extends React.Component {
 
 										<div
 											className={`search-results-advanced${
-												this.props.base == undefined ||
-												this.props.base == ""
+												this.props.base === undefined ||
+												this.props.base === ""
 													? "-choice"
 													: ""
 											}`}
@@ -428,7 +428,7 @@ export default class extends React.Component {
 													}
 													nbResult={(total) => {
 														if (
-															this.state.ready ==
+															this.state.ready ===
 															true
 														) {
 															this.sendParams(

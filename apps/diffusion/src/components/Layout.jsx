@@ -139,7 +139,7 @@ export default class Layout extends React.Component {
 						</li>
 						<li className="list-inline-item">
 							<a
-								href={`mailto:pop@culture.gouv.fr`}
+								href={"mailto:pop@culture.gouv.fr"}
 								target="_blank"
 								rel="noreferrer noopener"
 							>

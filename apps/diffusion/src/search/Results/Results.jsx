@@ -1,5 +1,5 @@
 import React from "react";
-import Map from "./Map";
+import MapComponent from "./Map";
 import Mosaic from "./Mosaic";
 import List from "./List";
 import { pushSearchRoute } from "../../services/url";
@@ -89,30 +89,30 @@ class Results extends React.Component {
 					setNbreResult={this.props.nbResult}
 				/>
 			);
-		} else if (view === "map") {
+		}
+		if (view === "map") {
 			return (
-				<Map
+				<MapComponent
 					key="carte"
 					initialValues={this.props.initialValues}
 					setNbreResult={this.props.nbResult}
 				/>
 			);
-		} else {
-			return (
-				<List
-					key="list"
-					initialValues={this.props.initialValues}
-					setNbreResult={this.props.nbResult}
-				/>
-			);
 		}
+		return (
+			<List
+				key="list"
+				initialValues={this.props.initialValues}
+				setNbreResult={this.props.nbResult}
+			/>
+		);
 	}
 
 	render() {
 		return (
 			<div
 				className={`result-view${
-					this.props.mode == "advanced" ? "-advanced" : ""
+					this.props.mode === "advanced" ? "-advanced" : ""
 				}`}
 			>
 				{this.renderTabs()}

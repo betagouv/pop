@@ -13,16 +13,14 @@ export function EnluminuresAbregeePdf(notice) {
 		.filter((d) => d)
 		.join(", ");
 	return (
-		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
+		<Link src={`${pop_url}notice/${notice.collection}/${notice.REF}`}>
 			<View style={styles.noticeAbregeeContainer}>
 				<View style={styles.imageAbregee}>
 					{notice.VIDEO.length > 0 ? (
 						<Image
 							src={
-								bucket_url +
-								notice.VIDEO[0] +
-								"?" +
-								new Date().getTime()
+								`${bucket_url +
+								notice.VIDEO[0]}?${new Date().getTime()}`
 							}
 						/>
 					) : (

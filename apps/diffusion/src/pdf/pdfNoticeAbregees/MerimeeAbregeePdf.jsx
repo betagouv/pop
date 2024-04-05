@@ -10,16 +10,14 @@ export function MerimeeAbregeePdf(notice) {
 		notice.STAT + (notice.STAT && notice.DPRO ? " ; " : "") + notice.DPRO;
 
 	return (
-		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
+		<Link src={`${pop_url}notice/${notice.collection}/${notice.REF}`}>
 			<View style={styles.noticeAbregeeContainer}>
 				<View style={styles.imageAbregee}>
 					{notice.MEMOIRE.length > 0 ? (
 						<Image
 							src={
-								bucket_url +
-								notice.MEMOIRE[0].url +
-								"?" +
-								new Date().getTime()
+								`${bucket_url +
+								notice.MEMOIRE[0].url}?${new Date().getTime()}`
 							}
 						/>
 					) : (
@@ -41,7 +39,7 @@ export function MerimeeAbregeePdf(notice) {
 						{logo != null && logo !== "" ? (
 							<Image style={styles.logo} src={logo} />
 						) : (
-							<Text></Text>
+							<Text />
 						)}
 					</View>
 				</View>

@@ -57,7 +57,7 @@ const customSearchBtn = ({ onClickCall }) => {
 			type="button"
 			title="Rechercher"
 			onClick={() => onClickCall()}
-		></button>
+		/>
 	);
 };
 

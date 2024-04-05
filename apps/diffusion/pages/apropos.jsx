@@ -30,7 +30,7 @@ export default class extends React.Component {
 		EAnalytics.initialize();
 		EAnalytics.track([
 			"path",
-			`Page à propos`,
+			"Page à propos",
 			"pagegroup",
 			"Page à propos",
 		]);

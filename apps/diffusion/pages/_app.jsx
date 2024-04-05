@@ -24,7 +24,7 @@ export default class MyApp extends App {
 		const { Component, pageProps } = this.props;
 		const cookies = new Cookies();
 		const currentBucket = cookies.get("currentBucket") || [];
-		var jsonCurrentBucket = JSON.stringify(currentBucket);
+		const jsonCurrentBucket = JSON.stringify(currentBucket);
 		cookies.set("currentBucket", jsonCurrentBucket, {
 			path: "/",
 			overwrite: true,

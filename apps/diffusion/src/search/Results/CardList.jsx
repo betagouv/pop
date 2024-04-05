@@ -81,7 +81,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	const loc = contentLoca && contentLoca !== "" ? contentLoca : data.LOCA;
 
 	const link = `/notice/memoire/${data.REF}${
-		searchParams ? "?" + toUrlQueryString(searchParams) : ""
+		searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 	}  `;
 
 	return (
@@ -96,7 +96,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 			<div className="list-card-container desktop-only">
 				<Link
 					href={`/notice/memoire/${data.REF}${
-						searchParams ? "?" + toUrlQueryString(searchParams) : ""
+						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}  `}
 					key={data.REF}
 				>
@@ -117,8 +117,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 							<p>
 								{" "}
 								{data.AUTOEU && data.AUTOEU.length > 0
-									? "Auteur de l’œuvre représentée : " +
-										data.AUTOEU.join(" ; ")
+									? `Auteur de l’œuvre représentée : ${data.AUTOEU.join(" ; ")}`
 									: ""}
 							</p>
 							<p>{loc}</p>
@@ -170,8 +169,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 					<p>
 						{" "}
 						{data.AUTOEU && data.AUTOEU.length > 0
-							? "Auteur de l’œuvre représentée : " +
-								data.AUTOEU.join(" ; ")
+							? `Auteur de l’œuvre représentée : ${data.AUTOEU.join(" ; ")}`
 							: ""}
 					</p>
 					<p>{loc}</p>
@@ -209,7 +207,7 @@ export const Palissy = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	const line5 = joinData([data.STAT, data.DPRO]);
 
 	const link = `/notice/palissy/${data.REF}${
-		searchParams ? "?" + toUrlQueryString(searchParams) : ""
+		searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 	}`;
 
 	return (
@@ -224,7 +222,7 @@ export const Palissy = ({ data, removeFromBucket, searchParams, listRefs }) => {
 			<div className="list-card-container desktop-only">
 				<Link
 					href={`/notice/palissy/${data.REF}${
-						searchParams ? "?" + toUrlQueryString(searchParams) : ""
+						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={data.REF}
 				>
@@ -321,7 +319,7 @@ export const Merimee = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	const line4 = joinData([data.STAT, data.DPRO]);
 
 	const link = `/notice/merimee/${data.REF}${
-		searchParams ? "?" + toUrlQueryString(searchParams) : ""
+		searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 	}`;
 
 	return (
@@ -336,7 +334,7 @@ export const Merimee = ({ data, removeFromBucket, searchParams, listRefs }) => {
 			<div className="list-card-container desktop-only">
 				<Link
 					href={`/notice/merimee/${data.REF}${
-						searchParams ? "?" + toUrlQueryString(searchParams) : ""
+						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={data.REF}
 				>
@@ -425,7 +423,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	const domn = data.DOMN ? data.DOMN.join(", ") : "";
 
 	const link = `/notice/mnr/${data.REF}${
-		searchParams ? "?" + toUrlQueryString(searchParams) : ""
+		searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 	}`;
 
 	return (
@@ -440,7 +438,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 			<div className="list-card-container desktop-only">
 				<Link
 					href={`/notice/mnr/${data.REF}${
-						searchParams ? "?" + toUrlQueryString(searchParams) : ""
+						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={data.REF}
 				>
@@ -469,8 +467,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 									{data.LOCA && data.LOCA !== "" ? (
 										<>
 											<p>
-												{Mapping.mnr["LOCA"].label +
-													" : "}
+												{`${Mapping.mnr.LOCA.label} : `}
 											</p>
 											{addLineBreak(data.LOCA)}
 										</>
@@ -478,8 +475,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 									{data.AFFE && data.AFFE !== "" ? (
 										<>
 											<p>
-												{Mapping.mnr["AFFE"].label +
-													" : "}
+												{`${Mapping.mnr.AFFE.label} : `}
 											</p>
 											{addLineBreak(data.AFFE)}
 										</>
@@ -489,8 +485,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 									{data.HIST4 ? (
 										<>
 											<p>
-												{Mapping.mnr["HIST4"].label +
-													" : "}
+												{`${Mapping.mnr.HIST4.label} : `}
 											</p>
 											{addLineBreak(data.HIST4)}
 										</>
@@ -552,13 +547,13 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 							<p>{addLineBreak(domn)}</p>
 							{data.LOCA && data.LOCA !== "" ? (
 								<>
-									<p>{Mapping.mnr["LOCA"].label + " : "}</p>
+									<p>{`${Mapping.mnr.LOCA.label} : `}</p>
 									{addLineBreak(data.LOCA)}
 								</>
 							) : null}
 							{data.AFFE && data.AFFE !== "" ? (
 								<>
-									<p>{Mapping.mnr["AFFE"].label + " : "}</p>
+									<p>{`${Mapping.mnr.AFFE.label} : `}</p>
 									{addLineBreak(data.AFFE)}
 								</>
 							) : null}
@@ -594,7 +589,7 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	const loca = joinData([data.VILLE_M, data.NOMOFF]);
 
 	const link = `/notice/joconde/${data.REF}${
-		searchParams ? "?" + toUrlQueryString(searchParams) : ""
+		searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 	}`;
 
 	return (
@@ -611,7 +606,7 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs }) => {
 					<Link
 						href={`/notice/joconde/${data.REF}${
 							searchParams
-								? "?" + toUrlQueryString(searchParams)
+								? `?${toUrlQueryString(searchParams)}`
 								: ""
 						}`}
 						key={data.REF}
@@ -718,7 +713,7 @@ export const Museo = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	const ImageComponent = <img src={image_preview} alt={title} />;
 
 	const link = `/notice/museo/${data.REF}${
-		searchParams ? "?" + toUrlQueryString(searchParams) : ""
+		searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 	}`;
 
 	// M45078 - Affichage du logo muse-de-france uniquement si le producteur est Musée
@@ -741,7 +736,7 @@ export const Museo = ({ data, removeFromBucket, searchParams, listRefs }) => {
 			<div className="list-card-container desktop-only">
 				<Link
 					href={`/notice/museo/${data.REF}${
-						searchParams ? "?" + toUrlQueryString(searchParams) : ""
+						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={data.REF}
 				>
@@ -832,7 +827,7 @@ export const Enluminures = ({
 	const ImageComponent = <img src={image_preview} alt={title} />;
 
 	const link = `/notice/enluminures/${REF}${
-		searchParams ? "?" + toUrlQueryString(searchParams) : ""
+		searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 	}`;
 
 	return (
@@ -847,7 +842,7 @@ export const Enluminures = ({
 			<div className="list-card-container desktop-only">
 				<Link
 					href={`/notice/enluminures/${REF}${
-						searchParams ? "?" + toUrlQueryString(searchParams) : ""
+						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={REF}
 				>
@@ -971,7 +966,7 @@ export const Autor = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	);
 
 	const link = `/notice/autor/${REF}${
-		searchParams ? "?" + toUrlQueryString(searchParams) : ""
+		searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 	}`;
 
 	return (
@@ -986,7 +981,7 @@ export const Autor = ({ data, removeFromBucket, searchParams, listRefs }) => {
 			<div className="list-card-container desktop-only">
 				<Link
 					href={`/notice/autor/${REF}${
-						searchParams ? "?" + toUrlQueryString(searchParams) : ""
+						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={REF}
 				>

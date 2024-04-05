@@ -13,7 +13,7 @@ function deleteLastSlash(url) {
 
 const api_url = deleteLastSlash(publicRuntimeConfig.api_url);
 const server_api_url = deleteLastSlash(serverRuntimeConfig.api_url);
-const bucket_url = publicRuntimeConfig.bucket_url + "/";
+const bucket_url = `${publicRuntimeConfig.bucket_url}/`;
 const pop_url = publicRuntimeConfig.pop_url;
 const eurelian = publicRuntimeConfig.eurelian;
 const es_url = `${api_url}/search/`;

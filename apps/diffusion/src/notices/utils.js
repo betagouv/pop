@@ -116,17 +116,17 @@ export function schema({
 	const obj = {};
 	obj["@context"] = "http://schema.org";
 	obj["@type"] = "VisualArtwork";
-	obj["name"] = name;
-	obj["alternateName"] = alternateName;
-	obj["dateCreated"] = created_at;
-	obj["artform"] = artform;
-	obj["image"] = image;
-	obj["description"] = description;
-	obj["creator"] = (creator || []).map((name) => {
+	obj.name = name;
+	obj.alternateName = alternateName;
+	obj.dateCreated = created_at;
+	obj.artform = artform;
+	obj.image = image;
+	obj.description = description;
+	obj.creator = (creator || []).map((name) => {
 		return { "@type": "Person", name: name.trim() };
 	});
-	obj["comment"] = comment;
-	obj["artMedium"] = artMedium;
+	obj.comment = comment;
+	obj.artMedium = artMedium;
 	return JSON.stringify(obj);
 }
 
@@ -135,7 +135,7 @@ export function pdfLinks(value, name) {
 		return null;
 	}
 	if (!value || !Array.isArray(value) || !value.length) {
-		if (String(value) === value && !String(value) == "") {
+		if (String(value) === value && !String(value) === "") {
 			return {
 				url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify(
 					{ [name]: JSON.stringify([value]) },

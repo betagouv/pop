@@ -34,16 +34,14 @@ export function MemoireAbregeePdf(notice) {
 	const date = joinData([notice.DATPV, notice.DATOR]);
 	const localisation = notice.LOCA;
 	return (
-		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
+		<Link src={`${pop_url}notice/${notice.collection}/${notice.REF}`}>
 			<View style={styles.noticeAbregeeContainer}>
 				<View style={styles.imageAbregee}>
 					{notice.IMG ? (
 						<Image
 							src={
-								bucket_url +
-								notice.IMG +
-								"?" +
-								new Date().getTime()
+								`${bucket_url +
+								notice.IMG}?${new Date().getTime()}`
 							}
 						/>
 					) : (

@@ -9,7 +9,7 @@ require("dotenv").config();
 
 Sentry.init({
 	dsn: process.env.SENTRY_DSN,
-	release: "pop-consultation@" + require("../../package.json").version,
+	release: `pop-consultation@${require("../../package.json").version}`,
 	environment: process.env.NODE_ENV,
 });
 const dev = process.env.NODE_ENV === "development";
@@ -81,7 +81,7 @@ app.prepare().then(() => {
 			);
 			app.render(req, res, "/search", renderParams);
 		} else if (pathname.match(noticeRegex)) {
-			const renderPath = "/notice/" + pathname.replace(noticeRegex, "$1");
+			const renderPath = `/notice/${pathname.replace(noticeRegex, "$1")}`;
 			const renderParams = Object.assign(
 				{ id: pathname.replace(noticeRegex, "$2") },
 				query,

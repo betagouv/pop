@@ -409,10 +409,8 @@ export function JocondePdf(notice, title, links, museo) {
 							<Image
 								style={styles.image}
 								src={
-									bucket_url +
-									notice.IMG[0] +
-									"?" +
-									new Date().getTime()
+									`${bucket_url +
+									notice.IMG[0]}?${new Date().getTime()}`
 								}
 							/>
 						</View>

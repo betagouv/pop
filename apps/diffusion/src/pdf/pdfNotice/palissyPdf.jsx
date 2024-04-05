@@ -482,10 +482,8 @@ export function PalissyPdf(notice, title, localisation, links) {
 								<Image
 									style={styles.image}
 									src={
-										bucket_url +
-										notice.MEMOIRE[0].url +
-										"?" +
-										new Date().getTime()
+										`${bucket_url +
+										notice.MEMOIRE[0].url}?${new Date().getTime()}`
 									}
 								/>
 							</View>
@@ -737,7 +735,7 @@ export function PalissyPdf(notice, title, localisation, links) {
 											style={styles.listLinked}
 											src={notice.LINHA[index]}
 											target="_blank"
-											key={"notice.LINHA_" + index}
+											key={`notice.LINHA_${index}`}
 										>
 											<Text>{notice.LINHA[index]}</Text>
 										</Link>
@@ -761,7 +759,7 @@ export function PalissyPdf(notice, title, localisation, links) {
 											style={styles.listLinked}
 											src={notice.LREG[index]}
 											target="_blank"
-											key={"notice.LREG_" + index}
+											key={`notice.LREG_${index}`}
 										>
 											<Text>{notice.LREG[index]}</Text>
 										</Link>

@@ -29,7 +29,7 @@ export default class BucketButton extends React.Component {
 			} else if (!isAlreadyInBucket) {
 				currentBucket.push({ ref: ref, base: base });
 				document.getElementById("nbBucket").innerHTML =
-					"Consulter mon panier ( " + currentBucket.length + " )";
+					`Consulter mon panier ( ${currentBucket.length} )`;
 				//Transformation de la liste de notice au format json et modification du cookie
 				const jsonCurrentBucket = JSON.stringify(currentBucket);
 				cookies.set("currentBucket", jsonCurrentBucket, {
@@ -83,10 +83,10 @@ export default class BucketButton extends React.Component {
 							this.props.base,
 							this.props.reference,
 						) ? (
-						<div></div>
+						<div />
 					) : (
 						<div
-							className={`btn btn-outline-success d-sm-block`}
+							className={"btn btn-outline-success d-sm-block"}
 							onClick={() =>
 								this.addToBucket(
 									this.props.base,

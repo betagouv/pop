@@ -8,16 +8,14 @@ export function MuseoAbregeePdf(notice) {
 		getNoticeInfo(notice);
 
 	return (
-		<Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
+		<Link src={`${pop_url}notice/${notice.collection}/${notice.REF}`}>
 			<View style={styles.noticeAbregeeContainer}>
 				<View style={styles.imageAbregee}>
 					{notice.PHOTO ? (
 						<Image
 							src={
-								bucket_url +
-								notice.PHOTO +
-								"?" +
-								new Date().getTime()
+								`${bucket_url +
+								notice.PHOTO}?${new Date().getTime()}`
 							}
 						/>
 					) : (

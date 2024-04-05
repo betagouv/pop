@@ -36,7 +36,7 @@ export function toGeoJson(arr) {
 		features: [],
 	};
 
-	var clusterMaker = require("./clusters");
+	const clusterMaker = require("./clusters");
 	clusterMaker.k(20);
 	clusterMaker.iterations(3);
 	const data = [];
@@ -55,7 +55,7 @@ export function toGeoJson(arr) {
 	}
 	clusterMaker.data(data);
 	const clusters = clusterMaker.clusters();
-	for (var i = 0; i < clusters.length; i++) {
+	for (let i = 0; i < clusters.length; i++) {
 		const item = clusters[i];
 
 		if (!item.points.length) {
@@ -63,7 +63,7 @@ export function toGeoJson(arr) {
 		}
 
 		let coordinates = [item.centroid[1], item.centroid[0]];
-		if (item.points.length == 1 && item.points[0].meta().count == 1) {
+		if (item.points.length === 1 && item.points[0].meta().count === 1) {
 			coordinates = [
 				item.points[0].meta().hits[0]._source.POP_COORDONNEES.lon,
 				item.points[0].meta().hits[0]._source.POP_COORDONNEES.lat,

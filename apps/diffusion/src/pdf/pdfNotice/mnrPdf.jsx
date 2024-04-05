@@ -319,10 +319,8 @@ export function MnrPdf(notice, title, links) {
 								<Image
 									style={styles.image}
 									src={
-										bucket_url +
-										notice.VIDEO[0] +
-										"?" +
-										new Date().getTime()
+										`${bucket_url +
+										notice.VIDEO[0]}?${new Date().getTime()}`
 									}
 								/>
 							</View>
