@@ -290,26 +290,23 @@ router.delete(
 	},
 );
 
-function determineProducteur(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const noticeProducteur = await identifyProducteur(
-				"mnr",
-				notice.REF,
-				"",
-				"",
-			);
-			if (noticeProducteur) {
-				notice.PRODUCTEUR = noticeProducteur;
-			} else {
-				notice.PRODUCTEUR = "MNR";
-			}
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
+async function determineProducteur(notice) {
+	try {
+		const noticeProducteur = await identifyProducteur(
+			"mnr",
+			notice.REF,
+			"",
+			"",
+		);
+		if (noticeProducteur) {
+			notice.PRODUCTEUR = noticeProducteur;
+		} else {
+			notice.PRODUCTEUR = "MNR";
 		}
-	});
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
 module.exports = router;

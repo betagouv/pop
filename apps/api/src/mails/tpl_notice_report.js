@@ -394,6 +394,7 @@ function regexIt(str) {
 		/Le champ (.+) avec la valeur (.+) n'est pas conforme avec le thesaurus http:\/\/data\.culture\.fr\/thesaurus\/resource\/ark:\/(.+)/gm;
 	let m;
 
+	// biome-ignore lint/suspicious/noAssignInExpressions: temp before re-write
 	while ((m = regex.exec(str)) !== null) {
 		// This is necessary to avoid infinite loops with zero-width matches
 		if (m.index === regex.lastIndex) {

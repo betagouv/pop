@@ -83,75 +83,66 @@ async function withFlags(notice) {
 	return notice;
 }
 
-function transformBeforeCreateAndUpdate(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (notice.VIDEO !== undefined) {
-				if (Array.isArray(notice.VIDEO)) {
-					notice.CONTIENT_IMAGE = notice.VIDEO.length ? "oui" : "non";
-				} else {
-					notice.CONTIENT_IMAGE = notice.VIDEO ? "oui" : "non";
-				}
+async function transformBeforeCreateAndUpdate(notice) {
+	try {
+		if (notice.VIDEO !== undefined) {
+			if (Array.isArray(notice.VIDEO)) {
+				notice.CONTIENT_IMAGE = notice.VIDEO.length ? "oui" : "non";
+			} else {
+				notice.CONTIENT_IMAGE = notice.VIDEO ? "oui" : "non";
 			}
+		}
 
-			//Si la notice contient des coordonnées, contient geolocalisation devient oui
-			let lat = "";
-			let lon = "";
-			const coordonnees = { lat: 0, lon: 0 };
+		//Si la notice contient des coordonnées, contient geolocalisation devient oui
+		let lat = "";
+		let lon = "";
+		const coordonnees = { lat: 0, lon: 0 };
 
+		if (notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]) {
+			lat = String(notice["POP_COORDONNEES.lat"]);
+			lon = String(notice["POP_COORDONNEES.lon"]);
+		} else if (
+			notice.POP_COORDONNEES &&
+			(notice.POP_COORDONNEES.lat || notice.POP_COORDONNEES.lon)
+		) {
+			lat = String(notice.POP_COORDONNEES.lat);
+			lon = String(notice.POP_COORDONNEES.lon);
+		}
+		if (lat || lon) {
+			if (lat) {
+				coordonnees.lat = Number.parseFloat(lat.replace(",", "."));
+			}
+			if (lon) {
+				coordonnees.lon = Number.parseFloat(lon.replace(",", "."));
+			}
+			//Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
 			if (
-				notice["POP_COORDONNEES.lat"] ||
-				notice["POP_COORDONNEES.lon"]
+				coordonnees.lat !== 0 &&
+				!Number.isNaN(coordonnees.lat) &&
+				coordonnees.lon !== 0 &&
+				!Number.isNaN(coordonnees.lon)
 			) {
-				lat = String(notice["POP_COORDONNEES.lat"]);
-				lon = String(notice["POP_COORDONNEES.lon"]);
-			} else if (
-				notice.POP_COORDONNEES &&
-				(notice.POP_COORDONNEES.lat || notice.POP_COORDONNEES.lon)
-			) {
-				lat = String(notice.POP_COORDONNEES.lat);
-				lon = String(notice.POP_COORDONNEES.lon);
-			}
-			if (lat || lon) {
-				if (lat) {
-					coordonnees.lat = Number.parseFloat(lat.replace(",", "."));
-				}
-				if (lon) {
-					coordonnees.lon = Number.parseFloat(lon.replace(",", "."));
-				}
-				//Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
-				if (
-					coordonnees.lat !== 0 &&
-					!Number.isNaN(coordonnees.lat) &&
-					coordonnees.lon !== 0 &&
-					!Number.isNaN(coordonnees.lon)
-				) {
-					notice.POP_CONTIENT_GEOLOCALISATION = "oui";
-				} else {
-					notice.POP_CONTIENT_GEOLOCALISATION = "non";
-				}
+				notice.POP_CONTIENT_GEOLOCALISATION = "oui";
 			} else {
 				notice.POP_CONTIENT_GEOLOCALISATION = "non";
 			}
-			if (
-				notice["POP_COORDONNEES.lat"] ||
-				notice["POP_COORDONNEES.lon"]
-			) {
-				notice["POP_COORDONNEES.lat"] = coordonnees.lat;
-				notice["POP_COORDONNEES.lon"] = coordonnees.lon;
-			} else {
-				notice.POP_COORDONNEES = coordonnees;
-			}
-
-			notice.DMAJ = formattedNow();
-
-			notice = await withFlags(notice);
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
+		} else {
+			notice.POP_CONTIENT_GEOLOCALISATION = "non";
 		}
-	});
+		if (notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]) {
+			notice["POP_COORDONNEES.lat"] = coordonnees.lat;
+			notice["POP_COORDONNEES.lon"] = coordonnees.lon;
+		} else {
+			notice.POP_COORDONNEES = coordonnees;
+		}
+
+		notice.DMAJ = formattedNow();
+
+		notice = await withFlags(notice);
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
 router.get("/:ref", async (req, res) => {
@@ -377,17 +368,17 @@ router.delete(
 				});
 			}
 
-			if (doc.RENV !== []) {
+			if (Array.isArray(doc.RENV) && doc.RENV.length > 0) {
 				doc.RENV = [];
 				await removeLinksEnluminures(doc.REF, "RENV");
 			}
 
-			if (doc.REFC !== []) {
+			if (Array.isArray(doc.REFC) && doc.REFC.length > 0) {
 				doc.REFC = [];
 				await removeLinksEnluminures(doc.REF, "REFC");
 			}
 
-			if (doc.REFDE !== []) {
+			if (Array.isArray(doc.REFDE) && doc.REFDE.length > 0) {
 				doc.REFDE = [];
 				await removeLinksEnluminures(doc.REF, "REFDE");
 			}
@@ -412,111 +403,96 @@ router.delete(
 	},
 );
 
-function determineProducteur(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			let noticeProducteur;
-			noticeProducteur = await identifyProducteur(
-				"enluminures",
-				notice.REF,
-				"",
-				"",
-			);
-			if (noticeProducteur) {
-				notice.PRODUCTEUR = noticeProducteur;
-			} else {
-				notice.PRODUCTEUR = "Enluminures";
-			}
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
+async function determineProducteur(notice) {
+	try {
+		const noticeProducteur = await identifyProducteur(
+			"enluminures",
+			notice.REF,
+			"",
+			"",
+		);
+		if (noticeProducteur) {
+			notice.PRODUCTEUR = noticeProducteur;
+		} else {
+			notice.PRODUCTEUR = "Enluminures";
 		}
-	});
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
-function removeLinksEnluminures(ref, fieldEnluminures) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const promises = [];
-			const criteres = {};
-			criteres[fieldEnluminures] = ref;
-			// Récupération des notices Enluminures qui sont liées à la notice en cours
-			const noticesToPopulate = await Enluminures.find(criteres);
+async function removeLinksEnluminures(ref, fieldEnluminures) {
+	const promises = [];
+	const criteres = {};
+	criteres[fieldEnluminures] = ref;
+	// Récupération des notices Enluminures qui sont liées à la notice en cours
+	const noticesToPopulate = await Enluminures.find(criteres);
 
-			for (let i = 0; i < noticesToPopulate.length; i++) {
-				// Si la référence de la notice est absente de la liste mise à jour, la référence est supprimée
+	for (let i = 0; i < noticesToPopulate.length; i++) {
+		// Si la référence de la notice est absente de la liste mise à jour, la référence est supprimée
+		noticesToPopulate[i][fieldEnluminures] = noticesToPopulate[i][
+			fieldEnluminures
+		].filter((e) => e !== ref);
+		promises.push(noticesToPopulate[i].save());
+	}
+	await Promise.all(promises);
+}
+
+async function populateLinksEnlunminures(notice, refList, fieldEnluminures) {
+	try {
+		if (!Array.isArray(refList)) {
+			return;
+		}
+		const promises = [];
+		const criteres = {};
+		criteres[fieldEnluminures] = notice.REF;
+		// Récupération des notices Enluminures qui sont liées à la notice en cours
+		const noticesToPopulate = await Enluminures.find(criteres);
+
+		let list = [];
+		switch (fieldEnluminures) {
+			case "RENV":
+				list = notice.RENV;
+				break;
+			case "REFC":
+				list = notice.REFDE;
+				break;
+			case "REFDE":
+				list = notice.REFC;
+				break;
+		}
+
+		for (let i = 0; i < noticesToPopulate.length; i++) {
+			// Si la référence de la notice est absente de la liste mise à jour, la référence est supprimée
+			if (!list.includes(noticesToPopulate[i].REF)) {
 				noticesToPopulate[i][fieldEnluminures] = noticesToPopulate[i][
 					fieldEnluminures
-				].filter((e) => e !== ref);
+				].filter((e) => e !== notice.REF);
 				promises.push(noticesToPopulate[i].save());
 			}
-			await Promise.all(promises);
-			resolve();
-		} catch (error) {
-			reject(error);
 		}
-	});
-}
 
-function populateLinksEnlunminures(notice, refList, fieldEnluminures) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (!Array.isArray(refList)) {
-				resolve();
-				return;
-			}
-			const promises = [];
-			const criteres = {};
-			criteres[fieldEnluminures] = notice.REF;
-			// Récupération des notices Enluminures qui sont liées à la notice en cours
-			const noticesToPopulate = await Enluminures.find(criteres);
-
-			let list = [];
-			switch (fieldEnluminures) {
-				case "RENV":
-					list = notice.RENV;
-					break;
-				case "REFC":
-					list = notice.REFDE;
-					break;
-				case "REFDE":
-					list = notice.REFC;
-					break;
-			}
-
-			for (let i = 0; i < noticesToPopulate.length; i++) {
-				// Si la référence de la notice est absente de la liste mise à jour, la référence est supprimée
-				if (!list.includes(noticesToPopulate[i].REF)) {
-					noticesToPopulate[i][fieldEnluminures] = noticesToPopulate[
-						i
-					][fieldEnluminures].filter((e) => e !== notice.REF);
-					promises.push(noticesToPopulate[i].save());
+		for (let i = 0; i < list.length; i++) {
+			if (!noticesToPopulate.find((e) => e.REF === list[i])) {
+				// Si la notice n'est pas encore liée
+				const obj = await Enluminures.findOne({ REF: list[i] });
+				if (
+					obj &&
+					Array.isArray(obj[fieldEnluminures]) &&
+					!obj[fieldEnluminures].includes(notice.REF)
+				) {
+					obj[fieldEnluminures].push(notice.REF);
+					promises.push(obj.save());
 				}
 			}
-
-			for (let i = 0; i < list.length; i++) {
-				if (!noticesToPopulate.find((e) => e.REF === list[i])) {
-					// Si la notice n'est pas encore liée
-					const obj = await Enluminures.findOne({ REF: list[i] });
-					if (
-						obj &&
-						Array.isArray(obj[fieldEnluminures]) &&
-						!obj[fieldEnluminures].includes(notice.REF)
-					) {
-						obj[fieldEnluminures].push(notice.REF);
-						promises.push(obj.save());
-					}
-				}
-			}
-
-			await Promise.all(promises);
-			resolve();
-		} catch (error) {
-			capture(error);
-			resolve();
 		}
-	});
+
+		await Promise.all(promises);
+	} catch (error) {
+		capture(error);
+		throw error;
+	}
 }
 
 module.exports = router;

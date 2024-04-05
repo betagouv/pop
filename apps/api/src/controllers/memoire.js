@@ -156,7 +156,9 @@ async function getPrefixesFromProducteurs(listBase) {
 
 	producteurs.map((producteur) =>
 		producteur.BASE.filter((base) => listBase.includes(base.base)).map(
-			(base) => (listePrefix = listePrefix.concat(base.prefixes)),
+			(base) => {
+				listePrefix = listePrefix.concat(base.prefixes);
+			},
 		),
 	);
 
@@ -653,80 +655,72 @@ router.delete(
 );
 
 async function determineProducteur(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const noticeProducteur = await identifyProducteur(
-				"memoire",
-				notice.REF,
-				notice.IDPROD,
-				notice.EMET,
-			);
-			if (noticeProducteur) {
-				notice.PRODUCTEUR = noticeProducteur;
-			} else {
-				notice.PRODUCTEUR = "AUTRE";
-			}
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
+	try {
+		const noticeProducteur = await identifyProducteur(
+			"memoire",
+			notice.REF,
+			notice.IDPROD,
+			notice.EMET,
+		);
+		if (noticeProducteur) {
+			notice.PRODUCTEUR = noticeProducteur;
+		} else {
+			notice.PRODUCTEUR = "AUTRE";
 		}
-	});
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
-function populateBaseFromMemoire(notice, refList, baseToPopulate) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (!Array.isArray(refList)) {
-				resolve();
-				return;
-			}
-			const promises = [];
-			const noticesToPopulate = await baseToPopulate.find({
-				REFMEM: notice.REF,
-			});
-
-			for (let i = 0; i < noticesToPopulate.length; i++) {
-				// If the object is removed from notice, then remove it from palissy
-				if (!refList.includes(noticesToPopulate[i].REF)) {
-					noticesToPopulate[i].REFMEM = noticesToPopulate[
-						i
-					].REFMEM.filter((e) => e !== notice.REF);
-					promises.push(noticesToPopulate[i].save());
-				}
-			}
-
-			let list = [];
-			switch (baseToPopulate) {
-				case Joconde:
-					list = notice.REFJOC;
-					break;
-				case Museo:
-					list = notice.REFMUS;
-					break;
-			}
-
-			for (let i = 0; i < list.length; i++) {
-				if (!noticesToPopulate.find((e) => e.REF === list[i])) {
-					const obj = await baseToPopulate.findOne({ REF: list[i] });
-					if (
-						obj &&
-						Array.isArray(obj.REFMEM) &&
-						!obj.REFMEM.includes(notice.REF)
-					) {
-						obj.REFMEM.push(notice.REF);
-						promises.push(obj.save());
-					}
-				}
-			}
-
-			await Promise.all(promises);
-			resolve();
-		} catch (error) {
-			capture(error);
-			resolve();
+async function populateBaseFromMemoire(notice, refList, baseToPopulate) {
+	try {
+		if (!Array.isArray(refList)) {
+			return;
 		}
-	});
+		const promises = [];
+		const noticesToPopulate = await baseToPopulate.find({
+			REFMEM: notice.REF,
+		});
+
+		for (let i = 0; i < noticesToPopulate.length; i++) {
+			// If the object is removed from notice, then remove it from palissy
+			if (!refList.includes(noticesToPopulate[i].REF)) {
+				noticesToPopulate[i].REFMEM = noticesToPopulate[
+					i
+				].REFMEM.filter((e) => e !== notice.REF);
+				promises.push(noticesToPopulate[i].save());
+			}
+		}
+
+		let list = [];
+		switch (baseToPopulate) {
+			case Joconde:
+				list = notice.REFJOC;
+				break;
+			case Museo:
+				list = notice.REFMUS;
+				break;
+		}
+
+		for (let i = 0; i < list.length; i++) {
+			if (!noticesToPopulate.find((e) => e.REF === list[i])) {
+				const obj = await baseToPopulate.findOne({ REF: list[i] });
+				if (
+					obj &&
+					Array.isArray(obj.REFMEM) &&
+					!obj.REFMEM.includes(notice.REF)
+				) {
+					obj.REFMEM.push(notice.REF);
+					promises.push(obj.save());
+				}
+			}
+		}
+
+		await Promise.all(promises);
+	} catch (error) {
+		capture(error);
+	}
 }
 
 module.exports = router;

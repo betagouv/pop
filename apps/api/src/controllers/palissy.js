@@ -28,7 +28,6 @@ const {
 	uploadFile,
 	hasCorrectCoordinates,
 	hasCorrectPolygon,
-	findPalissyProducteur,
 	identifyProducteur,
 	fileAuthorized,
 } = require("./utils");
@@ -277,79 +276,72 @@ async function transformBeforeCreate(notice) {
 	await transformBeforeCreateOrUpdate(notice);
 }
 
-function checkIfMemoireImageExist(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			// Here, we update the images and we keep the order ( !! important )
-			const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
-			const arr = NoticesMemoire.map((e) => {
-				const NAME =
-					e.TICO || e.LEG || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
-				return {
-					ref: e.REF,
-					url: e.IMG,
-					copy: e.COPY,
-					name: NAME,
-					marq: e.MARQ,
-				};
-			});
+async function checkIfMemoireImageExist(notice) {
+	try {
+		// Here, we update the images and we keep the order ( !! important )
+		const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
+		const arr = NoticesMemoire.map((e) => {
+			const NAME =
+				e.TICO || e.LEG || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
+			return {
+				ref: e.REF,
+				url: e.IMG,
+				copy: e.COPY,
+				name: NAME,
+				marq: e.MARQ,
+			};
+		});
 
-			const newArr = (notice.MEMOIRE || []).filter((e) =>
-				arr.find((f) => f.ref === e.ref),
-			);
-			for (let i = 0; i < arr.length; i++) {
-				if (!newArr.find((e) => e.REF === arr[i].REF)) {
-					newArr.push(arr[i]);
-				}
+		const newArr = (notice.MEMOIRE || []).filter((e) =>
+			arr.find((f) => f.ref === e.ref),
+		);
+		for (let i = 0; i < arr.length; i++) {
+			if (!newArr.find((e) => e.REF === arr[i].REF)) {
+				newArr.push(arr[i]);
 			}
-			resolve(newArr);
-		} catch (e) {
-			capture(e);
-			reject(e);
 		}
-	});
+		return newArr;
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
-function populateMerimeeREFO(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (!Array.isArray(notice.REFA)) {
-				resolve();
-				return;
-			}
-			const promises = [];
-			const merimees = await Merimee.find({ REFO: notice.REF });
-
-			for (let i = 0; i < merimees.length; i++) {
-				// If the object is removed from notice, then remove it from palissy
-				if (!notice.REFA.includes(merimees[i].REF)) {
-					merimees[i].REFO = merimees[i].REFO.filter(
-						(e) => e !== notice.REF,
-					);
-					promises.push(merimees[i].save());
-				}
-			}
-
-			for (let i = 0; i < notice.REFA.length; i++) {
-				if (!merimees.find((e) => e.REF === notice.REFA[i])) {
-					const obj = await Merimee.findOne({ REF: notice.REFA[i] });
-					if (
-						obj &&
-						Array.isArray(obj.REFO) &&
-						!obj.REFO.includes(notice.REF)
-					) {
-						obj.REFO.push(notice.REF);
-						promises.push(obj.save());
-					}
-				}
-			}
-			await Promise.all(promises);
-			resolve();
-		} catch (error) {
-			capture(error);
-			resolve();
+async function populateMerimeeREFO(notice) {
+	try {
+		if (!Array.isArray(notice.REFA)) {
+			return;
 		}
-	});
+		const promises = [];
+		const merimees = await Merimee.find({ REFO: notice.REF });
+
+		for (let i = 0; i < merimees.length; i++) {
+			// If the object is removed from notice, then remove it from palissy
+			if (!notice.REFA.includes(merimees[i].REF)) {
+				merimees[i].REFO = merimees[i].REFO.filter(
+					(e) => e !== notice.REF,
+				);
+				promises.push(merimees[i].save());
+			}
+		}
+
+		for (let i = 0; i < notice.REFA.length; i++) {
+			if (!merimees.find((e) => e.REF === notice.REFA[i])) {
+				const obj = await Merimee.findOne({ REF: notice.REFA[i] });
+				if (
+					obj &&
+					Array.isArray(obj.REFO) &&
+					!obj.REFO.includes(notice.REF)
+				) {
+					obj.REFO.push(notice.REF);
+					promises.push(obj.save());
+				}
+			}
+		}
+		await Promise.all(promises);
+	} catch (error) {
+		capture(error);
+	}
 }
 
 router.get(
@@ -644,81 +636,74 @@ router.delete(
 	},
 );
 
-function determineProducteur(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const noticeProducteur = await identifyProducteur(
-				"palissy",
-				notice.REF,
-				"",
-				"",
-			);
-			if (noticeProducteur) {
-				notice.PRODUCTEUR = noticeProducteur;
-			} else {
-				notice.PRODUCTEUR = "AUTRE";
-			}
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
+async function determineProducteur(notice) {
+	try {
+		const noticeProducteur = await identifyProducteur(
+			"palissy",
+			notice.REF,
+			"",
+			"",
+		);
+		if (noticeProducteur) {
+			notice.PRODUCTEUR = noticeProducteur;
+		} else {
+			notice.PRODUCTEUR = "AUTRE";
 		}
-	});
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
-function populateBaseFromPalissy(notice, refList, baseToPopulate) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (!Array.isArray(refList)) {
-				resolve();
-				return;
-			}
-			const promises = [];
-			const noticesToPopulate = await baseToPopulate.find({
-				REFPAL: notice.REF,
-			});
-
-			for (let i = 0; i < noticesToPopulate.length; i++) {
-				// If the object is removed from notice, then remove it from palissy
-				if (!refList.includes(noticesToPopulate[i].REF)) {
-					noticesToPopulate[i].REFPAL = noticesToPopulate[
-						i
-					].REFPAL.filter((e) => e !== notice.REF);
-					promises.push(noticesToPopulate[i].save());
-				}
-			}
-
-			let list = [];
-			switch (baseToPopulate) {
-				case Joconde:
-					list = notice.REFJOC;
-					break;
-				case Museo:
-					list = notice.REFMUS;
-					break;
-			}
-
-			for (let i = 0; i < list.length; i++) {
-				if (!noticesToPopulate.find((e) => e.REF === list[i])) {
-					const obj = await baseToPopulate.findOne({ REF: list[i] });
-					if (
-						obj &&
-						Array.isArray(obj.REFPAL) &&
-						!obj.REFPAL.includes(notice.REF)
-					) {
-						obj.REFPAL.push(notice.REF);
-						promises.push(obj.save());
-					}
-				}
-			}
-
-			await Promise.all(promises);
+async function populateBaseFromPalissy(notice, refList, baseToPopulate) {
+	try {
+		if (!Array.isArray(refList)) {
 			resolve();
-		} catch (error) {
-			capture(error);
-			resolve();
+			return;
 		}
-	});
+		const promises = [];
+		const noticesToPopulate = await baseToPopulate.find({
+			REFPAL: notice.REF,
+		});
+
+		for (let i = 0; i < noticesToPopulate.length; i++) {
+			// If the object is removed from notice, then remove it from palissy
+			if (!refList.includes(noticesToPopulate[i].REF)) {
+				noticesToPopulate[i].REFPAL = noticesToPopulate[
+					i
+				].REFPAL.filter((e) => e !== notice.REF);
+				promises.push(noticesToPopulate[i].save());
+			}
+		}
+
+		let list = [];
+		switch (baseToPopulate) {
+			case Joconde:
+				list = notice.REFJOC;
+				break;
+			case Museo:
+				list = notice.REFMUS;
+				break;
+		}
+
+		for (let i = 0; i < list.length; i++) {
+			if (!noticesToPopulate.find((e) => e.REF === list[i])) {
+				const obj = await baseToPopulate.findOne({ REF: list[i] });
+				if (
+					obj &&
+					Array.isArray(obj.REFPAL) &&
+					!obj.REFPAL.includes(notice.REF)
+				) {
+					obj.REFPAL.push(notice.REF);
+					promises.push(obj.save());
+				}
+			}
+		}
+
+		await Promise.all(promises);
+	} catch (error) {
+		capture(error);
+	}
 }
 
 module.exports = router;

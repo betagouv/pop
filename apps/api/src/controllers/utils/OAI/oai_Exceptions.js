@@ -64,9 +64,6 @@ function getExceptionMessage(code) {
 		case EXCEPTION_CODES.ID_DOES_NOT_EXIST: {
 			return ExceptionMessages.ID_DOES_NOT_EXIST;
 		}
-		case EXCEPTION_CODES.ID_DOES_NOT_EXIST: {
-			return ExceptionMessages.ID_DOES_NOT_EXIST;
-		}
 		case EXCEPTION_CODES.NO_RECORDS_MATCH: {
 			return ExceptionMessages.NO_RECORDS_MATCH;
 		}

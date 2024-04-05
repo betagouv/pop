@@ -478,62 +478,58 @@ router.delete(
 	},
 );
 
-function populateBaseFromMuseo(notice, refList, baseToPopulate) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (!Array.isArray(refList)) {
-				resolve();
-				return;
-			}
-			const promises = [];
-			const noticesToPopulate = await baseToPopulate.find({
-				REFMUS: notice.REF,
-			});
-
-			for (let i = 0; i < noticesToPopulate.length; i++) {
-				// If the object is removed from notice, then remove it from palissy
-				if (!refList.includes(noticesToPopulate[i].REF)) {
-					noticesToPopulate[i].REFMUS = noticesToPopulate[
-						i
-					].REFMUS.filter((e) => e !== notice.REF);
-					promises.push(noticesToPopulate[i].save());
-				}
-			}
-
-			let list = [];
-			switch (baseToPopulate) {
-				case Memoire:
-					list = notice.REFMEM;
-					break;
-				case Merimee:
-					list = notice.REFMER;
-					break;
-				case Palissy:
-					list = notice.REFPAL;
-					break;
-			}
-
-			for (let i = 0; i < list.length; i++) {
-				if (!noticesToPopulate.find((e) => e.REF === list[i])) {
-					const obj = await baseToPopulate.findOne({ REF: list[i] });
-					if (
-						obj &&
-						Array.isArray(obj.REFMUS) &&
-						!obj.REFMUS.includes(notice.REF)
-					) {
-						obj.REFMUS.push(notice.REF);
-						promises.push(obj.save());
-					}
-				}
-			}
-
-			await Promise.all(promises);
+async function populateBaseFromMuseo(notice, refList, baseToPopulate) {
+	try {
+		if (!Array.isArray(refList)) {
 			resolve();
-		} catch (error) {
-			capture(error);
-			resolve();
+			return;
 		}
-	});
+		const promises = [];
+		const noticesToPopulate = await baseToPopulate.find({
+			REFMUS: notice.REF,
+		});
+
+		for (let i = 0; i < noticesToPopulate.length; i++) {
+			// If the object is removed from notice, then remove it from palissy
+			if (!refList.includes(noticesToPopulate[i].REF)) {
+				noticesToPopulate[i].REFMUS = noticesToPopulate[
+					i
+				].REFMUS.filter((e) => e !== notice.REF);
+				promises.push(noticesToPopulate[i].save());
+			}
+		}
+
+		let list = [];
+		switch (baseToPopulate) {
+			case Memoire:
+				list = notice.REFMEM;
+				break;
+			case Merimee:
+				list = notice.REFMER;
+				break;
+			case Palissy:
+				list = notice.REFPAL;
+				break;
+		}
+
+		for (let i = 0; i < list.length; i++) {
+			if (!noticesToPopulate.find((e) => e.REF === list[i])) {
+				const obj = await baseToPopulate.findOne({ REF: list[i] });
+				if (
+					obj &&
+					Array.isArray(obj.REFMUS) &&
+					!obj.REFMUS.includes(notice.REF)
+				) {
+					obj.REFMUS.push(notice.REF);
+					promises.push(obj.save());
+				}
+			}
+		}
+
+		await Promise.all(promises);
+	} catch (error) {
+		capture(error);
+	}
 }
 
 module.exports = router;

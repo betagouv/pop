@@ -91,43 +91,40 @@ function transformBeforeCreate(notice) {
 	notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
 }
 
-function transformBeforeCreateAndUpdate(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (notice.IMG !== undefined) {
-				if (Array.isArray(notice.IMG)) {
-					notice.CONTIENT_IMAGE = notice.IMG.length ? "oui" : "non";
-				} else {
-					notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
-				}
+async function transformBeforeCreateAndUpdate(notice) {
+	try {
+		if (notice.IMG !== undefined) {
+			if (Array.isArray(notice.IMG)) {
+				notice.CONTIENT_IMAGE = notice.IMG.length ? "oui" : "non";
+			} else {
+				notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
 			}
-
-			notice.DMAJ = formattedNow();
-
-			if (notice.MUSEO) {
-				const museo = await Museo.findOne({ REF: notice.MUSEO });
-				if (museo) {
-					notice.REGION = museo.REGION || "";
-					notice.DPT = museo.DPT || "";
-					notice.VILLE_M = museo.VILLE_M || "";
-					notice.NOMOFF = museo.NOMOFF || "";
-					notice.CONTACT = museo.CONTACT_GENERIQUE || "";
-
-					if (museo.POP_COORDONNEES?.lat) {
-						notice.POP_COORDONNEES = museo.POP_COORDONNEES;
-						notice.POP_CONTIENT_GEOLOCALISATION = "oui";
-					} else {
-						notice.POP_CONTIENT_GEOLOCALISATION = "non";
-					}
-				}
-			}
-			notice = await withFlags(notice);
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
 		}
-	});
+
+		notice.DMAJ = formattedNow();
+
+		if (notice.MUSEO) {
+			const museo = await Museo.findOne({ REF: notice.MUSEO });
+			if (museo) {
+				notice.REGION = museo.REGION || "";
+				notice.DPT = museo.DPT || "";
+				notice.VILLE_M = museo.VILLE_M || "";
+				notice.NOMOFF = museo.NOMOFF || "";
+				notice.CONTACT = museo.CONTACT_GENERIQUE || "";
+
+				if (museo.POP_COORDONNEES?.lat) {
+					notice.POP_COORDONNEES = museo.POP_COORDONNEES;
+					notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+				} else {
+					notice.POP_CONTIENT_GEOLOCALISATION = "non";
+				}
+			}
+		}
+		notice = await withFlags(notice);
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
 // Update a notice by ref
@@ -368,85 +365,77 @@ router.delete(
 	},
 );
 
-function determineProducteur(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			let noticeProducteur;
-			noticeProducteur = await identifyProducteur(
-				"joconde",
-				notice.REF,
-				"",
-				"",
-			);
-			if (noticeProducteur) {
-				notice.PRODUCTEUR = noticeProducteur;
-			} else {
-				notice.PRODUCTEUR = "MUSEE";
-			}
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
+async function determineProducteur(notice) {
+	try {
+		const noticeProducteur = await identifyProducteur(
+			"joconde",
+			notice.REF,
+			"",
+			"",
+		);
+		if (noticeProducteur) {
+			notice.PRODUCTEUR = noticeProducteur;
+		} else {
+			notice.PRODUCTEUR = "MUSEE";
 		}
-	});
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
-function populateBaseFromJoconde(notice, refList, baseToPopulate) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (!Array.isArray(refList)) {
-				resolve();
-				return;
-			}
-			const promises = [];
-			const noticesToPopulate = await baseToPopulate.find({
-				REFJOC: notice.REF,
-			});
-
-			for (let i = 0; i < noticesToPopulate.length; i++) {
-				// If the object is removed from notice, then remove it from palissy
-				if (!refList.includes(noticesToPopulate[i].REF)) {
-					noticesToPopulate[i].REFJOC = noticesToPopulate[
-						i
-					].REFJOC.filter((e) => e !== notice.REF);
-					promises.push(noticesToPopulate[i].save());
-				}
-			}
-
-			let list = [];
-			switch (baseToPopulate) {
-				case Memoire:
-					list = notice.REFMEM;
-					break;
-				case Merimee:
-					list = notice.REFMER;
-					break;
-				case Palissy:
-					list = notice.REFPAL;
-					break;
-			}
-
-			for (let i = 0; i < list.length; i++) {
-				if (!noticesToPopulate.find((e) => e.REF === list[i])) {
-					const obj = await baseToPopulate.findOne({ REF: list[i] });
-					if (
-						obj &&
-						Array.isArray(obj.REFJOC) &&
-						!obj.REFJOC.includes(notice.REF)
-					) {
-						obj.REFJOC.push(notice.REF);
-						promises.push(obj.save());
-					}
-				}
-			}
-
-			await Promise.all(promises);
+async function populateBaseFromJoconde(notice, refList, baseToPopulate) {
+	try {
+		if (!Array.isArray(refList)) {
 			resolve();
-		} catch (error) {
-			capture(error);
-			resolve();
+			return;
 		}
-	});
+		const promises = [];
+		const noticesToPopulate = await baseToPopulate.find({
+			REFJOC: notice.REF,
+		});
+
+		for (let i = 0; i < noticesToPopulate.length; i++) {
+			// If the object is removed from notice, then remove it from palissy
+			if (!refList.includes(noticesToPopulate[i].REF)) {
+				noticesToPopulate[i].REFJOC = noticesToPopulate[
+					i
+				].REFJOC.filter((e) => e !== notice.REF);
+				promises.push(noticesToPopulate[i].save());
+			}
+		}
+
+		let list = [];
+		switch (baseToPopulate) {
+			case Memoire:
+				list = notice.REFMEM;
+				break;
+			case Merimee:
+				list = notice.REFMER;
+				break;
+			case Palissy:
+				list = notice.REFPAL;
+				break;
+		}
+
+		for (let i = 0; i < list.length; i++) {
+			if (!noticesToPopulate.find((e) => e.REF === list[i])) {
+				const obj = await baseToPopulate.findOne({ REF: list[i] });
+				if (
+					obj &&
+					Array.isArray(obj.REFJOC) &&
+					!obj.REFJOC.includes(notice.REF)
+				) {
+					obj.REFJOC.push(notice.REF);
+					promises.push(obj.save());
+				}
+			}
+		}
+
+		await Promise.all(promises);
+	} catch (error) {
+		capture(error);
+	}
 }
 
 module.exports = router;

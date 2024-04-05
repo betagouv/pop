@@ -1,6 +1,5 @@
 const Producteur = require("../../models/producteur");
 const { capture } = require("./../../sentry.js");
-const { indexOf } = require("./regions");
 
 // Creates a new ID for a notice of type "collection".
 function getNewId(collection, prefix, dpt) {
@@ -79,7 +78,9 @@ function addZeros(v, zeros) {
 async function identifyProducteur(collection, REF, IDPROD, EMET) {
 	let producteurs = [];
 	await Producteur.find({ "BASE.base": collection }).then(
-		(listProducteurs) => (producteurs = listProducteurs),
+		(listProducteurs) => {
+			producteurs = listProducteurs;
+		},
 	);
 
 	//Liste des producteurs donc le préfixe correspond au début de la REF de la notice
@@ -236,18 +237,18 @@ function removeChar(chaine) {
 	const replaceChar = '"';
 
 	const keep = chaine[0] === search && chaine[chaine.length - 1] === search;
-	chaine = chaine.replace(search, replaceChar);
+	let newChaine = chaine.replace(search, replaceChar);
 
 	// Analyse des caractères à supprimer
 	if (
 		!keep &&
-		chaine[0] === replaceChar &&
-		chaine[chaine.length - 1] === replaceChar
+		newChaine[0] === replaceChar &&
+		newChaine[newChaine.length - 1] === replaceChar
 	) {
-		chaine = chaine.substring(1, chaine.length - 1);
+		newChaine = chaine.substring(1, chaine.length - 1);
 	}
 
-	return chaine;
+	return newChaine;
 }
 
 module.exports = {

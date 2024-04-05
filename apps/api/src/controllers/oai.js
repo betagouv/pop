@@ -131,7 +131,8 @@ router.get("/", async (req, res) => {
 					}
 					if (
 						Object.keys(req.query).includes("metadataPrefix") &&
-						!METADATA_FORMATS.hasOwnProperty(
+						!Object.hasOwn(
+							METADATA_FORMATS,
 							req.query.metadataPrefix,
 						)
 					) {
@@ -205,7 +206,8 @@ router.get("/", async (req, res) => {
 					}
 					if (
 						Object.keys(req.query).includes("metadataPrefix") &&
-						!METADATA_FORMATS.hasOwnProperty(
+						!Object.hasOwn(
+							METADATA_FORMATS,
 							req.query.metadataPrefix,
 						)
 					) {
@@ -230,7 +232,7 @@ router.get("/", async (req, res) => {
 					}
 					if (
 						Object.keys(req.query).includes("set") &&
-						!baseNames.hasOwnProperty(req.query.set)
+						!Object.hasOwn(baseNames, req.query.set)
 					) {
 						res.locals.Erreur = generateException(
 							req.query,
@@ -292,7 +294,8 @@ router.get("/", async (req, res) => {
 					}
 					if (
 						Object.keys(req.query).includes("metadataPrefix") &&
-						!METADATA_FORMATS.hasOwnProperty(
+						!Object.hasOwn(
+							METADATA_FORMATS,
 							req.query.metadataPrefix,
 						)
 					) {
@@ -306,7 +309,7 @@ router.get("/", async (req, res) => {
 					if (
 						arg.length === 3 &&
 						arg[0] === "oai" &&
-						baseNames.hasOwnProperty(arg[1]) &&
+						Object.hasOwn(baseNames, arg[1]) &&
 						arg[2] !== ""
 					) {
 						const ref = await createMongoGetRecordQuery(req.query);

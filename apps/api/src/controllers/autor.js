@@ -1,15 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const bodyParser = require("body-parser");
 const Autor = require("../models/autor");
 const NoticesOAI = require("../models/noticesOAI");
 const passport = require("passport");
-const {
-	formattedNow,
-	updateNotice,
-	updateOaiNotice,
-	getBaseCompletName,
-} = require("./utils");
+const { formattedNow, updateNotice, updateOaiNotice } = require("./utils");
 const {
 	canUpdateAutor,
 	canCreateAutor,
@@ -152,7 +146,7 @@ router.put(
 			const promises = [];
 
 			// Prepare and update notice.
-			await transformBeforeCreateAndUpdate(notice);
+			transformBeforeCreateAndUpdate(notice);
 			await determineProducteur(notice);
 			const oaiObj = { DMAJ: notice.DMAJ };
 
@@ -278,62 +272,51 @@ router.delete(
 );
 
 function transformBeforeCreateAndUpdate(notice, prevNotice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			notice.DMAJ = formattedNow();
-			notice.BASE = "Ressources biographiques (Autor)";
-			notice = withFlags(notice);
+	try {
+		notice.DMAJ = formattedNow();
+		notice.BASE = "Ressources biographiques (Autor)";
+		notice = withFlags(notice);
 
-			//Construction du champ Nom + Prenom
-			const NOM = notice.NOM;
-			const PREN = notice.PREN;
-			notice.NOMPRENOM =
-				(PREN ? PREN : "") +
-				(PREN && NOM ? " " : "") +
-				(NOM ? NOM : "");
+		//Construction du champ Nom + Prenom
+		const NOM = notice.NOM;
+		const PREN = notice.PREN;
+		notice.NOMPRENOM =
+			(PREN ? PREN : "") + (PREN && NOM ? " " : "") + (NOM ? NOM : "");
 
-			//Champ CONTIENT_IMAGE égal à oui si Memoire contient une url d'image au moins
-			MEMOIRE = notice.MEMOIRE
-				? notice.MEMOIRE
-				: prevNotice
-					? prevNotice.MEMOIRE
-					: [];
-			if (MEMOIRE.length > 0) {
-				notice.CONTIENT_IMAGE = MEMOIRE.some((e) => e.url)
-					? "oui"
-					: "non";
-			} else {
-				notice.CONTIENT_IMAGE = "non";
-			}
-
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
+		//Champ CONTIENT_IMAGE égal à oui si Memoire contient une url d'image au moins
+		MEMOIRE = notice.MEMOIRE
+			? notice.MEMOIRE
+			: prevNotice
+				? prevNotice.MEMOIRE
+				: [];
+		if (MEMOIRE.length > 0) {
+			notice.CONTIENT_IMAGE = MEMOIRE.some((e) => e.url) ? "oui" : "non";
+		} else {
+			notice.CONTIENT_IMAGE = "non";
 		}
-	});
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
 async function determineProducteur(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const noticeProducteur = await identifyProducteur(
-				"autor",
-				notice.REF,
-				"",
-				"",
-			);
-			if (noticeProducteur) {
-				notice.PRODUCTEUR = noticeProducteur;
-			} else {
-				notice.PRODUCTEUR = "AUTRE";
-			}
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
+	try {
+		const noticeProducteur = await identifyProducteur(
+			"autor",
+			notice.REF,
+			"",
+			"",
+		);
+		if (noticeProducteur) {
+			notice.PRODUCTEUR = noticeProducteur;
+		} else {
+			notice.PRODUCTEUR = "AUTRE";
 		}
-	});
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
 // Control properties document, flag each error.

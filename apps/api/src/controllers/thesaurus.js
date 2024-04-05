@@ -51,7 +51,7 @@ router.get(
 			value: { $regex: new RegExp(`^${value}`) },
 		});
 		q.exec((e, values) => {
-			values = values.map((element) => {
+			const body = values.map((element) => {
 				return {
 					_id: element._id,
 					idThesaurus: element.idThesaurus,
@@ -60,7 +60,7 @@ router.get(
 					isAltLabel: element.altLabel,
 				};
 			});
-			res.send({ statusCode: 202, body: JSON.stringify(values) });
+			res.send({ statusCode: 202, body: JSON.stringify(body) });
 		});
 	},
 );
@@ -86,7 +86,7 @@ router.get(
 		};
 
 		Thesaurus.find(query, (e, values) => {
-			values = values.map((element) => {
+			const body = values.map((element) => {
 				return {
 					_id: element._id,
 					idThesaurus: element.idThesaurus,
@@ -95,7 +95,7 @@ router.get(
 					isAltLabel: element.altLabel,
 				};
 			});
-			res.send({ statusCode: 200, body: JSON.stringify(values) });
+			res.send({ statusCode: 200, body: JSON.stringify(body) });
 		});
 	},
 );
@@ -366,9 +366,9 @@ function createThesaurusOperation(idThesaurus, parseData) {
 	const propPrefLabel = "http://www.w3.org/2004/02/skos/core#prefLabel";
 	const today = moment.tz(new Date(), timeZone).format("YYYY-MM-DD");
 
-	parseData.forEach((el) => {
+	for (const el of parseData) {
 		if (el[propAltLabel]) {
-			el[propAltLabel].forEach((element) => {
+			for (const element of el[propAltLabel]) {
 				const theso = {
 					idThesaurus: idThesaurus,
 					arc: el[propId],
@@ -384,11 +384,11 @@ function createThesaurusOperation(idThesaurus, parseData) {
 						upsert: true,
 					},
 				});
-			});
+			}
 		}
 
 		if (el[propPrefLabel]) {
-			el[propPrefLabel].forEach((element) => {
+			for (const element of el[propPrefLabel]) {
 				const theso = {
 					idThesaurus: idThesaurus,
 					arc: el[propId],
@@ -404,9 +404,9 @@ function createThesaurusOperation(idThesaurus, parseData) {
 						upsert: true,
 					},
 				});
-			});
+			}
 		}
-	});
+	}
 
 	return operations;
 }
@@ -419,9 +419,9 @@ async function createThesaurus(idThesaurus, parseData) {
 	const propPrefLabel = "http://www.w3.org/2004/02/skos/core#prefLabel";
 	const today = moment.tz(new Date(), timeZone).format("YYYY-MM-DD");
 
-	parseData.forEach((el, i) => {
-		if (parseData[i][propAltLabel]) {
-			parseData[i][propAltLabel].forEach((element) => {
+	for (const el of parseData) {
+		if (el[propAltLabel]) {
+			for (const element of el[propAltLabel]) {
 				const theso = new Thesaurus({
 					idThesaurus: idThesaurus,
 					arc: parseData[i][propId],
@@ -430,11 +430,11 @@ async function createThesaurus(idThesaurus, parseData) {
 					updatedAt: today,
 				});
 				promises.push(theso.save());
-			});
+			}
 		}
 
-		if (parseData[i][propPrefLabel]) {
-			parseData[i][propPrefLabel].forEach((element) => {
+		if (el[propPrefLabel]) {
+			for (const element of el[propPrefLabel]) {
 				const theso = new Thesaurus({
 					idThesaurus: idThesaurus,
 					arc: parseData[i][propId],
@@ -443,9 +443,9 @@ async function createThesaurus(idThesaurus, parseData) {
 					updatedAt: today,
 				});
 				promises.push(theso.save());
-			});
+			}
 		}
-	});
+	}
 
 	await Promise.all(promises);
 }
@@ -493,7 +493,7 @@ router.get("/getAllThesaurusById", (req, res) => {
 	const thesaurusId = req.query.id;
 
 	Thesaurus.find({ idThesaurus: thesaurusId }, (e, values) => {
-		values = values.map((element) => {
+		const results = values.map((element) => {
 			return {
 				_id: element._id,
 				idThesaurus: element.idThesaurus,
@@ -502,7 +502,7 @@ router.get("/getAllThesaurusById", (req, res) => {
 				isAltLabel: element.altLabel,
 			};
 		});
-		res.status(202).send(values);
+		res.status(202).send(results);
 	});
 });
 
@@ -538,23 +538,19 @@ router.get(
 	},
 );
 
-function getAllChildrenConcept(conceptId, arr) {
+async function getAllChildrenConcept(conceptId, arr) {
 	try {
-		return new Promise(async (resolve, reject) => {
-			arr.push(conceptId);
-			const childs = await getChildrenByConceptId(conceptId);
-			const ArrP = [];
-			if (childs) {
-				for (let i = 0; i < childs.length; i++) {
-					ArrP.push(getAllChildrenConcept(childs[i], arr));
-				}
+		arr.push(conceptId);
+		const childs = getChildrenByConceptId(conceptId);
+		const ArrP = [];
+		if (childs) {
+			for (let i = 0; i < childs.length; i++) {
+				ArrP.push(getAllChildrenConcept(childs[i], arr));
 			}
-			await Promise.all(ArrP);
-			resolve();
-		});
+		}
+		await Promise.all(ArrP);
 	} catch (e) {
 		capture(e);
-		resolve();
 	}
 }
 

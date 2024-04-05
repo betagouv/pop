@@ -954,29 +954,24 @@ async function createXmlFileListRecords(queryContent) {
 }
 
 async function createXmlFileGetRecord(queryContent) {
-	try {
-		resp = {
-			"OAI-PMH": [
-				{
-					_attr: {
-						xmlns: "http://www.openarchives.org/OAI/2.0/",
-						"xmlns:xsi":
-							"http://www.w3.org/2001/XMLSchema-instance",
-						"xmlns:dc": "http://purl.org/dc/elements/1.1/",
-						"xsi:schemaLocation":
-							"http://www.openarchives.org/OAI/2.0/" +
-							"\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd",
-					},
+	resp = {
+		"OAI-PMH": [
+			{
+				_attr: {
+					xmlns: "http://www.openarchives.org/OAI/2.0/",
+					"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+					"xmlns:dc": "http://purl.org/dc/elements/1.1/",
+					"xsi:schemaLocation":
+						"http://www.openarchives.org/OAI/2.0/" +
+						"\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd",
 				},
-				{ responseDate: new Date().toISOString() },
-			],
-		};
-		resp["OAI-PMH"].push({ request: [{ _attr: queryContent }, baseUrl] });
-		resp["OAI-PMH"].push(await createGetRecordXml(queryContent));
-		return xml(resp, { declaration: true });
-	} catch (err) {
-		throw err;
-	}
+			},
+			{ responseDate: new Date().toISOString() },
+		],
+	};
+	resp["OAI-PMH"].push({ request: [{ _attr: queryContent }, baseUrl] });
+	resp["OAI-PMH"].push(await createGetRecordXml(queryContent));
+	return xml(resp, { declaration: true });
 }
 
 module.exports = {

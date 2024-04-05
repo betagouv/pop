@@ -271,86 +271,79 @@ async function transformBeforeCreate(notice) {
 	await transformBeforeCreateOrUpdate(notice);
 }
 
-function checkIfMemoireImageExist(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			// Here, we update the images and we keep the order ( !! important )
-			const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
-			const arr = NoticesMemoire.map((e) => {
-				const NAME =
-					e.LEG || e.TICO || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
-				return {
-					ref: e.REF,
-					url: e.IMG,
-					copy: e.COPY,
-					name: NAME,
-					marq: e.MARQ,
-				};
-			});
+async function checkIfMemoireImageExist(notice) {
+	try {
+		// Here, we update the images and we keep the order ( !! important )
+		const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
+		const arr = NoticesMemoire.map((e) => {
+			const NAME =
+				e.LEG || e.TICO || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
+			return {
+				ref: e.REF,
+				url: e.IMG,
+				copy: e.COPY,
+				name: NAME,
+				marq: e.MARQ,
+			};
+		});
 
-			const newArr = (notice.MEMOIRE || []).filter((e) =>
-				arr.find((f) => f.ref === e.ref),
-			);
-			for (let i = 0; i < arr.length; i++) {
-				if (!newArr.find((e) => e.REF === arr[i].REF)) {
-					newArr.push(arr[i]);
-				}
+		const newArr = (notice.MEMOIRE || []).filter((e) =>
+			arr.find((f) => f.ref === e.ref),
+		);
+		for (let i = 0; i < arr.length; i++) {
+			if (!newArr.find((e) => e.REF === arr[i].REF)) {
+				newArr.push(arr[i]);
 			}
-			resolve(newArr);
-		} catch (e) {
-			capture(e);
-			reject(e);
 		}
-	});
+		return newArr;
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
-function populateREFO(notice) {
-	return new Promise(async (resolve, _reject) => {
-		const objs = await Palissy.find({ REFA: notice.REF });
-		const REFO = objs.map((e) => e.REF);
-		resolve(REFO);
-	});
+async function populateREFO(notice) {
+	const objs = await Palissy.find({ REFA: notice.REF });
+	const REFO = objs.map((e) => e.REF);
+	return REFO;
 }
-function populatePalissyREFA(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (!Array.isArray(notice.REFO)) {
-				resolve();
-				return;
-			}
-			const promises = [];
-			const palissys = await Palissy.find({ REFA: notice.REF });
 
-			for (let i = 0; i < palissys.length; i++) {
-				// If the object is removed from notice, then remove it from merimee
-				if (!notice.REFO.includes(palissys[i].REF)) {
-					palissys[i].REFA = palissys[i].REFA.filter(
-						(e) => e !== notice.REF,
-					);
-					promises.push(palissys[i].save());
-				}
-			}
-
-			for (let i = 0; i < notice.REFO.length; i++) {
-				if (!palissys.find((e) => e.REF === notice.REFO[i])) {
-					const obj = await Palissy.findOne({ REF: notice.REFO[i] });
-					if (
-						obj &&
-						Array.isArray(obj.REFA) &&
-						!obj.REFA.includes(notice.REF)
-					) {
-						obj.REFA.push(notice.REF);
-						promises.push(obj.save());
-					}
-				}
-			}
-			await Promise.all(promises);
-			resolve();
-		} catch (error) {
-			capture(error);
-			resolve();
+async function populatePalissyREFA(notice) {
+	try {
+		if (!Array.isArray(notice.REFO)) {
+			return;
 		}
-	});
+		const promises = [];
+		const palissys = await Palissy.find({ REFA: notice.REF });
+
+		for (let i = 0; i < palissys.length; i++) {
+			// If the object is removed from notice, then remove it from merimee
+			if (!notice.REFO.includes(palissys[i].REF)) {
+				palissys[i].REFA = palissys[i].REFA.filter(
+					(e) => e !== notice.REF,
+				);
+				promises.push(palissys[i].save());
+			}
+		}
+
+		for (let i = 0; i < notice.REFO.length; i++) {
+			if (!palissys.find((e) => e.REF === notice.REFO[i])) {
+				const obj = await Palissy.findOne({ REF: notice.REFO[i] });
+				if (
+					obj &&
+					Array.isArray(obj.REFA) &&
+					!obj.REFA.includes(notice.REF)
+				) {
+					obj.REFA.push(notice.REF);
+					promises.push(obj.save());
+				}
+			}
+		}
+		await Promise.all(promises);
+	} catch (error) {
+		capture(error);
+		throw error;
+	}
 }
 
 // Generate new ID from notice information (department + prefix)
@@ -640,81 +633,75 @@ router.delete(
 	},
 );
 
-function determineProducteur(notice) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const noticeProducteur = await identifyProducteur(
-				"merimee",
-				notice.REF,
-				"",
-				"",
-			);
-			if (noticeProducteur) {
-				notice.PRODUCTEUR = noticeProducteur;
-			} else {
-				notice.PRODUCTEUR = "AUTRE";
-			}
-			resolve();
-		} catch (e) {
-			capture(e);
-			reject(e);
+async function determineProducteur(notice) {
+	try {
+		const noticeProducteur = await identifyProducteur(
+			"merimee",
+			notice.REF,
+			"",
+			"",
+		);
+		if (noticeProducteur) {
+			notice.PRODUCTEUR = noticeProducteur;
+		} else {
+			notice.PRODUCTEUR = "AUTRE";
 		}
-	});
+	} catch (e) {
+		capture(e);
+		throw e;
+	}
 }
 
-function populateBaseFromMerimee(notice, refList, baseToPopulate) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			if (!Array.isArray(refList)) {
-				resolve();
-				return;
-			}
-			const promises = [];
-			const noticesToPopulate = await baseToPopulate.find({
-				REFMER: notice.REF,
-			});
-
-			for (let i = 0; i < noticesToPopulate.length; i++) {
-				// If the object is removed from notice, then remove it from palissy
-				if (!refList.includes(noticesToPopulate[i].REF)) {
-					noticesToPopulate[i].REFMER = noticesToPopulate[
-						i
-					].REFMER.filter((e) => e !== notice.REF);
-					promises.push(noticesToPopulate[i].save());
-				}
-			}
-
-			let list = [];
-			switch (baseToPopulate) {
-				case Joconde:
-					list = notice.REFJOC;
-					break;
-				case Museo:
-					list = notice.REFMUS;
-					break;
-			}
-
-			for (let i = 0; i < list.length; i++) {
-				if (!noticesToPopulate.find((e) => e.REF === list[i])) {
-					const obj = await baseToPopulate.findOne({ REF: list[i] });
-					if (
-						obj &&
-						Array.isArray(obj.REFMER) &&
-						!obj.REFMER.includes(notice.REF)
-					) {
-						obj.REFMER.push(notice.REF);
-						promises.push(obj.save());
-					}
-				}
-			}
-
-			await Promise.all(promises);
+async function populateBaseFromMerimee(notice, refList, baseToPopulate) {
+	try {
+		if (!Array.isArray(refList)) {
 			resolve();
-		} catch (error) {
-			capture(error);
-			resolve();
+			return;
 		}
-	});
+		const promises = [];
+		const noticesToPopulate = await baseToPopulate.find({
+			REFMER: notice.REF,
+		});
+
+		for (let i = 0; i < noticesToPopulate.length; i++) {
+			// If the object is removed from notice, then remove it from palissy
+			if (!refList.includes(noticesToPopulate[i].REF)) {
+				noticesToPopulate[i].REFMER = noticesToPopulate[
+					i
+				].REFMER.filter((e) => e !== notice.REF);
+				promises.push(noticesToPopulate[i].save());
+			}
+		}
+
+		let list = [];
+		switch (baseToPopulate) {
+			case Joconde:
+				list = notice.REFJOC;
+				break;
+			case Museo:
+				list = notice.REFMUS;
+				break;
+		}
+
+		for (let i = 0; i < list.length; i++) {
+			if (!noticesToPopulate.find((e) => e.REF === list[i])) {
+				const obj = await baseToPopulate.findOne({ REF: list[i] });
+				if (
+					obj &&
+					Array.isArray(obj.REFMER) &&
+					!obj.REFMER.includes(notice.REF)
+				) {
+					obj.REFMER.push(notice.REF);
+					promises.push(obj.save());
+				}
+			}
+		}
+
+		await Promise.all(promises);
+	} catch (error) {
+		capture(error);
+		throw error;
+	}
 }
 
 module.exports = router;

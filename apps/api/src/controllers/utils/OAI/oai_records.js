@@ -1487,9 +1487,8 @@ function createRecordMerimee(elem, notice) {
 				if (date !== "") {
 					if (date !== "") {
 						date.concat(" ;", date);
-					} else {
-						date = date;
 					}
+
 					if (coverageTemporal !== "") {
 						coverageTemporal.concat(" ;", date);
 					} else {
@@ -2382,8 +2381,6 @@ function createRecordPalissy(elem, notice) {
 			notice.DATE.map((date) => {
 				if (date !== "") {
 					date.concat(" ;", date);
-				} else {
-					date = date;
 				}
 				if (coverageTemporal !== "") {
 					coverageTemporal.concat(" ;", date);

@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const generator = require("generate-password");
-const mailer = require("../mailer");
 const { capture } = require("./../sentry.js");
 require("../passport")(passport);
 const Producteur = require("../models/producteur");
@@ -113,7 +111,7 @@ router.put(
 		if (!producteur) {
 			res.status(404).send({
 				success: false,
-				msg: `La mise à jour des informations à échoué. Producteur ${LABEL} introuvable.`,
+				msg: `La mise à jour des informations à échoué. Producteur ${label} introuvable.`,
 			});
 		}
 
@@ -152,11 +150,22 @@ router.get(
 		const listeProducteur = req.query.producteurs;
 		const producteurs = await Producteur.find({});
 		// Renvoie la liste des préfixes associés aux producteurs en paramètre
-		producteurs.map((producteur) =>
-			producteur.BASE.filter((base) =>
+		// producteurs.forEach((producteur) =>
+		// 	producteur.BASE.filter((base) =>
+		// 		listeProducteur.includes(base.base),
+		// 	).forEach(
+		// 		(base) => (listePrefix = listePrefix.concat(base.prefixes)),
+		// 	),
+		// );
+
+		for (const producteur of producteurs) {
+			const bases = producteur.BASE.filter((base) =>
 				listeProducteur.includes(base.base),
-			).map((base) => (listePrefix = listePrefix.concat(base.prefixes))),
-		);
+			);
+			for (const base of bases) {
+				listePrefix = listePrefix.concat(base.prefixes);
+			}
+		}
 
 		res.status(200).json({ success: true, listePrefix: listePrefix });
 	},
