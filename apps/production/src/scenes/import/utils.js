@@ -87,43 +87,45 @@ async function readCSV(file, delimiter, encoding, quote) {
 		quote: quote || "",
 		relax_column_count: true,
 	});
-	const output = [];
 
-	let record = null;
-	let header = null;
+	return new Promise((resolve, reject) => {
+		const output = [];
+		let record = null;
+		let header = null;
 
-	parser.on("readable", () => {
-		// biome-ignore lint/suspicious/noAssignInExpressions: temp before re-write
-		while ((record = parser.read())) {
-			// Delete empty lines.
-			if (!record.join("").trim()) {
-				continue;
+		parser.on("readable", () => {
+			// biome-ignore lint/suspicious/noAssignInExpressions: temp before re-write
+			while ((record = parser.read())) {
+				// Delete empty lines.
+				if (!record.join("").trim()) {
+					continue;
+				}
+
+				if (!header) {
+					header = [].concat(record);
+					continue;
+				}
+				const obj = {};
+				record.map((e, i) => {
+					obj[header[i]] = e;
+				});
+				output.push(obj);
 			}
+		});
 
-			if (!header) {
-				header = [].concat(record);
-				continue;
-			}
-			const obj = {};
-			record.map((e, i) => {
-				obj[header[i]] = e;
-			});
-			output.push(obj);
-		}
+		// Catch any error
+		parser.on("error", (err) => {
+			reject(err.message);
+		});
+
+		// When we are done, test that the parsed output matched what expected
+		parser.on("finish", () => {
+			resolve(output);
+		});
+
+		parser.write(res);
+		parser.end();
 	});
-
-	// Catch any error
-	parser.on("error", (err) => {
-		reject(err.message);
-	});
-
-	// When we are done, test that the parsed output matched what expected
-	parser.on("finish", () => {
-		resolve(output);
-	});
-
-	parser.write(res);
-	parser.end();
 }
 
 function parseAjoutPilote(res, object) {

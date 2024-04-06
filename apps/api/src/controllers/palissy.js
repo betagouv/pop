@@ -658,7 +658,6 @@ async function determineProducteur(notice) {
 async function populateBaseFromPalissy(notice, refList, baseToPopulate) {
 	try {
 		if (!Array.isArray(refList)) {
-			resolve();
 			return;
 		}
 		const promises = [];

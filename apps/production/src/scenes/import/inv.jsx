@@ -71,15 +71,14 @@ async function parseFiles(files, encoding) {
 			checkReference(importedNotices[i]);
 		}
 
-		resolve({
+		return {
 			importedNotices,
 			fileNames: [
 				"GERTRUDE_xmlToPALISSY_lexicovide.txt",
 				"GERTRUDE_xmlToMEMOIRE_lexicovide.txt",
 				"GERTRUDE_xmlToMERIMEE_lexicovide.txt",
 			],
-		});
-		return;
+		};
 	}
 
 	// RENABL
@@ -101,25 +100,22 @@ async function parseFiles(files, encoding) {
 		for (let i = 0; i < importedNotices.length; i++) {
 			checkReference(importedNotices[i]);
 		}
-		resolve({ importedNotices, fileNames });
-		return;
+		return { importedNotices, fileNames };
 	}
 
 	// Import CSV type (MH)
-	await common_mh_inv
-		.parseFilesCsv(files, encoding, "INV")
-		.then((resp) => {
-			// Vérification des références
-			for (let i = 0; i < resp.importedNotices.length; i++) {
-				checkReference(resp.importedNotices[i]);
-			}
-			resolve(resp);
-		})
-		.catch((err) => {
-			if (err !== "Pas de fichiers .csv detecté") {
-				reject(err);
-			}
-		});
+	try {
+		const resp = await common_mh_inv.parseFilesCsv(files, encoding, "INV");
+		// Vérification des références
+		for (let i = 0; i < resp.importedNotices.length; i++) {
+			checkReference(resp.importedNotices[i]);
+		}
+		return resp;
+	} catch (err) {
+		if (err !== "Pas de fichiers .csv detecté") {
+			throw Error(err);
+		}
+	}
 
 	// ERROR
 	throw Error(

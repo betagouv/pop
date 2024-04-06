@@ -256,8 +256,9 @@ class Importer extends Component {
 			this.props.fieldsToExport,
 		);
 
-		const doc = await api
-			.createImport(
+		let doc = null;
+		try {
+			doc = await api.createImport(
 				{
 					institution: this.props.institution,
 					user: this.props.userId,
@@ -274,14 +275,16 @@ class Importer extends Component {
 						rejected.length,
 				},
 				file,
-			)
-			.catch((e) => {
-				const avert = this.state.avertissement;
-				avert.push(
-					"POP n'a pas pu enregistrer cet import dans l'historique des imports. L'import a échoué.",
-				);
-				this.setState({ avertissement: avert, loading: false });
-			});
+			);
+		} catch (err) {
+			const avert = this.state.avertissement;
+			avert.push(
+				"POP n'a pas pu enregistrer cet import dans l'historique des imports. L'import a échoué.",
+			);
+			this.setState({ avertissement: avert, loading: false });
+			console.error(err);
+			return;
+		}
 
 		const importId = doc.doc._id;
 

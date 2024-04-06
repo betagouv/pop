@@ -30,8 +30,7 @@ class Import extends React.Component {
 				files,
 				this.state.museofile,
 			);
-			resolve({ importedNotices, fileNames: [rootFile.name] });
-			return;
+			return { importedNotices, fileNames: [rootFile.name] };
 		}
 
 		// Test Excel format

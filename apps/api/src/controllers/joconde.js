@@ -387,7 +387,6 @@ async function determineProducteur(notice) {
 async function populateBaseFromJoconde(notice, refList, baseToPopulate) {
 	try {
 		if (!Array.isArray(refList)) {
-			resolve();
 			return;
 		}
 		const promises = [];
@@ -435,6 +434,7 @@ async function populateBaseFromJoconde(notice, refList, baseToPopulate) {
 		await Promise.all(promises);
 	} catch (error) {
 		capture(error);
+		throw error;
 	}
 }
 

@@ -655,7 +655,6 @@ async function determineProducteur(notice) {
 async function populateBaseFromMerimee(notice, refList, baseToPopulate) {
 	try {
 		if (!Array.isArray(refList)) {
-			resolve();
 			return;
 		}
 		const promises = [];

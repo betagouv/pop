@@ -58,12 +58,12 @@ class request {
 			);
 			const jsonData = await response.json();
 			if (response.status !== 200 || jsonData.success !== true) {
-				return reject(jsonData);
+				throw Error(jsonData);
 			}
-			resolve(jsonData);
+			return jsonData;
 		} catch (err) {
 			Raven.captureException(err);
-			reject({ success: false, msg: "L'api est inaccessible." });
+			throw Error({ success: false, msg: "L'api est inaccessible." });
 		}
 	}
 
