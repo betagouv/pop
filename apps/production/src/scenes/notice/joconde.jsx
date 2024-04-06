@@ -12,11 +12,11 @@ import Mapping from "../../services/mapping";
 import AccordionHistorique from "./components/AccordionHistorique";
 import BackButton from "./components/BackButton";
 import DeleteButton from "./components/DeleteButton";
-import Comments from "./components/comments.js";
-import Field from "./components/field.js";
+import Comments from "./components/comments";
+import Field from "./components/field";
 import FieldImages from "./components/fieldImages";
-import MapComponent from "./components/map.js";
-import Section from "./components/section.js";
+import MapComponent from "./components/map";
+import Section from "./components/section";
 
 import "./index.css";
 

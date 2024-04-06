@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import inv from "../../../assets/inventaire.jpg";
 import mh from "../../../assets/mh.png";
-import { bucket_url } from "../../../config;
+import { bucket_url } from "../../../config";
 
 import utils from "./utils";
 

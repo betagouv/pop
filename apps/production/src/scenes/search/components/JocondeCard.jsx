@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import mdf from "../../../assets/musee-de-france.png";
-import { bucket_url } from "../../../config;
+import { bucket_url } from "../../../config";
 import utils from "./utils";
 const castToArray = utils.castToArray;
 

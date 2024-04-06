@@ -1,5 +1,5 @@
 import "isomorphic-fetch";
-const { api_url } = require("../config);
+const { api_url } = require("../config");
 
 // This class provides ~low level access to POP API.
 // Use it via `request.fetchJSON`, `request.fetchFormData`, etc.

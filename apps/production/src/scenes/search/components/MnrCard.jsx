@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import { bucket_url } from "../../../config;
+import { bucket_url } from "../../../config";
 
 import Mapping from "../../../services/mapping";
 

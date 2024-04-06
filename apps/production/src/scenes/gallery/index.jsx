@@ -10,9 +10,9 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Col, Row } from "reactstrap";
-import { bucket_url, es_url } from "../../config.js";
-import CollapsableFacet from "../search/components/CollapsableFacet.js";
-import utils from "../search/components/utils.js";
+import { bucket_url, es_url } from "../../config";
+import CollapsableFacet from "../search/components/CollapsableFacet";
+import utils from "../search/components/utils";
 import "./index.css";
 
 function Gallery({ role, group }) {

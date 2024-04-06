@@ -16,7 +16,7 @@ if (process.env.SENTRY_DSN) {
 if (process.env.AMPLITUDE_API_KEY) {
 	amplitude.getInstance().init(AMPLITUDE_API_KEY);
 }
-const store = configureStore(/* provide initial state if any */);
+const store = configureStore({});
 
 ReactDOM.render(
 	<Provider store={store}>

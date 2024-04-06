@@ -17,6 +17,6 @@ export default function reducer(state, action) {
 		case actions.LOGOUT:
 			return { ...state, user: null };
 		default:
-			return state;
+			return state ?? initState;
 	}
 }

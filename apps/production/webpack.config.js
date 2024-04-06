@@ -33,7 +33,7 @@ module.exports = (env) => {
 			process: "process/browser",
 		}),
 		new TerserPlugin({
-			test: /\.js($|\?)/i,
+			test: /\.(js|jsx)($|\?)/i,
 			exclude: /node_modules/,
 			parallel: 4,
 		}),

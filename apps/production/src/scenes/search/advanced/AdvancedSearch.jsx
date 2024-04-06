@@ -7,7 +7,7 @@ import {
 } from "@popproject/pop-react-elasticsearch";
 import React, { useState, useEffect } from "react";
 import { Container } from "reactstrap";
-import { es_url } from "../../../config;
+import { es_url } from "../../../config";
 import Mapping from "../../../services/mapping";
 import DeleteComponent from "../components/DeleteComponent";
 import ExportComponent from "../components/ExportComponent";

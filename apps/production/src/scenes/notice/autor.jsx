@@ -4,17 +4,17 @@ import { toastr } from "react-redux-toastr";
 import { Link } from "react-router-dom";
 import { Button, Col, Container, Form, Row } from "reactstrap";
 import { reduxForm } from "redux-form";
-import Loader from "../../components/Loader/index.js";
-import { bucket_url, pop_url } from "../../config.js";
-import Autor from "../../entities/Autor.js";
-import API from "../../services/api.js";
-import Mapping from "../../services/mapping.js";
-import AccordionHistorique from "./components/AccordionHistorique.js";
-import BackButton from "./components/BackButton.js";
-import DeleteButton from "./components/DeleteButton.js";
-import Field from "./components/field.js";
-import FieldImages from "./components/fieldImages.js";
-import Section from "./components/section.js";
+import Loader from "../../components/Loader/index";
+import { bucket_url, pop_url } from "../../config";
+import Autor from "../../entities/Autor";
+import API from "../../services/api";
+import Mapping from "../../services/mapping";
+import AccordionHistorique from "./components/AccordionHistorique";
+import BackButton from "./components/BackButton";
+import DeleteButton from "./components/DeleteButton";
+import Field from "./components/field";
+import FieldImages from "./components/fieldImages";
+import Section from "./components/section";
 
 import "./index.css";
 

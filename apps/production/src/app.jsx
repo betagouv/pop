@@ -32,7 +32,8 @@ class App extends React.Component {
 					"Application",
 					localStorage.getItem("application"),
 				);
-				origSend.apply(this, data);
+				// biome-ignore lint/style/noArguments:
+				origSend.apply(this, arguments);
 			};
 		})();
 	}

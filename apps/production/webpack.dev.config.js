@@ -41,7 +41,7 @@ module.exports = (env) => {
 			},
 		},
 		resolve: {
-			extensions: [".", ".js", ".jsx"],
+			extensions: ["", ".js", ".jsx"],
 			fallback: {
 				buffer: require.resolve("buffer/"),
 				fs: false,

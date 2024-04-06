@@ -8,7 +8,7 @@ import {
 } from "@popproject/pop-react-elasticsearch";
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
-import { es_url } from "../../../config;
+import { es_url } from "../../../config";
 import Card from "../components/AutorCard";
 import CollapsableFacet from "../components/CollapsableFacet";
 import ExportComponent from "../components/ExportComponent";

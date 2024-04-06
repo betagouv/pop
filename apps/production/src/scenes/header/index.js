@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container } from "reactstrap";
 
-import Logo from "./logo.js";
-import User from "./user.js";
+import Logo from "./logo";
+import User from "./user";
 
 import "./index.css";
 
