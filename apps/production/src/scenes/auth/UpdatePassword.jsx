@@ -59,7 +59,7 @@ class UpdatePassword extends Component {
 						return <p>{el}</p>;
 					})
 				: message_info_password;
-		return <div class="informations-mdp">{message}</div>;
+		return <div className="informations-mdp">{message}</div>;
 	}
 
 	lastConnectedAt() {

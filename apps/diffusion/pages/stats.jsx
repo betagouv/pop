@@ -1,4 +1,4 @@
-import https from "node:https";
+import https from "https";
 import fetch from "isomorphic-unfetch";
 import Head from "next/head";
 import React from "react";

@@ -31,7 +31,8 @@
 				"noUnusedTemplateLiteral": "warn", // Too much in the project
 				"useTemplate": "warn",
 				"useSelfClosingElements": "warn",
-				"noUselessElse": "warn"
+				"noUselessElse": "warn",
+				"useNodejsImportProtocol": "off"
 			},
 			"a11y": {
 				"useAltText": "warn",

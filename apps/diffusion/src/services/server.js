@@ -1,7 +1,7 @@
-const { createServer } = require("node:http");
-const { parse } = require("node:url");
+const { createServer } = require("http");
+const { parse } = require("url");
 const next = require("next");
-const { join } = require("node:path");
+const { join } = require("path");
 const Sentry = require("@sentry/node");
 
 // Load environment variables from ".env" file.

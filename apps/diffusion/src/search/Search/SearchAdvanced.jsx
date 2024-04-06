@@ -3119,7 +3119,7 @@ class SearchAdvanced extends React.Component {
 			this.onKeyDownCall = onClickCall;
 			useEventListener("keydown", this.handler);
 			return (
-				<div class="container-btn">
+				<div className="container-btn">
 					<button
 						type="button"
 						title="Rechercher"
