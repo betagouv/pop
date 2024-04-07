@@ -1,3 +1,3 @@
 import "@testing-library/jest-dom";
 
-jest.mock("../../services/api);
+jest.mock("../../services/api");

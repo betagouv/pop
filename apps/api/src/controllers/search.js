@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { esUrl, esPort, ID_PROD_APP, ovh } = require("../config.js");
-const http = require("node:http");
+const http = require("http");
 const aws4 = require("aws4");
 const { ndjsonToJsonText } = require("ndjson-to-json-text");
 const es = require("../elasticsearch.js")();
