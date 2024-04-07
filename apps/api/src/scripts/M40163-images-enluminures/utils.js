@@ -1,4 +1,4 @@
-const path = require("node:path");
+const path = require("path");
 
 //const nameFile = 'enluminures-cas-simple';
 const nameFile = "enluminures-cas-multiple";

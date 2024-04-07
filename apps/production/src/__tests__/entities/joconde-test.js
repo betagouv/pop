@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import fs from "fs";
 import Joconde from "../../entities/Joconde";
 import utils from "../../scenes/import/utils";
 

@@ -1,7 +1,7 @@
 require("dotenv").config();
 const AWS = require("aws-sdk");
-const fs = require("node:fs");
-const path = require("node:path");
+const fs = require("fs");
+const path = require("path");
 const csv = require("csv");
 const filenamify = require("filenamify");
 

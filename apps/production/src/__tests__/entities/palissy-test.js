@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import fs from "fs";
 import Palissy from "../../entities/Palissy";
 import utils from "../../scenes/import/utils";
 

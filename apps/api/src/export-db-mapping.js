@@ -1,5 +1,5 @@
-const fs = require("node:fs");
-const path = require("node:path");
+const fs = require("fs");
+const path = require("path");
 const modelsPath = "./models";
 const mappingProductionPath = "../../production/src/services/mapping.js";
 const mappingDiffusionPath = "../../diffusion/src/services/mapping.js";

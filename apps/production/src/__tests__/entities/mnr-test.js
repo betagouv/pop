@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import fs from "fs";
 import Mnr from "../../entities/Mnr";
 import utils from "../../scenes/import/utils";
 

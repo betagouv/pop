@@ -122,6 +122,7 @@ describe("POST /joconde", () => {
 			LVID: "htp://f", // 4
 		};
 		res = await createNotice(await createUser(), 200, flagNotice);
+		console.log("Raises flags", res);
 		res = await request(app)
 			.get(`/joconde/${flagNotice.REF}`)
 			.set("Accept", "application/json")

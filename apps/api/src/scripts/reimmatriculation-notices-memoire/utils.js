@@ -1,4 +1,4 @@
-const path = require("node:path");
+const path = require("path");
 
 const nameFile = "Reimmatriculation-dernierlot2";
 const pathFileCsv = path.resolve(__dirname, `csv/${nameFile}.csv`);

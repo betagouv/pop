@@ -1,6 +1,6 @@
 const conf = require("dotenv").config();
 require("../mongo");
-const fs = require("node:fs");
+const fs = require("fs");
 const Mnr = require("../models/mnr");
 const { async } = require("rxjs/internal/scheduler/async");
 const Gallery = require("../models/gallery");
