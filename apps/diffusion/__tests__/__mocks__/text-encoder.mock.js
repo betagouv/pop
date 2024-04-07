@@ -1,4 +1,4 @@
-import { TextDecoder, TextEncoder } from "node:util";
+import { TextDecoder, TextEncoder } from "util";
 
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
