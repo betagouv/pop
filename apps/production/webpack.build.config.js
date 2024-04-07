@@ -47,10 +47,11 @@ module.exports = (env) => {
 		bail: true,
 		output: {
 			path: path.resolve("build"),
-			filename: "[contenthash].index.[ext]",
+			filename: "[contenthash].index.js",
 			publicPath: "/",
 		},
 		resolve: {
+			extensions: ["", ".js", ".jsx"],
 			fallback: {
 				fs: false,
 				stream: require.resolve("stream-browserify"),
