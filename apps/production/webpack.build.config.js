@@ -59,6 +59,7 @@ module.exports = (env) => {
 				os: require.resolve("os-browserify/browser"),
 				process: require.resolve("process/browser"),
 				buffer: require.resolve("buffer/"),
+				events: false,
 			},
 		},
 		module: {
