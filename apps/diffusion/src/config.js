@@ -19,6 +19,8 @@ const eurelian = publicRuntimeConfig.eurelian;
 const es_url = `${api_url}/search/`;
 const sentryDsn = publicRuntimeConfig.sentryDsn;
 
+console.log("api_url", api_url);
+
 const emailContactMnr =
 	"isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture.gouv.fr";
 
