@@ -1,20 +1,18 @@
-var notices = db.museo.find().noCursorTimeout();
-var noticeCount = db.museo.count();
-notices.forEach(function( aRow ){
-	var ref = aRow.REF;
-	
+const notices = db.museo.find().noCursorTimeout();
+let noticeCount = db.museo.count();
+notices.forEach((aRow) => {
+	const ref = aRow.REF;
+
 	//Update field WWW
 	db.museo.update(
-		{ REF : ref},
+		{ REF: ref },
 		{
-			$rename : {
-				'location' : 'POP_COORDONNEES'
-				}
-			
-		}
-	)
-	
+			$rename: {
+				location: "POP_COORDONNEES",
+			},
+		},
+	);
+
 	noticeCount--;
-	print(noticeCount + " notices restantes");
-	
-})
+	print(`${noticeCount} notices restantes`);
+});

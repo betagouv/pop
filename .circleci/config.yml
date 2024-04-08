@@ -4,7 +4,7 @@ executors:
   docker_node:
     working_directory: ~/repo
     docker:
-      - image: cimg/node:14.21.3
+      - image: cimg/node:14.17
   docker_python:
     working_directory: ~/repo
     docker:
@@ -281,7 +281,7 @@ jobs:
       - build:
            app: diffusion
            api_url: https://api.pop.culture.gouv.fr
-           server_api_url: http://pop-api.eu-west-3.elasticbeanstalk.com
+           server_api_url: https://pop-api.eu-west-3.elasticbeanstalk.com
            pop_url: https://pop.culture.gouv.fr/
            bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
            env: production

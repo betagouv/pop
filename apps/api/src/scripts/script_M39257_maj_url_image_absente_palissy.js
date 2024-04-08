@@ -1,40 +1,43 @@
-notices = db.palissy.find( { MEMOIRE: { $eq: [] } } );
+notices = db.palissy.find({ MEMOIRE: { $eq: [] } });
 nbreNotices = notices.count();
 let countUpdate = 0;
 
 print(nbreNotices);
 
-notices.forEach(notice => {
-    // On récupère les notices MEMOIRE liées
-    const noticesMemoire = db.memoire.find( { LBASE: { $elemMatch: { $eq: notice.REF }  } } );
+notices.forEach((notice) => {
+	// On récupère les notices MEMOIRE liées
+	const noticesMemoire = db.memoire.find({
+		LBASE: { $elemMatch: { $eq: notice.REF } },
+	});
 
-    // Construction du tableau MEMOIRE
-    let arrayMemoire = noticesMemoire.map((noticeMemoire) => {
-        if(noticeMemoire){
-            let memoire = {};
-            memoire._id = noticeMemoire._id;
-            memoire.ref = noticeMemoire.REF;
-            memoire.url = noticeMemoire.IMG;
-            memoire.copy = noticeMemoire.COPY;
-            memoire.name = noticeMemoire.LEG;
+	// Construction du tableau MEMOIRE
+	const arrayMemoire = noticesMemoire
+		.map((noticeMemoire) => {
+			if (noticeMemoire) {
+				const memoire = {};
+				memoire._id = noticeMemoire._id;
+				memoire.ref = noticeMemoire.REF;
+				memoire.url = noticeMemoire.IMG;
+				memoire.copy = noticeMemoire.COPY;
+				memoire.name = noticeMemoire.LEG;
 
-            return memoire;
-        }
-    }).filter(val => val);
+				return memoire;
+			}
+		})
+		.filter((val) => val);
 
-    if(arrayMemoire.length > 0){
-        db.palissy.update(
-            { REF : notice.REF },
-            {
-                $set : {
-                    MEMOIRE : arrayMemoire
-                }
-            }
-        )
+	if (arrayMemoire.length > 0) {
+		db.palissy.update(
+			{ REF: notice.REF },
+			{
+				$set: {
+					MEMOIRE: arrayMemoire,
+				},
+			},
+		);
 
-        countUpdate++;
-    }   
+		countUpdate++;
+	}
 });
 
-
-print(countUpdate + " notices mise à jour");
+print(`${countUpdate} notices mise à jour`);

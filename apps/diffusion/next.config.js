@@ -14,7 +14,7 @@ const cspHeaders = `
   font-src 'self' https://cdnjs.cloudflare.com https://www.pop.culture.gouv.fr data:;
   connect-src 'self' ${
 		process.env.API_URL ? process.env.API_URL : "http://localhost:3000"
-	} https://cdnjs.cloudflare.com https://s3.eu-west-3.amazonaws.com https://www.pop.culture.gouv.fr https://uvvw.pop.culture.gouv.fr http://stats.data.gouv.fr https://static.hotjar.com https://o1104995.ingest.sentry.io https://script.hotjar.com https://api.mapbox.com https://api.tiles.mapbox.com;
+  } https://cdnjs.cloudflare.com https://s3.eu-west-3.amazonaws.com https://www.pop.culture.gouv.fr https://uvvw.pop.culture.gouv.fr http://stats.data.gouv.fr https://static.hotjar.com https://o1104995.ingest.sentry.io https://script.hotjar.com https://api.mapbox.com https://api.tiles.mapbox.com;
   img-src 'self' *.amazonaws.com http://stats.data.gouv.fr https://www.pop.culture.gouv.fr;
   object-src 'self' data:;
 `;

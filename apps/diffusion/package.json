@@ -1,71 +1,73 @@
 {
-  "name": "pop-next",
-  "version": "2.0.1",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.28",
-    "@fortawesome/free-solid-svg-icons": "^5.13.0",
-    "@fortawesome/react-fontawesome": "^0.1.9",
-    "@popproject/pop-react-elasticsearch": "^2.1.11",
-    "@react-pdf/renderer": "^3.0.0",
-    "@sentry/browser": "^6.12.0",
-    "@sentry/node": "^6.12.0",
-    "acorn": "^8.5.0",
-    "bootstrap": "^4.3.1",
-    "classnames": "^2.2.6",
-    "core-js": "^3.17.3",
-    "dotenv": "^10.0.0",
-    "dotenv-webpack": "^7.0.3",
-    "html2canvas": "^1.0.0-rc.5",
-    "isomorphic-unfetch": "^3.0.0",
-    "lodash": "^4.17.14",
-    "lodash.template": "^4.5.0",
-    "mapbox-gl": "^2.4.1",
-    "next": "^12.3.4",
-    "next-pwa": "^5.6.0",
-    "ngeohash": "^0.6.3",
-    "nprogress": "^0.2.0",
-    "query-string": "^7.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-slick": "^0.28.1",
-    "react-switch": "^6.0.0",
-    "react-viewer": "^3.2.2",
-    "reactstrap": "^8.10.0",
-    "shave": "^2.5.4",
-    "unfetch": "^4.1.0",
-    "universal-cookie": "^4.0.3",
-    "validator": "^13.6.0",
-    "webpack": "^5.76.2"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.21.3",
-    "@babel/preset-env": "^7.5.4",
-    "@babel/preset-react": "^7.0.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "jest-environment-jsdom": "29.5.0",
-    "jest": "^29.5.0",
-    "jest-sonar": "^0.2.15"
-  },
-  "engines": {
-    "node": "^14.17.5"
-  },
-  "scripts": {
-    "dev": "node src/services/server.js",
-    "build": "next build",
-    "start": "node src/services/server.js",
-    "test": "jest"
-  },
-  "prettier": {
-    "printWidth": 100
-  },
-  "jestSonar": {
-    "reportPath": "reports",
-    "reportFile": "test-report.xml",
-    "indent": 4
-  },
-  "author": "",
-  "license": "MIT"
+	"name": "pop-next",
+	"version": "2.0.1",
+	"description": "",
+	"main": "index.js",
+	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^1.2.28",
+		"@fortawesome/free-solid-svg-icons": "^5.13.0",
+		"@fortawesome/react-fontawesome": "^0.1.9",
+		"@popproject/pop-react-elasticsearch": "^2.1.11",
+		"@react-pdf/renderer": "^3.0.0",
+		"@sentry/browser": "^6.12.0",
+		"@sentry/node": "^6.12.0",
+		"acorn": "^8.5.0",
+		"bootstrap": "^4.3.1",
+		"classnames": "^2.2.6",
+		"core-js": "^3.17.3",
+		"dotenv": "^10.0.0",
+		"dotenv-webpack": "^7.0.3",
+		"html2canvas": "^1.0.0-rc.5",
+		"isomorphic-unfetch": "^3.0.0",
+		"lodash": "^4.17.14",
+		"lodash.template": "^4.5.0",
+		"mapbox-gl": "^2.4.1",
+		"next": "^12.3.4",
+		"next-pwa": "^5.6.0",
+		"ngeohash": "^0.6.3",
+		"nprogress": "^0.2.0",
+		"query-string": "^7.0.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-slick": "^0.28.1",
+		"react-switch": "^6.0.0",
+		"react-viewer": "^3.2.2",
+		"reactstrap": "^8.10.0",
+		"regenerator-runtime": "^0.14.1",
+		"shave": "^2.5.4",
+		"styled-jsx": "^5.1.2",
+		"unfetch": "^4.1.0",
+		"universal-cookie": "^4.0.3",
+		"validator": "^13.6.0",
+		"webpack": "^5.76.2"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.21.3",
+		"@babel/preset-env": "^7.5.4",
+		"@babel/preset-react": "^7.0.0",
+		"@testing-library/jest-dom": "^5.16.5",
+		"@testing-library/react": "^13.4.0",
+		"jest": "^29.5.0",
+		"jest-environment-jsdom": "29.5.0",
+		"jest-sonar": "^0.2.15"
+	},
+	"engines": {
+		"node": "14.17"
+	},
+	"scripts": {
+		"dev": "node src/services/server.js",
+		"build": "next build",
+		"start": "node src/services/server.js",
+		"test": "jest"
+	},
+	"prettier": {
+		"printWidth": 100
+	},
+	"jestSonar": {
+		"reportPath": "reports",
+		"reportFile": "test-report.xml",
+		"indent": 4
+	},
+	"author": "",
+	"license": "MIT"
 }

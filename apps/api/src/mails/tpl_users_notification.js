@@ -1,12 +1,12 @@
 /**
- * 
- * @param {String} role 
- * @param {String} email 
- * @param {String} password 
- * @returns 
+ *
+ * @param {String} role
+ * @param {String} email
+ * @param {String} password
+ * @returns
  */
-function templateCreateAccount(role, email, password){
-    return `Félicitations!<br /><br />
+function templateCreateAccount(role, email, password) {
+	return `Félicitations!<br /><br />
     Votre compte ${role} POP a été créé avec succès.<br /><br />
     Le lien vers la plateforme de production est le suivant : <a href="http://production.pop.culture.gouv.fr">http://production.pop.culture.gouv.fr</a><br />
     Le lien vers la plateforme de diffusion est le suivant : <a href="https://www.pop.culture.gouv.fr/">https://www.pop.culture.gouv.fr/</a><br /><br />
@@ -18,12 +18,12 @@ function templateCreateAccount(role, email, password){
 }
 
 /**
- * 
- * @param {String} password 
- * @returns 
+ *
+ * @param {String} password
+ * @returns
  */
 function templateForgetPassword(password) {
-    return `Bonjour!<br /><br />
+	return `Bonjour!<br /><br />
     Votre nouveau mot de passe provisoire est ${password}<br />
     Nous vous recommandons de modifier votre mot de passe le plus rapidement 
     possible en cliquant en haut à droite lors de votre connexion<br /><br />
@@ -32,6 +32,6 @@ function templateForgetPassword(password) {
 }
 
 module.exports = {
-    templateCreateAccount,
-    templateForgetPassword
-}
+	templateCreateAccount,
+	templateForgetPassword,
+};
