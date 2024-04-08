@@ -57,7 +57,7 @@
 	"scripts": {
 		"dev": "node src/services/server.js",
 		"build": "next build",
-		"start": "node src/services/server.js",
+		"start": "NODE_ENV=production node src/services/server.js",
 		"test": "jest"
 	},
 	"prettier": {

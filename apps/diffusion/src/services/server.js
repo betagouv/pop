@@ -13,12 +13,13 @@ Sentry.init({
 	environment: process.env.NODE_ENV,
 });
 const dev = process.env.NODE_ENV === "development";
+const port = process.env.PORT || 8081;
 
-const app = next({ dev });
+const app = next({ dev, port });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-	createServer((req, res) => {
+	createServer(async (req, res) => {
 		const parsedUrl = parse(req.url, true);
 		const { pathname, query } = parsedUrl;
 
@@ -38,14 +39,16 @@ app.prepare().then(() => {
 		if (req.headers.host != null) {
 			isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
 		}
+
 		const isNotSecure =
 			req.headers["x-forwarded-proto"] &&
 			req.headers["x-forwarded-proto"] === "http";
 		const splitUrl = req.url.split("/");
+
 		// Vérifie si un élément est vide dans l'url
 		if (splitUrl.indexOf("", 1) > -1) {
 			res.statusCode = 404;
-			handle(req, res, parsedUrl);
+			await handle(req, res, parsedUrl);
 		} else if (
 			isProdDomain &&
 			(isNotSecure || !req.headers.host.match(/^www/))
@@ -69,7 +72,7 @@ app.prepare().then(() => {
 				"../../.next/static",
 				parsedUrl.pathname,
 			);
-			app.serveStatic(req, res, path);
+			await app.serveStatic(req, res, path);
 		} else if (pathname.match(searchRegex)) {
 			const renderParams = Object.assign(
 				{
@@ -82,25 +85,26 @@ app.prepare().then(() => {
 				},
 				query,
 			);
-			app.render(req, res, "/search", renderParams);
+			await app.render(req, res, "/search", renderParams);
 		} else if (pathname.match(noticeRegex)) {
 			const renderPath = `/notice/${pathname.replace(noticeRegex, "$1")}`;
 			const renderParams = Object.assign(
 				{ id: pathname.replace(noticeRegex, "$2") },
 				query,
 			);
-			app.render(req, res, renderPath, renderParams);
+			await app.render(req, res, renderPath, renderParams);
 		} else if (pathname.match(galleryRegex)) {
 			const renderParams = Object.assign(
 				{ id: pathname.replace(galleryRegex, "$1") },
 				query,
 			);
-			app.render(req, res, "/gallery", renderParams);
+			await app.render(req, res, "/gallery", renderParams);
 		} else {
-			handle(req, res, parsedUrl);
+			await handle(req, res, parsedUrl);
 		}
-	}).listen(8081, (err) => {
+	}).listen(port, (err) => {
 		if (err) throw err;
 		console.log("> Ready on http://localhost:8081");
+		console.log(`> API_URL ${process.env.API_URL}`);
 	});
 });
