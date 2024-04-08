@@ -34,7 +34,10 @@ app.prepare().then(() => {
 		const galleryRegex = /^\/gallery\/(.*?)$/;
 		const searchRegex =
 			/^\/(advanced-search|search)\/(list|map|mosaic)(?:\/(.+))?$/;
-		const isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
+		let isProdDomain = false;
+		if (req.headers.host != null) {
+			isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
+		}
 		const isNotSecure =
 			req.headers["x-forwarded-proto"] &&
 			req.headers["x-forwarded-proto"] === "http";
