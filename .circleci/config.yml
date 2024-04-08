@@ -94,6 +94,46 @@ commands:
           root: ~/repo/apps/<< parameters.app >>
           paths:
             - << parameters.path >>
+  build_diffusion:
+    parameters:
+      app:
+        type: string
+      api_url:
+        type: string
+      server_api_url:
+        type: string
+      pop_url:
+        type: string
+      bucket_url:
+        type: string
+      env:
+        type: string
+      sentry:
+        type: string
+      path:
+        type: string
+      eurelian:
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: << parameters.app >>
+      - run:
+          name: build
+          command: |
+            cd apps/<< parameters.app >>
+            echo "NEXT_PUBLIC_API_URL=<< parameters.api_url >>" > .env
+            if [ "<< parameters.app >>" = "diffusion" ]; then echo "SERVER_API_URL=<< parameters.server_api_url >>" > .env; fi
+            echo "NEXT_PUBLIC_POP_URL=<< parameters.pop_url >>" >> .env
+            echo "NEXT_PUBLIC_BUCKET_URL=<< parameters.bucket_url >>" >> .env
+            echo "NODE_ENV=<< parameters.env >>" >> .env
+            echo "NEXT_PUBLIC_SENTRY_DSN=<< parameters.sentry >>" >> .env
+            echo "NEXT_PUBLIC_EURELIAN=<< parameters.eurelian >>" >> .env
+            npm run build
+      - persist_to_workspace:
+          root: ~/repo/apps/<< parameters.app >>
+          paths:
+            - << parameters.path >>
   deploy_https:
     parameters:
       eb_deploy:
@@ -252,7 +292,7 @@ jobs:
   build_diffusion_test:
     executor: docker_node
     steps:
-      - build:
+      - build_diffusion:
           app: diffusion
           api_url: https://pop-api-test.eu-west-3.elasticbeanstalk.com
           server_api_url: https://pop-api-test.eu-west-3.elasticbeanstalk.com
@@ -265,7 +305,7 @@ jobs:
   build_diffusion_staging:
     executor: docker_node
     steps:
-      - build:
+      - build_diffusion:
           app: diffusion
           api_url: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
           server_api_url: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
@@ -278,7 +318,7 @@ jobs:
   build_diffusion_prod:
     executor: docker_node
     steps:
-      - build:
+      - build_diffusion:
            app: diffusion
            api_url: https://api.pop.culture.gouv.fr
            server_api_url: https://pop-api.eu-west-3.elasticbeanstalk.com

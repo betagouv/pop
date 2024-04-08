@@ -11,13 +11,13 @@ function deleteLastSlash(url) {
 	return url;
 }
 
-const api_url = deleteLastSlash(publicRuntimeConfig.api_url);
-const server_api_url = deleteLastSlash(serverRuntimeConfig.api_url);
-const bucket_url = `${publicRuntimeConfig.bucket_url}/`;
-const pop_url = publicRuntimeConfig.pop_url;
-const eurelian = publicRuntimeConfig.eurelian;
+const api_url = deleteLastSlash(process.env.NEXT_PUBLIC_API_URL);
+const server_api_url = deleteLastSlash(process.env.API_URL);
+const bucket_url = `${process.env.NEXT_PUBLIC_BUCKET_URL}/`;
+const pop_url = process.env.NEXT_PUBLIC_POP_URL;
+const eurelian = process.env.NEXT_PUBLIC_EURELIAN;
 const es_url = `${api_url}/search/`;
-const sentryDsn = publicRuntimeConfig.sentryDsn;
+const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
 console.log("api_url", api_url);
 
