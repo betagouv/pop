@@ -51,7 +51,7 @@ router.post("/scroll", (req, res) => {
 
 router.use("/:indices/_msearch", async (req, res) => {
 	if (ovh) {
-		let opts = {
+		const opts = {
 			host: esUrl,
 			path: req.originalUrl.replace("/search", ""),
 			body: req.body,
@@ -70,7 +70,7 @@ router.use("/:indices/_msearch", async (req, res) => {
 			!req.headers.application ||
 			req.headers.application !== ID_PROD_APP
 		) {
-			opts = addFilterFields(req, opts);
+			opts.body = addFilterFieldsBody(req.body);
 		}
 
 		// Convert NdJson to json object
@@ -92,7 +92,7 @@ router.use("/:indices/_msearch", async (req, res) => {
 				.send({ success: false, msg: "Erreur lors de la requête." });
 		}
 	} else {
-		let opts = {
+		const opts = {
 			host: esUrl,
 			path: req.originalUrl.replace("/search", ""),
 			body: req.body,
@@ -110,7 +110,7 @@ router.use("/:indices/_msearch", async (req, res) => {
 			!req.headers.application ||
 			req.headers.application !== ID_PROD_APP
 		) {
-			opts = addFilterFields(req, opts);
+			opts.body = addFilterFieldsBody(req.body);
 		}
 
 		aws4.sign(opts);
@@ -121,6 +121,46 @@ router.use("/:indices/_msearch", async (req, res) => {
 		}).end(opts.body || "");
 	}
 });
+
+function addFilterFieldsBody(body) {
+	let transformData = false;
+	const reqFilter = body
+		.split("\n")
+		.filter((val) => val !== "")
+		.map((val) => {
+			const obj = JSON.parse(val);
+
+			if (Object.keys(obj).includes("query")) {
+				const listeNonDiffusable = [
+					...listeNonDiffusablePalissy(),
+					...listeNonDiffusableMNR(),
+				];
+				obj._source = {
+					excludes: listeNonDiffusable,
+				};
+				transformData = true;
+			}
+
+			if (!ovh) {
+				// semble ne pas être supporté par opensearch
+				// Mantis 46413 - Les notices ayant le CONTIENT_IMAGE égales à "oui" doivent être affichées en premier
+				obj.sort = [
+					{
+						"CONTIENT_IMAGE.keyword": { order: "desc" },
+					},
+				];
+			}
+
+			return JSON.stringify(obj);
+		})
+		.join("\n");
+
+	if (transformData) {
+		return `${reqFilter}\n`;
+	}
+
+	return body;
+}
 
 function addFilterFields(req, opts) {
 	let transformData = false;
