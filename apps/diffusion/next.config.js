@@ -1,5 +1,5 @@
-const Dotenv = require("dotenv-webpack");
-require("dotenv").config();
+// const Dotenv = require("dotenv-webpack");
+// require("dotenv").config();
 
 const withPWA = require("next-pwa")({
 	dest: "public",
@@ -54,7 +54,7 @@ module.exports = {
 		};
 
 		// Load environment variables from ".env" file.
-		config.plugins.push(new Dotenv());
+		// config.plugins.push(new Dotenv());
 
 		// Source: https://github.com/zeit/styled-jsx#nextjs
 		config.module.rules.push({
