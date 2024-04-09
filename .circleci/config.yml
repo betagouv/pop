@@ -122,13 +122,13 @@ commands:
           name: build
           command: |
             cd apps/<< parameters.app >>
-            echo "NEXT_PUBLIC_API_URL=<< parameters.api_url >>" > .env
+            echo "API_URL=<< parameters.api_url >>" > .env
             if [ "<< parameters.app >>" = "diffusion" ]; then echo "SERVER_API_URL=<< parameters.server_api_url >>" > .env; fi
-            echo "NEXT_PUBLIC_POP_URL=<< parameters.pop_url >>" >> .env
-            echo "NEXT_PUBLIC_BUCKET_URL=<< parameters.bucket_url >>" >> .env
+            echo "POP_URL=<< parameters.pop_url >>" >> .env
+            echo "BUCKET_URL=<< parameters.bucket_url >>" >> .env
             echo "NODE_ENV=<< parameters.env >>" >> .env
-            echo "NEXT_PUBLIC_SENTRY_DSN=<< parameters.sentry >>" >> .env
-            echo "NEXT_PUBLIC_EURELIAN=<< parameters.eurelian >>" >> .env
+            echo "SENTRY_DSN=<< parameters.sentry >>" >> .env
+            echo "EURELIAN=<< parameters.eurelian >>" >> .env
             npm run build
       - persist_to_workspace:
           root: ~/repo/apps/<< parameters.app >>
@@ -311,7 +311,7 @@ jobs:
           server_api_url: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
           pop_url: https://pop-consultation-staging.eu-west-3.elasticbeanstalk.com/
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
-          env: staging
+          env: production
           sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
           path: ./
           eurelian: uvvw.pop.culture.gouv.fr

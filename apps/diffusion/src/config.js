@@ -1,6 +1,3 @@
-import getConfig from "next/config";
-const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
-
 function deleteLastSlash(url) {
 	if (url == null) return;
 
@@ -11,13 +8,39 @@ function deleteLastSlash(url) {
 	return url;
 }
 
-const api_url = deleteLastSlash(process.env.NEXT_PUBLIC_API_URL);
+// const configs = {
+// 	dev: {
+// 		//
+// 	},
+// 	staging: {
+// 		//
+// 	},
+// 	prod: {
+// 		//
+// 	},
+// };
+
+// const getConfig = () => {
+// 	if (process.env.NEXT_PUBLIC_OVH) {
+// 		return {
+// 			api_url: deleteLastSlash(process.env.NEXT_PUBLIC_API_URL),
+// 			server_api_url: deleteLastSlash(process.env.API_URL),
+// 			bucket_url: `${process.env.NEXT_PUBLIC_BUCKET_URL}/`,
+// 			pop_url: process.env.NEXT_PUBLIC_POP_URL,
+// 			eurelian: process.env.NEXT_PUBLIC_EURELIAN,
+// 			es_url: `${api_url}/search/`,
+// 			sentryDsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+// 		};
+// 	}
+// };
+
+const api_url = deleteLastSlash(process.env.API_URL);
 const server_api_url = deleteLastSlash(process.env.API_URL);
-const bucket_url = `${process.env.NEXT_PUBLIC_BUCKET_URL}/`;
-const pop_url = process.env.NEXT_PUBLIC_POP_URL;
-const eurelian = process.env.NEXT_PUBLIC_EURELIAN;
+const bucket_url = `${process.env.BUCKET_URL}/`;
+const pop_url = process.env.POP_URL;
+const eurelian = process.env.EURELIAN;
 const es_url = `${api_url}/search/`;
-const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
+const sentryDsn = process.env.SENTRY_DSN;
 
 console.log("api_url", api_url);
 
