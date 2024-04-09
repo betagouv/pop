@@ -29,17 +29,6 @@ function deleteLastSlash(url) {
 }
 
 module.exports = {
-	publicRuntimeConfig: {
-		api_url: process.env.API_URL,
-		es_url: process.env.ES_URL,
-		bucket_url: process.env.BUCKET_URL,
-		pop_url: process.env.POP_URL,
-		eurelian: process.env.EURELIAN,
-		sentryDsn: process.env.SENTRY_DSN,
-	},
-	serverRuntimeConfig: {
-		api_url: process.env.SERVER_API_URL ?? process.env.API_URL,
-	},
 	webpack: (config, options) => {
 		// Unshift polyfills in main entrypoint.
 		// Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026
