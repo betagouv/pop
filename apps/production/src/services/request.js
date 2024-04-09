@@ -37,7 +37,7 @@ class request {
 			if (response.status < 300 || jsonData.success === true) {
 				return jsonData;
 			}
-			throw Error(jsonData);
+			return Promise.reject(jsonData);
 		} catch (err) {
 			Raven.captureException(err);
 			throw Error({
@@ -58,7 +58,7 @@ class request {
 			);
 			const jsonData = await response.json();
 			if (response.status !== 200 || jsonData.success !== true) {
-				throw Error(jsonData);
+				return Promise.reject(jsonData);
 			}
 			return jsonData;
 		} catch (err) {
@@ -81,7 +81,7 @@ class request {
 			}
 			if (response.status !== 200) {
 				Raven.captureException(response);
-				throw Error(
+				return Promise.reject(
 					[
 						`Un probleme a été detecté lors de l'enregistrement via l'API.`,
 						"Les équipes techniques ont été notifiées.",
