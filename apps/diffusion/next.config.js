@@ -42,7 +42,7 @@ module.exports = {
 		};
 
 		// Load environment variables from ".env" file.
-		config.plugins.push(new Dotenv());
+		config.plugins.push(new Dotenv({ systemvars: true }));
 
 		// Source: https://github.com/zeit/styled-jsx#nextjs
 		config.module.rules.push({
