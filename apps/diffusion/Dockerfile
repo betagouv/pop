@@ -17,7 +17,7 @@ FROM base
 COPY --from=build /app /app
 
 # Set the command to start server
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "ovh:start"]
 
 # Expose port
 EXPOSE 8081
