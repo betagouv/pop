@@ -1,9 +1,0 @@
-stages:
-  - lint
-
-image: node:14.17-bullseye-slim
-
-lint:
-  stage: lint
-  script:
-    - npx @biomejs/biome check ./ --diagnostic-level=error
