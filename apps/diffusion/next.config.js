@@ -42,7 +42,9 @@ module.exports = {
 		};
 
 		// Load environment variables from ".env" file.
-		config.plugins.push(new Dotenv({ path: "./.env.default" }));
+		if (process.env.OVH == null) {
+			config.plugins.push(new Dotenv());
+		}
 
 		// Source: https://github.com/zeit/styled-jsx#nextjs
 		config.module.rules.push({

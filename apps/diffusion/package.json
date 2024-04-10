@@ -58,9 +58,7 @@
 		"dev": "node src/services/server.js",
 		"build": "next build",
 		"start": "NODE_ENV=production node src/services/server.js",
-		"test": "jest",
-		"fill-env": "sh ./scripts/replace_process_env.sh",
-		"ovh:start": "npm run fill-env && npm run start"
+		"test": "jest"
 	},
 	"prettier": {
 		"printWidth": 100

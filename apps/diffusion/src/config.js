@@ -8,12 +8,16 @@ function deleteLastSlash(url) {
 	return url;
 }
 
-const api_url = deleteLastSlash(process.env.API_URL);
-const bucket_url = `${process.env.BUCKET_URL}/`;
-const pop_url = process.env.POP_URL;
-const eurelian = process.env.EURELIAN;
+const api_url = deleteLastSlash(
+	process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL,
+);
+const bucket_url = `${
+	process.env.BUCKET_URL ?? process.env.NEXT_PUBLIC_BUCKET_URL
+}/`;
+const pop_url = process.env.POP_URL ?? process.env.NEXT_PUBLIC_POP_URL;
+const eurelian = process.env.EURELIAN ?? process.env.NEXT_PUBLIC_EURELIAN;
 const es_url = `${api_url}/search/`;
-const sentryDsn = process.env.SENTRY_DSN;
+const sentryDsn = process.env.SENTRY_DSN ?? process.env.NEXT_PUBLIC_SENTRY_DSN;
 
 console.log("api_url", api_url);
 
