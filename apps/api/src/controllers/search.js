@@ -5,6 +5,7 @@ const http = require("http");
 const aws4 = require("aws4");
 const { ndjsonToJsonText } = require("ndjson-to-json-text");
 const es = require("../elasticsearch.js")();
+const { logger } = require("../logger");
 
 /**
  *
@@ -62,9 +63,6 @@ router.use("/:indices/_msearch", async (req, res) => {
 			opts.port = esPort;
 		}
 
-		console.log("opts", opts);
-		console.log("paths", req.params.indices);
-
 		// Si la requête ne provient pas de l'application production
 		if (
 			!req.headers.application ||
@@ -86,7 +84,7 @@ router.use("/:indices/_msearch", async (req, res) => {
 				getResultInElasticSearch6CompatibilityMode(results.body),
 			);
 		} catch (e) {
-			console.error(e);
+			logger.error(e);
 			return res
 				.status(500)
 				.send({ success: false, msg: "Erreur lors de la requête." });
