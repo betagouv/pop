@@ -61,6 +61,7 @@
 		"nodemailer": "^6.6.3",
 		"passport": "^0.6.0",
 		"passport-jwt": "^4.0.0",
+		"pino-http": "^9.0.0",
 		"proj4": "^2.7.5",
 		"swagger-autogen": "^2.23.1",
 		"swagger-ui-express": "^4.1.6",

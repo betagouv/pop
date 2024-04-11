@@ -5,11 +5,15 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const compression = require("compression");
 const Sentry = require("@sentry/node");
+
 const config = require("./config");
+const logger = require("./logger");
 require("./passport")(passport);
 require("./mongo");
 
 const app = express();
+
+app.use(logger);
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger/swagger_ui.json");

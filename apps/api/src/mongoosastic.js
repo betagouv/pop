@@ -1,9 +1,10 @@
-const { ovh } = require("./config.js");
+const { logger } = require("./logger");
+const { ovh } = require("./config");
 
 if (ovh) {
-	console.log("Using mongoosastic5");
+	logger.info("Using mongoosastic5");
 	module.exports = require("mongoosastic5");
 } else {
-	console.log("Using mongoosastic");
+	logger.info("Using mongoosastic");
 	module.exports = require("mongoosastic");
 }
