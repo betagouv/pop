@@ -44,6 +44,19 @@ const webpackConfig = (config, options) => {
 	return config;
 };
 
-module.exports = {
-	webpack: webpackConfig,
-};
+if (process.env.OVH === "true") {
+	module.exports = {
+		publicRuntimeConfig: {
+			apiUrl: process.env.NEXT_PUBLIC_API_URL,
+			bucketUrl: process.env.NEXT_PUBLIC_BUCKET_URL,
+			popUrl: process.env.NEXT_PUBLIC_POP_URL,
+			eurelian: process.env.NEXT_PUBLIC_EURELIAN,
+			sentryDsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+		},
+		webpack: webpackConfig,
+	};
+} else {
+	module.exports = {
+		webpack: webpackConfig,
+	};
+}

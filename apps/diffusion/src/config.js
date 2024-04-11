@@ -1,3 +1,5 @@
+import getConfig from "next/config";
+
 function deleteLastSlash(url) {
 	if (url == null) return;
 
@@ -8,14 +10,15 @@ function deleteLastSlash(url) {
 	return url;
 }
 
+const { publicRuntimeConfig } = getConfig();
 const config = {};
 
 if (process.env.OVH === "true") {
-	config.api_url = deleteLastSlash(process.env.NEXT_PUBLIC_API_URL);
-	config.bucket_url = `${process.env.NEXT_PUBLIC_BUCKET_URL}/`;
-	config.pop_url = process.env.NEXT_PUBLIC_POP_URL;
-	config.eurelian = process.env.NEXT_PUBLIC_EURELIAN;
-	config.sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
+	config.api_url = publicRuntimeConfig.apiUrl;
+	config.bucket_url = `${publicRuntimeConfig.bucketUrl}/`;
+	config.pop_url = publicRuntimeConfig.popUrl;
+	config.eurelian = publicRuntimeConfig.eurelian;
+	config.sentryDsn = publicRuntimeConfig.sentryDsn;
 } else {
 	config.api_url = deleteLastSlash(process.env.API_URL);
 	config.bucket_url = `${process.env.BUCKET_URL}/`;
