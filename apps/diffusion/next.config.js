@@ -52,6 +52,7 @@ if (process.env.OVH === "true") {
 			popUrl: process.env.POP_URL,
 			eurelian: process.env.EURELIAN,
 			sentryDsn: process.env.SENTRY_DSN,
+			ovh: process.env.OVH,
 		},
 		webpack: webpackConfig,
 	};
