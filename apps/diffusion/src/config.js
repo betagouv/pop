@@ -10,10 +10,10 @@ function deleteLastSlash(url) {
 	return url;
 }
 
-const { publicRuntimeConfig } = getConfig();
 const config = {};
 
 if (process.env.OVH === "true") {
+	const { publicRuntimeConfig } = getConfig();
 	config.api_url = publicRuntimeConfig.apiUrl;
 	config.bucket_url = `${publicRuntimeConfig.bucketUrl}/`;
 	config.pop_url = publicRuntimeConfig.popUrl;

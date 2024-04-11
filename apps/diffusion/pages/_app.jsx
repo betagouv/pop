@@ -2,11 +2,19 @@ import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
-import React from "react";
+import React, { useEffect } from "react";
 import Cookies from "universal-cookie";
 
-export default class MyApp extends App {
-	componentDidMount() {
+export default function CustomApp({ Component, pageProps }) {
+	const cookies = new Cookies();
+	const currentBucket = cookies.get("currentBucket") || [];
+	const jsonCurrentBucket = JSON.stringify(currentBucket);
+	cookies.set("currentBucket", jsonCurrentBucket, {
+		path: "/",
+		overwrite: true,
+	});
+
+	useEffect(() => {
 		NProgress.configure({ showSpinner: false });
 		Router.events.on("routeChangeStart", (url) => {
 			NProgress.start();
@@ -18,32 +26,22 @@ export default class MyApp extends App {
 		});
 		Router.events.on("routeChangeComplete", () => NProgress.done());
 		Router.events.on("routeChangeError", () => NProgress.done());
-	}
+	}, []);
 
-	render() {
-		const { Component, pageProps } = this.props;
-		const cookies = new Cookies();
-		const currentBucket = cookies.get("currentBucket") || [];
-		const jsonCurrentBucket = JSON.stringify(currentBucket);
-		cookies.set("currentBucket", jsonCurrentBucket, {
-			path: "/",
-			overwrite: true,
-		});
-
-		return (
-			<>
-				<Head>
-					<meta
-						name="viewport"
-						content="width=device-width, initial-scale=1, shrink-to-fit=no"
-					/>
-					<meta
-						name="viewport"
-						content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-					/>
-				</Head>
-				<Component {...pageProps} />
-				<style jsx global>{`
+	return (
+		<>
+			<Head>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1, shrink-to-fit=no"
+				/>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+				/>
+			</Head>
+			<Component {...pageProps} />
+			<style jsx global>{`
           html {
             position: relative;
             min-height: 100%;
@@ -106,7 +104,14 @@ export default class MyApp extends App {
               url("/static/fonts/nexa.woff") format("woff");
           }
         `}</style>
-			</>
-		);
-	}
+		</>
+	);
+}
+
+if (process.env.OVH === "true") {
+	// We need to opt-out of optimisation to use publicRuntimeConfig
+	CustomApp.getInitialProps = async (appContext) => {
+		const ctx = App.getInitialProps(appContext);
+		return ctx;
+	};
 }
