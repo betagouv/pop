@@ -9,6 +9,8 @@ FROM base as build
 # Copy the entire project to the working directory
 COPY . .
 
+ENV OVH=true
+
 # Install project dependencies
 RUN npm ci && npm run build && npm ci --omit=dev
 
