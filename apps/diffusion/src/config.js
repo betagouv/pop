@@ -42,6 +42,7 @@ if (publicRuntimeConfig.ovh === "true") {
 config.es_url = `${config.api_url}/search/`;
 
 console.log("api_url", config.api_url);
+console.log("server_api_url", config.server_api_url);
 
 config.emailContactMnr =
 	"isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture.gouv.fr";
