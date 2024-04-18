@@ -100,7 +100,7 @@ commands:
         type: string
       api_url:
         type: string
-      server_api_url:
+      server:
         type: string
       pop_url:
         type: string
@@ -123,7 +123,7 @@ commands:
           command: |
             cd apps/<< parameters.app >>
             echo "API_URL=<< parameters.api_url >>" > .env
-            echo "SERVER_API_URL=<< parameters.server_api_url >>" > .env
+            echo "SERVER_API_URL=<< parameters.server >>" > .env
             echo "POP_URL=<< parameters.pop_url >>" >> .env
             echo "BUCKET_URL=<< parameters.bucket_url >>" >> .env
             echo "NODE_ENV=<< parameters.env >>" >> .env
@@ -295,7 +295,7 @@ jobs:
       - build_diffusion:
           app: diffusion
           api_url: https://pop-api-test.eu-west-3.elasticbeanstalk.com
-          server_api_url: https://pop-api-test.eu-west-3.elasticbeanstalk.com
+          server: https://pop-api-test.eu-west-3.elasticbeanstalk.com
           pop_url: https://pop-consultation-test.eu-west-3.elasticbeanstalk.com/
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test
           env: test
@@ -308,7 +308,7 @@ jobs:
       - build_diffusion:
           app: diffusion
           api_url: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
-          server_api_url: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
+          server: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
           pop_url: https://pop-consultation-staging.eu-west-3.elasticbeanstalk.com/
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
           env: production
@@ -321,7 +321,7 @@ jobs:
       - build_diffusion:
            app: diffusion
            api_url: https://api.pop.culture.gouv.fr
-           server_api_url: http://pop-api.eu-west-3.elasticbeanstalk.com
+           server: http://pop-api.eu-west-3.elasticbeanstalk.com
            pop_url: https://pop.culture.gouv.fr/
            bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque
            env: production
