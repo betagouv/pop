@@ -1,29 +1,9 @@
 import getConfig from "next/config";
 
-function deleteLastSlash(url) {
-	if (url == null) return;
-
-	if (url.slice(-1) === "/") {
-		return url.slice(0, -1);
-	}
-
-	return url;
-}
-
-function addSlash(url) {
-	if (url == null) return;
-
-	if (url.slice(-1) !== "/") {
-		return `${url}/`;
-	}
-
-	return url;
-}
-
-const { publicRuntimeConfig } = getConfig();
 const config = {};
 
 if (publicRuntimeConfig.ovh === "true") {
+	const { publicRuntimeConfig } = getConfig();
 	config.api_url = publicRuntimeConfig.apiUrl;
 	config.server_api_url = publicRuntimeConfig.apiUrl;
 	config.bucket_url = `${publicRuntimeConfig.bucketUrl}/`;
