@@ -25,12 +25,14 @@ const config = {};
 
 if (publicRuntimeConfig.ovh === "true") {
 	config.api_url = publicRuntimeConfig.apiUrl;
+	config.server_api_url = publicRuntimeConfig.apiUrl;
 	config.bucket_url = `${publicRuntimeConfig.bucketUrl}/`;
 	config.pop_url = publicRuntimeConfig.popUrl;
 	config.eurelian = publicRuntimeConfig.eurelian;
 	config.sentryDsn = publicRuntimeConfig.sentryDsn;
 } else {
-	config.api_url = addSlash(process.env.API_URL);
+	config.api_url = process.env.API_URL;
+	config.server_api_url = process.env.SERVER_API_URL;
 	config.bucket_url = `${process.env.BUCKET_URL}/`;
 	config.pop_url = process.env.POP_URL;
 	config.eurelian = process.env.EURELIAN;
