@@ -12,7 +12,7 @@ const getApiUrl = () => {
 class api {
 	getNotice(collection, ref) {
 		return new Promise((resolve, reject) => {
-			this._get(`${getApiUrl}/${collection}/${ref}`)
+			this._get(`${getApiUrl()}/${collection}/${ref}`)
 				.then((notice) => {
 					if (notice) notice.collection = collection;
 					resolve(notice);
@@ -24,7 +24,7 @@ class api {
 	// Get all producteurs.
 	getProducteurs() {
 		return new Promise((resolve, reject) => {
-			return this._get(`${getApiUrl}/producteur`)
+			return this._get(`${getApiUrl()}/producteur`)
 				.then((producteurs) => {
 					resolve(producteurs);
 				})
@@ -33,18 +33,18 @@ class api {
 	}
 
 	getImportCount(ref) {
-		return this._get(`${getApiUrl}/import/count`);
+		return this._get(`${getApiUrl()}/import/count`);
 	}
 
 	getGallery(id) {
-		return this._get(`${getApiUrl}/gallery/${id}`);
+		return this._get(`${getApiUrl()}/gallery/${id}`);
 	}
 
 	createGallery(params) {
 		const formData = new FormData();
 		formData.append("gallery", JSON.stringify({ params }));
 
-		return fetch(`${getApiUrl}/gallery`, {
+		return fetch(`${getApiUrl()}/gallery`, {
 			method: "POST",
 			cache: "no-cache",
 			credentials: "same-origin",
@@ -56,7 +56,7 @@ class api {
 	}
 
 	async getMapboxToken() {
-		return (await this._get(`${getApiUrl}/mapbox/token`)).token;
+		return (await this._get(`${getApiUrl()}/mapbox/token`)).token;
 	}
 
 	_get(url) {
@@ -92,7 +92,7 @@ class api {
 				})
 				.catch((err) => {
 					Sentry.captureException(err);
-					reject(`L'api (${getApiUrl}) est inaccessible`, err);
+					reject(`L'api (${getApiUrl()}) est inaccessible`, err);
 				});
 		});
 	}
@@ -105,7 +105,7 @@ class api {
 
 		return new Promise((resolve, reject) => {
 			fetch(
-				`${getApiUrl}/search/merimee,palissy,memoire,joconde,mnr,museo,enluminures,autor/_msearch`,
+				`${getApiUrl()}/search/merimee,palissy,memoire,joconde,mnr,museo,enluminures,autor/_msearch`,
 				{
 					method: "POST",
 					cache: "no-cache",
@@ -137,7 +137,7 @@ class api {
 
 	getMaintenance() {
 		return new Promise((resolve, reject) => {
-			this._get(`${getApiUrl}/maintenance`)
+			this._get(`${getApiUrl()}/maintenance`)
 				.then((resp) => {
 					resolve(resp);
 				})
