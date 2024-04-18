@@ -17,6 +17,7 @@ const Producteur = require("../models/producteur");
 const moment = require("moment-timezone");
 const { checkValidRef } = require("./utils/notice");
 const { cleanArrayValue } = require("./utils/dataFilter");
+const { logger } = require("../logger");
 
 const {
 	uploadFile,
@@ -449,9 +450,10 @@ router.put(
 		}
 
 		// Update IMPORT ID.
-		if (notice.POP_IMPORT?.length) {
+		if (notice.POP_IMPORT != null && notice.POP_IMPORT.length > 0) {
 			const id = notice.POP_IMPORT[0];
-			notice.POP_IMPORT = undefined;
+			// biome-ignore lint/performance/noDelete: Neeed to really remove the POP_IMPORT field
+			delete notice.POP_IMPORT;
 			notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
 		}
 		await transformBeforeUpdate(notice);
@@ -488,8 +490,10 @@ router.put(
 			await updateNotice(Memoire, ref, notice);
 			await updateOaiNotice(NoticesOAI, ref, oaiObj);
 		} catch (e) {
+			logger.error(e);
 			capture(e);
 			res.status(500).send({ success: false, error: e });
+			return;
 		}
 
 		try {
