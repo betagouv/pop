@@ -1,15 +1,5 @@
 const Dotenv = require("dotenv-webpack");
 
-function deleteLastSlash(url) {
-	if (url == null) return;
-
-	if (url.slice(-1) === "/") {
-		return url.slice(0, -1);
-	}
-
-	return url;
-}
-
 const webpackConfig = (config, options) => {
 	// Unshift polyfills in main entrypoint.
 	// Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026

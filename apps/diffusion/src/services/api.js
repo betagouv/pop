@@ -90,7 +90,7 @@ class api {
 				})
 				.catch((err) => {
 					Sentry.captureException(err);
-					reject("L'api est inaccessible", err);
+					reject(`L'api (${api_url}) est inaccessible`, err);
 				});
 		});
 	}
