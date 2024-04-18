@@ -2,8 +2,8 @@ import getConfig from "next/config";
 
 const config = {};
 
+const { publicRuntimeConfig } = getConfig();
 if (publicRuntimeConfig.ovh === "true") {
-	const { publicRuntimeConfig } = getConfig();
 	config.api_url = publicRuntimeConfig.apiUrl;
 	config.server_api_url = publicRuntimeConfig.apiUrl;
 	config.bucket_url = `${publicRuntimeConfig.bucketUrl}/`;
