@@ -10,6 +10,16 @@ function deleteLastSlash(url) {
 	return url;
 }
 
+function addSlash(url) {
+	if (url == null) return;
+
+	if (url.slice(-1) !== "/") {
+		return `${url}/`;
+	}
+
+	return url;
+}
+
 const { publicRuntimeConfig } = getConfig();
 const config = {};
 
@@ -20,7 +30,7 @@ if (publicRuntimeConfig.ovh === "true") {
 	config.eurelian = publicRuntimeConfig.eurelian;
 	config.sentryDsn = publicRuntimeConfig.sentryDsn;
 } else {
-	config.api_url = deleteLastSlash(process.env.API_URL);
+	config.api_url = addSlash(process.env.API_URL);
 	config.bucket_url = `${process.env.BUCKET_URL}/`;
 	config.pop_url = process.env.POP_URL;
 	config.eurelian = process.env.EURELIAN;
