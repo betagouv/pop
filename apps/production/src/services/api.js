@@ -498,6 +498,12 @@ class api {
 	getMaintenance() {
 		return request.getJSON("/maintenance");
 	}
+
+	getNoticesByRef(collection, refs) {
+		return request.fetchJSON("POST", `/notices/batch/${collection}`, {
+			refs,
+		});
+	}
 }
 
 const apiObject = new api();

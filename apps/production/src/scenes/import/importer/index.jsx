@@ -95,27 +95,22 @@ class Importer extends Component {
 				return;
 			}
 
+			const importedRefs = importedNotices.map((n) => n.REF);
+
 			// Get existing notices.
 			existingNotices = {};
-			for (let i = 0; i < importedNotices.length; i++) {
-				this.setState({
-					countRecupNotice: this.state.countRecupNotice + 1,
-				});
-				this.setState({
-					loading: true,
-					loadingMessage: `Récupération des notices existantes ... ${this.state.countRecupNotice} / ${importedNotices.length} notices`,
-					progress: Math.floor(
-						(i * 100) / (importedNotices.length * 2),
-					),
-				});
-				const collection = importedNotices[i]._type;
-				const notice = await api.getNotice(
-					collection,
-					importedNotices[i].REF,
-				);
-				if (notice) {
-					existingNotices[importedNotices[i].REF] = notice;
-				}
+
+			this.setState({
+				loading: true,
+				loadingMessage: "Récupération des notices existantes ...",
+				progress: 0,
+			});
+			const notices = await api.getNoticesByRef(
+				this.props.collection,
+				importedRefs,
+			);
+			for (const notice of notices) {
+				existingNotices[notice.REF] = notice;
 			}
 
 			// Compute diff.
@@ -123,6 +118,12 @@ class Importer extends Component {
 				loadingMessage: "Calcul des différences....",
 				countRecupNotice: 0,
 			});
+
+			const listPrefix = await api.getPrefixesFromProducteurs([
+				"autor",
+				"palissy",
+				"merimee",
+			]);
 
 			// START DIFF
 			for (let i = 0; i < importedNotices.length; i++) {
@@ -156,10 +157,13 @@ class Importer extends Component {
 				} else {
 					importedNotices[i]._status = "created";
 				}
-				await importedNotices[i].validate({
-					...existingNotice,
-					...importedNotices[i],
-				});
+				importedNotices[i].validate(
+					{
+						...existingNotice,
+						...importedNotices[i],
+					},
+					listPrefix,
+				);
 			}
 
 			this.setState({ loadOpenTheso: true });

@@ -63,6 +63,7 @@ app.use("/enluminures", require("./controllers/enluminures"));
 app.use("/museo", require("./controllers/museo"));
 app.use("/autor", require("./controllers/autor"));
 app.use("/deleteHistorique", require("./controllers/deleteHistorique"));
+app.use("/notices", require("./controllers/notices"));
 
 // Gallery
 app.use("/gallery", require("./controllers/gallery"));

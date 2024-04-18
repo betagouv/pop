@@ -1,29 +1,25 @@
 import validator from "validator";
-import API from "../services/api";
 import regions from "../services/regions";
 import Notice from "./Notice";
 
-let foreignRegion = false;
-
 export default class Memoire extends Notice {
+	foreignRegion = false;
+
 	constructor(body) {
 		if (body.REF) {
 			body.REF = String(body.REF).toUpperCase();
 		}
 		// Condition pour le contrôle de la région pour l'import MAP
-		foreignRegion = body._foreign_region || false;
 		super(body, "memoire");
+		this.foreignRegion = body._foreign_region || false;
 	}
-	async validate(body) {
+
+	validate(body, listPrefix) {
 		super.validate(body);
 		// Every controls errors are *warnings* for now.
 		// Required properties.
-		const listPrefix = await API.getPrefixesFromProducteurs([
-			"autor",
-			"palissy",
-			"merimee",
-		]);
 
+		// TODO: User reduce or for loop
 		["CONTACT", "TYPDOC", "DOM", "LOCA", "LEG", "COPY", "REF", "IDPROD"]
 			.filter((prop) => !body[prop])
 			.forEach((prop) =>
@@ -82,7 +78,10 @@ export default class Memoire extends Notice {
 		let checkRegion = true;
 		// Si le producteur existe et égale MPP (cas d'une notice existante)
 		// OU les champs PAYS et REG sont renseignés pour une nouvelle notice
-		if ((body.PRODUCTEUR && "MPP" === body.PRODUCTEUR) || foreignRegion) {
+		if (
+			(body.PRODUCTEUR && "MPP" === body.PRODUCTEUR) ||
+			this.foreignRegion
+		) {
 			checkRegion =
 				Array.isArray(body.PAYS) &&
 				body.PAYS.length < 2 &&
