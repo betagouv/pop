@@ -25,7 +25,6 @@ const {
 	updateNotice,
 	updateOaiNotice,
 	deleteFile,
-	findMemoireProducteur,
 	identifyProducteur,
 	fileAuthorized,
 } = require("./utils");
