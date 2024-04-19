@@ -18,6 +18,8 @@ export const getServerSideProps = async ({ query: { id } }) => {
 			params.base,
 			queryString.stringify(params),
 		);
+		console.log("GALLERY redirect to", location);
+
 		return {
 			redirect: {
 				destination: location,
