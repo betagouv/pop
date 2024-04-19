@@ -1,47 +1,32 @@
 import queryString from "query-string";
-import React from "react";
 import API from "../src/services/api";
-import EAnalytics from "../src/services/eurelian";
 import throw404 from "../src/services/throw404";
-import { paramsToUrlAlias, pushSearchRoute } from "../src/services/url";
+import { paramsToUrlAlias } from "../src/services/url";
 
-export default class extends React.Component {
-	componentDidMount() {
-		// Tracking Eurelian
-		EAnalytics.initialize();
-		EAnalytics.track(["path", "Page Galerie", "pagegroup", "Page Galerie"]);
-	}
+const GalleryPage = () => {
+	return throw404();
+};
+export default GalleryPage;
 
-	static async getInitialProps({ query: { id }, res }) {
-		try {
-			// Load gallery, then redirect.
-			const gallery = await API.getGallery(id);
-			// Gallery should have params.
-			if (gallery.params) {
-				const { view, mode, ...params } = gallery.params;
-				// Add gallery id to params
-				params.gallery = JSON.stringify(id);
-				// "res" means server-side.
-				if (res) {
-					const location = paramsToUrlAlias(
-						mode,
-						view,
-						params.base,
-						queryString.stringify(params),
-					);
-					res.writeHead(302, { Location: location });
-					res.end();
-				} else {
-					pushSearchRoute({ mode, view, base: params.base, params });
-				}
-			}
-		} catch (e) {
-			console.log(e);
-		}
+export const getServerSideProps = async ({ query: { id } }) => {
+	try {
+		const gallery = await API.getGallery(id);
+		const { view, mode, ...params } = gallery.params;
+		const location = paramsToUrlAlias(
+			mode,
+			view,
+			params.base,
+			queryString.stringify(params),
+		);
+		return {
+			redirect: {
+				destination: location,
+				permanent: false,
+			},
+		};
+	} catch (err) {
+		return {
+			notFound: true,
+		};
 	}
-
-	render() {
-		// It cannot be rendered, should have been redirected in `getInitialProps`.
-		throw404();
-	}
-}
+};
