@@ -30,6 +30,7 @@ import EAnalytics from "../../src/services/eurelian";
 import mapping from "../../src/services/mapping";
 import throw404 from "../../src/services/throw404";
 import { getNoticeInfo, trackDownload } from "../../src/utils";
+import MapComponent from "../../src/notices/Map";
 
 const pushLinkedNotices = (a, d, base) => {
 	for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -880,6 +881,8 @@ export default class extends React.Component {
 									notice={notice}
 									museo={this.props.museo}
 								/>
+
+								<MapComponent notice={notice} />
 							</Col>
 						</Row>
 					</Container>
