@@ -177,6 +177,10 @@ export default class extends React.Component {
 	}
 
 	linkRepr(value) {
+		if (value == null || (Array.isArray(value) && value.length <= 0)) {
+			return "";
+		}
+
 		// Caractères possible dans la valeur renseignée
 		const regexPattern = new RegExp(/[(),;:]/g);
 		const arrayContent = [];
