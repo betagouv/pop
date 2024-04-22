@@ -106,7 +106,7 @@ class Import extends React.Component {
 				if (authorizedImports.includes("map")) {
 					listRoutes.push({
 						url: "/import/memoire",
-						name: "MAP (Service Archives Photos)",
+						name: "MPP (Service Archives Photos)",
 						image,
 					});
 				}
