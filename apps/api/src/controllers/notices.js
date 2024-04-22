@@ -51,12 +51,9 @@ const getExistingsNotices = async (collection, refs) => {
 router.post(
 	"/batch/:collection",
 	passport.authenticate("jwt", { session: false }),
-	// upload.single("notices"),
 	async (req, res) => {
 		const { collection } = req.params;
-		// const { file } = req;
 		logger.debug(`Will fetch to collection ${collection}`);
-		// logger.debug(file);
 
 		try {
 			const notices = await getExistingsNotices(

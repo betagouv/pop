@@ -96,6 +96,7 @@ class Importer extends Component {
 			}
 
 			const importedRefs = importedNotices.map((n) => n.REF);
+			const collection = importedNotices[0]._type;
 
 			// Get existing notices.
 			existingNotices = {};
@@ -105,10 +106,7 @@ class Importer extends Component {
 				loadingMessage: "Récupération des notices existantes ...",
 				progress: 0,
 			});
-			const notices = await api.getNoticesByRef(
-				this.props.collection,
-				importedRefs,
-			);
+			const notices = await api.getNoticesByRef(collection, importedRefs);
 			for (const notice of notices) {
 				existingNotices[notice.REF] = notice;
 			}
