@@ -161,9 +161,6 @@ commands:
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
             echo "$PROXY_PRODUCTION" | base64 -di > .platform/nginx/nginx.conf
-            echo "NGINX CONF ---"
-            cat .platform/nginx/nginx.conf
-            echo "NGINX CONF END ---"
             sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
             eb deploy << parameters.eb_deploy >>
   deploy_api_https:
@@ -428,6 +425,9 @@ jobs:
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
             echo "$PROXY_DIFFUSION" | base64 -di > .platform/nginx/nginx.conf
+            echo "NGINX CONF ---"
+            cat .platform/nginx/nginx.conf
+            echo "NGINX CONF END ---"
             sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
             eb deploy pop-consultation-staging
   deploy_production_staging:
