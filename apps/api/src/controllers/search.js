@@ -52,27 +52,18 @@ router.post("/scroll", (req, res) => {
 
 router.use("/:indices/_msearch", async (req, res) => {
 	if (ovh) {
-		const opts = {
-			host: esUrl,
-			path: req.originalUrl.replace("/search", ""),
-			body: req.body,
-		};
-
-		// Ajout du port sur l'environnement de dev
-		if (esPort !== "80") {
-			opts.port = esPort;
-		}
+		let body = req.body;
 
 		// Si la requête ne provient pas de l'application production
 		if (
 			!req.headers.application ||
 			req.headers.application !== ID_PROD_APP
 		) {
-			opts.body = addFilterFieldsBody(req.body);
+			body = addFilterFieldsBody(req.body);
 		}
 
 		// Convert NdJson to json object
-		const jsonText = ndjsonToJsonText(opts.body);
+		const jsonText = ndjsonToJsonText(body);
 		const jsonQueryBody = JSON.parse(jsonText);
 
 		try {
@@ -80,6 +71,7 @@ router.use("/:indices/_msearch", async (req, res) => {
 				body: jsonQueryBody,
 				index: req.params.indices.split(","),
 			});
+
 			return res.json(
 				getResultInElasticSearch6CompatibilityMode(results.body),
 			);
