@@ -1,6 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { esUrl, esPort, ID_PROD_APP, ovh } = require("../config.js");
+const axios = require("axios");
+const {
+	esUrl,
+	esPort,
+	ID_PROD_APP,
+	ovh,
+	esUsername,
+	esPassword,
+} = require("../config.js");
 const http = require("http");
 const aws4 = require("aws4");
 const { ndjsonToJsonText } = require("ndjson-to-json-text");
@@ -24,9 +32,10 @@ function getResultInElasticSearch6CompatibilityMode(results) {
 
 // Scroll API (required for full exports)
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html#search-request-scroll
-router.post("/scroll", (req, res) => {
+router.post("/scroll", async (req, res) => {
 	let path;
 	let body;
+
 	// First request with a full query, next with a scroll_id.
 	if (req.query.scroll_id) {
 		path = "/_search/scroll";
@@ -39,15 +48,45 @@ router.post("/scroll", (req, res) => {
 			.status(400)
 			.send({ success: false, msg: "Impossible de parser la requête." });
 	}
-	const headers = { "Content-Type": "Application/json" };
-	const opts = { host: esUrl, path, body, method: "POST", headers };
+
+	const opts = {
+		host: esUrl,
+		path,
+		body,
+		method: ovh ? "GET" : "POST",
+		headers: { "content-type": "application/json" },
+	};
+
 	if (esPort !== "80") {
-		opts.port = esPort;
+		opts.host += `:${esPort}`;
 	}
-	aws4.sign(opts);
-	http.request(opts, (res1) => {
-		res1.pipe(res);
-	}).end(opts.body || "");
+
+	if (ovh) {
+		const auth = Buffer.from(`${esUsername}:${esPassword}`).toString(
+			"base64",
+		);
+		opts.headers.Authorization = `Basic ${auth}`;
+		logger.debug({ esUrl: opts.host, path: opts.path });
+		try {
+			const { data } = await axios.request({
+				url: opts.host + opts.path,
+				method: opts.method,
+				headers: opts.headers,
+				data: opts.body,
+			});
+			return res.status(200).send(data);
+		} catch (err) {
+			logger.error(err);
+			return res.status(500).send({ success: false, msg: err.message });
+		}
+	} else {
+		aws4.sign(opts);
+		logger.debug({ opts });
+
+		http.request(opts, (res1) => {
+			res1.pipe(res);
+		}).end(opts.body || "");
+	}
 });
 
 router.use("/:indices/_msearch", async (req, res) => {
