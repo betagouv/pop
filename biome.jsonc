@@ -9,7 +9,9 @@
 			"build/*",
 			"coverage/*",
 			"diffusion/static/*",
-			"diffusion/public/*"
+			"diffusion/public/*",
+			"swagger/*",
+			".npm"
 		]
 	},
 	"linter": {
