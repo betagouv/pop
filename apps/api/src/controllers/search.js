@@ -22,7 +22,7 @@ const { logger } = require("../logger");
  */
 function getResultInElasticSearch6CompatibilityMode(results) {
 	const responsesWithTotalModified = results.responses.map((resultItem) => {
-		resultItem.hits.total = resultItem.hits.total.value;
+		resultItem.hits = { total: resultItem.hits?.total.value ?? 0 };
 		return resultItem;
 	});
 	return {
