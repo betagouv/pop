@@ -74,24 +74,13 @@ pipeline {
                         }
                     }
 
-                    stage("build") {
+                    stage("build & tag") {
                         when {
                             branch "staging"
                         }
                         steps {
                             script {
                                 helpers.BuildDockerApp("${APP}")
-                            }
-                        }
-                    }
-
-                    stage("tag") {
-                        when {
-                            branch "staging"
-                        }
-                        steps {
-                            script {
-                                helpers.TagDockerApp("${APP}")
                             }
                         }
                     }
