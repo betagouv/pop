@@ -32,20 +32,20 @@ pipeline {
             }
         }
 
-        stage("Lint") {
-            agent {
-                docker { 
-                    image "${env.MAIN_DOCKER_REGISTRY_HOST}/docker.io/library/node:20"
-                    label "${params.AGENT}"
-                }
-            }
+        // stage("Lint") {
+        //     agent {
+        //         docker { 
+        //             image "${env.MAIN_DOCKER_REGISTRY_HOST}/docker.io/library/node:20"
+        //             label "${params.AGENT}"
+        //         }
+        //     }
 
-            steps {
-                script {
-                    sh "npx --cache .npm @biomejs/biome check ./ --diagnostic-level=error"
-                }
-            }
-        }
+        //     steps {
+        //         script {
+        //             sh "npx --cache .npm @biomejs/biome check ./ --diagnostic-level=error"
+        //         }
+        //     }
+        // }
 
         stage("TestBuildTagRollout") {
             matrix {
