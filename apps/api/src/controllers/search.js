@@ -1,3 +1,4 @@
+const assert = require("assert");
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
@@ -12,6 +13,7 @@ const {
 const http = require("http");
 const aws4 = require("aws4");
 const { ndjsonToJsonText } = require("ndjson-to-json-text");
+const _ = require("lodash");
 const es = require("../elasticsearch.js")();
 const { logger } = require("../logger");
 
@@ -22,12 +24,53 @@ const { logger } = require("../logger");
  */
 function getResultInElasticSearch6CompatibilityMode(results) {
 	const responsesWithTotalModified = results.responses.map((resultItem) => {
-		resultItem.hits = { total: resultItem.hits?.total.value ?? 0 };
+		resultItem.hits.total = resultItem.hits?.total.value ?? 0;
 		return resultItem;
 	});
 	return {
 		responses: responsesWithTotalModified,
 	};
+}
+
+/**
+ * Remove `should_not` from the object, will check recursively.
+ */
+function removeShouldNot(obj) {
+	const { should_not, ...rest } = obj;
+
+	for (const [key, value] of Object.entries(rest)) {
+		console.log(key, value);
+		if (_.isArray(value) && typeof value !== "string") {
+			for (const [index, item] of Object.entries(value)) {
+				if (_.isPlainObject(item)) {
+					rest[key][index] = removeShouldNot(item);
+				}
+			}
+		} else if (_.isPlainObject(value)) {
+			rest[key] = removeShouldNot(value);
+		}
+	}
+
+	return rest;
+}
+
+/**
+ * Will insert some fields to make the query we get compatible with OpenSearch.
+ * */
+function insertOpenSearchFields(body) {
+	assert(Array.isArray(body), "body must be an array");
+
+	return body.map((item) => {
+		// If the item is a query
+		if ("query" in item) {
+			return {
+				track_total_hits: true, // this get the total number of hits. By default on OpenSearch it's set to 10000
+				...removeShouldNot(item),
+			};
+		}
+
+		return removeShouldNot(item);
+	});
 }
 
 // Scroll API (required for full exports)
@@ -103,7 +146,11 @@ router.use("/:indices/_msearch", async (req, res) => {
 
 		// Convert NdJson to json object
 		const jsonText = ndjsonToJsonText(body);
-		const jsonQueryBody = JSON.parse(jsonText);
+		let jsonQueryBody = JSON.parse(jsonText);
+
+		// hacky insert of needed fields for OpenSearch compatibility
+		jsonQueryBody = insertOpenSearchFields(jsonQueryBody);
+		logger.debug(jsonQueryBody);
 
 		try {
 			const results = await es.msearch({
