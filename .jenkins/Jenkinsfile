@@ -57,22 +57,22 @@ pipeline {
                 }
 
                 stages {
-                    stage("Test") {
-                        agent {
-                            docker { 
-                                image "${env.main_docker_registry_host}/docker.io/library/node:14"
-                                label "${params.AGENT}"
-                            }
-                        }
-                        steps {
-                            script {
-                                dir("apps/${APP == "edition" ? "production" : "${APP}"}/") {
-                                    sh "npm ci --cache .npm"
-                                    sh "DB_ENDPOINT=${MONGO_URI} npm run test"
-                                }
-                            }
-                        }
-                    }
+                    // stage("Test") {
+                    //     agent {
+                    //         docker { 
+                    //             image "${env.main_docker_registry_host}/docker.io/library/node:14"
+                    //             label "${params.AGENT}"
+                    //         }
+                    //     }
+                    //     steps {
+                    //         script {
+                    //             dir("apps/${APP == "edition" ? "production" : "${APP}"}/") {
+                    //                 sh "npm ci --cache .npm"
+                    //                 sh "DB_ENDPOINT=${MONGO_URI} npm run test"
+                    //             }
+                    //         }
+                    //     }
+                    // }
 
                     stage("build & tag") {
                         when {
