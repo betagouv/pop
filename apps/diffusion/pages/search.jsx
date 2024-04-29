@@ -369,8 +369,6 @@ export default class extends React.Component {
 																	this.props
 																		.base ===
 																	base.key
-																		? true
-																		: false
 																}
 																onChange={() =>
 																	this.handleRadioBaseChange(
