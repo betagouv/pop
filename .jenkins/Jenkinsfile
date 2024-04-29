@@ -61,7 +61,7 @@ pipeline {
                         agent {
                             docker { 
                                 image "${env.main_docker_registry_host}/docker.io/library/node:14"
-                                label "${params.agent}"
+                                label "${params.AGENT}"
                             }
                         }
                         steps {
