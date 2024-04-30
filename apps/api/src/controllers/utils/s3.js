@@ -1,10 +1,9 @@
 const fs = require("fs");
-const AWS = require("aws-sdk");
+const s3 = require("../../s3");
 const { s3Bucket } = require("../../config.js");
 
 // Upload a file to S3. Maybe we should not write to disk.
 function uploadFile(path, file, Bucket = s3Bucket) {
-	const s3 = new AWS.S3();
 	return new Promise((resolve, reject) => {
 		const data = fs.readFileSync(file.path);
 		const params = {
@@ -37,7 +36,6 @@ function deleteFile(path, collection) {
 			reject(new Error(`${collection} does not match ${path}`));
 			return;
 		}
-		const s3 = new AWS.S3();
 		s3.deleteObject({ Bucket: s3Bucket, Key: path }, (err) => {
 			if (err) {
 				reject(new Error(JSON.stringify(err)));
