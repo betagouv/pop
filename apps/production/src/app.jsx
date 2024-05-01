@@ -85,7 +85,7 @@ class App extends React.Component {
 			<div>
 				{this.renderAlert()}
 				{this.renderAlertMaintenance()}
-				<PublicRoutes history={history} />;
+				<PublicRoutes history={history} />
 			</div>
 		);
 	}

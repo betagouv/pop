@@ -118,8 +118,8 @@ class Notice extends React.Component {
 			toastr.error("La modification n'a pas été enregistrée", "", {
 				component: () => (
 					<div>
-						{notice._errors.map((e) => (
-							<p>{e}</p>
+						{notice._errors.map((e, idx) => (
+							<p key={`notice-error-${idx}`}>{e}</p>
 						))}
 					</div>
 				),

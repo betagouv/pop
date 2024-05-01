@@ -358,11 +358,13 @@ export default class extends React.Component {
 										this.props.base !== "" ? (
 											<div className="search-bases-radio-buttons">
 												{bases.map((base) => (
-													<div className="radioCard">
+													<div
+														key={base.key}
+														className="radioCard"
+													>
 														<div className="radioButtonContainer">
 															<input
 																className="radioButton"
-																key={base.key}
 																type="radio"
 																value={base.key}
 																checked={

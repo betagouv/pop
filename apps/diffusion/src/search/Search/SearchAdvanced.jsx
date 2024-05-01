@@ -3140,18 +3140,13 @@ class SearchAdvanced extends React.Component {
 				{(this.props.base === "" || this.props.base == null) && (
 					<div className="radioContainer">
 						{bases.map((base) => (
-							<div className="radioCard">
+							<div key={base.key} className="radioCard">
 								<div className="radioButtonContainer">
 									<input
 										className="radioButton"
-										key={base.key}
 										type="radio"
 										value={base.key}
-										checked={
-											this.props.base === base.key
-												? true
-												: false
-										}
+										checked={this.props.base === base.key}
 										onChange={(e) => this.onBaseChange(e)}
 									/>
 									<div className="radioName">{base.base}</div>

@@ -109,8 +109,10 @@ export default class extends React.Component {
 						const qs = queryString.stringify({
 							auteur: JSON.stringify([photographer]),
 						});
+
 						return (
 							<div
+								key={`photographer-${index}`}
 								style={{
 									display: "flex",
 									flexDirection: "row",
@@ -138,19 +140,26 @@ export default class extends React.Component {
 
 	serie() {
 		const serie = this.props.notice.SERIE;
-		const links = serie.map((element) => {
+		const links = serie.map((element, idx) => {
 			const qs = queryString.stringify({
 				serie: JSON.stringify([element]),
 			});
 			return (
-				<a href={`/search/list?${qs}`} target="_blank" rel="noreferrer">
+				<a
+					key={`serie-${idx}`}
+					href={`/search/list?${qs}`}
+					target="_blank"
+					rel="noreferrer"
+				>
 					{element}
 				</a>
 			);
 		});
+
 		return (
 			serie && (
 				<React.Fragment>
+					{/* biome-ignore lint/correctness/useJsxKeyInIterable: i'm sure */}
 					{links.reduce((a, b) => [a, " ; ", b])}
 				</React.Fragment>
 			)
@@ -170,19 +179,26 @@ export default class extends React.Component {
 	}
 
 	addLinkFieldMultiValue(fieldValues, name) {
-		const links = fieldValues.map((element) => {
+		const links = fieldValues.map((element, idx) => {
 			const qs = queryString.stringify({
 				name: JSON.stringify([element]),
 			});
 			return (
-				<a href={`/search/list?${qs}`} target="_blank" rel="noreferrer">
+				<a
+					key={`link-${idx}`}
+					href={`/search/list?${qs}`}
+					target="_blank"
+					rel="noreferrer"
+				>
 					{element}
 				</a>
 			);
 		});
+
 		return (
 			fieldValues && (
 				<React.Fragment>
+					{/* biome-ignore lint/correctness/useJsxKeyInIterable: <explanation> */}
 					{links.reduce((a, b) => [a, " ; ", b])}
 				</React.Fragment>
 			)

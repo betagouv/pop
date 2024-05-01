@@ -78,6 +78,7 @@ export default class Drawer extends Component {
 
 		const arr = notices.map((notice) => (
 			<div
+				key={notice.REF}
 				className="mini"
 				onClick={() => {
 					this.setState({ selectedNotice: notice });
@@ -86,6 +87,7 @@ export default class Drawer extends Component {
 				{this.renderNoticeMini(notice)}
 			</div>
 		));
+
 		return (
 			<div className="drawer">
 				<div

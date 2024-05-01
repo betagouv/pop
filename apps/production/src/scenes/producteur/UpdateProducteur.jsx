@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { toastr } from "react-redux-toastr";
-import { Button, Col, Input, Modal, Row } from "reactstrap";
+import { Button, Input, Modal } from "reactstrap";
 
 import api from "../../services/api";
 import ProducteurBaseLine from "./components/ProducteurBaseLine";
@@ -143,9 +143,9 @@ class UpdateProducteur extends React.Component {
 		return (
 			<div>
 				{this.renderModal()}
-				<a href="#" onClick={this.handleClick}>
+				<Button color="link" type="button" onClick={this.handleClick}>
 					Modifier
-				</a>
+				</Button>
 			</div>
 		);
 	}

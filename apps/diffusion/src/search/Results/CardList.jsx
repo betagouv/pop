@@ -31,7 +31,13 @@ function pickFirst(data) {
 }
 
 function addLineBreak(value) {
-	return value ? value.split("#").map((element) => <p>{element}</p>) : null;
+	return value
+		? value
+				.split("#")
+				.map((element) => (
+					<p key={element.replace(" ", "-")}>{element}</p>
+				))
+		: null;
 }
 
 function transformS3URI(path) {
