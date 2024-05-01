@@ -301,6 +301,7 @@ export default class Bucket extends React.Component {
 
 							{blocList.map((item) => (
 								<div
+									key={`bloc_${item.bloc}`}
 									id={`bloc_${item.bloc}`}
 									className="notices-wrapper"
 								>

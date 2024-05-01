@@ -22,18 +22,14 @@ class Signin extends Component {
 	}
 
 	renderError(error) {
-		if (error.indexOf("#") > -1) {
-			return (
-				<React.Fragment>
-					{error.split("#").map((el) => (
-						<p className="sign-text-error">{el}</p>
-					))}
-				</React.Fragment>
-			);
-		}
 		return (
 			<React.Fragment>
-				<p className="sign-text-error">{error}</p>
+				<p
+					style={{ whiteSpace: "pre-wrap" }}
+					className="sign-text-error"
+				>
+					{error}
+				</p>
 			</React.Fragment>
 		);
 	}

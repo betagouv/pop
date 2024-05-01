@@ -657,8 +657,8 @@ class Importer extends Component {
 					Avertissements sur l'import
 				</p>
 				<ul>
-					{this.state.avertissement.map((element) => {
-						return <li>{element}</li>;
+					{this.state.avertissement.map((element, idx) => {
+						return <li key={`avertissement-${idx}`}>{element}</li>;
 					})}
 				</ul>
 			</div>

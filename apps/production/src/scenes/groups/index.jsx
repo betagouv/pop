@@ -58,9 +58,18 @@ class Groups extends React.Component {
 							<tr key={_id}>
 								<td>{label}</td>
 								<td>
-									{prods.map((item) => (
-										<tr>{item}</tr>
-									))}
+									<ul
+										style={{
+											listStyle: "none",
+											paddingLeft: 0,
+										}}
+									>
+										{prods.map((item) => (
+											<li key={`${_id}-${item}`}>
+												{item}
+											</li>
+										))}
+									</ul>
 								</td>
 								<td>
 									<UpdateGroup
