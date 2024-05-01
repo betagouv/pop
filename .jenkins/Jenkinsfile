@@ -42,7 +42,7 @@ pipeline {
 
             steps {
                 script {
-                    sh "npx --cache .npm @biomejs/biome lint ./ --diagnostic-level=error"
+                    sh "npx --cache .npm @biomejs/biome@1.7.2 lint ./ --diagnostic-level=error"
                 }
             }
         }
