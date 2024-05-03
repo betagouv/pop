@@ -208,12 +208,14 @@ export default class extends React.Component {
 
 	// Display a list of links to authors
 	links(value, name) {
+		console.log(value, name);
 		//const author = this.props.notice.AUTR;
 		if (!value) {
 			return null;
 		}
-		if (!value || !Array.isArray(value) || !value.length) {
-			if (String(value) === value && !String(value) === "") {
+
+		if (!Array.isArray(value)) {
+			if (typeof value === "string" && value !== "") {
 				const url = `/search/list?${queryString.stringify({
 					[name]: JSON.stringify([value]),
 				})}`;
@@ -225,6 +227,11 @@ export default class extends React.Component {
 			}
 			return null;
 		}
+
+		if (value.length === 0) {
+			return null;
+		}
+
 		const links = [];
 		value.forEach((val) => {
 			if (val.indexOf("#") > -1) {
