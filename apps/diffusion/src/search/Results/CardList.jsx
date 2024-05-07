@@ -590,7 +590,7 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	const LogoComponent = (
 		<img src="/static/musee-de-france.png" className="producteur" />
 	);
-	const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
+	const author = joinData([data.AUTR, data.ECOL]);
 	let peri = pickFirst([data.MILL, data.PERI, data.EPOQ]);
 	if (peri === author) {
 		peri = "";
