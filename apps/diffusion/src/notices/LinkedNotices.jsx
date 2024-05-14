@@ -35,7 +35,9 @@ class SmallNotice extends React.Component {
 				<a style={{ textDecoration: "none" }} className="card">
 					<img src={image_preview} alt={title} />
 					<div className="content">
-						<p className="categories">{categorie}</p>
+						<p className="categories">
+							{categorie} {this.props.notice.REF}
+						</p>
 						<h3>{title}</h3>
 						{this.props.notice.DENO ? (
 							<p className="categories">
