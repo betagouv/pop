@@ -1,7 +1,5 @@
 import org.pop.PopHelpers
 
-def helpers = new PopHelpers()
-
 pipeline {
     parameters {
         string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
@@ -70,7 +68,7 @@ pipeline {
                         }
                         steps {
                             script {
-                                helpers.BuildDockerApp("${APP}")
+                                buildPushImage "${APP}")
                             }
                         }
                     }
