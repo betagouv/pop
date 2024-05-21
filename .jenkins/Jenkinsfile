@@ -68,7 +68,7 @@ pipeline {
                         }
                         steps {
                             script {
-                                buildPushImage "${APP}")
+                                buildPushImage "${APP}"
                             }
                         }
                     }
