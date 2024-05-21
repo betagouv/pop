@@ -1,8 +1,9 @@
-def helpers
+import org.pop.PopHelpers
+
+def helpers = new PopHelpers()
 
 pipeline {
     parameters {
-        choice(name: 'AGENT', choices: ['dev'], description: 'Jenkins agent to use')
         string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
     }
         
@@ -14,29 +15,18 @@ pipeline {
         TAG = "${params.TAG}"
         DOMAIN = "atnum"
         APP_VERSION = "0.1.0"
-        MONGO_URI = credentials("pop-${params.AGENT}-mongo-uri")
     }
 
     agent {
-        label "${params.AGENT}"
+        label "dev"
     }
 
     stages {
-        stage("load") {
-            steps {
-                script {
-                    dir(".jenkins") {
-                        helpers = load "helpers.groovy"
-                    }
-                }
-            }
-        }
-
         stage("Lint") {
             agent {
                 docker { 
                     image "${env.MAIN_DOCKER_REGISTRY_HOST}/docker.io/library/node:20"
-                    label "${params.AGENT}"
+                    label "dev"
                 }
             }
 
