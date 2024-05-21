@@ -75,7 +75,7 @@ class UpdateProfile extends Component {
 		);
 	}
 
-	async updateProfile() {
+	updateProfile = async () => {
 		const { email, logout, user } = this.props;
 		const { nom, prenom, institution, group, role, museofile } = user;
 		const {
@@ -133,7 +133,7 @@ class UpdateProfile extends Component {
 			done: true,
 			hasChangedPassword: !!hasChangedPassword,
 		});
-	}
+	};
 
 	lastConnectedAt() {
 		if (!this.props.lastConnectedAt) {
