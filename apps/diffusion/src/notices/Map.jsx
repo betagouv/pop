@@ -27,7 +27,11 @@ class MapComponent extends React.Component {
 					center,
 					attributionControl: {
 						compact: true,
-						custom: ["OpenStreetMap", "Etalab", "MapLibre"],
+						customAttribution: [
+							"OpenStreetMap",
+							"Etalab",
+							"MapLibre",
+						],
 					},
 				});
 

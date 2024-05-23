@@ -1,10 +1,8 @@
-import { bucket_url } from "../../../config";
-
 import { getNoticeInfo } from "../../../utils";
 
 export default class Marker {
 	constructor(feature, color = "#007bff") {
-		const mapboxgl = require("mapbox-gl");
+		const maplibre = require("maplibre-gl");
 
 		this._element = null;
 		this._onClick = null;
@@ -26,13 +24,15 @@ export default class Marker {
 			this._type = "notice";
 			el = createMarkerElement(feature);
 		}
+
 		el.addEventListener("click", (e) => {
 			e.stopPropagation();
 			if (this._onClick) {
 				this._onClick(this);
 			}
 		});
-		this._element = new mapboxgl.Marker(el).setLngLat(
+
+		this._element = new maplibre.Marker({ element: el }).setLngLat(
 			feature.geometry.coordinates,
 		);
 	}
