@@ -1,132 +1,52 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Button, Container, Input } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Container } from "reactstrap";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 import Loader from "../../components/Loader";
 import api from "../../services/api";
 
 import "./index.css";
 
-export default class ImportComponent extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			arc: "",
-			done: false,
-			loading: false,
-			error: "",
-			messages: [],
-		};
-	}
+export default function ThesaurusComponent() {
+	const [loading, setLoading] = useState(true);
+	const [lastUpdate, setLastUpdate] = useState(null);
+	const [error, setError] = useState(null);
 
-	addMessage(message, edit = false) {
-		if (edit) {
-			const messages = [...this.state.messages];
-			messages[messages.length - 1] = message;
-			this.setState({
-				messages,
-			});
-		} else {
-			this.setState({
-				messages: [...this.state.messages, message],
-			});
-		}
-	}
-
-	async onUpdate() {
-		try {
-			this.setState({
-				loading: true,
-			});
-			this.addMessage("Ne fermez pas cette page");
-			this.addMessage(`Récupération des "top" concepts`);
-			const topconctps = await api.getTopConceptsByThesaurusId(
-				this.state.arc,
-			);
-			this.addMessage(
-				`Récupération de  ${topconctps.length} "top" concepts...`,
-			);
-			this.addMessage("Récupération des concepts enfants");
-			const allconcepts = [];
-			for (let i = 0; i < topconctps.length; i++) {
-				const childs = await api.getAllChildrenConcept(
-					topconctps[i].identifier,
-				);
-				allconcepts.push(...childs);
-				this.addMessage(
-					`Récupération de ${allconcepts.length} concepts enfants...`,
-					true,
-				);
+	useEffect(() => {
+		(async () => {
+			console.log("fetch thesaurus");
+			try {
+				const res = await api.getLastThesaurusUpdate();
+				setLastUpdate(new Date(res.lastUpdate));
+			} catch (err) {
+				console.error(err);
+			} finally {
+				setLoading(false);
 			}
-			this.addMessage("Récupération des termes préférés...");
-			const terms = [];
-			for (let i = 0; i < allconcepts.length; i++) {
-				const childs = await api.getPreferredTermByConceptId(
-					allconcepts[i],
-				);
-				terms.push(...childs);
-				this.addMessage(
-					`Récupération de ${terms.length} termes...`,
-					true,
-				);
-			}
-			this.addMessage("Suppression des anciennes valeurs thesaurus");
-			await api.deleteAllThesaurus(this.state.arc);
-			this.addMessage("Ajout des thésaurus dans la base");
+		})();
+	}, []);
 
-			while (terms.length) {
-				const tmp = terms.splice(0, 100);
-				await api.createThesaurus(this.state.arc, { terms: tmp });
-				this.addMessage(
-					`${terms.length} Thésaurus restant à ajouter dans la base`,
-					true,
-				);
-			}
-			this.setState({ loading: false, done: true });
-			this.addMessage("FIN ! ", true);
-		} catch (e) {
-			console.log("ERROR", e);
-			this.setState({ loading: false, done: true, error: "error" });
-		}
-	}
-
-	render() {
-		const messages = this.state.messages.map((e) => <div key={e}>{e}</div>);
-
-		if (this.state.loading) {
-			return (
-				<div className="import-container">
-					<Container>
-						<Loader />
-						<div>{messages}</div>
-					</Container>
-				</div>
-			);
-		}
-
-		if (this.state.done) {
-			return (
-				<div className="import-container">
-					<div>{messages}</div>
-					<Link to="/">Revenir a la page d'accueil</Link>
-				</div>
-			);
-		}
-
+	if (loading) {
 		return (
-			<Container className="thesaurus">
-				<div className="inputzone">
-					<Input
-						onChange={(e) => this.setState({ arc: e.target.value })}
-						value={this.state.arc}
-						placeholder="http://data.culture.fr/thesaurus/resource/ark:/67717/T84"
-					/>
-					<Button color="primary" onClick={this.onUpdate.bind(this)}>
-						Update
-					</Button>
-				</div>
-				<div>{this.state.error}</div>
-			</Container>
+			<div className="import-container">
+				<Container>
+					<Loader />
+				</Container>
+			</div>
 		);
 	}
+
+	return (
+		<Container className="thesaurus" style={{ marginTop: 12 }}>
+			{loading && <Loader />}
+			{error != null && <div>{error}</div>}
+			{lastUpdate != null && (
+				<div>
+					Dernière mise à jour:{" "}
+					{format(lastUpdate, "PPP", { locale: fr })}
+				</div>
+			)}
+		</Container>
+	);
 }

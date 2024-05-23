@@ -11,6 +11,7 @@
 		"buffer": "^6.0.3",
 		"connected-react-router": "^6.9.1",
 		"csv-parse": "^4.16.0",
+		"date-fns": "^3.6.0",
 		"deep-diff": "^1.0.2",
 		"dotenv": "^10.0.0",
 		"es6-promise": "^4.2.8",

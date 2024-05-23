@@ -504,6 +504,10 @@ class api {
 			refs,
 		});
 	}
+
+	getLastThesaurusUpdate() {
+		return request.fetchJSON("GET", "/thesaurus/last-update");
+	}
 }
 
 const apiObject = new api();
