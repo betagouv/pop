@@ -22,12 +22,12 @@ class MapComponent extends React.Component {
 			this.props.notice.POP_COORDONNEES.lat
 		) {
 			const loadMapBox = async () => {
-				const mapboxgl = require("mapbox-gl");
-				mapboxgl.accessToken = await api.getMapboxToken();
+				const maplibre = require("maplibre-gl");
+				// mapboxgl.accessToken = await api.getMapboxToken();
 
-				const map = new mapboxgl.Map({
+				const map = new maplibre.Map({
 					container: "map",
-					style: "mapbox://styles/mapbox/streets-v9",
+					style: "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
 					zoom: 14,
 					center,
 				});
