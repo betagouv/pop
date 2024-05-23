@@ -1,10 +1,6 @@
-import Head from "next/head";
 import React from "react";
-import api from "../services/api";
 
 class MapComponent extends React.Component {
-	map = null;
-
 	constructor(props) {
 		super(props);
 		this.mapRef = React.createRef();
@@ -23,13 +19,16 @@ class MapComponent extends React.Component {
 		) {
 			const loadMapBox = async () => {
 				const maplibre = require("maplibre-gl");
-				// mapboxgl.accessToken = await api.getMapboxToken();
 
 				const map = new maplibre.Map({
 					container: "map",
 					style: "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
 					zoom: 14,
 					center,
+					attributionControl: {
+						compact: true,
+						custom: ["OpenStreetMap", "Etalab", "MapLibre"],
+					},
 				});
 
 				map.on("error", (event) => {
@@ -72,12 +71,6 @@ class MapComponent extends React.Component {
 
 		return (
 			<div className="map-container onPrintHide">
-				<Head>
-					<link
-						href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css"
-						rel="stylesheet"
-					/>
-				</Head>
 				<div id="map" ref={this.mapRef} />
 				<style jsx>{`
           .map-container {

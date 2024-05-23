@@ -37,6 +37,11 @@ class MyDocument extends Document {
 						type="text/css"
 						href="/static/nprogress.css"
 					/>
+					<link
+						rel="stylesheet"
+						type="text/css"
+						href="/static/maplibre-gl.css"
+					/>
 					<script src="/static/piwik.js" />
 					<script src="/static/jquery.min.js" />
 					<script src="/static/jquery.highlight-5.js" />

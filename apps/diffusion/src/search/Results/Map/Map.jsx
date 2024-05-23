@@ -11,7 +11,7 @@ export default class MapComponent extends React.Component {
 	state = {
 		loaded: false,
 		popup: null,
-		style: "mapbox://styles/mapbox/streets-v9",
+		style: "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
 		drawerContent: null,
 		selectedMarker: null,
 		selectedPositionMarker: null,
@@ -28,7 +28,7 @@ export default class MapComponent extends React.Component {
 	}
 
 	async loadMapBox() {
-		const mapboxgl = require("mapbox-gl");
+		const mapboxgl = require("maplibre-gl");
 		mapboxgl.accessToken = await api.getMapboxToken();
 		this.map = new mapboxgl.Map({
 			container: "map",
