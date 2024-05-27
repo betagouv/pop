@@ -630,6 +630,7 @@ export default class extends React.Component {
 											"BIBL",
 											"SOUR",
 											"PHOTO",
+											"PRECISION_JURIDIQUE",
 										]}
 									/>
 									<Field
@@ -695,6 +696,10 @@ export default class extends React.Component {
 									<Field
 										title={mapping.palissy.PHOTO.label}
 										content={notice.PHOTO}
+									/>
+									<Field
+										title={mapping.palissy.PRECISION_JURIDIQUE.label}
+										content={notice.PRECISION_JURIDIQUE}
 									/>
 
 									<Title
