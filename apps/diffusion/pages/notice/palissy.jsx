@@ -639,6 +639,13 @@ export default class extends React.Component {
 										join={" ; "}
 									/>
 									<Field
+										title={
+											mapping.palissy.PRECISION_JURIDIQUE
+												.label
+										}
+										content={notice.PRECISION_JURIDIQUE}
+									/>
+									<Field
 										title={mapping.palissy.PROT.label}
 										content={notice.PROT}
 									/>
@@ -696,10 +703,6 @@ export default class extends React.Component {
 									<Field
 										title={mapping.palissy.PHOTO.label}
 										content={notice.PHOTO}
-									/>
-									<Field
-										title={mapping.palissy.PRECISION_JURIDIQUE.label}
-										content={notice.PRECISION_JURIDIQUE}
 									/>
 
 									<Title
