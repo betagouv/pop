@@ -44,6 +44,12 @@ const settings = {
 				filter: ["french_elision", "icu_folding"],
 			},
 		},
+		normalizer: {
+			sort_normalizer: {
+				type: "custom",
+				filter: ["trim", "lowercase", "asciifolding"],
+			},
+		},
 	},
 };
 
@@ -56,6 +62,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		ACTU: {
@@ -63,6 +74,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -74,6 +90,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		ADRS: {
@@ -81,6 +102,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -92,6 +118,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		AIRE: {
@@ -99,6 +130,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -110,6 +146,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		APRO: {
@@ -119,6 +160,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		ARCHEO: {
@@ -126,6 +172,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -142,6 +193,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		AUTR: {
@@ -156,6 +212,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		BASE: {
@@ -163,6 +224,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -174,6 +240,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		CANT: {
@@ -181,6 +252,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -197,6 +273,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		CONTACT: {
@@ -204,6 +285,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -215,6 +301,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		COOR: {
@@ -222,6 +313,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -233,6 +329,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		COPY: {
@@ -240,6 +341,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -256,6 +362,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DBOR: {
@@ -263,6 +374,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -279,6 +395,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DENQ: {
@@ -286,6 +407,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -297,6 +423,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DESC: {
@@ -306,6 +437,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 8000,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DIMS: {
@@ -313,6 +449,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -324,6 +465,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DMAJ: {
@@ -333,6 +479,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DMIS: {
@@ -340,6 +491,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -356,6 +512,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DOSADRS: {
@@ -363,6 +524,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -374,6 +540,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DOSURL: {
@@ -381,6 +552,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -392,6 +568,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DPRO: {
@@ -401,6 +582,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		DPT: {
@@ -408,6 +594,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -424,6 +615,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		ENER: {
@@ -431,6 +627,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -442,6 +643,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		ETUD: {
@@ -451,6 +657,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		GENR: {
@@ -458,6 +669,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -474,6 +690,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		HYDR: {
@@ -481,6 +702,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -492,6 +718,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		IMAGE: {
@@ -499,6 +730,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -510,6 +746,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		INSEE: {
@@ -517,6 +758,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -528,6 +774,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		LINHA: {
@@ -535,6 +786,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
 				},
 			},
 		},
@@ -544,6 +800,11 @@ const mappings = {
 				keyword: {
 					type: "keyword",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		LBASE2: {
@@ -551,6 +812,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -562,6 +828,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		LIEU: {
@@ -571,6 +842,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		LMDP: {
@@ -578,6 +854,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -593,6 +874,11 @@ const mappings = {
 				strict: {
 					type: "text",
 					analyzer: "french_strict",
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
 				},
 			},
 		},
@@ -625,6 +911,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		MHPP: {
@@ -632,6 +923,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -643,6 +939,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		MOSA: {
@@ -650,6 +951,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -661,6 +967,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		OBS: {
@@ -670,6 +981,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		PAFF: {
@@ -677,6 +993,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -693,6 +1014,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		PERS: {
@@ -707,6 +1033,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		PINT: {
@@ -714,6 +1045,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -725,6 +1061,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		PLOC: {
@@ -734,6 +1075,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		POP_CONTIENT_GEOLOCALISATION: {
@@ -741,6 +1087,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -758,6 +1109,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 8000,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		PRODUCTEUR: {
@@ -765,6 +1121,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -776,6 +1137,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		PSTA: {
@@ -783,6 +1149,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -794,6 +1165,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		REFIM: {
@@ -801,6 +1177,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -812,6 +1193,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		REFO: {
@@ -819,6 +1205,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -829,6 +1220,11 @@ const mappings = {
 				keyword: {
 					type: "keyword",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		REFMUS: {
@@ -836,6 +1232,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
 				},
 			},
 		},
@@ -851,6 +1252,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		REMA: {
@@ -858,6 +1264,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -869,6 +1280,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		RENV: {
@@ -876,6 +1292,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -892,6 +1313,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		RFPA: {
@@ -899,6 +1325,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -915,6 +1346,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		SCLX: {
@@ -922,6 +1358,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -933,6 +1374,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		STAT: {
@@ -940,6 +1386,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -951,6 +1402,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		THEM: {
@@ -958,6 +1414,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -974,6 +1435,11 @@ const mappings = {
 					type: "text",
 					analyzer: "french_strict",
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		TOUT: {
@@ -981,6 +1447,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -992,6 +1463,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		VERT: {
@@ -999,6 +1475,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -1010,6 +1491,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		VISI: {
@@ -1017,6 +1503,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -1028,6 +1519,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		WADRS: {
@@ -1035,6 +1531,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -1046,6 +1547,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		WEB: {
@@ -1053,6 +1559,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -1064,6 +1575,11 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+					ignore_above: 256,
+				},
 			},
 		},
 		ZONE: {
@@ -1071,6 +1587,11 @@ const mappings = {
 			fields: {
 				keyword: {
 					type: "keyword",
+					ignore_above: 256,
+				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
 					ignore_above: 256,
 				},
 			},
@@ -1084,6 +1605,11 @@ const mappings = {
 							type: "keyword",
 							ignore_above: 256,
 						},
+						sort: {
+							type: "keyword",
+							normalizer: "sort_normalizer",
+							ignore_above: 256,
+						},
 					},
 				},
 				nom: {
@@ -1091,6 +1617,11 @@ const mappings = {
 					fields: {
 						keyword: {
 							type: "keyword",
+							ignore_above: 256,
+						},
+						sort: {
+							type: "keyword",
+							normalizer: "sort_normalizer",
 							ignore_above: 256,
 						},
 					},
@@ -1102,6 +1633,11 @@ const mappings = {
 							type: "keyword",
 							ignore_above: 256,
 						},
+						sort: {
+							type: "keyword",
+							normalizer: "sort_normalizer",
+							ignore_above: 256,
+						},
 					},
 				},
 				email: {
@@ -1109,6 +1645,11 @@ const mappings = {
 					fields: {
 						keyword: {
 							type: "keyword",
+							ignore_above: 256,
+						},
+						sort: {
+							type: "keyword",
+							normalizer: "sort_normalizer",
 							ignore_above: 256,
 						},
 					},
@@ -1120,6 +1661,11 @@ const mappings = {
 							type: "keyword",
 							ignore_above: 256,
 						},
+						sort: {
+							type: "keyword",
+							normalizer: "sort_normalizer",
+							ignore_above: 256,
+						},
 					},
 				},
 				updateMode: {
@@ -1127,6 +1673,11 @@ const mappings = {
 					fields: {
 						keyword: {
 							type: "keyword",
+							ignore_above: 256,
+						},
+						sort: {
+							type: "keyword",
+							normalizer: "sort_normalizer",
 							ignore_above: 256,
 						},
 					},
