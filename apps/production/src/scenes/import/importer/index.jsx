@@ -35,15 +35,10 @@ class Importer extends Component {
 			loadOpenTheso: false,
 			countRecupNotice: 0,
 			countControleNotice: 0,
-			localStorage: null,
 			saveDisabled: false,
 			collection: props.collection,
 			avertissement: [],
 		};
-	}
-
-	componentDidMount() {
-		this.setState({ localStorage: window.localStorage });
 	}
 
 	async onFilesDropped(errors, files, encoding) {
@@ -166,9 +161,9 @@ class Importer extends Component {
 
 			this.setState({ loadOpenTheso: true });
 
-			Object.keys(localStorage).forEach((key) => {
+			Object.keys(sessionStorage).forEach((key) => {
 				if (key.indexOf("opentheso-") === 0) {
-					localStorage.removeItem(key);
+					sessionStorage.removeItem(key);
 				}
 			});
 

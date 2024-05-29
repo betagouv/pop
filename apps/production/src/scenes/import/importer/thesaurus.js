@@ -168,6 +168,8 @@ export async function checkOpenTheso(notice) {
 const storageExceptionThesaurus = [];
 
 async function checkVocabulaireThesaurus(mappingField, value, base) {
+	console.log("checking theso", mappingField, value, base);
+
 	let arrayLabel = [];
 	let message = "";
 	const arrayIdThesaurus = THESAURUS_CONTROLE[base].id_list_theso;
@@ -180,7 +182,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 		 * Pour réduire les requêtes vers l'api, le référentiel est stocké dans le storage si celui-ci n'est pas encore présent
 		 * Exemple de clé opentheso-th305
 		 */
-		if (!localStorage.getItem(`opentheso-${mappingField.idthesaurus}`)) {
+		if (!sessionStorage.getItem(`opentheso-${mappingField.idthesaurus}`)) {
 			if (!storageExceptionThesaurus.includes(mappingField.idthesaurus)) {
 				const resp = await api.getThesaurusById(
 					mappingField.idthesaurus,
@@ -188,7 +190,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 				arrayStorage = resp;
 				try {
 					// Sauvegarde du référentiel
-					localStorage.setItem(
+					sessionStorage.setItem(
 						`opentheso-${mappingField.idthesaurus}`,
 						JSON.stringify(resp),
 					);
@@ -200,7 +202,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 			}
 		} else {
 			arrayStorage = JSON.parse(
-				localStorage.getItem(`opentheso-${mappingField.idthesaurus}`),
+				sessionStorage.getItem(`opentheso-${mappingField.idthesaurus}`),
 			);
 		}
 
@@ -215,9 +217,7 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 			} else {
 				res = await callThesaurus(mappingField.idthesaurus, value);
 			}
-			if (res.statusCode === "200") {
-				arrayLabel = JSON.parse(res.body);
-			}
+			arrayLabel = res.body;
 		}
 
 		let foundValue = false;
