@@ -125,7 +125,7 @@ router.get(
 					isAltLabel: element.altLabel,
 				};
 			});
-			res.send({ statusCode: 200, body: JSON.stringify(body) });
+			res.status(200).json(body);
 		});
 	},
 );
@@ -503,7 +503,7 @@ router.get("/getAllThesaurusById", (req, res) => {
 				isAltLabel: element.altLabel,
 			};
 		});
-		res.status(202).send(results);
+		res.status(200).json(results);
 	});
 });
 

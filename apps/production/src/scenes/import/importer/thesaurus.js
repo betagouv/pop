@@ -168,14 +168,11 @@ export async function checkOpenTheso(notice) {
 const storageExceptionThesaurus = [];
 
 async function checkVocabulaireThesaurus(mappingField, value, base) {
-	console.log("checking theso", mappingField, value, base);
-
 	let arrayLabel = [];
 	let message = "";
 	const arrayIdThesaurus = THESAURUS_CONTROLE[base].id_list_theso;
 
 	try {
-		let res = {};
 		let arrayStorage = [];
 
 		/**
@@ -210,17 +207,18 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 			arrayLabel = Object.values(arrayStorage);
 		} else {
 			if (arrayIdThesaurus.includes(mappingField.idthesaurus)) {
-				res = await api.validateWithThesaurus(
+				arrayLabel = await api.validateWithThesaurus(
 					mappingField.idthesaurus,
 					value,
 				);
 			} else {
-				res = await callThesaurus(mappingField.idthesaurus, value);
+				const res = await api.validateOpenTheso(
+					mappingField.idthesaurus,
+					value,
+				);
+				arrayLabel = res.body;
 			}
-			arrayLabel = res.body;
 		}
-
-		let foundValue = false;
 
 		// Préparation des valeurs préférées
 		const arrayPrefLabel = [];
@@ -240,10 +238,14 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 		// Recherhe de la valeur exacte dans le tableau de valeur du WS
 		for (let i = 0; i < arrayLabel.length; i++) {
 			const element = arrayLabel[i];
+
 			if (element.label === value && !element.isAltLabel) {
 				// la saisie correspond à une valeur du référentiel et la valeur est un label préféré
-				foundValue = true;
-			} else if (
+				// la saisie est présente dans le référentiel, retour du message ""
+				return "";
+			}
+
+			if (
 				element.label === value ||
 				element.label.toLowerCase() === value.toLowerCase()
 			) {
@@ -258,11 +260,6 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 					addMatchValue(value, element);
 				}
 			}
-		}
-
-		if (foundValue) {
-			// la saisie est présente dans le référentiel, retour du message ""
-			return "";
 		}
 
 		// si la liste est récupérée et la valeur est présente dans la liste
@@ -314,16 +311,14 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 			}
 		}
 	} catch (err) {
-		console.error("error checking vocabularies", { err });
+		console.error("error checking vocabularies", {
+			err: JSON.stringify(err),
+		});
 		// Erreur du à l'absence de la valeur dans le référentiel opentheso
 		message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
 	}
 
 	return message;
-}
-
-async function callThesaurus(thesaurus, value) {
-	return api.validateOpenTheso(thesaurus, value);
 }
 
 async function callPrefLabel(id) {

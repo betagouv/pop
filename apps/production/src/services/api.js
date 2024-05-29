@@ -462,9 +462,11 @@ class api {
 			`/thesaurus/search?id=${thesaurusId}&value=${str}`,
 		);
 	}
+
 	// Validate with thesaurus
 	validateWithThesaurus(thesaurusId, str) {
-		return request.getJSON(
+		return request.fetchJSON(
+			"GET",
 			`/thesaurus/validate?id=${thesaurusId}&value=${str}`,
 		);
 	}
