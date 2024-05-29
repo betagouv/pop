@@ -318,11 +318,19 @@ router.get("/:ref", async (req, res) => {
      }
  */
 	const ref = req.params.ref;
-	const notice = await Joconde.findOne({ REF: ref });
-	if (notice) {
-		return res.status(200).send(notice);
+	try {
+		const notice = await Joconde.findOne({ REF: ref });
+		if (notice) {
+			return res.status(200).send(notice);
+		}
+		return res
+			.status(404)
+			.send({ success: false, msg: "Notice introuvable." });
+	} catch (error) {
+		return res
+			.status(404)
+			.send({ success: false, msg: "Notice introuvable." });
 	}
-	return res.status(404).send({ success: false, msg: "Notice introuvable." });
 });
 
 // Delete one notice.
