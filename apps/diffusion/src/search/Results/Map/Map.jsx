@@ -1,4 +1,3 @@
-import Head from "next/head";
 import React from "react";
 import Loader from "../../../components/Loader";
 import Drawer from "./Drawer";
@@ -25,7 +24,7 @@ export default class MapComponent extends React.Component {
 		this.reload = this.reload.bind(this);
 	}
 
-	async loadMapBox() {
+	async loadMap() {
 		const maplibre = require("maplibre-gl");
 		this.map = new maplibre.Map({
 			container: "map",
@@ -64,7 +63,7 @@ export default class MapComponent extends React.Component {
 					this.map.off("moveend", handleMapMoveend);
 					this.map.off("click", handleMapClick);
 					this.map.off("error", handleMapError);
-					this.loadMapBox();
+					this.loadMap();
 				});
 			}
 		};
@@ -73,12 +72,12 @@ export default class MapComponent extends React.Component {
 
 	reload() {
 		this.setState({ loaded: false }, () => {
-			this.loadMapBox();
+			this.loadMap();
 		});
 	}
 
 	componentDidMount() {
-		this.loadMapBox();
+		this.loadMap();
 	}
 
 	updateQuery() {
@@ -135,12 +134,12 @@ export default class MapComponent extends React.Component {
 	}
 
 	setPosition(position, zoom = 13, showMarker = true) {
-		const mapboxgl = require("mapbox-gl");
+		const maplibre = require("maplibre-gl");
 		if (this.state.selectedPositionMarker) {
 			this.state.selectedPositionMarker.remove();
 		}
 		if (position && showMarker) {
-			const marker = new mapboxgl.Marker();
+			const marker = new maplibre.Marker();
 			marker.setLngLat(position);
 			this.setState({ selectedPositionMarker: marker });
 			marker.addTo(this.map);
@@ -235,18 +234,6 @@ export default class MapComponent extends React.Component {
 				style={{ width: "100%", height: "600px" }}
 				className="search-map view"
 			>
-				<Head>
-					<link
-						href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css"
-						rel="stylesheet"
-					/>
-					<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.4/mapbox-gl-geocoder.min.js" />
-					<link
-						rel="stylesheet"
-						href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.4/mapbox-gl-geocoder.css"
-						type="text/css"
-					/>
-				</Head>
 				<Location
 					ready={this.state.loaded}
 					map={this.map}
@@ -268,15 +255,7 @@ export default class MapComponent extends React.Component {
 					id="map"
 					ref={this.mapRef}
 					style={{ width: "100%", height: "600px" }}
-				>
-					<SwitchStyleButton
-						value={this.state.style}
-						onChange={(style) => {
-							this.setState({ style });
-							this.map.setStyle(style);
-						}}
-					/>
-				</div>
+				></div>
 				<style jsx global>{`
           .search-map .switch-view {
             width: 60px;
@@ -437,6 +416,34 @@ export default class MapComponent extends React.Component {
             background-size: contain;
           }
 
+          .location .location-search-results {
+            position: absolute;
+            background-color: white;
+            top: 50px;
+            width: 280px;
+            height: 120px;
+            corner-radius: 5px;
+            padding-left: 2px;
+            padding-right: 2px;
+            overflow-y: scroll;
+          }
+          
+          .location .location-search-results .location-search-results-result {
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            outline: inherit;
+            cursor: pointer;
+            color: black;
+            width: 100%;
+            text-align: left;
+          }
+
+          .location .location-search-results .location-search-results-result:hover {
+            background: #f2f2f2;
+          }
+
           .location .location-home-icon {
             background-image: url(/static/House-128.png);
             width: 40px;
@@ -445,6 +452,13 @@ export default class MapComponent extends React.Component {
             background-position: center;
             cursor: pointer;
             background-size: contain;
+          }
+
+          .location #query-input {
+            width: 200px;
+            font-size: 12px;
+            padding-left: 4px;
+            padding-right: 4px;
           }
 
           .marker-cluster {
@@ -571,32 +585,3 @@ export default class MapComponent extends React.Component {
 		);
 	}
 }
-
-const SwitchStyleButton = ({ onChange, value }) => {
-	return (
-		<div
-			className="switch-view"
-			onClick={() =>
-				onChange(
-					value === "mapbox://styles/mapbox/streets-v9"
-						? "mapbox://styles/mapbox/satellite-streets-v9"
-						: "mapbox://styles/mapbox/streets-v9",
-				)
-			}
-		>
-			{value === "mapbox://styles/mapbox/streets-v9" ? (
-				<img
-					src="/static/satelite.png"
-					className="thumbnailStyle"
-					alt="style"
-				/>
-			) : (
-				<img
-					src="/static/street.png"
-					className="thumbnailStyle"
-					alt="style"
-				/>
-			)}
-		</div>
-	);
-};

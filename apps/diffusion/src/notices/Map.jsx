@@ -17,7 +17,7 @@ class MapComponent extends React.Component {
 			this.props.notice.POP_COORDONNEES &&
 			this.props.notice.POP_COORDONNEES.lat
 		) {
-			const loadMapBox = async () => {
+			const loadMap = async () => {
 				const maplibre = require("maplibre-gl");
 
 				const map = new maplibre.Map({
@@ -39,7 +39,7 @@ class MapComponent extends React.Component {
 					if (event.error && event.error.status === 401) {
 						map.remove();
 						this.setState({ loaded: false }, () => {
-							loadMapBox();
+							loadMap();
 						});
 					}
 				});
@@ -65,7 +65,7 @@ class MapComponent extends React.Component {
 				this.setState({ loaded: true });
 			};
 
-			loadMapBox();
+			loadMap();
 		}
 	}
 	render() {

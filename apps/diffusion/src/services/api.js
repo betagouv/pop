@@ -55,10 +55,6 @@ class api {
 		});
 	}
 
-	async getMapboxToken() {
-		return (await this._get(`${getApiUrl()}/mapbox/token`)).token;
-	}
-
 	_get(url) {
 		return new Promise((resolve, reject) => {
 			fetch(url)
@@ -142,6 +138,12 @@ class api {
 					resolve(resp);
 				})
 				.catch((e) => reject(e));
+		});
+	}
+
+	async searchPlaces(query) {
+		return this._get(`${getApiUrl()}/addresses/search?q=${query}`, {
+			method: "GET",
 		});
 	}
 }

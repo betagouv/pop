@@ -103,10 +103,10 @@ app.use(
 	swaggerUi.setup(swaggerDocument),
 );
 
-app.use("/mapbox", require("./controllers/mapbox"));
-
 // Maintenance
 app.use("/maintenance", require("./controllers/maintenance"));
+
+app.use("/addresses", require("./controllers/addresses"));
 
 app.use(Sentry.Handlers.errorHandler());
 

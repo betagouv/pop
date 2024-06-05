@@ -1,47 +1,28 @@
-import { configureScope } from "@sentry/browser";
 import React, { Component } from "react";
+import { throttle, isEmpty } from "lodash";
 import api from "../../../services/api";
 
 class Location extends Component {
-	state = { loaded: false };
+	state = {
+		loaded: false,
+		query: "",
+		searchResults: [],
+	};
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.ready && !this.props.ready) {
-			this.load(nextProps.map);
-		}
+	async searchPlaces(query) {
+		const data = await api.searchPlaces(query);
+		console.log(data);
+		this.setState({ searchResults: data.features });
 	}
 
-	async load(map) {
-		const geocoder = new MapboxGeocoder({
-			accessToken: await api.getMapboxToken(),
-			countries: "fr", // limit results to France,
-			placeholder: "Entrez une ville ou une adresse",
-		});
-		document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+	async onChangeQuery(query) {
+		this.setState({ query });
+		throttle(async () => this.searchPlaces(query), 500)();
+	}
 
-		const handleGeoCoderResult = (ev) => {
-			this.props.setPosition(ev.result.center);
-		};
-		geocoder.on("result", handleGeoCoderResult);
-
-		const handleGeoCoderClear = () => {
-			this.props.setPosition(null);
-		};
-		geocoder.on("clear", handleGeoCoderClear);
-
-		const handleGeoCoderError = (event) => {
-			if (event.error && event.error.statusCode === 401) {
-				this.setState({ loaded: false }, () => {
-					geocoder.off("result", handleGeoCoderResult);
-					geocoder.off("clear", handleGeoCoderClear);
-					geocoder.off("error", handleGeoCoderError);
-					this.props.onReload();
-				});
-			}
-		};
-		geocoder.on("error", handleGeoCoderError);
-
-		this.setState({ loaded: true });
+	async goToPlace(place) {
+		this.props.setPosition(place.geometry.coordinates);
+		this.setState({ query: "", searchResults: [] });
 	}
 
 	render() {
@@ -49,7 +30,17 @@ class Location extends Component {
 			this.props.ready && (
 				<div>
 					<div className="location">
-						<div id="geocoder" style={{ display: "flex" }} />
+						<div>
+							<input
+								id="query-input"
+								type="text"
+								value={this.state.query}
+								onChange={(ev) =>
+									this.onChangeQuery(ev.target.value)
+								}
+								placeholder="Entrez une ville ou une adresse"
+							/>
+						</div>
 						<div
 							className="location-target-icon"
 							onClick={() => {
@@ -73,6 +64,25 @@ class Location extends Component {
 								);
 							}}
 						/>
+
+						{!isEmpty(this.state.query) && (
+							<div className="location-search-results">
+								{this.state.searchResults.map((result) => (
+									<button
+										type="button"
+										key={result.id}
+										className="location-search-results-result"
+										onClick={() => this.goToPlace(result)}
+									>
+										{result.properties.label}
+									</button>
+								))}
+
+								{this.state.searchResults.length === 0 && (
+									<div>Pas de résultats</div>
+								)}
+							</div>
+						)}
 					</div>
 				</div>
 			)

@@ -28,7 +28,6 @@
 	},
 	"homepage": "https://github.com/betagouv/pop",
 	"dependencies": {
-		"@mapbox/mapbox-sdk": "^0.15.3",
 		"@opensearch-project/opensearch": "^2.5.0",
 		"@sentry/node": "^6.11.0",
 		"@sindresorhus/slugify": "^1.1.0",
