@@ -1,7 +1,6 @@
 import Head from "next/head";
 import React from "react";
 import Loader from "../../../components/Loader";
-import api from "../../../services/api";
 import Drawer from "./Drawer";
 import Location from "./Location";
 import Marker from "./Marker";
@@ -11,7 +10,6 @@ export default class MapComponent extends React.Component {
 	state = {
 		loaded: false,
 		popup: null,
-		style: "mapbox://styles/mapbox/streets-v9",
 		drawerContent: null,
 		selectedMarker: null,
 		selectedPositionMarker: null,
@@ -28,11 +26,14 @@ export default class MapComponent extends React.Component {
 	}
 
 	async loadMapBox() {
-		const mapboxgl = require("mapbox-gl");
-		mapboxgl.accessToken = await api.getMapboxToken();
-		this.map = new mapboxgl.Map({
+		const maplibre = require("maplibre-gl");
+		this.map = new maplibre.Map({
 			container: "map",
-			style: this.state.style,
+			style: "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
+			attributionControl: {
+				compact: true,
+				customAttribution: ["OpenStreetMap", "Etalab", "MapLibre"],
+			},
 		});
 
 		const handleMapLoad = () => {
@@ -54,7 +55,7 @@ export default class MapComponent extends React.Component {
 		};
 		this.map.on("click", handleMapClick);
 
-		this.map.addControl(new mapboxgl.NavigationControl());
+		this.map.addControl(new maplibre.NavigationControl());
 
 		const handleMapError = (event) => {
 			if (event.error && event.error.status === 401) {
@@ -170,7 +171,7 @@ export default class MapComponent extends React.Component {
 		if (props.aggregations) {
 			const geojson = toGeoJson(props.aggregations.france.buckets);
 
-			geojson.features.forEach((feature) => {
+			for (const feature of geojson.features) {
 				const key = feature.properties.id;
 				// If the marker is a single notice, always the same, then we do not rebuild it
 				if (
@@ -188,11 +189,14 @@ export default class MapComponent extends React.Component {
 					feature,
 					zoom >= 15 ? "#fc5e2a" : "#007bff",
 				);
+
 				marker.onClick((marker) => {
 					let zoom = this.map.getZoom();
+
 					if (marker._type === "cluster") {
 						zoom++;
 					}
+
 					const center = marker.getCoordinates();
 					this.map.flyTo({ center, zoom: Math.min(zoom, 24) });
 					if (zoom >= 15 || marker._type === "notice") {
@@ -201,7 +205,7 @@ export default class MapComponent extends React.Component {
 				});
 
 				newMarkers[key] = marker;
-			});
+			}
 		}
 
 		for (const key in removeList) {

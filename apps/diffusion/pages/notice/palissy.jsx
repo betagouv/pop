@@ -630,12 +630,20 @@ export default class extends React.Component {
 											"BIBL",
 											"SOUR",
 											"PHOTO",
+											"PRECISION_JURIDIQUE",
 										]}
 									/>
 									<Field
 										title={mapping.palissy.STAT.label}
 										content={notice.STAT}
 										join={" ; "}
+									/>
+									<Field
+										title={
+											mapping.palissy.PRECISION_JURIDIQUE
+												.label
+										}
+										content={notice.PRECISION_JURIDIQUE}
 									/>
 									<Field
 										title={mapping.palissy.PROT.label}

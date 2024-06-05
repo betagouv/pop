@@ -8,11 +8,41 @@ const { capture } = require("../sentry.js");
 const x2js = new X2JS();
 const router = express.Router();
 const moment = require("moment-timezone");
+const { logger } = require("../logger");
 const timeZone = "Europe/Paris";
 
 function escapeRegExp(string) {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
+const THESAURUSES = [
+	// Joconde
+	"th305",
+	"th291",
+	"th294",
+	"th306",
+	"th284",
+	"th290",
+	"th304",
+	"th287",
+	"th295",
+	"th298",
+
+	//Merimée & Palissy
+	"th369",
+
+	// Mérimée
+	"th368",
+	"th371",
+	"th366",
+	"th375",
+	"th380",
+	"th384",
+	"th383",
+	"th378",
+
+	// Palissy
+	"th361",
+];
 
 router.get(
 	"/search",
@@ -95,7 +125,7 @@ router.get(
 					isAltLabel: element.altLabel,
 				};
 			});
-			res.send({ statusCode: 200, body: JSON.stringify(body) });
+			res.status(200).json(body);
 		});
 	},
 );
@@ -271,42 +301,13 @@ router.post("/refreshThesaurus", async (req, res) => {
       #swagger.path = '/thesaurus/refreshThesaurus'
       #swagger.description = "Rafraichissement des thesaurus"
   */
-	const thesauruses = [
-		// Joconde
-		"th305",
-		"th291",
-		"th294",
-		"th306",
-		"th284",
-		"th290",
-		"th304",
-		"th287",
-		"th295",
-		"th298",
-
-		//Merimée & Palissy
-		"th369",
-
-		// Mérimée
-		"th368",
-		"th371",
-		"th366",
-		"th375",
-		"th380",
-		"th384",
-		"th383",
-		"th378",
-
-		// Palissy
-		"th361",
-	];
 
 	res.status(200).send({ success: true, msg: "Thesaurus refreshing" });
 
 	const operations = [];
 
-	for (let i = 0; i < thesauruses.length; i++) {
-		const thesoId = thesauruses[i];
+	for (let i = 0; i < THESAURUSES.length; i++) {
+		const thesoId = THESAURUSES[i];
 		console.log(`Fetching thesaurus ${thesoId}`);
 		try {
 			const thesoRes = await axios.get(
@@ -335,7 +336,7 @@ router.post("/refreshThesaurus", async (req, res) => {
 	}
 
 	await Thesaurus.bulkWrite(
-		thesauruses.map((thesoId) => ({
+		THESAURUSES.map((thesoId) => ({
 			deleteMany: {
 				filter: { idThesaurus: thesoId },
 			},
@@ -502,7 +503,7 @@ router.get("/getAllThesaurusById", (req, res) => {
 				isAltLabel: element.altLabel,
 			};
 		});
-		res.status(202).send(results);
+		res.status(200).json(results);
 	});
 });
 
@@ -637,5 +638,37 @@ return new Promise((resolve, reject) => {
   );
 });*/
 }
+
+router.get(
+	"/last-update",
+	passport.authenticate("jwt", { session: false }),
+	async (_req, res) => {
+		try {
+			const someThesaurus = await Thesaurus.find({
+				idThesaurus: { $exists: true },
+				updatedAt: { $exists: true },
+			})
+				.limit(1)
+				.exec();
+
+			if (someThesaurus.length <= 0) {
+				return res.status(404).json({ message: "Pas de thesaurus" });
+			}
+
+			logger.debug({ thesaurus: someThesaurus[0] });
+
+			return res
+				.status(200)
+				.json({ lastUpdate: someThesaurus[0].updatedAt });
+		} catch (err) {
+			logger.error(err);
+			capture(err);
+			return res.status(500).json({
+				message:
+					"impossible de récupéré la dernière date de mise à jour",
+			});
+		}
+	},
+);
 
 module.exports = router;

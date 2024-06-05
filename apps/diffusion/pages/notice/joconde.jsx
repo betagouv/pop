@@ -30,6 +30,7 @@ import EAnalytics from "../../src/services/eurelian";
 import mapping from "../../src/services/mapping";
 import throw404 from "../../src/services/throw404";
 import { getNoticeInfo, trackDownload } from "../../src/utils";
+import MapComponent from "../../src/notices/Map";
 
 const pushLinkedNotices = (a, d, base) => {
 	for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -177,6 +178,10 @@ export default class extends React.Component {
 	}
 
 	linkRepr(value) {
+		if (value == null || (Array.isArray(value) && value.length <= 0)) {
+			return "";
+		}
+
 		// Caractères possible dans la valeur renseignée
 		const regexPattern = new RegExp(/[(),;:]/g);
 		const arrayContent = [];
@@ -203,12 +208,14 @@ export default class extends React.Component {
 
 	// Display a list of links to authors
 	links(value, name) {
+		console.log(value, name);
 		//const author = this.props.notice.AUTR;
 		if (!value) {
 			return null;
 		}
-		if (!value || !Array.isArray(value) || !value.length) {
-			if (String(value) === value && !String(value) === "") {
+
+		if (!Array.isArray(value)) {
+			if (typeof value === "string" && value !== "") {
 				const url = `/search/list?${queryString.stringify({
 					[name]: JSON.stringify([value]),
 				})}`;
@@ -220,6 +227,11 @@ export default class extends React.Component {
 			}
 			return null;
 		}
+
+		if (value.length === 0) {
+			return null;
+		}
+
 		const links = [];
 		value.forEach((val) => {
 			if (val.indexOf("#") > -1) {
@@ -323,7 +335,9 @@ export default class extends React.Component {
 		if (typeof title === "string" && title.indexOf("#") > -1) {
 			title_component = title
 				.split("#")
-				.map((element) => <p>{element}</p>);
+				.map((element) => (
+					<p key={element.replaceAll(" ", "-")}>{element}</p>
+				));
 		}
 
 		//construction du pdf au format joconde
@@ -876,6 +890,8 @@ export default class extends React.Component {
 									notice={notice}
 									museo={this.props.museo}
 								/>
+
+								<MapComponent notice={notice} />
 							</Col>
 						</Row>
 					</Container>

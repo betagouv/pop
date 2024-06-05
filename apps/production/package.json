@@ -11,6 +11,7 @@
 		"buffer": "^6.0.3",
 		"connected-react-router": "^6.9.1",
 		"csv-parse": "^4.16.0",
+		"date-fns": "^3.6.0",
 		"deep-diff": "^1.0.2",
 		"dotenv": "^10.0.0",
 		"es6-promise": "^4.2.8",
@@ -20,6 +21,7 @@
 		"isomorphic-fetch": "^3.0.0",
 		"jszip": "^3.10.1",
 		"leaflet": "^1.7.1",
+		"maplibre-gl": "^4.3.2",
 		"os-browserify": "^0.3.0",
 		"path-browserify": "^1.0.1",
 		"process": "^0.11.10",
@@ -33,6 +35,7 @@
 		"react-dom": "^17.0.2",
 		"react-dropzone": "^11.3.4",
 		"react-leaflet": "^3.2.1",
+		"react-map-gl": "^7.1.7",
 		"react-redux": "^7.2.4",
 		"react-redux-toastr": "^7.6.5",
 		"react-router": "5.3.4",
@@ -47,7 +50,8 @@
 		"stream-browserify": "^3.0.0",
 		"validator": "^13.6.0",
 		"webfontloader": "^1.6.28",
-		"xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
+		"xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz",
+		"zustand": "^4.5.2"
 	},
 	"engines": {
 		"node": "14.17"
@@ -79,7 +83,6 @@
 		"@babel/runtime-corejs3": "^7.15.3",
 		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/react": "^12.0.0",
-		"@types/history": "^5.0.0",
 		"babel-loader": "^8.2.2",
 		"babel-preset-minify": "^0.5.1",
 		"core-js": "^3.16.2",

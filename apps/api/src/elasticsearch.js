@@ -1,7 +1,8 @@
+const { logger } = require("./logger");
 const { ovh, ...config } = require("./config.js");
 
 if (ovh) {
-	console.log("Using opensearch");
+	logger.info("Using opensearch");
 	const { Client } = require("@opensearch-project/opensearch");
 
 	let client = null;
@@ -32,7 +33,7 @@ if (ovh) {
 
 	module.exports = getElasticInstance;
 } else {
-	console.log("Using elasticsearch");
+	logger.info("Using elasticsearch");
 	const AWS = require("aws-sdk");
 	let client = null;
 	const getElasticInstance = () => {

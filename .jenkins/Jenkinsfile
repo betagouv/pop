@@ -1,0 +1,95 @@
+import org.pop.PopHelpers
+
+pipeline {
+    parameters {
+        string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
+    }
+        
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    environment {
+        TAG = "${params.TAG}"
+        DOMAIN = "atnum"
+        APP_VERSION = "0.1.0"
+    }
+
+    agent {
+        label "dev"
+    }
+
+    stages {
+        stage("Lint") {
+            agent {
+                docker { 
+                    image "${env.MAIN_DOCKER_REGISTRY_HOST}/docker.io/library/node:20"
+                    label "dev"
+                }
+            }
+
+            steps {
+                script {
+                    sh "npx --cache .npm @biomejs/biome@1.7.2 lint ./ --diagnostic-level=error"
+                }
+            }
+        }
+
+        stage("TestBuildTagRollout") {
+            matrix {
+                axes {
+                    axis {
+                        name "APP"
+                        values "edition", "diffusion", "api"
+                    }
+                }
+
+                stages {
+                    // stage("Test") {
+                    //     agent {
+                    //         docker { 
+                    //             image "${env.main_docker_registry_host}/docker.io/library/node:14"
+                    //             label "${params.AGENT}"
+                    //         }
+                    //     }
+                    //     steps {
+                    //         script {
+                    //             dir("apps/${APP == "edition" ? "production" : "${APP}"}/") {
+                    //                 sh "npm ci --cache .npm"
+                    //                 sh "DB_ENDPOINT=${MONGO_URI} npm run test"
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+                    stage("build & tag") {
+                        when {
+                            branch "staging"
+                        }
+                        steps {
+                            script {
+                                buildPushImage "${APP}"
+                            }
+                        }
+                    }
+
+                    stage("rollout") {
+                        when {
+                            branch "staging"
+                        }
+                        steps {
+                            build job: 'atnum/dev/pop/pop-rollout',
+                            parameters: [
+                                string(name: 'ENVIRONNEMENT', value: 'dev'),
+                                string(name: 'NAMESPACE', value: 'pop'), 
+                                string(name: 'CONTEXTE', value: 'default'),
+                                string(name: 'MICROSERVICE', value: "${APP}"),
+                            ],
+                            wait: false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

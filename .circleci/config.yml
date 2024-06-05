@@ -83,7 +83,47 @@ commands:
           command: |
             cd apps/<< parameters.app >>
             echo "API_URL=<< parameters.api_url >>" > .env
-            if [ "<< parameters.app >>" = "diffusion" ]; then echo "SERVER_API_URL=<< parameters.server_api_url >>" > .env; fi
+            if [ "<< parameters.app >>" = "diffusion" ]; then echo "SERVER_API_URL=<< parameters.server_api_url >>" >> .env; fi
+            echo "POP_URL=<< parameters.pop_url >>" >> .env
+            echo "BUCKET_URL=<< parameters.bucket_url >>" >> .env
+            echo "NODE_ENV=<< parameters.env >>" >> .env
+            echo "SENTRY_DSN=<< parameters.sentry >>" >> .env
+            echo "EURELIAN=<< parameters.eurelian >>" >> .env
+            npm run build
+      - persist_to_workspace:
+          root: ~/repo/apps/<< parameters.app >>
+          paths:
+            - << parameters.path >>
+  build_diffusion:
+    parameters:
+      app:
+        type: string
+      api_url:
+        type: string
+      server:
+        type: string
+      pop_url:
+        type: string
+      bucket_url:
+        type: string
+      env:
+        type: string
+      sentry:
+        type: string
+      path:
+        type: string
+      eurelian:
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: << parameters.app >>
+      - run:
+          name: build
+          command: |
+            cd apps/<< parameters.app >>
+            echo "API_URL=<< parameters.api_url >>" > .env
+            echo "SERVER_API_URL=<< parameters.server >>" >> .env
             echo "POP_URL=<< parameters.pop_url >>" >> .env
             echo "BUCKET_URL=<< parameters.bucket_url >>" >> .env
             echo "NODE_ENV=<< parameters.env >>" >> .env
@@ -252,12 +292,12 @@ jobs:
   build_diffusion_test:
     executor: docker_node
     steps:
-      - build:
+      - build_diffusion:
           app: diffusion
           api_url: https://pop-api-test.eu-west-3.elasticbeanstalk.com
-          server_api_url: https://pop-api-test.eu-west-3.elasticbeanstalk.com
+          server: https://pop-api-test.eu-west-3.elasticbeanstalk.com
           pop_url: https://pop-consultation-test.eu-west-3.elasticbeanstalk.com/
-          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
+          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test
           env: test
           sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
           path: ./
@@ -265,25 +305,25 @@ jobs:
   build_diffusion_staging:
     executor: docker_node
     steps:
-      - build:
+      - build_diffusion:
           app: diffusion
           api_url: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
-          server_api_url: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
+          server: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
           pop_url: https://pop-consultation-staging.eu-west-3.elasticbeanstalk.com/
-          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
-          env: staging
+          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
+          env: production
           sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
           path: ./
           eurelian: uvvw.pop.culture.gouv.fr
   build_diffusion_prod:
     executor: docker_node
     steps:
-      - build:
+      - build_diffusion:
            app: diffusion
            api_url: https://api.pop.culture.gouv.fr
-           server_api_url: https://pop-api.eu-west-3.elasticbeanstalk.com
+           server: http://pop-api.eu-west-3.elasticbeanstalk.com
            pop_url: https://pop.culture.gouv.fr/
-           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
+           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque
            env: production
            sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
            path: ./
@@ -385,6 +425,9 @@ jobs:
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
             echo "$PROXY_DIFFUSION" | base64 -di > .platform/nginx/nginx.conf
+            echo "NGINX CONF ---"
+            cat .platform/nginx/nginx.conf
+            echo "NGINX CONF END ---"
             sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
             eb deploy pop-consultation-staging
   deploy_production_staging:
@@ -477,28 +520,24 @@ workflows:
       - build_production_test:
           requires:
             - test_production
-            - prepare_all
           filters:
             branches:
               only: develop
       - build_production_staging:
           requires:
             - test_production
-            - prepare_all
           filters:
             branches:
               only: staging
       - build_production_prod:
           requires:
             - test_production
-            - prepare_all
           filters:
             branches:
               only: master
       - deploy_api_test:
           requires:
             - test_api
-            - prepare_all
           filters:
             branches:
               only: develop
@@ -518,7 +557,6 @@ workflows:
       - deploy_api_staging:
           requires:
             - test_api
-            - prepare_all
           filters:
             branches:
               only: staging
@@ -539,7 +577,6 @@ workflows:
       - deploy_api_prod:
           requires:
             - test_api
-            - prepare_all
           filters:
             branches:
               only: master

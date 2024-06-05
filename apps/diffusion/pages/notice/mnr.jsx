@@ -244,7 +244,7 @@ export default class extends React.Component {
 		if (typeof title === "string" && title.indexOf("#") > -1) {
 			title_component = title
 				.split("#")
-				.map((element) => <p>{element}</p>);
+				.map((element) => <p key={element}>{element}</p>);
 		}
 
 		return (

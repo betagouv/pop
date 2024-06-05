@@ -8,7 +8,7 @@ import {
 	DropdownToggle,
 } from "reactstrap";
 import Avatar from "../../components/Avatar";
-import authAction from "./../../redux/auth/actions";
+import authAction from "../../redux/auth/actions";
 const { logout } = authAction;
 import { history } from "../../redux/store";
 import "./user.css";
@@ -69,7 +69,7 @@ class User extends Component {
 						className="dropdown-item"
 						onClick={() => history.push("/thesaurus")}
 					>
-						Mettre à jour le thesaurus
+						Thesaurus
 					</DropdownItem>
 					<DropdownItem
 						className="dropdown-item"

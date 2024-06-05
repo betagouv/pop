@@ -430,7 +430,8 @@ router.put(
 			// Update IMPORT ID (this code is unclear…)
 			if (notice.POP_IMPORT.length) {
 				const id = notice.POP_IMPORT[0];
-				notice.POP_IMPORT = undefined;
+				// biome-ignore lint/performance/noDelete: Need to really remove the POP_IMPORT field
+				delete notice.POP_IMPORT;
 				notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
 			}
 

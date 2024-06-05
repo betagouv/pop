@@ -462,9 +462,11 @@ class api {
 			`/thesaurus/search?id=${thesaurusId}&value=${str}`,
 		);
 	}
+
 	// Validate with thesaurus
 	validateWithThesaurus(thesaurusId, str) {
-		return request.getJSON(
+		return request.fetchJSON(
+			"GET",
 			`/thesaurus/validate?id=${thesaurusId}&value=${str}`,
 		);
 	}
@@ -497,6 +499,16 @@ class api {
 
 	getMaintenance() {
 		return request.getJSON("/maintenance");
+	}
+
+	getNoticesByRef(collection, refs) {
+		return request.fetchJSON("POST", `/notices/batch/${collection}`, {
+			refs,
+		});
+	}
+
+	getLastThesaurusUpdate() {
+		return request.fetchJSON("GET", "/thesaurus/last-update");
 	}
 }
 

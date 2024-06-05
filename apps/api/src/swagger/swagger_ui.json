@@ -131,7 +131,6 @@
 			"get": {
 				"tags": ["Auth"],
 				"description": "Informations utilisateur",
-				"parameters": [],
 				"responses": {
 					"200": {
 						"description": "OK"
@@ -222,7 +221,6 @@
 		"/logout": {
 			"get": {
 				"description": "",
-				"parameters": [],
 				"responses": {
 					"200": {
 						"description": "OK"
@@ -336,6 +334,70 @@
 			}
 		},
 		"/{ref}": {
+			"put": {
+				"tags": ["Autor"],
+				"description": "Utilisé pour la mise à jour du document",
+				"parameters": [
+					{
+						"name": "ref",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"notice": {
+									"example": "any"
+								},
+								"updateMode": {
+									"example": "any"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Autor"],
+				"description": "Utilisé pour la suppression du document",
+				"parameters": [
+					{
+						"name": "ref",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			},
 			"get": {
 				"tags": ["Mnr"],
 				"description": "Retourne les informations de la notice Mnr",
@@ -742,7 +804,6 @@
 			"get": {
 				"tags": ["Import"],
 				"description": "Retourne le nombre total d\\'import",
-				"parameters": [],
 				"responses": {
 					"200": {
 						"description": "Récupération des informations avec succés",
@@ -1428,7 +1489,6 @@
 			"delete": {
 				"tags": ["Museo"],
 				"description": "Suppression de la notice Museo",
-				"parameters": [],
 				"responses": {
 					"200": {
 						"description": "OK"
@@ -1451,9 +1511,8 @@
 				"description": "Retourne les informations en fonction du paramètre (Identify, ListSets, ListMetadataFormats, ListIdentifiers, ListRecords, GetRecord)",
 				"parameters": [
 					{
-						"name": "verb",
+						"name": "metadataPrefix",
 						"in": "query",
-						"description": "Paramètre suivant description",
 						"type": "string"
 					},
 					{
@@ -1467,8 +1526,19 @@
 						"type": "string"
 					},
 					{
+						"name": "set",
+						"in": "query",
+						"type": "string"
+					},
+					{
 						"name": "identifier",
 						"in": "query",
+						"type": "string"
+					},
+					{
+						"name": "verb",
+						"in": "query",
+						"description": "Paramètre suivant description",
 						"type": "string"
 					}
 				],
@@ -1668,7 +1738,6 @@
 			"get": {
 				"tags": ["Producteurs"],
 				"description": "Retourne la liste des Producteurs",
-				"parameters": [],
 				"responses": {
 					"200": {
 						"description": "Récupération des informations avec succés",
@@ -1859,7 +1928,6 @@
 			"get": {
 				"tags": ["Groups"],
 				"description": "Récupère la liste des groupes",
-				"parameters": [],
 				"responses": {
 					"200": {
 						"description": "OK"
@@ -2205,6 +2273,17 @@
 				}
 			}
 		},
+		"/thesaurus/refreshThesaurus": {
+			"post": {
+				"tags": ["Thesaurus"],
+				"description": "Rafraichissement des thesaurus",
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
 		"/thesaurus/autocompleteByIdthesaurusAndValue": {
 			"get": {
 				"tags": ["Thesaurus"],
@@ -2214,11 +2293,40 @@
 						"name": "id",
 						"in": "query",
 						"type": "string"
+					},
+					{
+						"name": "value",
+						"in": "query",
+						"type": "string"
 					}
 				],
 				"responses": {
 					"200": {
 						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/thesaurus/getAllThesaurusById": {
+			"get": {
+				"tags": ["Thesaurus"],
+				"description": "Retourne la liste des Thesaurus en fonction de l'identifiant",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "query",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"202": {
+						"description": "Accepted"
 					}
 				}
 			}
@@ -2251,7 +2359,6 @@
 			"get": {
 				"tags": ["Users"],
 				"description": "Récupère la liste des utilisateurs",
-				"parameters": [],
 				"responses": {
 					"200": {
 						"description": "OK"
@@ -2370,7 +2477,6 @@
 			"delete": {
 				"tags": ["Users"],
 				"description": "Suppression d\\'un utilisateur",
-				"parameters": [],
 				"responses": {
 					"200": {
 						"description": "OK"

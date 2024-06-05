@@ -1,4 +1,15 @@
 const nodemailer = require("nodemailer");
+const { logger } = require("./logger");
+
+const transporter = nodemailer.createTransport({
+	host: process.env.SMTP_HOST,
+	port: process.env.SMTP_PORT,
+	secure: process.env.SMTP_PORT === 465 || process.env.SMTP_PORT === 587, // true for 465, false for other ports
+	auth: {
+		user: process.env.SMTP_LOGIN,
+		pass: process.env.SMTP_PASSWORD,
+	},
+});
 
 class Mailer {
 	async send(subject, to, html, ccMail = true) {
@@ -7,16 +18,6 @@ class Mailer {
 			// Generate test SMTP service account from ethereal.email
 			// Only needed if you don't have a real mail account for testing
 			// create reusable transporter object using the default SMTP transport
-
-			const transporter = nodemailer.createTransport({
-				host: process.env.SMTP_HOST,
-				port: process.env.SMTP_PORT,
-				secure: process.env.SMTP_PORT === 465, // true for 465, false for other ports
-				auth: {
-					user: process.env.SMTP_LOGIN,
-					pass: process.env.SMTP_PASSWORD,
-				},
-			});
 
 			// setup email data with unicode symbols
 			const mailOptions = {
@@ -34,7 +35,7 @@ class Mailer {
 			// send mail with defined transport object
 			return transporter.sendMail(mailOptions);
 		} catch (error) {
-			return console.log(error);
+			return logger.error(error);
 		}
 	}
 }

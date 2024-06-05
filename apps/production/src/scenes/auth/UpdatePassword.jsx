@@ -52,14 +52,15 @@ class UpdatePassword extends Component {
 		if (this.props.hasResetPassword) {
 			return <div />;
 		}
-		// Si le message contient des retours à la ligne
-		const message =
-			message_info_password.indexOf("\n") > -1
-				? message_info_password.split("\n").map((el) => {
-						return <p>{el}</p>;
-					})
-				: message_info_password;
-		return <div className="informations-mdp">{message}</div>;
+
+		return (
+			<div
+				style={{ whiteSpace: "pre-wrap" }}
+				className="informations-mdp"
+			>
+				{message_info_password}
+			</div>
+		);
 	}
 
 	lastConnectedAt() {
@@ -79,14 +80,11 @@ class UpdatePassword extends Component {
 	}
 
 	renderError() {
-		const error =
-			this.state.error !== ""
-				? this.state.error.split("\n").map((el) => {
-						return <p>{el}</p>;
-					})
-				: this.state.error;
-
-		return <div className="renderError">{error}</div>;
+		return (
+			<div style={{ whiteSpace: "pre-wrap" }} className="renderError">
+				{this.state.error}
+			</div>
+		);
 	}
 
 	render() {

@@ -39,6 +39,7 @@ class PublicRoutes extends React.Component {
 							}}
 						/>
 						<Header />
+
 						<Switch>
 							<RestrictedRoute
 								exact
@@ -137,12 +138,14 @@ const RestrictedRoute = ({
 						/>
 					);
 				}
+
 				return (
 					<div>
 						<Component {...props} />
 					</div>
 				);
 			}
+
 			return (
 				<Redirect
 					to={{
@@ -155,10 +158,10 @@ const RestrictedRoute = ({
 	/>
 );
 
-const mapstatetoprops = ({ Auth }) => {
+const mapStateToProps = ({ Auth }) => {
 	return {
 		isLoggedIn: !!Auth.user,
 		hasResetPassword: !!Auth.user && Auth.user.hasResetPassword,
 	};
 };
-export default connect(mapstatetoprops, {})(PublicRoutes);
+export default connect(mapStateToProps, {})(PublicRoutes);

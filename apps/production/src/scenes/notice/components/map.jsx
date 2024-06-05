@@ -1,107 +1,175 @@
-import L from "leaflet";
 import React from "react";
-import { MapContainer, Marker, Polygon, Popup, TileLayer } from "react-leaflet";
+import MapContainer, {
+	Marker,
+	Popup,
+	AttributionControl,
+} from "react-map-gl/maplibre";
+import "maplibre-gl/dist/maplibre-gl.css";
 
 import "./map.css";
 
-export default class MapComponent extends React.Component {
-	renderPoint() {
-		if (this.props.notice.POP_CONTIENT_GEOLOCALISATION !== "oui") {
-			return <div />;
-		}
-		return (
-			<Marker
-				position={[
-					this.props.notice.POP_COORDONNEES.lat,
-					this.props.notice.POP_COORDONNEES.lon,
-				]}
-				icon={L.icon({
-					iconUrl: require("../../../assets/marker-icon.png"),
-					iconSize: [38, 55],
-					iconAnchor: [22, 54],
-					popupAnchor: [-3, -76],
-					shadowUrl: require("../../../assets/marker-shadow.png"),
-					shadowSize: [68, 55],
-					shadowAnchor: [22, 54],
-				})}
+import { create } from "zustand";
+import { devtools } from "zustand/middleware";
+
+const useMapStore = create(
+	devtools((set) => ({
+		popupOpen: false,
+
+		togglePopup: (value) =>
+			set(
+				(state) => {
+					console.log("togglePopup", state.popupOpen);
+					return { popupOpen: value };
+				},
+				false,
+				"togglePopup",
+			),
+	})),
+);
+
+function NoticePopup({ lat, lon, TICO, DENO }) {
+	const { popupOpen: open, togglePopup } = useMapStore();
+
+	if (!open) return <></>;
+
+	return (
+		<Popup
+			latitude={lat}
+			longitude={lon}
+			anchor="top"
+			closeOnClick={false}
+			closeOnMove={false}
+			onClose={() => {
+				togglePopup(false);
+			}}
+		>
+			<span>
+				{TICO}
+				<br />
+				{DENO}
+			</span>
+		</Popup>
+	);
+}
+
+function NoticeMarker({ lat, lon }) {
+	const togglePopup = useMapStore((state) => state.togglePopup);
+
+	return (
+		<Marker
+			latitude={lat}
+			longitude={lon}
+			onClick={() => {
+				console.log("on click");
+				togglePopup(true);
+			}}
+			anchor="bottom"
+			color="#4782c5"
+		/>
+	);
+}
+
+function NoticeGeometry({ notice }) {
+	return (
+		<Polygon
+			color="purple"
+			positions={notice.POP_COORDINATES_POLYGON.coordinates}
+		/>
+	);
+}
+
+function isLatitude(lat) {
+	return Number.isFinite(lat) && lat !== 0 && Math.abs(lat) <= 90;
+}
+
+function isLongitude(lng) {
+	return Number.isFinite(lng) && lng !== 0 && Math.abs(lng) <= 180;
+}
+
+function isGeometry(notice) {
+	if (
+		!notice.POP_COORDINATES_POLYGON ||
+		!notice.POP_COORDINATES_POLYGON.coordinates ||
+		!notice.POP_COORDINATES_POLYGON.coordinates.length
+	) {
+		return false;
+	}
+	return true;
+}
+
+function getCenter(notice) {
+	if (notice.POP_CONTIENT_GEOLOCALISATION !== "oui") {
+		return null;
+	}
+
+	const { POP_COORDONNEES, POP_COORDINATES_POLYGON } = notice;
+	if (
+		POP_COORDONNEES &&
+		isLatitude(POP_COORDONNEES.lat) &&
+		isLongitude(POP_COORDONNEES.lon)
+	) {
+		return [notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon];
+	}
+
+	if (POP_COORDINATES_POLYGON?.coordinates?.length) {
+		return POP_COORDINATES_POLYGON.coordinates[0];
+	}
+
+	return null;
+}
+
+function NoticeMapContent({ notice }) {
+	const center = getCenter(notice);
+
+	if (center == null) {
+		return <div>Carte non disponible</div>;
+	}
+
+	return (
+		<div className="leaflet-parent-container">
+			<MapContainer
+				mapStyle="https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
+				initialViewState={{
+					latitude: center[0],
+					longitude: center[1],
+					zoom: 15,
+					scrollZoom: false,
+					dragPan: false,
+					dragRotate: false,
+					keyboard: false,
+					touchPitch: false,
+					doubleClickZoom: false,
+				}}
+				attributionControl={false}
 			>
-				<Popup>
-					<span>
-						{this.props.notice.TICO}
-						<br />
-						{this.props.notice.DENO}
-					</span>
-				</Popup>
-			</Marker>
-		);
-	}
-
-	renderGeometry() {
-		if (
-			!this.props.notice.POP_COORDINATES_POLYGON ||
-			!this.props.notice.POP_COORDINATES_POLYGON.coordinates ||
-			!this.props.notice.POP_COORDINATES_POLYGON.coordinates.length
-		) {
-			return <div />;
-		}
-
-		return (
-			<Polygon
-				color="purple"
-				positions={
-					this.props.notice.POP_COORDINATES_POLYGON.coordinates
-				}
-			/>
-		);
-	}
-
-	isLatitude(lat) {
-		return Number.isFinite(lat) && lat !== 0 && Math.abs(lat) <= 90;
-	}
-
-	isLongitude(lng) {
-		return Number.isFinite(lng) && lng !== 0 && Math.abs(lng) <= 180;
-	}
-
-	render() {
-		let center = null;
-
-		if (!this.props.notice) {
-			return <div />;
-		}
-
-		const { POP_COORDONNEES, POP_COORDINATES_POLYGON } = this.props.notice;
-
-		if (
-			POP_COORDONNEES &&
-			this.isLatitude(POP_COORDONNEES.lat) &&
-			this.isLongitude(POP_COORDONNEES.lon)
-		) {
-			center = [
-				this.props.notice.POP_COORDONNEES.lat,
-				this.props.notice.POP_COORDONNEES.lon,
-			];
-		}
-
-		if (POP_COORDINATES_POLYGON?.coordinates?.length) {
-			center = POP_COORDINATES_POLYGON.coordinates[0];
-		}
-
-		if (!center) {
-			return <div>Carte non disponible</div>;
-		}
-
-		return (
-			<div className="leaflet-parent-container">
-				<MapContainer center={center} zoom={15} scrollWheelZoom={false}>
-					<TileLayer
-						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				{isGeometry(notice) ? (
+					<NoticeGeometry notice={notice} />
+				) : (
+					<NoticeMarker
+						lat={notice.POP_COORDONNEES.lat}
+						lon={notice.POP_COORDONNEES.lon}
 					/>
-					{this.renderGeometry()}
-					{this.renderPoint()}
-				</MapContainer>
-			</div>
-		);
+				)}
+
+				<NoticePopup
+					lat={notice.POP_COORDONNEES.lat}
+					lon={notice.POP_COORDONNEES.lon}
+					TICO={notice.TICO}
+					DENO={notice.DENO}
+				/>
+
+				<AttributionControl
+					customAttribution={["OpenStreetMap", "Etalab", "MapLibre"]}
+				/>
+			</MapContainer>
+		</div>
+	);
+}
+
+export default function NoticeMap({ notice }) {
+	if (!notice) {
+		return <></>;
 	}
+
+	return <NoticeMapContent notice={notice} />;
 }

@@ -185,7 +185,8 @@ router.put(
 			// Update IMPORT ID (this code is unclear…)
 			if (notice.POP_IMPORT.length) {
 				const id = notice.POP_IMPORT[0];
-				notice.POP_IMPORT = undefined;
+				// biome-ignore lint/performance/noDelete: Need to really remove the POP_IMPORT field
+				delete notice.POP_IMPORT;
 				notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
 			}
 
@@ -317,11 +318,19 @@ router.get("/:ref", async (req, res) => {
      }
  */
 	const ref = req.params.ref;
-	const notice = await Joconde.findOne({ REF: ref });
-	if (notice) {
-		return res.status(200).send(notice);
+	try {
+		const notice = await Joconde.findOne({ REF: ref });
+		if (notice) {
+			return res.status(200).send(notice);
+		}
+		return res
+			.status(404)
+			.send({ success: false, msg: "Notice introuvable." });
+	} catch (error) {
+		return res
+			.status(404)
+			.send({ success: false, msg: "Notice introuvable." });
 	}
-	return res.status(404).send({ success: false, msg: "Notice introuvable." });
 });
 
 // Delete one notice.

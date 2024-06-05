@@ -13,6 +13,8 @@ const MAPBOX_EXPIRATION_DELAY = process.env.MAPBOX_EXPIRATION_DELAY;
 const ID_PROD_APP = process.env.ID_PROD_APP;
 const ovh = process.env.OVH === "true";
 const bucketUrl = process.env.BUCKET_URL;
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 module.exports = {
 	mongoUrl,

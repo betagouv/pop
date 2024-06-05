@@ -5,11 +5,15 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const compression = require("compression");
 const Sentry = require("@sentry/node");
+
 const config = require("./config");
+const logger = require("./logger");
 require("./passport")(passport);
 require("./mongo");
 
 const app = express();
+
+app.use(logger);
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger/swagger_ui.json");
@@ -28,12 +32,16 @@ app.use(bodyParser.text({ type: "application/x-ndjson" }));
 app.use(helmet());
 
 // Enable CORS - Cross Origin Resource Sharing
-app.use(
-	cors({
-		origin: config.ovh ? [/cloud\.culture\.fr$/, /gouv\.fr$/] : true,
-		credentials: true,
-	}),
-);
+if (process.env.NODE_ENV === "development") {
+	app.use(cors({ origin: true, credentials: true }));
+} else {
+	app.use(
+		cors({
+			origin: config.ovh ? [/cloud\.culture\.fr$/, /gouv\.fr$/] : true,
+			credentials: true,
+		}),
+	);
+}
 
 app.use(passport.initialize());
 
@@ -59,6 +67,7 @@ app.use("/enluminures", require("./controllers/enluminures"));
 app.use("/museo", require("./controllers/museo"));
 app.use("/autor", require("./controllers/autor"));
 app.use("/deleteHistorique", require("./controllers/deleteHistorique"));
+app.use("/notices", require("./controllers/notices"));
 
 // Gallery
 app.use("/gallery", require("./controllers/gallery"));

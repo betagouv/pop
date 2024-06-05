@@ -4,6 +4,8 @@ import React from "react";
 import { styles } from "../pdf/pdfNotice/styles";
 
 export function renderFieldRepr(title, str) {
+	if (str == null || str === "") return <></>;
+
 	return (
 		<div id={title} className="field">
 			<h3>{title}</h3>

@@ -31,7 +31,13 @@ function pickFirst(data) {
 }
 
 function addLineBreak(value) {
-	return value ? value.split("#").map((element) => <p>{element}</p>) : null;
+	return value
+		? value
+				.split("#")
+				.map((element) => (
+					<p key={element.replace(" ", "-")}>{element}</p>
+				))
+		: null;
 }
 
 function transformS3URI(path) {
@@ -584,7 +590,7 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs }) => {
 	const LogoComponent = (
 		<img src="/static/musee-de-france.png" className="producteur" />
 	);
-	const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
+	const author = joinData([data.AUTR, data.ECOL]);
 	let peri = pickFirst([data.MILL, data.PERI, data.EPOQ]);
 	if (peri === author) {
 		peri = "";

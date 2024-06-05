@@ -1,10 +1,21 @@
+const assert = require("assert");
 const express = require("express");
 const router = express.Router();
-const { esUrl, esPort, ID_PROD_APP, ovh } = require("../config.js");
+const axios = require("axios");
+const {
+	esUrl,
+	esPort,
+	ID_PROD_APP,
+	ovh,
+	esUsername,
+	esPassword,
+} = require("../config.js");
 const http = require("http");
 const aws4 = require("aws4");
 const { ndjsonToJsonText } = require("ndjson-to-json-text");
+const _ = require("lodash");
 const es = require("../elasticsearch.js")();
+const { logger } = require("../logger");
 
 /**
  *
@@ -13,7 +24,11 @@ const es = require("../elasticsearch.js")();
  */
 function getResultInElasticSearch6CompatibilityMode(results) {
 	const responsesWithTotalModified = results.responses.map((resultItem) => {
-		resultItem.hits.total = resultItem.hits.total.value;
+		if (resultItem.hits == null) {
+			resultItem.hits = {};
+		}
+
+		resultItem.hits.total = resultItem.hits?.total.value ?? 0;
 		return resultItem;
 	});
 	return {
@@ -21,11 +36,53 @@ function getResultInElasticSearch6CompatibilityMode(results) {
 	};
 }
 
+/**
+ * Remove `should_not` from the object, will check recursively.
+ */
+function removeShouldNot(obj) {
+	const { should_not, ...rest } = obj;
+
+	for (const [key, value] of Object.entries(rest)) {
+		console.log(key, value);
+		if (_.isArray(value) && typeof value !== "string") {
+			for (const [index, item] of Object.entries(value)) {
+				if (_.isPlainObject(item)) {
+					rest[key][index] = removeShouldNot(item);
+				}
+			}
+		} else if (_.isPlainObject(value)) {
+			rest[key] = removeShouldNot(value);
+		}
+	}
+
+	return rest;
+}
+
+/**
+ * Will insert some fields to make the query we get compatible with OpenSearch.
+ * */
+function insertOpenSearchFields(body) {
+	assert(Array.isArray(body), "body must be an array");
+
+	return body.map((item) => {
+		// If the item is a query
+		if ("query" in item) {
+			return {
+				track_total_hits: true, // this get the total number of hits. By default on OpenSearch it's set to 10000
+				...removeShouldNot(item),
+			};
+		}
+
+		return removeShouldNot(item);
+	});
+}
+
 // Scroll API (required for full exports)
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html#search-request-scroll
-router.post("/scroll", (req, res) => {
+router.post("/scroll", async (req, res) => {
 	let path;
 	let body;
+
 	// First request with a full query, next with a scroll_id.
 	if (req.query.scroll_id) {
 		path = "/_search/scroll";
@@ -38,55 +95,78 @@ router.post("/scroll", (req, res) => {
 			.status(400)
 			.send({ success: false, msg: "Impossible de parser la requête." });
 	}
-	const headers = { "Content-Type": "Application/json" };
-	const opts = { host: esUrl, path, body, method: "POST", headers };
+
+	const opts = {
+		host: esUrl,
+		path,
+		body,
+		method: ovh ? "GET" : "POST",
+		headers: { "content-type": "application/json" },
+	};
+
 	if (esPort !== "80") {
-		opts.port = esPort;
+		opts.host += `:${esPort}`;
 	}
-	aws4.sign(opts);
-	http.request(opts, (res1) => {
-		res1.pipe(res);
-	}).end(opts.body || "");
+
+	if (ovh) {
+		const auth = Buffer.from(`${esUsername}:${esPassword}`).toString(
+			"base64",
+		);
+		opts.headers.Authorization = `Basic ${auth}`;
+		logger.debug({ esUrl: opts.host, path: opts.path });
+		try {
+			const { data } = await axios.request({
+				url: opts.host + opts.path,
+				method: opts.method,
+				headers: opts.headers,
+				data: opts.body,
+			});
+			return res.status(200).send(data);
+		} catch (err) {
+			logger.error(err);
+			return res.status(500).send({ success: false, msg: err.message });
+		}
+	} else {
+		aws4.sign(opts);
+		logger.debug({ opts });
+
+		http.request(opts, (res1) => {
+			res1.pipe(res);
+		}).end(opts.body || "");
+	}
 });
 
 router.use("/:indices/_msearch", async (req, res) => {
 	if (ovh) {
-		const opts = {
-			host: esUrl,
-			path: req.originalUrl.replace("/search", ""),
-			body: req.body,
-		};
-
-		// Ajout du port sur l'environnement de dev
-		if (esPort !== "80") {
-			opts.port = esPort;
-		}
-
-		console.log("opts", opts);
-		console.log("paths", req.params.indices);
+		let body = req.body;
 
 		// Si la requête ne provient pas de l'application production
 		if (
 			!req.headers.application ||
 			req.headers.application !== ID_PROD_APP
 		) {
-			opts.body = addFilterFieldsBody(req.body);
+			body = addFilterFieldsBody(req.body);
 		}
 
 		// Convert NdJson to json object
-		const jsonText = ndjsonToJsonText(opts.body);
-		const jsonQueryBody = JSON.parse(jsonText);
+		const jsonText = ndjsonToJsonText(body);
+		let jsonQueryBody = JSON.parse(jsonText);
+
+		// hacky insert of needed fields for OpenSearch compatibility
+		jsonQueryBody = insertOpenSearchFields(jsonQueryBody);
+		logger.debug(jsonQueryBody);
 
 		try {
 			const results = await es.msearch({
 				body: jsonQueryBody,
 				index: req.params.indices.split(","),
 			});
+
 			return res.json(
 				getResultInElasticSearch6CompatibilityMode(results.body),
 			);
 		} catch (e) {
-			console.error(e);
+			logger.error(e);
 			return res
 				.status(500)
 				.send({ success: false, msg: "Erreur lors de la requête." });

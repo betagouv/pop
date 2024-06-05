@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"dev": "nodemon ./src/index.js",
-		"start": "node ./src/swagger/swagger.js && node ./src/index.js  ",
+		"start": "node ./src/swagger/swagger.js && node ./src/index.js",
 		"deploy:prod": "npm install && eb deploy pop-api --profil POP",
 		"deploy:staging": "npm install && eb deploy pop-api-staging --profil POP",
 		"test": "jest -i",
@@ -25,9 +25,6 @@
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/betagouv/pop/issues"
-	},
-	"prettier": {
-		"printWidth": 100
 	},
 	"homepage": "https://github.com/betagouv/pop",
 	"dependencies": {
@@ -64,12 +61,14 @@
 		"nodemailer": "^6.6.3",
 		"passport": "^0.6.0",
 		"passport-jwt": "^4.0.0",
+		"pino-http": "^9.0.0",
 		"proj4": "^2.7.5",
 		"swagger-autogen": "^2.23.1",
 		"swagger-ui-express": "^4.1.6",
 		"uuid": "^8.3.2",
 		"validator": "^13.6.0",
 		"x2js": "^3.4.4",
+		"xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
 		"xml": "^1.0.1",
 		"xml2js": "^0.5.0"
 	},

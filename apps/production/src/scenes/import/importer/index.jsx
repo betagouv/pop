@@ -35,15 +35,10 @@ class Importer extends Component {
 			loadOpenTheso: false,
 			countRecupNotice: 0,
 			countControleNotice: 0,
-			localStorage: null,
 			saveDisabled: false,
 			collection: props.collection,
 			avertissement: [],
 		};
-	}
-
-	componentDidMount() {
-		this.setState({ localStorage: window.localStorage });
 	}
 
 	async onFilesDropped(errors, files, encoding) {
@@ -95,27 +90,20 @@ class Importer extends Component {
 				return;
 			}
 
+			const importedRefs = importedNotices.map((n) => n.REF);
+			const collection = importedNotices[0]._type;
+
 			// Get existing notices.
 			existingNotices = {};
-			for (let i = 0; i < importedNotices.length; i++) {
-				this.setState({
-					countRecupNotice: this.state.countRecupNotice + 1,
-				});
-				this.setState({
-					loading: true,
-					loadingMessage: `Récupération des notices existantes ... ${this.state.countRecupNotice} / ${importedNotices.length} notices`,
-					progress: Math.floor(
-						(i * 100) / (importedNotices.length * 2),
-					),
-				});
-				const collection = importedNotices[i]._type;
-				const notice = await api.getNotice(
-					collection,
-					importedNotices[i].REF,
-				);
-				if (notice) {
-					existingNotices[importedNotices[i].REF] = notice;
-				}
+
+			this.setState({
+				loading: true,
+				loadingMessage: "Récupération des notices existantes ...",
+				progress: 0,
+			});
+			const notices = await api.getNoticesByRef(collection, importedRefs);
+			for (const notice of notices) {
+				existingNotices[notice.REF] = notice;
 			}
 
 			// Compute diff.
@@ -123,6 +111,12 @@ class Importer extends Component {
 				loadingMessage: "Calcul des différences....",
 				countRecupNotice: 0,
 			});
+
+			const listPrefix = await api.getPrefixesFromProducteurs([
+				"autor",
+				"palissy",
+				"merimee",
+			]);
 
 			// START DIFF
 			for (let i = 0; i < importedNotices.length; i++) {
@@ -156,17 +150,20 @@ class Importer extends Component {
 				} else {
 					importedNotices[i]._status = "created";
 				}
-				await importedNotices[i].validate({
-					...existingNotice,
-					...importedNotices[i],
-				});
+				importedNotices[i].validate(
+					{
+						...existingNotice,
+						...importedNotices[i],
+					},
+					listPrefix,
+				);
 			}
 
 			this.setState({ loadOpenTheso: true });
 
-			Object.keys(localStorage).forEach((key) => {
+			Object.keys(sessionStorage).forEach((key) => {
 				if (key.indexOf("opentheso-") === 0) {
-					localStorage.removeItem(key);
+					sessionStorage.removeItem(key);
 				}
 			});
 
@@ -655,8 +652,8 @@ class Importer extends Component {
 					Avertissements sur l'import
 				</p>
 				<ul>
-					{this.state.avertissement.map((element) => {
-						return <li>{element}</li>;
+					{this.state.avertissement.map((element, idx) => {
+						return <li key={`avertissement-${idx}`}>{element}</li>;
 					})}
 				</ul>
 			</div>
