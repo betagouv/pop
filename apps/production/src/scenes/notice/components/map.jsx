@@ -3,6 +3,8 @@ import MapContainer, {
 	Marker,
 	Popup,
 	AttributionControl,
+	Source,
+	Layer,
 } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 
@@ -71,10 +73,30 @@ function NoticeMarker({ lat, lon }) {
 
 function NoticeGeometry({ notice }) {
 	return (
-		<Polygon
-			color="purple"
-			positions={notice.POP_COORDINATES_POLYGON.coordinates}
-		/>
+		<Source
+			id="notice-polygon"
+			type="geojson"
+			data={{
+				type: "Feature",
+				geometry: {
+					type: "Polygon",
+					coordinates: [
+						notice.POP_COORDINATES_POLYGON.coordinates.map(
+							(coord) => [coord[1], coord[0]],
+						),
+					],
+				},
+			}}
+		>
+			<Layer
+				id="data"
+				source="notice-polygon"
+				type="fill"
+				paint={{
+					"fill-color": "purple",
+				}}
+			/>
+		</Source>
 	);
 }
 
@@ -132,13 +154,7 @@ function NoticeMapContent({ notice }) {
 				initialViewState={{
 					latitude: center[0],
 					longitude: center[1],
-					zoom: 15,
-					scrollZoom: false,
-					dragPan: false,
-					dragRotate: false,
-					keyboard: false,
-					touchPitch: false,
-					doubleClickZoom: false,
+					zoom: 13,
 				}}
 				attributionControl={false}
 			>
