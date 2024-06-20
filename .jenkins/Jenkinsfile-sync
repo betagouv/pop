@@ -17,7 +17,7 @@ pipeline {
         DB_NAME = "pop"
 
         DOMAIN = "${ENVIR == "dev" ? "atnum" : "atnum-release"}"
-        REGISTRY_DOMAIN = "${ENVIR == "dev" ? "atnum" : "atnum-release-publisher"}"
+        REGISTRY_DOMAIN = "${ENVIR == "dev" ? "atnum" : "atnum-release-puller"}"
         DB_CREDS = credentials("pop-${ENVIR}-db-app-creds")
         ES_CREDS = credentials("pop-${ENVIR}-search-app-creds")
         IMAGE = "${MAIN_DOCKER_REGISTRY_HOST}/${DOMAIN}/${APPLICATION}:${TAG}"
