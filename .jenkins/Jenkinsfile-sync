@@ -4,8 +4,6 @@ pipeline {
         string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
         string(name: 'CHUNKS', defaultValue: '200', description: 'Chunks')
         choice(name: 'COLLECTIONS_FILTERS', choices: ["all", "joconde","memoire","merimee","mnr","palissy","import","museo","autor","enluminures"], description: 'Collections MongoDB à synchroniser')
-        string(name: "DB_HOST", defaultValue: "mongodb-ce36dae4-o9fc946a2.database.cloud.ovh.net", description: "url de la database")
-        string(name: "ES_HOST", defaultValue: "https://opensearch-ce60a47d-o9fc946a2.database.cloud.ovh.net", description: "url du open search")
     }
         
     options {
@@ -18,6 +16,8 @@ pipeline {
 
         DOMAIN = "${ENVIR == "dev" ? "atnum" : "atnum-release"}"
         REGISTRY_DOMAIN = "${ENVIR == "dev" ? "atnum" : "atnum-release-publisher"}"
+        DB_HOST = credentials("pop-${ENVIR}-mongo-url")
+        ES_HOST = credentials("pop-${ENVIR}-opensearch-host")
         DB_CREDS = credentials("pop-${ENVIR}-db-app-creds")
         ES_CREDS = credentials("pop-${ENVIR}-search-app-creds")
         IMAGE = "${MAIN_DOCKER_REGISTRY_HOST}/${DOMAIN}/${APPLICATION}:${TAG}"
