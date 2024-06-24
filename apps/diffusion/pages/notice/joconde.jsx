@@ -208,7 +208,6 @@ export default class extends React.Component {
 
 	// Display a list of links to authors
 	links(value, name) {
-		console.log(value, name);
 		//const author = this.props.notice.AUTR;
 		if (!value) {
 			return null;
@@ -336,7 +335,7 @@ export default class extends React.Component {
 			title_component = title
 				.split("#")
 				.map((element) => (
-					<p key={element.replaceAll(" ", "-")}>{element}</p>
+					<p key={element.replace(/ /g, "-")}>{element}</p>
 				));
 		}
 
