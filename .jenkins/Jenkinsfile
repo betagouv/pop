@@ -1,5 +1,3 @@
-import org.pop.PopHelpers
-
 pipeline {
     parameters {
         string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
