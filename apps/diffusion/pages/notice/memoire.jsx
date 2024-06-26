@@ -159,7 +159,7 @@ export default class extends React.Component {
 		return (
 			serie && (
 				<React.Fragment>
-					{/* biome-ignore lint/correctness/useJsxKeyInIterable: i'm sure */}
+					{/* biome-ignore lint/correctness: i'm sure */}
 					{links.reduce((a, b) => [a, " ; ", b])}
 				</React.Fragment>
 			)
@@ -198,7 +198,7 @@ export default class extends React.Component {
 		return (
 			fieldValues && (
 				<React.Fragment>
-					{/* biome-ignore lint/correctness/useJsxKeyInIterable: <explanation> */}
+					{/* biome-ignore lint/correctness: <explanation> */}
 					{links.reduce((a, b) => [a, " ; ", b])}
 				</React.Fragment>
 			)

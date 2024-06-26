@@ -195,7 +195,7 @@ class Import extends React.Component {
 						)}
 					/>
 					{this.state.routes.map((route) => {
-						// biome-ignore lint/correctness/useJsxKeyInIterable: Good
+						// biome-ignore lint/correctness: Good
 						return route;
 					})}
 				</Switch>
