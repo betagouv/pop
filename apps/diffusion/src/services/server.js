@@ -3,6 +3,7 @@ const { parse } = require("url");
 const next = require("next");
 const { join } = require("path");
 const Sentry = require("@sentry/node");
+const logger = require("pino-http")({ level: "info" });
 
 // Load environment variables from ".env" file.
 require("dotenv").config();
@@ -22,6 +23,7 @@ app.prepare().then(() => {
 	createServer(async (req, res) => {
 		const parsedUrl = parse(req.url, true);
 		const { pathname, query } = parsedUrl;
+		logger(req, res);
 
 		const rootStaticFiles = [
 			"/robots.txt",
