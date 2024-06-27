@@ -10,7 +10,7 @@ const { signinByToken } = Actions;
 import { connect } from "react-redux";
 
 const message_maintenance =
-	"Une opération de maintenance est en cours. Elle peut fausser l’affichage des résultats. Nous vous présentons nos excuses pour la gêne occasionnée. L’opération devrait être finie le 12 avril 2022";
+	"Une opération de maintenance est en cours. Nous vous présentons nos excuses pour la gêne occasionnée. L’opération devrait être finie le 1er Juillet 2024";
 
 class App extends React.Component {
 	state = {
@@ -70,7 +70,7 @@ class App extends React.Component {
 			<Alert
 				style={{ marginBottom: "0px", textAlign: "center" }}
 				color="warning"
-				isOpen={this.state.maintenance === "TRUE"}
+				isOpen={this.state.maintenance === "true"}
 			>
 				{message_maintenance}
 			</Alert>
@@ -85,7 +85,9 @@ class App extends React.Component {
 			<div>
 				{this.renderAlert()}
 				{this.renderAlertMaintenance()}
-				<PublicRoutes history={history} />
+				{this.state.maintenance !== "true" && (
+					<PublicRoutes history={history} />
+				)}
 			</div>
 		);
 	}
