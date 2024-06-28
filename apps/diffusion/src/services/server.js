@@ -42,23 +42,12 @@ app.prepare().then(() => {
 			isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
 		}
 
-		const isNotSecure =
-			req.headers["x-forwarded-proto"] &&
-			req.headers["x-forwarded-proto"] === "http";
 		const splitUrl = req.url.split("/");
 
 		// Vérifie si un élément est vide dans l'url
 		if (splitUrl.indexOf("", 1) > -1) {
 			res.statusCode = 404;
 			await handle(req, res, parsedUrl);
-		} else if (
-			isProdDomain &&
-			(isNotSecure || !req.headers.host.match(/^www/))
-		) {
-			res.writeHead(301, {
-				Location: `https://www.pop.culture.gouv.fr${req.url}`,
-			});
-			res.end();
 		} else if (pathname.match(sitemapRegex)) {
 			const url = req.url.replace("/sitemap/", "");
 			res.writeHead(301, {
