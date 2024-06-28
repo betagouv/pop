@@ -5,7 +5,7 @@ const config = {};
 const { publicRuntimeConfig } = getConfig();
 if (publicRuntimeConfig.ovh === "true") {
 	config.api_url = publicRuntimeConfig.apiUrl;
-	config.server_api_url = publicRuntimeConfig.apiUrl;
+	config.server_api_url = publicRuntimeConfig.serverApiUrl;
 	config.bucket_url = `${publicRuntimeConfig.bucketUrl}/`;
 	config.pop_url = publicRuntimeConfig.popUrl;
 	config.eurelian = publicRuntimeConfig.eurelian;

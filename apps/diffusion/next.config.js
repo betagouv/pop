@@ -38,6 +38,7 @@ if (process.env.OVH === "true") {
 	module.exports = {
 		publicRuntimeConfig: {
 			apiUrl: process.env.API_URL,
+			serverApiUrl: process.env.SERVER_API_URL,
 			bucketUrl: process.env.BUCKET_URL,
 			popUrl: process.env.POP_URL,
 			eurelian: process.env.EURELIAN,
