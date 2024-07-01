@@ -916,6 +916,10 @@ const mappings = {
 					type: "keyword",
 					ignore_above: 256,
 				},
+				sort: {
+					type: "keyword",
+					normalizer: "sort_normalizer",
+				},
 			},
 		},
 		REFIM: {
