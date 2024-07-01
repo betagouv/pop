@@ -57,6 +57,12 @@ const settings = {
 				filter: ["french_elision", "icu_folding"],
 			},
 		},
+		normalizer: {
+			sort_normalizer: {
+				type: "custom",
+				filter: ["trim", "lowercase", "asciifolding"],
+			},
+		},
 	},
 };
 
