@@ -62,7 +62,7 @@ pipeline {
 
                     stage("build & tag") {
                         when {
-                            branch "dev"
+                            branch "master"
                         }
                         steps {
                             script {
@@ -73,7 +73,7 @@ pipeline {
 
                     stage("rollout") {
                         when {
-                            branch "dev"
+                            branch "master"
                         }
                         steps {
                             build job: 'atnum/dev/pop/pop-rollout',
