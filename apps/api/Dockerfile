@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as the base image
-FROM node:15.14-alpine as base
+FROM node:18.20.3-alpine as base
 
 # Set the working directory in the container
 WORKDIR /app
@@ -11,13 +11,15 @@ COPY . .
 
 # Install project dependencies
 RUN npm ci --omit=dev
+RUN node ./src/swagger/swagger.js
 
-FROM base 
+FROM gcr.io/distroless/nodejs18-debian11
 
 COPY --from=build /app /app
+WORKDIR /app
 
 # Set the command to start server
-CMD ["npm", "start"]
+CMD ["./src/index.js"]
 
 # Expose port
 EXPOSE 3000
