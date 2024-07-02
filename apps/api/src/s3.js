@@ -3,15 +3,11 @@
 const AWS = require("aws-sdk");
 const config = require("./config");
 
-if (config.ovh) {
-	AWS.config.update({
-		accessKeyId: config.accessKeyId,
-		secretAccessKey: config.secretAccessKey,
-	});
+AWS.config.update({
+	accessKeyId: config.accessKeyId,
+	secretAccessKey: config.secretAccessKey,
+});
 
-	module.exports = new AWS.S3({
-		endpoint: config.bucketUrl,
-	});
-} else {
-	module.exports = new AWS.S3();
-}
+module.exports = new AWS.S3({
+	endpoint: config.bucketUrl,
+});

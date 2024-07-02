@@ -8,8 +8,6 @@ const esUsername = process.env.ES_USERNAME;
 const esPassword = process.env.ES_PASSWORD;
 const s3Bucket = process.env.BUCKET || "pop-phototeque-dev";
 const secret = process.env.SECRET || "not-so-secret";
-const MAPBOX_API_SECRET_TOKEN = process.env.MAPBOX_API_SECRET_TOKEN;
-const MAPBOX_EXPIRATION_DELAY = process.env.MAPBOX_EXPIRATION_DELAY;
 const ID_PROD_APP = process.env.ID_PROD_APP;
 const ovh = process.env.OVH === "true";
 const bucketUrl = process.env.BUCKET_URL;
@@ -17,18 +15,18 @@ const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 module.exports = {
-	mongoUrl,
-	esUrl,
-	esPort,
-	s3Bucket,
-	PORT,
-	secret,
-	MAPBOX_API_SECRET_TOKEN,
-	MAPBOX_EXPIRATION_DELAY,
-	ID_PROD_APP,
-	ovh,
-	esUsername,
-	esPassword,
-	dbName,
-	bucketUrl,
+  mongoUrl,
+  esUrl,
+  esPort,
+  s3Bucket,
+  PORT,
+  secret,
+  ID_PROD_APP,
+  ovh,
+  esUsername,
+  esPassword,
+  dbName,
+  bucketUrl,
+  accessKeyId,
+  secretAccessKey,
 };

@@ -8,7 +8,7 @@ const upload = multer({ dest: "uploads/" });
 const { capture } = require("../sentry.js");
 const Import = require("../models/import");
 const { uploadFile, fileAuthorized } = require("./utils");
-const logger = require("../logger");
+const { logger } = require("../logger");
 
 // Get one notice by ref.
 router.put(
@@ -94,8 +94,7 @@ router.post(
 			}
 			return res.send({ success: true, msg: "OK", doc });
 		} catch (e) {
-			logger.error("ERREUR IMPORT", JSON.stringify(e));
-			capture(JSON.stringify(e));
+			capture(e);
 			return res
 				.status(403)
 				.send({ success: false, msg: JSON.stringify(e) });
