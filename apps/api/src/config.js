@@ -1,5 +1,6 @@
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
+const logLevel = process.env.LOG_LEVEL;
 const mongoUrl = process.env.DB_ENDPOINT || "mongodb://127.0.0.1/pop";
 const dbName = process.env.DB_NAME || "pop";
 const esUrl = process.env.ES_ENDPOINT || "http://127.0.0.1:9200";
@@ -15,6 +16,7 @@ const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 module.exports = {
+  logLevel,
   mongoUrl,
   esUrl,
   esPort,
