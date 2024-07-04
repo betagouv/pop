@@ -12,11 +12,11 @@ const { logger } = require("../logger");
 
 // Get one notice by ref.
 router.put(
-	"/:id",
-	passport.authenticate("jwt", { session: false }),
-	upload.any(),
-	async (req, res) => {
-		/* 	
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    /* 	
      #swagger.tags = ['Import']
      #swagger.path = '/import/{id}'
      #swagger.description = 'Retourne les informations sur un import' 
@@ -37,74 +37,76 @@ router.put(
      }
   */
 
-		try {
-			const id = String(req.params.id);
-			const body = JSON.parse(req.body.import);
-			await Import.updateOne(
-				{ _id: mongoose.Types.ObjectId(`${id}`) },
-				{ $set: body },
-			);
+    try {
+      const id = String(req.params.id);
+      const body = JSON.parse(req.body.import);
+      await Import.updateOne(
+        { _id: mongoose.Types.ObjectId(`${id}`) },
+        { $set: body },
+      );
 
-			for (let i = 0; i < req.files.length; i++) {
-				const f = req.files[i];
-				if (!fileAuthorized.includes(f.mimetype)) {
-					throw new Error("le type fichier n'est pas accepté");
-				}
-				const path = `import/${filenamify(id)}/${filenamify(
-					f.originalname,
-				)}`;
-				await uploadFile(path, f);
-			}
-			return res.send({ success: true, msg: "OK" });
-		} catch (e) {
-			capture(JSON.stringify(e));
-			return res
-				.status(403)
-				.send({ success: false, msg: JSON.stringify(e) });
-		}
-	},
+      for (let i = 0; i < req.files.length; i++) {
+        const f = req.files[i];
+        if (!fileAuthorized.includes(f.mimetype)) {
+          throw new Error("le type fichier n'est pas accepté");
+        }
+        const path = `import/${filenamify(id)}/${filenamify(
+          f.originalname,
+        )}`;
+        await uploadFile(path, f);
+        req.log.info("Fichier importé", { path });
+      }
+      return res.send({ success: true, msg: "OK" });
+    } catch (e) {
+      capture(JSON.stringify(e));
+      return res
+        .status(403)
+        .send({ success: false, msg: JSON.stringify(e) });
+    }
+  },
 );
 
 // Store import data (list of created, updated notices)
 router.post(
-	"/",
-	passport.authenticate("jwt", { session: false }),
-	upload.any(),
-	async (req, res) => {
-		/* 	
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    /* 	
     #swagger.tags = ['Import']
     #swagger.path = '/import'
     #swagger.description = "Création d'un import"
   */
-		try {
-			const body = JSON.parse(req.body.import);
-			const obj = new Import(body);
-			const doc = await obj.save();
+    try {
+      const body = JSON.parse(req.body.import);
+      const obj = new Import(body);
+      const doc = await obj.save();
 
-			for (let i = 0; i < req.files.length; i++) {
-				const id = String(doc._id);
-				const f = req.files[i];
-				if (!fileAuthorized.includes(f.mimetype)) {
-					throw new Error("le type fichier n'est pas accepté");
-				}
-				const path = `import/${filenamify(id)}/${filenamify(
-					f.originalname,
-				)}`;
-				await uploadFile(path, f);
-			}
-			return res.send({ success: true, msg: "OK", doc });
-		} catch (e) {
-			capture(e);
-			return res
-				.status(403)
-				.send({ success: false, msg: JSON.stringify(e) });
-		}
-	},
+      for (let i = 0; i < req.files.length; i++) {
+        const id = String(doc._id);
+        const f = req.files[i];
+        if (!fileAuthorized.includes(f.mimetype)) {
+          throw new Error("le type fichier n'est pas accepté");
+        }
+        const path = `import/${filenamify(id)}/${filenamify(
+          f.originalname,
+        )}`;
+        await uploadFile(path, f);
+        req.log.info("Fichier importé", { path });
+      }
+      return res.send({ success: true, msg: "OK", doc });
+    } catch (e) {
+      capture(e);
+      return res
+        .status(403)
+        .send({ success: false, msg: JSON.stringify(e) });
+    }
+  },
 );
 
 // Get imports count (for diffusion stats).
 router.get("/count", async (req, res) => {
-	/* 	
+  /* 	
     #swagger.tags = ['Import']
     #swagger.path = '/import/count'
     #swagger.description = "Retourne le nombre total d\'import"
@@ -120,14 +122,14 @@ router.get("/count", async (req, res) => {
       } 
     }
   */
-	let imports = null;
-	try {
-		imports = await Import.collection.estimatedDocumentCount({});
-		res.status(200).send(String(imports));
-	} catch (e) {
-		capture(JSON.stringify(e));
-		return res.status(500).send({ sucess: false, error: e });
-	}
+  let imports = null;
+  try {
+    imports = await Import.collection.estimatedDocumentCount({});
+    res.status(200).send(String(imports));
+  } catch (e) {
+    capture(JSON.stringify(e));
+    return res.status(500).send({ sucess: false, error: e });
+  }
 });
 
 module.exports = router;
