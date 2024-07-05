@@ -1,9 +1,10 @@
 const Sentry = require("@sentry/node");
+const config = require("./config");
 const { logger } = require("./logger");
 
-if (process.env.SENTRY_DSN) {
+if (config.sentryDSN) {
   Sentry.init({
-    dsn: process.env.SENTRY_DSN,
+    dsn: config.sentryDSN,
     environment: process.env.NODE_ENV,
     attachStacktrace: true,
   });

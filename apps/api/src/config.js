@@ -14,6 +14,7 @@ const ovh = process.env.OVH === "true";
 const bucketUrl = process.env.BUCKET_URL;
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+const sentryDSN = process.env.SENTRY_DSN;
 
 module.exports = {
   logLevel,
@@ -31,4 +32,5 @@ module.exports = {
   bucketUrl,
   accessKeyId,
   secretAccessKey,
+  sentryDSN,
 };
