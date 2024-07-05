@@ -13,13 +13,13 @@ COPY . .
 RUN npm ci --omit=dev
 RUN node ./src/swagger/swagger.js
 
-FROM gcr.io/distroless/nodejs18-debian11
+FROM base
 
 COPY --from=build /app /app
 WORKDIR /app
 
 # Set the command to start server
-CMD ["./src/index.js"]
+CMD ["node", "./src/index.js"]
 
 # Expose port
 EXPOSE 3000
