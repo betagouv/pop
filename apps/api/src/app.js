@@ -4,7 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const compression = require("compression");
-// const Sentry = require("@sentry/node");
+const Sentry = require("@sentry/node");
 
 const config = require("./config");
 const logger = require("./logger");
@@ -13,13 +13,13 @@ require("./mongo");
 
 const app = express();
 
-// if (config.sentryDSN) {
-//   Sentry.init({
-//     dsn: config.sentryDSN,
-//     environment: process.env.NODE_ENV,
-//     attachStacktrace: true,
-//   });
-// }
+if (config.sentryDSN) {
+  Sentry.init({
+    dsn: config.sentryDSN,
+    environment: process.env.NODE_ENV,
+    attachStacktrace: true,
+  });
+}
 
 app.use(logger);
 
@@ -116,6 +116,6 @@ app.use("/maintenance", require("./controllers/maintenance"));
 
 app.use("/addresses", require("./controllers/addresses"));
 
-// app.use(Sentry.Handlers.errorHandler());
+app.use(Sentry.Handlers.errorHandler());
 
 module.exports = app;
