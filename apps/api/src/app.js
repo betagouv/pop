@@ -13,6 +13,14 @@ require("./mongo");
 
 const app = express();
 
+if (config.sentryDSN) {
+  Sentry.init({
+    dsn: config.sentryDSN,
+    environment: process.env.NODE_ENV,
+    attachStacktrace: true,
+  });
+}
+
 app.use(logger);
 
 const swaggerUi = require("swagger-ui-express");
@@ -33,14 +41,14 @@ app.use(helmet());
 
 // Enable CORS - Cross Origin Resource Sharing
 if (process.env.NODE_ENV === "development") {
-	app.use(cors({ origin: true, credentials: true }));
+  app.use(cors({ origin: true, credentials: true }));
 } else {
-	app.use(
-		cors({
-			origin: config.ovh ? [/cloud\.culture\.fr$/, /gouv\.fr$/] : true,
-			credentials: true,
-		}),
-	);
+  app.use(
+    cors({
+      origin: config.ovh ? [/cloud\.culture\.fr$/, /gouv\.fr$/] : true,
+      credentials: true,
+    }),
+  );
 }
 
 app.use(passport.initialize());
@@ -48,7 +56,7 @@ app.use(passport.initialize());
 app.disable("x-powered-by");
 
 app.get("/", (_req, res) => {
-	res.send("POP API listening.");
+  res.send("POP API listening.");
 });
 
 app.use("/auth", require("./controllers/auth"));
@@ -88,19 +96,19 @@ app.use("/oai", require("./controllers/oai"));
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Swagger DOC
 app.use(
-	"/api-docs",
-	(req, res, next) => {
-		res.setHeader(
-			"Content-Security-Policy",
-			//   "default-src 'self'; font-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; style-src-attr 'self';  frame-src 'self';"
-			"default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' 'unsafe-inline';",
-		);
-		//swaggerDocument.host = req.get('host');
-		//req.swaggerDoc = swaggerDocument;
-		next();
-	},
-	swaggerUi.serve,
-	swaggerUi.setup(swaggerDocument),
+  "/api-docs",
+  (req, res, next) => {
+    res.setHeader(
+      "Content-Security-Policy",
+      //   "default-src 'self'; font-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; style-src-attr 'self';  frame-src 'self';"
+      "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' 'unsafe-inline';",
+    );
+    //swaggerDocument.host = req.get('host');
+    //req.swaggerDoc = swaggerDocument;
+    next();
+  },
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument),
 );
 
 // Maintenance
