@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const GroupSchema = new Schema({
-	LABEL: { type: String, required: true },
+	LABEL: { type: String, required: true, index: true },
 	PRODUCTEURS: { type: Array, required: true },
 });
 
