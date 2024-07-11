@@ -899,6 +899,17 @@ const Schema = new mongoose.Schema(
 				updateMode: String,
 			},
 		],
+		parisMuseeEntityUuid: {
+			type: String,
+			index: true,
+		},
+		crawledAt: {
+			type: Date,
+			documentation: {
+				description: "Date de moissonnage",
+				label: "Date de moissonneuse",
+			},
+		},
 	},
 	{ collection: "joconde" },
 );
