@@ -95,5 +95,7 @@ path,type,required,label,opendata,generated,description,thesaurus,label_mh,liste
 "WWW","Array","non","Lien site associé","","","Lien site associé. Doit être une URL valide.","","","",""
 "LVID","String","non","Lien Vidéo","","","Lien vidéo. Doit être une URL valide.","","","",""
 "HISTORIQUE","Array","non","","","","","","","",""
+"parisMuseeEntityUuid","String","non","","","","","","","",""
+"crawledAt","Date","non","Date de moissonnage","","","Date de moissonnage","","","",""
 "_id","ObjectID","non","","","","","","","",""
 "__v","Number","non","","","","","","","",""

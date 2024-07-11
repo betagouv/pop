@@ -31,6 +31,7 @@ import mapping from "../../src/services/mapping";
 import throw404 from "../../src/services/throw404";
 import { getNoticeInfo, trackDownload } from "../../src/utils";
 import MapComponent from "../../src/notices/Map";
+import dayjs from "dayjs";
 
 const pushLinkedNotices = (a, d, base) => {
 	for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -876,6 +877,17 @@ export default class extends React.Component {
 											separator="#"
 											upper={false}
 										/>
+										{notice.crawledAt != null && (
+											<Field
+												title={
+													mapping.joconde.crawledAt
+														.label
+												}
+												content={dayjs(notice.crawledAt)
+													.locale("fr")
+													.format("DD MMM YYYY")}
+											/>
+										)}
 									</div>
 
 									<ContactUs
