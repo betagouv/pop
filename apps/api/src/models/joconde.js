@@ -908,6 +908,7 @@ const Schema = new mongoose.Schema(
 			documentation: {
 				description: "Date de moissonnage",
 				label: "Date de moissonnage",
+				generated: true,
 			},
 		},
 	},

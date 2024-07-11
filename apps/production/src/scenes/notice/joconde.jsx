@@ -481,6 +481,7 @@ class Notice extends React.Component {
 									name="DMIS"
 									disabled={!this.state.editable}
 								/>
+								<CustomField name="crawledAt" disable />
 								<CustomField
 									name="LARC"
 									disabled={!this.state.editable}

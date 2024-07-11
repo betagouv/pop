@@ -3,6 +3,7 @@ import React from "react";
 import { WithContext as Tags } from "react-tag-input";
 import { UncontrolledTooltip } from "reactstrap";
 import { Field } from "redux-form";
+import dayjs from "dayjs";
 import api from "../../../services/api";
 import "./field.css";
 
@@ -276,6 +277,7 @@ export default class AbstractField extends React.Component {
 		} = this.props;
 
 		let Child = <div />;
+		console.log("type", rest, type);
 		if (type === "String" || type === "Number") {
 			if (name === "REFIMG") {
 				Child = (
@@ -306,8 +308,15 @@ export default class AbstractField extends React.Component {
 					{...rest}
 				/>
 			);
-		} else {
-			Child = <div />;
+		} else if (type === "Date") {
+			Child = (
+				<Field
+					key={`field-${name}`}
+					component={TextInput}
+					name={name}
+					{...rest}
+				/>
+			);
 		}
 
 		const title = label ? `${label} (${name})` : name;
