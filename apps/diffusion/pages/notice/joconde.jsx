@@ -32,6 +32,7 @@ import throw404 from "../../src/services/throw404";
 import { getNoticeInfo, trackDownload } from "../../src/utils";
 import MapComponent from "../../src/notices/Map";
 import dayjs from "dayjs";
+import "dayjs/locale/fr";
 
 const pushLinkedNotices = (a, d, base) => {
 	for (let i = 0; Array.isArray(d) && i < d.length; i++) {
