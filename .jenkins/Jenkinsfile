@@ -81,7 +81,7 @@ pipeline {
                             parameters: [
                                 string(name: 'ENVIR', value: 'dev'),
                                 string(name: 'CONTEXTE', value: 'default'),
-                                string(name: 'MICROSERVICE', value: APP),
+                                string(name: 'MICROSERVICE', value: "pop-${APP}"),
                                 string(name: 'IMAGE_TAG', value: "latest")
                             ],
                             wait: false
