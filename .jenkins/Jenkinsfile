@@ -79,10 +79,9 @@ pipeline {
                             build job: 'atnum/dev/pop/pop-rollout',
 
                             parameters: [
-                                string(name: 'ENVIRONNEMENT', value: 'dev'),
-                                string(name: 'NAMESPACE', value: 'pop'), 
+                                string(name: 'ENVIR', value: 'dev'),
                                 string(name: 'CONTEXTE', value: 'default'),
-                                string(name: 'MICROSERVICE', value: "${APP}"),
+                                string(name: 'MICROSERVICE', value: APP),
                                 string(name: 'IMAGE_TAG', value: "latest")
                             ],
                             wait: false
