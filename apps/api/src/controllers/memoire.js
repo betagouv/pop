@@ -562,12 +562,12 @@ router.post(
 		cleanArrayValue(notice);
 
 		const obj = new Memoire(notice);
-		const obj2 = new NoticesOAI(oaiObj);
 		checkESIndex(obj);
-		promises.push(obj.save());
-		promises.push(obj2.save());
 		try {
-			await Promise.all(promises);
+			await NoticesOAI.findOneAndUpdate({ REF: oaiObj.REF }, oaiObj, {
+				upsert: true,
+			});
+			await obj.save();
 			res.send({ success: true, msg: "OK" });
 		} catch (e) {
 			capture(e);
