@@ -1,4 +1,3 @@
-import Link from "next/link";
 import queryString from "query-string";
 import React from "react";
 import { Card, CardBody, CardTitle } from "reactstrap";
@@ -21,18 +20,14 @@ class TopicCard extends React.Component {
 		} else {
 			params = { ...this.props.params };
 		}
-		const href = `/search/mosaic?${queryString.stringify({
-			view: "mosaic",
+		const href = `/search/list?${queryString.stringify({
+			view: "list",
 			mode: "simple",
 			...toReactiveSearchParams(params),
 		})}`;
-		const alias = `/search/mosaic?${queryString.stringify(
-			toReactiveSearchParams(params),
-		)}`;
 
 		return (
 			<div className="topic-card">
-				{/* <Link href={href} as={alias}> */}
 				<a href={href}>
 					<Card>
 						<img
@@ -46,7 +41,6 @@ class TopicCard extends React.Component {
 						</CardBody>
 					</Card>
 				</a>
-				{/*} </Link> */}
 				<style jsx>{`
           .topic-card {
             padding-left: 15px;
