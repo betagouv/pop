@@ -10,7 +10,7 @@ FROM base as build
 COPY . .
 
 # Install project dependencies
-RUN npm ci --omit=dev
+RUN npm ci
 RUN node ./src/swagger/swagger.js
 
 FROM base
