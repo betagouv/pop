@@ -264,7 +264,7 @@ export default class extends React.Component {
 								aide pour une
 								<Link
 									href={
-										"https://pop-general.s3.eu-west-3.amazonaws.com/2022_Aide_POP_MH.pdf"
+										"https://pop-general.s3.gra.io.cloud.ovh.net/2022_Aide_POP_MH.pdf"
 									}
 								>
 									<a
@@ -279,7 +279,7 @@ export default class extends React.Component {
 								aide pour une
 								<Link
 									href={
-										"https://pop-general.s3.eu-west-3.amazonaws.com/2022_Aide_POP_MH_complexe.pdf"
+										"https://pop-general.s3.gra.io.cloud.ovh.net/2022_Aide_POP_MH_complexe.pdf"
 									}
 								>
 									<a
