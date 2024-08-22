@@ -51,7 +51,7 @@ app.prepare().then(() => {
 		} else if (pathname.match(sitemapRegex)) {
 			const url = req.url.replace("/sitemap/", "");
 			res.writeHead(301, {
-				Location: `https://s3.eu-west-3.amazonaws.com/pop-sitemap/${url}`,
+				Location: `https://pop-sitemaps.s3.gra.io.cloud.ovh.net/${url}`,
 			});
 			res.end();
 		} /* else if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
