@@ -1,0 +1,41 @@
+pipeline {
+    parameters {
+        choice(name: "ENVIR", choices: ["dev", "stg", "prd"], description: "Environment")
+        string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
+    }
+        
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    environment {
+        APPLICATION = "pop-api"
+        DB_NAME = "pop"
+
+        DOMAIN = "${ENVIR == "dev" ? "atnum" : "atnum-release"}"
+        REGISTRY_DOMAIN = "${ENVIR == "dev" ? "atnum" : "atnum-release-publisher"}"
+        DB_HOST = credentials("pop-${ENVIR}-mongo-url")
+        DB_CREDS = credentials("pop-${ENVIR}-db-app-creds")
+        IMAGE = "${MAIN_DOCKER_REGISTRY_HOST}/${DOMAIN}/${APPLICATION}:${TAG}"
+    }
+
+    agent {
+        label "${ENVIR}"
+    }
+
+    stages {
+        stage('Run sync') {
+            steps {
+                script {
+                    docker.withRegistry("https://${env.MAIN_DOCKER_REGISTRY_HOST}", "main-registry-robot-${REGISTRY_DOMAIN}") {
+                        docker.image("${IMAGE}").inside() {
+                            sh 'DB_ENDPOINT="mongodb+srv://${DB_CREDS_USR}:${DB_CREDS_PSW}@${DB_HOST}?replicaSet=replicaset&tls=true" \
+                                DB_NAME="${DB_NAME}" \
+                                node /app/src/scripts/generate_sitemaps.js -u -q'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
