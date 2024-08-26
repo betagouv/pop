@@ -2,6 +2,7 @@ pipeline {
     parameters {
         choice(name: "ENVIR", choices: ["dev", "stg", "prd"], description: "Environment")
         string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
+        string(name: "BUCKET", defaultValue: "pop-sitemaps", description: "Bucket name where sitemaps will be uploaded")
     }
         
     options {
@@ -16,6 +17,7 @@ pipeline {
         REGISTRY_DOMAIN = "${ENVIR == "dev" ? "atnum" : "atnum-release-publisher"}"
         DB_HOST = credentials("pop-${ENVIR}-mongo-url")
         DB_CREDS = credentials("pop-${ENVIR}-db-app-creds")
+        SITEMAPS_BUCKET = "${BUCKET}"
         IMAGE = "${MAIN_DOCKER_REGISTRY_HOST}/${DOMAIN}/${APPLICATION}:${TAG}"
     }
 
@@ -31,6 +33,7 @@ pipeline {
                         docker.image("${IMAGE}").inside() {
                             sh 'DB_ENDPOINT="mongodb+srv://${DB_CREDS_USR}:${DB_CREDS_PSW}@${DB_HOST}?replicaSet=replicaset&tls=true" \
                                 DB_NAME="${DB_NAME}" \
+                                SITEMAPS_BUCKET="${SITEMAPS_BUCKET}" \
                                 node /app/src/scripts/generate_sitemaps.js -u -q'
                         }
                     }

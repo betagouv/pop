@@ -63,7 +63,6 @@ const noticesClass = {
 	palissy: Palissy,
 	memoire: Memoire,
 	mnr: Mnr,
-	museo: Museo,
 	enluminures: Enluminures,
 };
 
@@ -169,7 +168,7 @@ async function run() {
 			for (const file of files) {
 				const data = fs.readFileSync(`./sitemaps/${file}`);
 				const params = {
-					Bucket: "pop-dev-sitemaps",
+					Bucket: process.env.SITEMAPS_BUCKET,
 					Key: file,
 					Body: data,
 					ContentType: "application/xml",
