@@ -84,6 +84,8 @@ async function run() {
 
 	const ctx = { links: [] };
 
+	fs.mkdirSync("./sitemaps", { recursive: true });
+
 	const smsStream = new SitemapAndIndexStream({
 		getSitemapStream: (i) => {
 			const sitemapStream = new SitemapStream({
