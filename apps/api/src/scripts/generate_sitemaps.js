@@ -1,18 +1,21 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const { simpleSitemapAndIndex } = require("sitemap");
+const { SitemapStream, SitemapAndIndexStream } = require("sitemap");
+const { finished } = require("stream");
 const { parse, formatISO } = require("date-fns");
 const { Listr } = require("listr2");
 const Observable = require("rxjs").Observable;
 const program = require("commander");
 const fs = require("fs");
+const { createGzip } = require("zlib");
+const { resolve } = require("path");
+const { promisify } = require("util");
 
 const Merimee = require("../models/merimee");
 const Joconde = require("../models/joconde");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
 const Mnr = require("../models/mnr");
-const Museo = require("../models/museo");
 const Enluminures = require("../models/enluminures");
 const { mongoUrl, dbName } = require("../config.js");
 const s3 = require("../s3");
@@ -81,6 +84,34 @@ async function run() {
 
 	const ctx = { links: [] };
 
+	const smsStream = new SitemapAndIndexStream({
+		getSitemapStream: (i) => {
+			const sitemapStream = new SitemapStream({
+				hostname: BASE_SITEMAPS_URL,
+				lastmodDateOnly: true,
+			});
+			const path = `./sitemaps/sitemap-${i}.xml`;
+
+			const ws = fs.createWriteStream(resolve(path + ".gz"));
+			sitemapStream
+				.pipe(createGzip()) // compress the output of the sitemap
+				.pipe(ws); // write it to sitemap-NUMBER.xml
+
+			return [
+				new URL(`sitemap-${i}.xml`, BASE_SITEMAPS_URL).toString(),
+				sitemapStream,
+				ws,
+			];
+		},
+	});
+	smsStream.pipe(createGzip());
+
+	const sitemapFile = fs.createWriteStream(
+		resolve("./sitemaps/sitemap-index.xml"),
+	);
+
+	smsStream.pipe(sitemapFile);
+
 	tasks.add({
 		title: "Processing",
 		rendererOptions: { persistentOutput: true, collapseSubstacks: false },
@@ -88,7 +119,7 @@ async function run() {
 			return task.newListr(
 				Object.keys(noticesClass).map((collection) => ({
 					title: collection,
-					task: async (ctx) => {
+					task: async () => {
 						const noticeClass = noticesClass[collection];
 						return new Observable(async (observer) => {
 							{
@@ -115,7 +146,7 @@ async function run() {
 									doc != null;
 									doc = await cursor.next()
 								) {
-									ctx.links.push({
+									smsStream.write({
 										url: `https://pop.culture.gouv.fr/notice/${collection}/${doc.get("REF")}`,
 										changefreq: "monthly",
 										priority: 0.7,
@@ -144,14 +175,8 @@ async function run() {
 
 	try {
 		await tasks.run();
-
-		console.log("Generating sitemaps");
-		await simpleSitemapAndIndex({
-			hostname: BASE_SITEMAPS_URL,
-			lastmodDateDateOnly: true,
-			destinationDir: "./sitemaps",
-			sourceData: ctx.links,
-		});
+		smsStream.end();
+		await promisify(finished)(sitemapFile);
 	} catch (err) {
 		console.error(err);
 		await mongoose.connection.close();
