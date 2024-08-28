@@ -4,7 +4,7 @@ pipeline {
         string(name: 'TAG', defaultValue: 'latest', description: 'Image tag')
         string(name: "BUCKET", defaultValue: "pop-sitemaps", description: "Bucket name where sitemaps will be uploaded")
     }
-        
+
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }

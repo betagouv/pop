@@ -22,6 +22,7 @@ const s3 = require("../s3");
 
 const BASE_URL_IMG = "https://pop-perf-assets.s3.gra.io.cloud.ovh.net";
 const BASE_SITEMAPS_URL = "https://pop-sitemaps.s3.gra.io.cloud.ovh.net";
+const SITEMAPS_BUCKET = process.env.SITEMAPS_BUCKET ?? "pop-dev-sitemaps";
 
 function extractUpdateDate(doc) {
 	if (doc.get("DMAJ") != null && doc.get("DMAJ") != "") {
@@ -124,49 +125,47 @@ async function run() {
 					task: async () => {
 						const noticeClass = noticesClass[collection];
 						return new Observable(async (observer) => {
-							{
-								const estimatedDocumentCount =
-									await noticeClass.estimatedDocumentCount();
+							const estimatedDocumentCount =
+								await noticeClass.estimatedDocumentCount();
 
-								let counter = 0;
-								if (!opts.quiet) {
+							let counter = 0;
+							if (!opts.quiet) {
+								observer.next(
+									`${Math.ceil((counter / estimatedDocumentCount) * 100)}% / ${estimatedDocumentCount}`,
+								);
+							} else {
+								observer.next(
+									`Processing: ${estimatedDocumentCount} documents`,
+								);
+							}
+
+							const cursor = noticeClass
+								.find()
+								.select("REF IMG DMAJ")
+								.cursor();
+							for (
+								let doc = await cursor.next();
+								doc != null;
+								doc = await cursor.next()
+							) {
+								smsStream.write({
+									url: `https://pop.culture.gouv.fr/notice/${collection}/${doc.get("REF")}`,
+									changefreq: "monthly",
+									priority: 0.7,
+									lastmodISO: extractUpdateDate(doc),
+									img: extractImages(doc),
+								});
+
+								counter++;
+
+								if (!opts.quiet && counter % 500 === 0) {
 									observer.next(
 										`${Math.ceil((counter / estimatedDocumentCount) * 100)}% / ${estimatedDocumentCount}`,
 									);
-								} else {
-									observer.next(
-										`Processing: ${estimatedDocumentCount} documents`,
-									);
 								}
-
-								const cursor = noticeClass
-									.find()
-									.select("REF IMG DMAJ")
-									.cursor();
-								for (
-									let doc = await cursor.next();
-									doc != null;
-									doc = await cursor.next()
-								) {
-									smsStream.write({
-										url: `https://pop.culture.gouv.fr/notice/${collection}/${doc.get("REF")}`,
-										changefreq: "monthly",
-										priority: 0.7,
-										lastmodISO: extractUpdateDate(doc),
-										img: extractImages(doc),
-									});
-
-									counter++;
-
-									if (!opts.quiet && counter % 500 === 0) {
-										observer.next(
-											`${Math.ceil((counter / estimatedDocumentCount) * 100)}% / ${estimatedDocumentCount}`,
-										);
-									}
-								}
-
-								observer.complete();
 							}
+
+							observer.complete();
 						});
 					},
 				})),
@@ -195,7 +194,7 @@ async function run() {
 			for (const file of files) {
 				const data = fs.readFileSync(`./sitemaps/${file}`);
 				const params = {
-					Bucket: process.env.SITEMAPS_BUCKET,
+					Bucket: SITEMAPS_BUCKET,
 					Key: file,
 					Body: data,
 					ContentType: "application/xml",
