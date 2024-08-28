@@ -1,7 +1,7 @@
 pipeline {
     parameters {
         choice(name: "ENVIR", choices: ["dev", "stg", "prd"], description: "Environment")
-        string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
+        string(name: 'TAG', defaultValue: 'latest', description: 'Image tag')
         string(name: "BUCKET", defaultValue: "pop-sitemaps", description: "Bucket name where sitemaps will be uploaded")
     }
         
