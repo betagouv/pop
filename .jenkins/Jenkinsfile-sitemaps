@@ -17,6 +17,8 @@ pipeline {
         REGISTRY_DOMAIN = "${ENVIR == "dev" ? "atnum" : "atnum-release-publisher"}"
         DB_HOST = credentials("pop-${ENVIR}-mongo-url")
         DB_CREDS = credentials("pop-${ENVIR}-db-app-creds")
+        AWS_ACCESS_KEY_ID = credentials("pop-${ENVIR}-objectstorage-access-key-id")
+        AWS_SECRET_ACCESS_KEY = credentials("pop-${ENVIR}-objectstorage-secret-access-key")
         SITEMAPS_BUCKET = "${BUCKET}"
         IMAGE = "${MAIN_DOCKER_REGISTRY_HOST}/${DOMAIN}/${APPLICATION}:${TAG}"
     }
@@ -34,6 +36,9 @@ pipeline {
                             sh 'DB_ENDPOINT="mongodb+srv://${DB_CREDS_USR}:${DB_CREDS_PSW}@${DB_HOST}?replicaSet=replicaset&tls=true" \
                                 DB_NAME="${DB_NAME}" \
                                 SITEMAPS_BUCKET="${SITEMAPS_BUCKET}" \
+                                AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+                                AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+                                BUCKET_URL="https://s3.gra.io.cloud.ovh.net/" \
                                 node /app/src/scripts/generate_sitemaps.js -u -q'
                         }
                     }
