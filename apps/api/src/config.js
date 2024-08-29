@@ -12,6 +12,7 @@ const secret = process.env.SECRET || "not-so-secret";
 const ID_PROD_APP = process.env.ID_PROD_APP;
 const ovh = process.env.OVH === "true";
 const bucketUrl = process.env.BUCKET_URL;
+const publicBucketUrl = process.env.PUBLIC_BUCKET_URL;
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const sentryDSN = process.env.SENTRY_DSN;

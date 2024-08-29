@@ -246,7 +246,7 @@ function addCommonBody(notices) {
 function addFooter(importId) {
 	const arr = [];
 	const diffUrl = `${process.env.POP_URL}/search/list?import=["${importId}"]`;
-	const fileUrl = `${process.env.BUCKET_URL}import/${importId}/import.csv`;
+	const fileUrl = `${process.env.PUBLIC_BUCKET_URL}import/${importId}/import.csv`;
 	arr.push("<h1>Liens</h1>");
 	arr.push(
 		`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`,
