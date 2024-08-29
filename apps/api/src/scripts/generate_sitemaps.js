@@ -198,7 +198,9 @@ async function run() {
 					Key: file,
 					Body: data,
 					ContentType: "application/xml",
-					ContentEncoding: "gzip",
+					ContentEncoding: file.includes("index")
+						? undefined
+						: "gzip",
 					ACL: "public-read",
 					Metadata: {
 						"Cache-Control": "max-age=31536000",
