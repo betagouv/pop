@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const _ = require("lodash");
-const logger = require("../logger");
+const { logger } = require("../logger");
 
 router.get("/search", async (req, res) => {
 	if (req.query.q == null) {
