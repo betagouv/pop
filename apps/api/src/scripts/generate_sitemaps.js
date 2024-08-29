@@ -189,7 +189,7 @@ async function run() {
 		try {
 			const files = fs
 				.readdirSync("./sitemaps")
-				.filter((f) => f.endsWith(".xml.gz"));
+				.filter((f) => f.includes(".xml"));
 
 			for (const file of files) {
 				const data = fs.readFileSync(`./sitemaps/${file}`);
