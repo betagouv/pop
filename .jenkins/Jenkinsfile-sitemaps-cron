@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage("generate-sitemaps") {
             steps {
-                build job: 'atnum/dev/pop/pop-rollout',
+                build job: 'atnum/prd/pop/pop-sitemaps',
 
                 parameters: [
                     string(name: 'ENVIR', value: 'prd'),

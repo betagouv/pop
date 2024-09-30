@@ -1,0 +1,25 @@
+pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    agent {
+        label "prd"
+    }
+
+    stages {
+        stage("generate-sitemaps") {
+            steps {
+                build job: 'atnum/prd/pop/pop-elasticsearch-sync',
+
+                parameters: [
+                    string(name: 'ENVIR', value: 'prd'),
+                    string(name: 'TAG', value: '9a181e1c'),
+                    string(name: 'CHUNKS', value: '200')
+                    string(name: 'COLLECTIONS_FILTERS', value: 'all')
+                ],
+                wait: false
+            }
+        }
+    }
+}
