@@ -101,7 +101,7 @@ async function run() {
 				.pipe(ws); // write it to sitemap-NUMBER.xml
 
 			return [
-				new URL(`sitemap-${i}.xml`, BASE_SITEMAPS_URL).toString(),
+				new URL(`sitemap-${i}.xml.gz`, BASE_SITEMAPS_URL).toString(),
 				sitemapStream,
 				ws,
 			];
