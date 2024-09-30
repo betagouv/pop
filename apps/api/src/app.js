@@ -1,3 +1,15 @@
+const Sentry = require("@sentry/node");
+const config = require("./config");
+
+if (config.sentryDSN) {
+  Sentry.init({
+    dsn: config.sentryDSN,
+    environment: process.env.NODE_ENV,
+    attachStacktrace: true,
+    tracesSampleRate: 1.0,
+  });
+}
+
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
@@ -5,22 +17,12 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const compression = require("compression");
 const { collectDefaultMetrics, register } = require("prom-client");
-// const Sentry = require("@sentry/node");
 
-const config = require("./config");
 const logger = require("./logger");
 require("./passport")(passport);
 require("./mongo");
 
 const app = express();
-
-// if (config.sentryDSN) {
-//   Sentry.init({
-//     dsn: config.sentryDSN,
-//     environment: process.env.NODE_ENV,
-//     attachStacktrace: true,
-//   });
-// }
 
 collectDefaultMetrics();
 
@@ -31,7 +33,7 @@ const swaggerDocument = require("./swagger/swagger_ui.json");
 
 app.enable("trust proxy");
 
-// app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.requestHandler());
 
 app.use(compression());
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -128,6 +130,6 @@ app.use("/actuator/prometheus", async (_req, res) => {
   }
 });
 
-// app.use(Sentry.Handlers.errorHandler());
+app.use(Sentry.Handlers.errorHandler());
 
 module.exports = app;
