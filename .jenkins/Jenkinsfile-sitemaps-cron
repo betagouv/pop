@@ -1,0 +1,24 @@
+pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    agent {
+        label "prd"
+    }
+
+    stages {
+        stage("generate-sitemaps") {
+            steps {
+                build job: 'atnum/dev/pop/pop-rollout',
+
+                parameters: [
+                    string(name: 'ENVIR', value: 'prd'),
+                    string(name: 'TAG', value: '9a181e1c'),
+                    string(name: 'BUCKET_NAME', value: 'pop-sitemaps')
+                ],
+                wait: false
+            }
+        }
+    }
+}
