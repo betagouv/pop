@@ -1,10 +1,10 @@
 # Use an official Node.js runtime as the base image
-FROM node:18.20.3-alpine as base
+FROM node:18.20.3-alpine AS base
 
 # Set the working directory in the container
 WORKDIR /app
 
-FROM base as build
+FROM base AS build
 
 # Copy the entire project to the working directory
 COPY . .
@@ -17,6 +17,7 @@ FROM base
 
 COPY --from=build /app /app
 WORKDIR /app
+ENV NODE_ENV=production
 
 # Set the command to start server
 CMD ["node", "./src/index.js"]
