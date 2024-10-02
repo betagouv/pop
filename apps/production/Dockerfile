@@ -1,10 +1,10 @@
 # Use an official Node.js runtime as the base image
-FROM node:15-alpine as base
+FROM node:15 AS base
 
 # Set the working directory in the container
 WORKDIR /app
 
-FROM base as build
+FROM base AS build
 
 # Copy the entire project to the working directory
 COPY . .

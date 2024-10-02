@@ -55,7 +55,7 @@
 		"zustand": "^4.5.2"
 	},
 	"engines": {
-		"node": "14.17"
+		"node": "15.14.0"
 	},
 	"scripts": {
 		"start": "node src/server/index.js",
