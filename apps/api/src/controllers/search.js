@@ -37,19 +37,40 @@ function getResultInElasticSearch6CompatibilityMode(results) {
 
 /**
  * Remove `should_not` from the object, will check recursively.
+ * Replace should with must, as it doesn't work for multi-value search field
  */
-function removeShouldNot(obj) {
+function updateOpenSearchQuery(obj) {
 	const { should_not, filter, ...rest } = obj;
 
 	for (const [key, value] of Object.entries(rest)) {
 		if (_.isArray(value) && typeof value !== "string") {
 			for (const [index, item] of Object.entries(value)) {
 				if (_.isPlainObject(item)) {
-					rest[key][index] = removeShouldNot(item);
+					rest[key][index] = updateOpenSearchQuery(item);
 				}
 			}
 		} else if (_.isPlainObject(value)) {
-			rest[key] = removeShouldNot(value);
+			rest[key] = updateOpenSearchQuery(value);
+		}
+	}
+
+	// Merge should with must, depending on wether should and must are objects or arrays
+	if (
+		"should" in rest &&
+		Array.isArray(rest.should) &&
+		rest.should.length > 0
+	) {
+		if ("must" in rest) {
+			if (Array.isArray(rest.must)) {
+				rest.must = [...rest.must, rest.should];
+			} else {
+				rest.must = [rest.must, ...rest.should];
+			}
+			rest.should = [];
+		} else {
+			rest.must = rest.should;
+			// biome-ignore lint/performance/noDelete: OK
+			delete rest.should;
 		}
 	}
 
@@ -71,11 +92,11 @@ function insertOpenSearchFields(body) {
 				sort: {
 					"CONTIENT_IMAGE.keyword": { order: "desc" },
 				},
-				...removeShouldNot(item),
+				...updateOpenSearchQuery(item),
 			};
 		}
 
-		return removeShouldNot(item);
+		return updateOpenSearchQuery(item);
 	});
 }
 
