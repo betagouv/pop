@@ -15,6 +15,7 @@ const aws4 = require("aws4");
 const { ndjsonToJsonText } = require("ndjson-to-json-text");
 const _ = require("lodash");
 const es = require("../elasticsearch.js")();
+const { z } = require("zod");
 
 /**
  *
@@ -34,6 +35,18 @@ function getResultInElasticSearch6CompatibilityMode(results) {
 		responses: responsesWithTotalModified,
 	};
 }
+
+const shapeReplaceShould = z.object({
+	should: z
+		.array(
+			z.object({
+				bool: z.object({
+					must_not: z.any(),
+				}),
+			}),
+		)
+		.length(2),
+});
 
 /**
  * Remove `should_not` from the object, will check recursively.
@@ -55,11 +68,7 @@ function updateOpenSearchQuery(obj) {
 	}
 
 	// Merge should with must, depending on wether should and must are objects or arrays
-	if (
-		"should" in rest &&
-		Array.isArray(rest.should) &&
-		rest.should.length > 0
-	) {
+	if (shapeReplaceShould.safeParse(rest).success) {
 		if ("must" in rest) {
 			if (Array.isArray(rest.must)) {
 				rest.must = [...rest.must, rest.should];
