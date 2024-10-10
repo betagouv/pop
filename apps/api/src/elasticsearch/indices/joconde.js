@@ -1147,6 +1147,10 @@ const mappings = {
 		POP_COORDONNEES: {
 			type: "geo_point",
 		},
+		crawledAt: {
+			type: "date",
+			format: "strict_date_time_no_millis||strict_date_optional_time||epoch_millis",
+		},
 		HISTORIQUE: {
 			properties: {
 				_id: {
