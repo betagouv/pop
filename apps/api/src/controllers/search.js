@@ -45,7 +45,7 @@ const shapeReplaceShould = z.object({
 				}),
 			}),
 		)
-		.length(2),
+		.min(2),
 });
 
 /**
