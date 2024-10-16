@@ -11,6 +11,7 @@ pipeline {
         TAG = "${params.TAG}"
         DOMAIN = "atnum"
         APP_VERSION = "0.1.0"
+        SENTRY_FILE = credentials("pop-dev-sentry-auth-token")
     }
 
     agent {
