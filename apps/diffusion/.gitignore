@@ -10,3 +10,5 @@ public/*
 # Jest
 coverage
 reports
+# Sentry Config File
+.env.sentry-build-plugin
