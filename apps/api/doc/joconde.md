@@ -35,6 +35,7 @@
 - [DIMS](/apps/api/doc/joconde.md#DIMS)
 - [DMAJ](/apps/api/doc/joconde.md#DMAJ)
 - [DMIS](/apps/api/doc/joconde.md#DMIS)
+- [DMOIS](/apps/api/doc/joconde.md#DMOIS)
 - [DOMN](/apps/api/doc/joconde.md#DOMN)
 - [DREP](/apps/api/doc/joconde.md#DREP)
 - [ECOL](/apps/api/doc/joconde.md#ECOL)
@@ -455,6 +456,16 @@ Date de la création (format AAAA-MM-JJ)
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
 |String|non|oui|non|oui||Date de création|||||||
+
+### DMOIS
+Date de moissonnage (format AAAA-MM-JJ)
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|oui|non|oui||Date de moissonnage|||||||
 
 ### DOMN
 Domaine
@@ -1099,14 +1110,14 @@ Lien vidéo. Doit être une URL valide.
 |String|non|non|non|non|||||||||
 
 ### crawledAt
-Date de moissonnage
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Date|non|non|non|non||Date de moissonnage|||||||
+|Date|non|non|non|non|||||||||
 
 ### _id
 
