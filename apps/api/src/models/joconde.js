@@ -322,6 +322,16 @@ const Schema = new mongoose.Schema(
 				opendata: true,
 			},
 		},
+		DMOIS: {
+			type: String,
+			default: "",
+			documentation: {
+				description: "Date de moissonnage (format AAAA-MM-JJ)",
+				generated: true,
+				label: "Date de moissonnage",
+				opendata: true,
+			},
+		},
 		DOMN: {
 			type: [String],
 			default: [],
@@ -905,11 +915,6 @@ const Schema = new mongoose.Schema(
 		},
 		crawledAt: {
 			type: Date,
-			documentation: {
-				description: "Date de moissonnage",
-				label: "Date de moissonnage",
-				generated: true,
-			},
 		},
 	},
 	{ collection: "joconde" },
