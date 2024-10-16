@@ -16,6 +16,8 @@ const publicBucketUrl = process.env.PUBLIC_BUCKET_URL;
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const sentryDSN = process.env.SENTRY_DSN;
+const sentryEnv = process.env.SENTRY_ENV;
+const commitHash = process.env.SRC_REF;
 
 module.exports = {
 	logLevel,
@@ -35,4 +37,6 @@ module.exports = {
 	accessKeyId,
 	secretAccessKey,
 	sentryDSN,
+	sentryEnv,
+	commitHash,
 };

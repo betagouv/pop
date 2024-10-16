@@ -1,15 +1,4 @@
-const Sentry = require("@sentry/node");
 const config = require("./config");
-
-if (config.sentryDSN) {
-	Sentry.init({
-		dsn: config.sentryDSN,
-		environment: process.env.NODE_ENV,
-		attachStacktrace: true,
-		tracesSampleRate: 1.0,
-	});
-}
-
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
