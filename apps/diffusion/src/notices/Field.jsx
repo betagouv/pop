@@ -1,6 +1,7 @@
-import { Image, Link, Text, View } from "@react-pdf/renderer";
+import { Link, Text, View } from "@react-pdf/renderer";
 import * as React from "react";
 import { styles } from "../pdf/pdfNotice/styles";
+import { isEmpty } from "lodash";
 
 export default ({
 	content,
@@ -14,10 +15,7 @@ export default ({
 	isLineBreakLink = false,
 }) => {
 	// Don't render empty elements.
-	const isEmptyArray = (c) => Array.isArray(c) && c.length === 0;
-	const isEmptyString = (s) => typeof s === "string" && !s.trim();
-
-	if (!content || isEmptyArray(content) || isEmptyString(content)) {
+	if (isEmpty(content)) {
 		return null;
 	}
 
