@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const compression = require("compression");
 const { collectDefaultMetrics, register } = require("prom-client");
+const Sentry = require("@sentry/node");
 
 const logger = require("./logger");
 require("./passport")(passport);
