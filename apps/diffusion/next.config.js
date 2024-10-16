@@ -1,4 +1,4 @@
-const Dotenv = require("dotenv-webpack");
+const { sentryWebpackPlugin } = require("@sentry/webpack-plugin");
 
 const webpackConfig = (config, options) => {
 	// Unshift polyfills in main entrypoint.
@@ -11,11 +11,6 @@ const webpackConfig = (config, options) => {
 		}
 		return entries;
 	};
-
-	// Load environment variables from ".env" file.
-	if (process.env.OVH == null) {
-		config.plugins.push(new Dotenv());
-	}
 
 	// Source: https://github.com/zeit/styled-jsx#nextjs
 	config.module.rules.push({
@@ -31,24 +26,29 @@ const webpackConfig = (config, options) => {
 		],
 	});
 
+	config.plugins.push(
+		sentryWebpackPlugin({
+			org: "betagouv",
+			url: "https://sentry.incubateur.net",
+			project: "pop-diffusion",
+			authToken: process.env.SENTRY_AUTH_TOKEN,
+		}),
+	);
+
 	return config;
 };
 
-if (process.env.OVH === "true") {
-	module.exports = {
-		publicRuntimeConfig: {
-			apiUrl: process.env.API_URL,
-			serverApiUrl: process.env.SERVER_API_URL,
-			bucketUrl: process.env.BUCKET_URL,
-			popUrl: process.env.POP_URL,
-			eurelian: process.env.EURELIAN,
-			sentryDsn: process.env.SENTRY_DSN,
-			ovh: process.env.OVH,
-		},
-		webpack: webpackConfig,
-	};
-} else {
-	module.exports = {
-		webpack: webpackConfig,
-	};
-}
+module.exports = {
+	publicRuntimeConfig: {
+		apiUrl: process.env.API_URL,
+		serverApiUrl: process.env.SERVER_API_URL,
+		bucketUrl: process.env.BUCKET_URL,
+		popUrl: process.env.POP_URL,
+		eurelian: process.env.EURELIAN,
+		sentryDsn: process.env.SENTRY_DSN,
+		sentryEnv: process.env.SENTRY_ENV,
+		commitHash: process.env.SRC_REF,
+		ovh: process.env.OVH,
+	},
+	webpack: webpackConfig,
+};
