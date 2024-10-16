@@ -1,10 +1,12 @@
 # Use an official Node.js runtime as the base image
-FROM node:14-alpine as base
+FROM node:18-alpine as base
+ARG SRC_REF
 
 # Set the working directory in the container
 WORKDIR /app
 
 FROM base as build
+ARG SRC_REF
 
 # Copy the entire project to the working directory
 COPY . .
@@ -15,6 +17,8 @@ ENV OVH=true
 RUN npm ci && npm run build && npm ci --omit=dev
 
 FROM base 
+ARG SRC_REF
+ENV SRC_REF=${SRC_REF}
 
 COPY --from=build /app /app
 

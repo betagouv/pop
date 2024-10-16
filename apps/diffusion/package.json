@@ -54,7 +54,7 @@
 		"jest-sonar": "^0.2.15"
 	},
 	"engines": {
-		"node": "14.17"
+		"node": "18.20.3"
 	},
 	"scripts": {
 		"dev": "node src/services/server.js",
