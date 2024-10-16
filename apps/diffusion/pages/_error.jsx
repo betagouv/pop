@@ -11,7 +11,7 @@ CustomErrorComponent.getInitialProps = async (contextData) => {
 	await Sentry.captureUnderscoreErrorException(contextData);
 
 	// This will contain the status code of the response
-	return Error.getInitialProps(contextData);
+	return NextError.getInitialProps(contextData);
 };
 
 export default CustomErrorComponent;

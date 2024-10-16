@@ -857,14 +857,8 @@ const SeeMore = ({ notice }) => {
 			<Field
 				title={mapping.palissy.DOSURL.label}
 				content={
-					<Link href={notice.DOSURL}>
-						<a
-							href={notice.DOSURL}
-							target="_blank"
-							rel="noreferrer"
-						>
-							Voir le dossier complet sur le site de la région
-						</a>
+					<Link href={notice.DOSURL} target="_blank" rel="noreferrer">
+						Voir le dossier complet sur le site de la région
 					</Link>
 				}
 				key="notice.DOSURL"
@@ -877,14 +871,12 @@ const SeeMore = ({ notice }) => {
 			<Field
 				title={mapping.palissy.DOSURLPDF.label}
 				content={
-					<Link href={postFixedLink(notice.DOSURLPDF)}>
-						<a
-							href={postFixedLink(notice.DOSURLPDF)}
-							target="_blank"
-							rel="noreferrer"
-						>
-							Voir le dossier d'origine numérisé
-						</a>
+					<Link
+						href={postFixedLink(notice.DOSURLPDF)}
+						target="_blank"
+						rel="noreferrer"
+					>
+						Voir le dossier d'origine numérisé
 					</Link>
 				}
 				key="notice.DOSURLPDF"
@@ -897,14 +889,12 @@ const SeeMore = ({ notice }) => {
 			<Field
 				title={mapping.palissy.POP_DOSSIER_VERT.label}
 				content={
-					<Link href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}>
-						<a
-							href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
-							target="_blank"
-							rel="noreferrer"
-						>
-							Voir le dossier d'origine numérisé
-						</a>
+					<Link
+						href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
+						target="_blank"
+						rel="noreferrer"
+					>
+						Voir le dossier d'origine numérisé
 					</Link>
 				}
 				key="notice.POP_DOSSIER_VERT"
@@ -922,14 +912,10 @@ const SeeMore = ({ notice }) => {
 				<Link
 					key={filename}
 					href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}
+					target="_blank"
+					rel="noreferrer"
 				>
-					<a
-						href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}
-						target="_blank"
-						rel="noreferrer"
-					>
-						{filename}
-					</a>
+					{filename}
 				</Link>,
 			);
 		}
@@ -986,14 +972,12 @@ const SeeMore = ({ notice }) => {
 				<Field
 					title={mapping.palissy.LIENS.label}
 					content={
-						<Link href={notice.LIENS[i]}>
-							<a
-								href={notice.LIENS[i]}
-								target="_blank"
-								rel="noreferrer"
-							>
-								{notice.LIENS[i]}
-							</a>
+						<Link
+							href={notice.LIENS[i]}
+							target="_blank"
+							rel="noreferrer"
+						>
+							{notice.LIENS[i]}
 						</Link>
 					}
 					key={`notice.LIENS${i}`}
@@ -1008,14 +992,12 @@ const SeeMore = ({ notice }) => {
 				<Field
 					title={mapping.merimee.LINHA.label}
 					content={
-						<Link href={notice.LINHA[0]}>
-							<a
-								href={notice.LINHA[0]}
-								target="_blank"
-								rel="noreferrer"
-							>
-								{notice.LINHA[0]}
-							</a>
+						<Link
+							href={notice.LINHA[0]}
+							target="_blank"
+							rel="noreferrer"
+						>
+							{notice.LINHA[0]}
 						</Link>
 					}
 					key="notice.LINHA_0"
@@ -1026,14 +1008,12 @@ const SeeMore = ({ notice }) => {
 				arr.push(
 					<Field
 						content={
-							<Link href={notice.LINHA[i]}>
-								<a
-									href={notice.LINHA[i]}
-									target="_blank"
-									rel="noreferrer"
-								>
-									{notice.LINHA[i]}
-								</a>
+							<Link
+								href={notice.LINHA[i]}
+								target="_blank"
+								rel="noreferrer"
+							>
+								{notice.LINHA[i]}
 							</Link>
 						}
 						key={`notice.LINHA_${i}`}
@@ -1049,14 +1029,12 @@ const SeeMore = ({ notice }) => {
 				<Field
 					title={mapping.merimee.LREG.label}
 					content={
-						<Link href={notice.LREG[0]}>
-							<a
-								href={notice.LREG[0]}
-								target="_blank"
-								rel="noreferrer"
-							>
-								{notice.LREG[0]}
-							</a>
+						<Link
+							href={notice.LREG[0]}
+							target="_blank"
+							rel="noreferrer"
+						>
+							{notice.LREG[0]}
 						</Link>
 					}
 					key="notice.LREG_0"
@@ -1067,14 +1045,12 @@ const SeeMore = ({ notice }) => {
 				arr.push(
 					<Field
 						content={
-							<Link href={notice.LREG[i]}>
-								<a
-									href={notice.LREG[i]}
-									target="_blank"
-									rel="noreferrer"
-								>
-									{notice.LREG[i]}
-								</a>
+							<Link
+								href={notice.LREG[i]}
+								target="_blank"
+								rel="noreferrer"
+							>
+								{notice.LREG[i]}
 							</Link>
 						}
 						key={`notice.LREG_${i}`}
@@ -1088,15 +1064,13 @@ const SeeMore = ({ notice }) => {
 		arr.push(
 			<Field
 				content={
-					<Link href={getUrlArchive(notice.REF)}>
-						<a
-							href={getUrlArchive(notice.REF)}
-							target="_blank"
-							rel="noreferrer"
-						>
-							Les archives conservées à la Médiathèque du
-							patrimoine et de la photographie
-						</a>
+					<Link
+						href={getUrlArchive(notice.REF)}
+						target="_blank"
+						rel="noreferrer"
+					>
+						Les archives conservées à la Médiathèque du patrimoine
+						et de la photographie
 					</Link>
 				}
 				key="mediathek_cible"
