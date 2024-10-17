@@ -27,6 +27,7 @@ FROM gcr.io/distroless/nodejs18-debian12:${DISTROLESS_TAG}
 ARG SRC_REF
 ENV SRC_REF=${SRC_REF}
 ENV NODE_ENV="production"
+WORKDIR /app
 
 COPY --from=build /app /app
 
