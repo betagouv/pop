@@ -478,17 +478,14 @@ export default class extends React.Component {
 												]),
 											},
 										)}`}
+										className="btn btn-secondary"
+										style={{
+											backgroundColor: "#C43A2F",
+										}}
+										hidden={this.props.hideButton}
+										target="_blank"
 									>
-										<a
-											className="btn btn-secondary"
-											style={{
-												backgroundColor: "#C43A2F",
-											}}
-											hidden={this.props.hideButton}
-											target="_blank"
-										>
-											Voir les collections du musée
-										</a>
+										Voir les collections du musée
 									</Link>
 								</div>
 								<MapComponent notice={notice} />

@@ -45,14 +45,12 @@ const SeeMore = ({ notice }) => {
 				<Field
 					title={mapping.enluminures.LIENS.label}
 					content={
-						<Link href={notice.LIENS[0]}>
-							<a
-								href={notice.LIENS[0]}
-								target="_blank"
-								rel="noreferrer"
-							>
-								{linkLabel}
-							</a>
+						<Link
+							href={notice.LIENS[0]}
+							target="_blank"
+							rel="noreferrer"
+						>
+							{linkLabel}
 						</Link>
 					}
 					key="notice.LIENS"
@@ -63,14 +61,12 @@ const SeeMore = ({ notice }) => {
 				arr.push(
 					<Field
 						content={
-							<Link href={notice.LIENS[i]}>
-								<a
-									href={notice.LIENS[i]}
-									target="_blank"
-									rel="noreferrer"
-								>
-									{linkLabel}
-								</a>
+							<Link
+								href={notice.LIENS[i]}
+								target="_blank"
+								rel="noreferrer"
+							>
+								{linkLabel}
 							</Link>
 						}
 						key="notice.LIENS"

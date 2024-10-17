@@ -942,14 +942,10 @@ const SeeMore = ({ notice }) => {
 				<Link
 					key={filename}
 					href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}
+					target="_blank"
+					rel="noreferrer"
 				>
-					<a
-						href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}
-						target="_blank"
-						rel="noreferrer"
-					>
-						{filename}
-					</a>
+					{filename}
 				</Link>,
 			);
 		}

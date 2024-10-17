@@ -346,7 +346,7 @@ export default class extends React.Component {
 		);
 
 		return (
-			<Layout>
+            <Layout>
 				<div className="notice">
 					<Container>
 						<Head>
@@ -379,7 +379,7 @@ export default class extends React.Component {
 							<div className="leftContainer-buttons">
 								{lastRecherche !== null && (
 									<div className="btn btn-last-search">
-										<Link href={lastRecherche}>
+										<Link href={lastRecherche} legacyBehavior>
 											<div className="text-last-search">
 												Retour à la recherche
 											</div>
@@ -915,7 +915,7 @@ export default class extends React.Component {
 				</div>
 				<style jsx>{noticeStyle}</style>
 			</Layout>
-		);
+        );
 	}
 }
 
@@ -962,8 +962,8 @@ const SeeMore = ({ notice, listUrl }) => {
 				title={mapping.memoire.LAUTP.label}
 				content={
 					<Link
-						href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP}`}
-					>
+                        href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP}`}
+                        legacyBehavior>
 						<a
 							target="_blank"
 							rel="noreferrer noopener"

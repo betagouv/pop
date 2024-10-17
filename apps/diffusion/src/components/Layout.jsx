@@ -42,30 +42,29 @@ export default class Layout extends React.Component {
 			<React.Fragment>
 				<div className="header desktop-only">
 					<Container className="NavContainer">
-						<Link href="/">
-							<a className="logo">
-								<img
-									src="/static/logo_MC.jpg"
-									alt="Logo"
-									className="md"
-								/>
-							</a>
+						<Link href="/" className="logo">
+							<img
+								src="/static/logo_MC.jpg"
+								alt="Logo"
+								className="md"
+							/>
 						</Link>
 						<h3 className="Title">
 							POP : la plateforme ouverte du patrimoine
 						</h3>
 						<div className="right-container">
 							<div className="linkBucket">
-								<Link href="/bucket">
-									<a className="btn btn-outline-danger onPrintHide">
-										<div className="btn-bucket">
-											<div id="nbBucket">
-												{this.state.countBucket !== 0
-													? `Consulter mon panier ( ${this.state.countBucket} )`
-													: "Panier vide"}{" "}
-											</div>
+								<Link
+									href="/bucket"
+									className="btn btn-outline-danger onPrintHide"
+								>
+									<div className="btn-bucket">
+										<div id="nbBucket">
+											{this.state.countBucket !== 0
+												? `Consulter mon panier ( ${this.state.countBucket} )`
+												: "Panier vide"}{" "}
 										</div>
-									</a>
+									</div>
 								</Link>
 							</div>
 							{
@@ -92,14 +91,12 @@ export default class Layout extends React.Component {
 				</div>
 				<div className="header mobile-only">
 					<div className="header-mobile-up">
-						<Link href="/">
-							<a className="logo">
-								<img
-									src="/static/logo_MC.jpg"
-									alt="Logo"
-									className="md"
-								/>
-							</a>
+						<Link href="/" className="logo">
+							<img
+								src="/static/logo_MC.jpg"
+								alt="Logo"
+								className="md"
+							/>
 						</Link>
 
 						<div className="header-buttons-wrapper">
@@ -128,14 +125,10 @@ export default class Layout extends React.Component {
 				<div className="footer">
 					<ul className="list-inline">
 						<li className="list-inline-item">
-							<Link href="/apropos">
-								<a>À propos</a>
-							</Link>
+							<Link href="/apropos">À propos</Link>
 						</li>
 						<li className="list-inline-item">
-							<Link href="/opendata">
-								<a>Télécharger les bases</a>
-							</Link>
+							<Link href="/opendata">Télécharger les bases</Link>
 						</li>
 						<li className="list-inline-item">
 							<a
@@ -148,7 +141,7 @@ export default class Layout extends React.Component {
 						</li>
 						<li className="list-inline-item">
 							<Link href="/tracking">
-								<a>Suivi d'audience et vie privée</a>
+								Suivi d'audience et vie privée
 							</Link>
 						</li>
 						<li className="list-inline-item">
@@ -156,7 +149,7 @@ export default class Layout extends React.Component {
 								Accessibilité : non conforme
 							</span>
 							<Link href="/accessibilite">
-								<a>Déclaration d’accessibilité</a>
+								Déclaration d’accessibilité
 							</Link>
 						</li>
 					</ul>

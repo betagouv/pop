@@ -30,34 +30,35 @@ class SmallNotice extends React.Component {
 
 		return (
 			<Link
+				className="card"
 				href={`/notice/${this.props.notice.collection}/${this.props.notice.REF}`}
+				style={{ textDecoration: "none" }}
 			>
-				<a style={{ textDecoration: "none" }} className="card">
-					<img src={image_preview} alt={title} />
-					<div className="content">
+				<img src={image_preview} alt={title} />
+				<div className="content">
+					<p className="categories">
+						{categorie} - {this.props.notice.REF}
+					</p>
+					<h3>{title}</h3>
+					{this.props.notice.DENO ? (
 						<p className="categories">
-							{categorie} - {this.props.notice.REF}
+							{this.props.notice.DENO.join(", ")}
 						</p>
-						<h3>{title}</h3>
-						{this.props.notice.DENO ? (
+					) : (
+						""
+					)}
+					<div>
+						{Array.isArray(this.props.notice.DOMN) ? (
 							<p className="categories">
-								{this.props.notice.DENO.join(", ")}
+								{this.props.notice.DOMN.join(", ")}
 							</p>
 						) : (
-							""
+							this.props.notice.DOMN
 						)}
-						<div>
-							{Array.isArray(this.props.notice.DOMN) ? (
-								<p className="categories">
-									{this.props.notice.DOMN.join(", ")}
-								</p>
-							) : (
-								this.props.notice.DOMN
-							)}
-							<p>{this.props.notice.AUTR}</p>
-						</div>
+						<p>{this.props.notice.AUTR}</p>
 					</div>
-					<style jsx>{`
+				</div>
+				<style jsx>{`
             .links .linked-notice-container {
               overflow-x: auto;
               max-height: 600px;
@@ -73,7 +74,6 @@ class SmallNotice extends React.Component {
               overflow: hidden;
             }
           `}</style>
-				</a>
 			</Link>
 		);
 	}

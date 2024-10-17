@@ -8,7 +8,7 @@ import { styles } from "../pdfNotice/styles";
 
 export function MnrPdf(notice, title, links) {
 	return (
-		<Document>
+        <Document>
 			<Page style={styles.page}>
 				<Text style={styles.header} fixed>
 					{" "}
@@ -388,5 +388,5 @@ export function MnrPdf(notice, title, links) {
 				/>
 			</Page>
 		</Document>
-	);
+    );
 }

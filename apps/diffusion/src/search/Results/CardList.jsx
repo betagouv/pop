@@ -105,6 +105,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}  `}
 					key={data.REF}
+					style={{ textDecoration: "none" }}
 				>
 					<div className="leftContent">
 						<div className="thumbnail">
@@ -235,6 +236,7 @@ export const Palissy = ({ data, removeFromBucket, searchParams, listRefs }) => {
 						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={data.REF}
+					style={{ textDecoration: "none" }}
 				>
 					<div className="leftContent">
 						<div className="thumbnail">
@@ -347,6 +349,7 @@ export const Merimee = ({ data, removeFromBucket, searchParams, listRefs }) => {
 						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={data.REF}
+					style={{ textDecoration: "none" }}
 				>
 					<div className="leftContent">
 						<div className="thumbnail">
@@ -451,6 +454,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
 						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={data.REF}
+					style={{ textDecoration: "none" }}
 				>
 					<div className="leftContent">
 						<div className="thumbnail">
@@ -620,6 +624,7 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs }) => {
 								: ""
 						}`}
 						key={data.REF}
+						style={{ textDecoration: "none" }}
 					>
 						<div className="leftContent">
 							<div className="thumbnail">
@@ -749,6 +754,7 @@ export const Museo = ({ data, removeFromBucket, searchParams, listRefs }) => {
 						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={data.REF}
+					style={{ textDecoration: "none" }}
 				>
 					<div className="leftContent">
 						<div className="thumbnail">{ImageComponent}</div>
@@ -855,6 +861,7 @@ export const Enluminures = ({
 						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={REF}
+					style={{ textDecoration: "none" }}
 				>
 					<div className="leftContent">
 						<div className="thumbnail">{ImageComponent}</div>
@@ -994,6 +1001,7 @@ export const Autor = ({ data, removeFromBucket, searchParams, listRefs }) => {
 						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
 					}`}
 					key={REF}
+					style={{ textDecoration: "none" }}
 				>
 					<div className="leftContent">
 						<div className="thumbnail">{ImageComponent}</div>

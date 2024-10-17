@@ -614,14 +614,12 @@ const SeeMore = () => {
 			<h2>Voir aussi</h2>
 			<Field
 				content={
-					<Link href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945">
-						<a
-							href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945"
-							target="_blank"
-							rel="noreferrer"
-						>
-							www.culture.gouv.fr/spoliations-restitutions-1933-1945
-						</a>
+					<Link
+						href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945"
+						target="_blank"
+						rel="noreferrer"
+					>
+						www.culture.gouv.fr/spoliations-restitutions-1933-1945
 					</Link>
 				}
 			/>

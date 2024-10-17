@@ -266,13 +266,10 @@ export default class extends React.Component {
 									href={
 										"https://pop-general.s3.gra.io.cloud.ovh.net/2022_Aide_POP_MH.pdf"
 									}
+									target="_blank"
+									style={{ marginLeft: "5px" }}
 								>
-									<a
-										target="_blank"
-										style={{ marginLeft: "5px" }}
-									>
-										recherche simple
-									</a>
+									recherche simple
 								</Link>
 							</li>
 							<li>
@@ -281,13 +278,10 @@ export default class extends React.Component {
 									href={
 										"https://pop-general.s3.gra.io.cloud.ovh.net/2022_Aide_POP_MH_complexe.pdf"
 									}
+									target="_blank"
+									style={{ marginLeft: "5px" }}
 								>
-									<a
-										target="_blank"
-										style={{ marginLeft: "5px" }}
-									>
-										recherche complexe
-									</a>
+									recherche complexe
 								</Link>
 							</li>
 						</ul>

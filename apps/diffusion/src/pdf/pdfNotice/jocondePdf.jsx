@@ -11,7 +11,7 @@ import { styles } from "../pdfNotice/styles";
 
 export function JocondePdf(notice, title, links, museo) {
 	return (
-		<Document>
+        <Document>
 			<Page style={styles.page}>
 				<Text style={styles.header} fixed>
 					{" "}
@@ -603,5 +603,5 @@ export function JocondePdf(notice, title, links, museo) {
 				/>
 			</Page>
 		</Document>
-	);
+    );
 }

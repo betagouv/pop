@@ -85,10 +85,10 @@ export function TextFieldReprPdf(value) {
 							key={`repr-${index}`}
 							src={item.url ? item.url : item}
 							debug={true}
+							target="_blank"
+							rel="noreferrer"
 						>
-							<a href={item.url} target="_blank" rel="noreferrer">
-								{<Text>{item.val.trim()}</Text>}
-							</a>
+							<Text>{item.val.trim()}</Text>
 						</Link>
 						<Text>&nbsp;; </Text>
 					</View>

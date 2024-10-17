@@ -52,6 +52,15 @@ export default css`
     margin-right: 15px;
   }
 
+  .text-last-search {
+    text-decoration: none;
+    color: white;
+  }
+  .text-last-search:hover {
+    text-decoration: none;
+    color: white;
+  }
+
   .leftContainer-buttons{
     display: flex;
     flex-direction: row;

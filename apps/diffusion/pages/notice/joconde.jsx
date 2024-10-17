@@ -927,14 +927,12 @@ const SeeMore = ({ notice, museo }) => {
 			<Field
 				title={mapping.joconde.LVID.label}
 				content={
-					<Link href={notice.LVID}>
-						<a
-							target="_blank"
-							rel="noreferrer noopener"
-							href={notice.LVID}
-						>
-							{notice.LVID}
-						</a>
+					<Link
+						href={notice.LVID}
+						target="_blank"
+						rel="noreferrer noopener"
+					>
+						{notice.LVID}
 					</Link>
 				}
 				key="notice.LVID"
@@ -948,14 +946,12 @@ const SeeMore = ({ notice, museo }) => {
 				<Field
 					title={mapping.joconde.WWW.label}
 					content={
-						<Link href={notice.WWW[0]}>
-							<a
-								href={notice.WWW[0]}
-								target="_blank"
-								rel="noreferrer"
-							>
-								{notice.WWW[0]}
-							</a>
+						<Link
+							href={notice.WWW[0]}
+							target="_blank"
+							rel="noreferrer"
+						>
+							{notice.WWW[0]}
 						</Link>
 					}
 					key="notice.WWW"
@@ -966,14 +962,12 @@ const SeeMore = ({ notice, museo }) => {
 				arr.push(
 					<Field
 						content={
-							<Link href={notice.WWW[i]}>
-								<a
-									href={notice.WWW[i]}
-									target="_blank"
-									rel="noreferrer"
-								>
-									{notice.WWW[i]}
-								</a>
+							<Link
+								href={notice.WWW[i]}
+								target="_blank"
+								rel="noreferrer"
+							>
+								{notice.WWW[i]}
 							</Link>
 						}
 						key="notice.WWW"
@@ -995,14 +989,12 @@ const SeeMore = ({ notice, museo }) => {
 			<Field
 				title={mapping.joconde.MUSEO.label}
 				content={
-					<Link href={`/notice/museo/${notice.MUSEO}`}>
-						<a
-							href={`/notice/museo/${notice.MUSEO}`}
-							target="_blank"
-							rel="noreferrer"
-						>
-							{text}
-						</a>
+					<Link
+						href={`/notice/museo/${notice.MUSEO}`}
+						target="_blank"
+						rel="noreferrer"
+					>
+						{text}
 					</Link>
 				}
 				key="notice.MUSEO"
@@ -1015,10 +1007,8 @@ const SeeMore = ({ notice, museo }) => {
 			<Field
 				title={mapping.joconde.RETIF.label}
 				content={
-					<Link href={notice.RETIF}>
-						<a href={notice.RETIF} target="_blank" rel="noreferrer">
-							INHA
-						</a>
+					<Link href={notice.RETIF} target="_blank" rel="noreferrer">
+						INHA
 					</Link>
 				}
 				key="notice.RETIF"
@@ -1031,7 +1021,7 @@ const SeeMore = ({ notice, museo }) => {
 			<Field
 				title={mapping.joconde.MSGCOM.label}
 				content={
-					<Link href={notice.RETIF}>
+					<Link href={notice.RETIF} legacyBehavior>
 						<a
 							href={`mailto:${notice.MSGCOM}`}
 							onClick={handleClick}
