@@ -378,6 +378,18 @@ export default class extends React.Component {
 			</div>
 		);
 
+		const displayMoissonnage = (() => {
+			if (this.props.notice.DMOIS == null) return false;
+			if (
+				this.props.notice.DMAJ != null &&
+				dayjs(this.props.notice.DMAJ).isAfter(
+					dayjs(this.props.notice.DMOIS),
+				)
+			)
+				return false;
+			return true;
+		})();
+
 		const lastRecherche = lastSearch(
 			this.props.searchParams,
 			this.props.searchParamsUrl,
@@ -876,15 +888,12 @@ export default class extends React.Component {
 											separator="#"
 											upper={false}
 										/>
-										{notice.crawledAt != null && (
+										{displayMoissonnage && (
 											<Field
 												title={
-													mapping.joconde.crawledAt
-														.label
+													mapping.joconde.DMOIS.label
 												}
-												content={dayjs(notice.crawledAt)
-													.locale("fr")
-													.format("DD MMM YYYY")}
+												content={notice.DMOIS}
 											/>
 										)}
 									</div>
