@@ -19,54 +19,57 @@ const models = fs
 	// Build an object from object's schema properties
 	.map((model) => ({
 		name: model.modelName,
-		paths: Object.entries(model.schema.paths).map(([k, v]) => {
-			const { documentation, required } = v.options;
-			const obj = {
-				name: v.path,
-				type: v.instance,
-				required: v.options.required,
-				opendata: v.options.documentation
-					? v.options.documentation.opendata
-					: "",
-				generated: v.options.documentation
-					? v.options.documentation.generated
-					: "",
-				deprecated: v.options.documentation
-					? v.options.documentation.deprecated
-					: "",
-				description: v.options.documentation?.description
-					? v.options.documentation.description
-					: "",
-				label: v.options.documentation?.label
-					? v.options.documentation.label
-					: "",
-			};
-			//   thesaurus: v.options.documentation ? v.options.documentation.thesaurus : "",
-			//   label_mh: v.options.documentation ? v.options.documentation.label_mh || "" : "",
-			//   listeAutorite: v.options.documentation ? v.options.documentation.listeAutorite || "" : "",
-			//   idthesaurus: v.options.documentation ? v.options.documentation.idthesaurus || "" : "",
+		paths: Object.entries(model.schema.paths)
+			.map(([k, v]) => {
+				const { documentation, required } = v.options;
+				const obj = {
+					name: v.path,
+					type: v.instance,
+					required: v.options.required,
+					hide: documentation ? documentation.hide || false : false,
+					opendata: v.options.documentation
+						? v.options.documentation.opendata
+						: "",
+					generated: v.options.documentation
+						? v.options.documentation.generated
+						: "",
+					deprecated: v.options.documentation
+						? v.options.documentation.deprecated
+						: "",
+					description: v.options.documentation?.description
+						? v.options.documentation.description
+						: "",
+					label: v.options.documentation?.label
+						? v.options.documentation.label
+						: "",
+				};
+				//   thesaurus: v.options.documentation ? v.options.documentation.thesaurus : "",
+				//   label_mh: v.options.documentation ? v.options.documentation.label_mh || "" : "",
+				//   listeAutorite: v.options.documentation ? v.options.documentation.listeAutorite || "" : "",
+				//   idthesaurus: v.options.documentation ? v.options.documentation.idthesaurus || "" : "",
 
-			if (documentation?.thesaurus) {
-				obj.thesaurus = documentation.thesaurus;
-			}
-			if (documentation?.label_mh) {
-				obj.label_mh = documentation.label_mh;
-			}
-			if (documentation?.listeAutorite) {
-				obj.listeAutorite = documentation.listeAutorite;
-			}
-			if (documentation?.idthesaurus) {
-				obj.idthesaurus = documentation.idthesaurus;
-			}
-			if (documentation?.label_inid) {
-				obj.label_inid = documentation.label_inid;
-			}
-			if (documentation?.label_inicm) {
-				obj.label_inicm = documentation.label_inicm;
-			}
+				if (documentation?.thesaurus) {
+					obj.thesaurus = documentation.thesaurus;
+				}
+				if (documentation?.label_mh) {
+					obj.label_mh = documentation.label_mh;
+				}
+				if (documentation?.listeAutorite) {
+					obj.listeAutorite = documentation.listeAutorite;
+				}
+				if (documentation?.idthesaurus) {
+					obj.idthesaurus = documentation.idthesaurus;
+				}
+				if (documentation?.label_inid) {
+					obj.label_inid = documentation.label_inid;
+				}
+				if (documentation?.label_inicm) {
+					obj.label_inicm = documentation.label_inicm;
+				}
 
-			return obj;
-		}),
+				return obj;
+			})
+			.filter((el) => !el.hide),
 	}));
 
 //write ReadMe

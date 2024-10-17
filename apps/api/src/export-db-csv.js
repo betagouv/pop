@@ -19,29 +19,36 @@ const models = fs
 	// Build an object from object's schema properties
 	.map((model) => ({
 		name: model.modelName,
-		paths: Object.entries(model.schema.paths).map(([k, v]) => {
-			const { documentation, required } = v.options;
-			const obj = {
-				path: v.path,
-				type: v.instance,
-				required: required ? "oui" : "non",
-				label: documentation ? documentation.label || "" : "",
-				opendata: documentation ? documentation.opendata || "" : "",
-				generated: documentation ? documentation.generated || "" : "",
-				description: documentation
-					? documentation.description || ""
-					: "",
-				thesaurus: documentation ? documentation.thesaurus || "" : "",
-				label_mh: documentation ? documentation.label_mh || "" : "",
-				listeAutorite: documentation
-					? documentation.listeAutorite || ""
-					: "",
-				idthesaurus: documentation
-					? documentation.idthesaurus || ""
-					: "",
-			};
-			return obj;
-		}),
+		paths: Object.entries(model.schema.paths)
+			.map(([k, v]) => {
+				const { documentation, required } = v.options;
+				const obj = {
+					path: v.path,
+					type: v.instance,
+					required: required ? "oui" : "non",
+					hide: documentation ? documentation.hide || false : false,
+					label: documentation ? documentation.label || "" : "",
+					opendata: documentation ? documentation.opendata || "" : "",
+					generated: documentation
+						? documentation.generated || ""
+						: "",
+					description: documentation
+						? documentation.description || ""
+						: "",
+					thesaurus: documentation
+						? documentation.thesaurus || ""
+						: "",
+					label_mh: documentation ? documentation.label_mh || "" : "",
+					listeAutorite: documentation
+						? documentation.listeAutorite || ""
+						: "",
+					idthesaurus: documentation
+						? documentation.idthesaurus || ""
+						: "",
+				};
+				return obj;
+			})
+			.filter((el) => !el.hide),
 	}));
 
 for (let i = 0; i < models.length; i++) {

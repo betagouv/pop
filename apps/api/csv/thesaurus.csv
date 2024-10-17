@@ -1,8 +1,8 @@
-path,type,required,label,opendata,generated,description,thesaurus,label_mh,listeAutorite,idthesaurus
-"idThesaurus","String","non","","","","","","","",""
-"arc","String","non","","","","","","","",""
-"value","String","non","","","","","","","",""
-"altLabel","Boolean","non","","","","","","","",""
-"updatedAt","String","non","","","","","","","",""
-"_id","ObjectID","non","","","","","","","",""
-"__v","Number","non","","","","","","","",""
+path,type,required,hide,label,opendata,generated,description,thesaurus,label_mh,listeAutorite,idthesaurus
+"idThesaurus","String","non","false","","","","","","","",""
+"arc","String","non","false","","","","","","","",""
+"value","String","non","false","","","","","","","",""
+"altLabel","Boolean","non","false","","","","","","","",""
+"updatedAt","String","non","false","","","","","","","",""
+"_id","ObjectID","non","false","","","","","","","",""
+"__v","Number","non","false","","","","","","","",""

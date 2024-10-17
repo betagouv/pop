@@ -915,6 +915,9 @@ const Schema = new mongoose.Schema(
 		},
 		crawledAt: {
 			type: Date,
+			documentation: {
+				hide: true,
+			},
 		},
 	},
 	{ collection: "joconde" },

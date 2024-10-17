@@ -12,38 +12,47 @@ const models = fs
 	// Build an object from object's schema properties
 	.map((model) => ({
 		name: model.modelName,
-		paths: Object.entries(model.schema.paths).map(([k, v]) => {
-			const { documentation, required } = v.options;
-			const obj = {
-				path: v.path,
-				type: v.instance,
-				required: required,
-				label: documentation ? documentation.label || "" : "",
-				opendata: documentation ? documentation.opendata || "" : "",
-				generated: documentation ? documentation.generated || "" : "",
-				deprecated: documentation ? documentation.deprecated || "" : "",
-				description: documentation
-					? documentation.description || ""
-					: "",
-				thesaurus: documentation ? documentation.thesaurus || "" : "",
-			};
-			if (documentation?.label_mh) {
-				obj.label_mh = documentation.label_mh;
-			}
-			if (documentation?.listeAutorite) {
-				obj.listeAutorite = documentation.listeAutorite;
-			}
-			if (documentation?.idthesaurus) {
-				obj.idthesaurus = documentation.idthesaurus;
-			}
-			if (documentation?.label_inid) {
-				obj.label_inid = documentation.label_inid;
-			}
-			if (documentation?.label_inicm) {
-				obj.label_inicm = documentation.label_inicm;
-			}
-			return obj;
-		}),
+		paths: Object.entries(model.schema.paths)
+			.map(([k, v]) => {
+				const { documentation, required } = v.options;
+				const obj = {
+					path: v.path,
+					type: v.instance,
+					required: required,
+					hide: documentation ? documentation.hide || false : false,
+					label: documentation ? documentation.label || "" : "",
+					opendata: documentation ? documentation.opendata || "" : "",
+					generated: documentation
+						? documentation.generated || ""
+						: "",
+					deprecated: documentation
+						? documentation.deprecated || ""
+						: "",
+					description: documentation
+						? documentation.description || ""
+						: "",
+					thesaurus: documentation
+						? documentation.thesaurus || ""
+						: "",
+				};
+				if (documentation?.label_mh) {
+					obj.label_mh = documentation.label_mh;
+				}
+				if (documentation?.listeAutorite) {
+					obj.listeAutorite = documentation.listeAutorite;
+				}
+				if (documentation?.idthesaurus) {
+					obj.idthesaurus = documentation.idthesaurus;
+				}
+				if (documentation?.label_inid) {
+					obj.label_inid = documentation.label_inid;
+				}
+				if (documentation?.label_inicm) {
+					obj.label_inicm = documentation.label_inicm;
+				}
+				return obj;
+			})
+			.filter((el) => !el.hide),
 	}));
 
 // 2. Convert

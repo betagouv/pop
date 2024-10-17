@@ -98,7 +98,6 @@
 - [LVID](/apps/api/doc/joconde.md#LVID)
 - [HISTORIQUE](/apps/api/doc/joconde.md#HISTORIQUE)
 - [parisMuseeEntityUuid](/apps/api/doc/joconde.md#parisMuseeEntityUuid)
-- [crawledAt](/apps/api/doc/joconde.md#crawledAt)
 - [_id](/apps/api/doc/joconde.md#_id)
 - [__v](/apps/api/doc/joconde.md#__v)
 ### PRODUCTEUR
@@ -1108,16 +1107,6 @@ Lien vidéo. Doit être une URL valide.
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
 |String|non|non|non|non|||||||||
-
-### crawledAt
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
-|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Date|non|non|non|non|||||||||
 
 ### _id
 
