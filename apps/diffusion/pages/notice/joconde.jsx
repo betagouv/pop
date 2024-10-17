@@ -1041,7 +1041,7 @@ const SeeMore = ({ notice, museo }) => {
 	return (
 		<div className="sidebar-section info">
 			<h2>Voir aussi</h2>
-			<div>{arr}</div>
+			<div style={{ overflow: "hidden" }}>{arr}</div>
 		</div>
 	);
 };
