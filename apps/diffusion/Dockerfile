@@ -26,11 +26,12 @@ RUN npm ci && npm run build && npm ci --omit=dev
 FROM gcr.io/distroless/nodejs18-debian12:${DISTROLESS_TAG}
 ARG SRC_REF
 ENV SRC_REF=${SRC_REF}
+ENV NODE_ENV="production"
 
 COPY --from=build /app /app
 
 # Set the command to start server
-CMD ["npm", "run", "start"]
+CMD ["./src/services/server.js"]
 
 # Expose port
 EXPOSE 8081
