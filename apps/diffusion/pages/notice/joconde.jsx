@@ -107,7 +107,7 @@ export default class extends React.Component {
 					listRefs[indexOfCurrentNotice - 1],
 				);
 				if (previousCollection !== "") {
-					prevLink = `notice/${previousCollection}/${
+					prevLink = `/notice/${previousCollection}/${
 						listRefs[indexOfCurrentNotice - 1]
 					}?${this.props.searchParamsUrl}`;
 				}
@@ -117,7 +117,7 @@ export default class extends React.Component {
 					listRefs[indexOfCurrentNotice + 1],
 				);
 				if (nextCollection !== "") {
-					nextLink = `notice/${nextCollection}/${
+					nextLink = `/notice/${nextCollection}/${
 						listRefs[indexOfCurrentNotice + 1]
 					}?${this.props.searchParamsUrl}`;
 				}
@@ -279,13 +279,13 @@ export default class extends React.Component {
 	renderPrevButton() {
 		if (this.state.prevLink !== undefined) {
 			return (
-				<a
+				<Link
 					title="Notice précédente"
-					href={pop_url + this.state.prevLink}
+					href={this.state.prevLink}
 					className="navButton onPrintHide"
 				>
 					&lsaquo;
-				</a>
+				</Link>
 			);
 		}
 		return null;
@@ -294,13 +294,13 @@ export default class extends React.Component {
 	renderNextButton() {
 		if (this.state.nextLink !== undefined) {
 			return (
-				<a
+				<Link
 					title="Notice suivante"
-					href={pop_url + this.state.nextLink}
+					href={this.state.nextLink}
 					className="navButton onPrintHide"
 				>
 					&rsaquo;
-				</a>
+				</Link>
 			);
 		}
 		return null;
@@ -419,13 +419,11 @@ export default class extends React.Component {
 						<div className="top-container">
 							<div className="leftContainer-buttons">
 								{lastRecherche !== null && (
-									<div className="btn btn-last-search">
-										<Link href={lastRecherche}>
-											<div className="text-last-search">
-												Retour à la recherche
-											</div>
-										</Link>
-									</div>
+									<Link href={lastRecherche}>
+										<div className="btn btn-last-search text-last-search">
+											Retour à la recherche
+										</div>
+									</Link>
 								)}
 							</div>
 							<div className="rightContainer-buttons">

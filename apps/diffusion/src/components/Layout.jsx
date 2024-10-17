@@ -47,6 +47,7 @@ export default class Layout extends React.Component {
 								src="/static/logo_MC.jpg"
 								alt="Logo"
 								className="md"
+								style={{ height: 160 }} // need to hardcode that since upgrade to nextjs 13.x (dunno why)
 							/>
 						</Link>
 						<h3 className="Title">
@@ -125,10 +126,16 @@ export default class Layout extends React.Component {
 				<div className="footer">
 					<ul className="list-inline">
 						<li className="list-inline-item">
-							<Link href="/apropos">À propos</Link>
+							<Link href="/apropos">
+								<span className="footer-item">À propos</span>
+							</Link>
 						</li>
 						<li className="list-inline-item">
-							<Link href="/opendata">Télécharger les bases</Link>
+							<Link href="/opendata">
+								<span className="footer-item">
+									Télécharger les bases
+								</span>
+							</Link>
 						</li>
 						<li className="list-inline-item">
 							<a
@@ -136,12 +143,16 @@ export default class Layout extends React.Component {
 								target="_blank"
 								rel="noreferrer noopener"
 							>
-								Nous contacter
+								<span className="footer-item">
+									Nous contacter
+								</span>
 							</a>
 						</li>
 						<li className="list-inline-item">
 							<Link href="/tracking">
-								Suivi d'audience et vie privée
+								<span className="footer-item">
+									Suivi d'audience et vie privée
+								</span>
 							</Link>
 						</li>
 						<li className="list-inline-item">
@@ -149,12 +160,15 @@ export default class Layout extends React.Component {
 								Accessibilité : non conforme
 							</span>
 							<Link href="/accessibilite">
-								Déclaration d’accessibilité
+								<span className="footer-item">
+									Déclaration d’accessibilité
+								</span>
 							</Link>
 						</li>
 					</ul>
 					<div className="version">Pop version {Package.version}</div>
 				</div>
+
 				<style jsx>{`
           .header {
             box-shadow: 0 2px 6px 0 rgb(189, 189, 189);
