@@ -10,6 +10,7 @@ config.pop_url = publicRuntimeConfig.popUrl;
 config.eurelian = publicRuntimeConfig.eurelian;
 config.sentryDsn = publicRuntimeConfig.sentryDsn;
 config.sentryEnv = publicRuntimeConfig.sentryEnv;
+config.sentryTracesSampleRate = publicRuntimeConfig.sentryTracesSampleRate;
 config.commitHash = publicRuntimeConfig.commitHash;
 
 config.es_url = `${config.api_url}/search/`;

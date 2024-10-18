@@ -108,10 +108,8 @@ export default function CustomApp({ Component, pageProps }) {
 	);
 }
 
-if (process.env.OVH === "true") {
-	// We need to opt-out of optimisation to use publicRuntimeConfig
-	CustomApp.getInitialProps = async (appContext) => {
-		const ctx = App.getInitialProps(appContext);
-		return ctx;
-	};
-}
+// We need to opt-out of optimisation to use publicRuntimeConfig
+CustomApp.getInitialProps = async (appContext) => {
+	const ctx = App.getInitialProps(appContext);
+	return ctx;
+};

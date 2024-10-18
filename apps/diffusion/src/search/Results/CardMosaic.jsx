@@ -9,7 +9,7 @@ export default ({ index, data, searchParams, listRefs, idQuery }) => {
 	searchParams.set("idQuery", idQuery);
 
 	return (
-        <Col>
+		<Col>
 			<a
 				className="list-card"
 				style={{ textDecoration: "none" }}
@@ -109,5 +109,5 @@ export default ({ index, data, searchParams, listRefs, idQuery }) => {
 				</style>
 			</a>
 		</Col>
-    );
+	);
 };

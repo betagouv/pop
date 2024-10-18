@@ -4,6 +4,7 @@ import { Alert, Container } from "reactstrap";
 import Cookies from "universal-cookie";
 import Package from "../../package.json";
 import API from "../../src/services/api";
+import { commitHash } from "../config";
 
 const message_maintenance =
 	"Une opération de maintenance est en cours. Elle peut fausser l’affichage des résultats. Nous vous présentons nos excuses pour la gêne occasionnée. L’opération devrait être finie le 12 avril 2022";
@@ -166,7 +167,9 @@ export default class Layout extends React.Component {
 							</Link>
 						</li>
 					</ul>
-					<div className="version">Pop version {Package.version}</div>
+					<div className="version">
+						Pop version {Package.version} #{commitHash}
+					</div>
 				</div>
 
 				<style jsx>{`

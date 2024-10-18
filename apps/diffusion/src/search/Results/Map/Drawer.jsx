@@ -43,7 +43,7 @@ export default class Drawer extends Component {
 
 	renderNotice(notice) {
 		return (
-            <div className="drawer">
+			<div className="drawer">
 				<div
 					className="drawer-back"
 					onClick={() => {
@@ -60,12 +60,15 @@ export default class Drawer extends Component {
 					{this.renderNoticeContent(notice)}
 				</div>
 				<div>
-					<Link href={`/notice/${notice._type}/${notice._source.REF}`} target="_blank">
+					<Link
+						href={`/notice/${notice._type}/${notice._source.REF}`}
+						target="_blank"
+					>
 						Voir la notice complète
 					</Link>
 				</div>
 			</div>
-        );
+		);
 	}
 
 	renderNotices(notices) {

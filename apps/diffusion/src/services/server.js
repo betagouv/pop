@@ -2,17 +2,11 @@ const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
 const { join } = require("path");
-const Sentry = require("@sentry/node");
 const logger = require("pino-http")({ level: "info" });
 
 // Load environment variables from ".env" file.
 require("dotenv").config();
 
-Sentry.init({
-	dsn: process.env.SENTRY_DSN,
-	release: `pop-consultation@${require("../../package.json").version}`,
-	environment: process.env.NODE_ENV,
-});
 const dev = process.env.NODE_ENV === "development";
 const port = process.env.PORT || 8081;
 

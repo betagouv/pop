@@ -88,7 +88,7 @@ const Gallery = ({ gallery }) => {
 const Museo = ({ museo }) => {
 	const title = museo.NOMUSAGE || museo.NOMOFF || museo.ANC;
 	return (
-        <div className="museo-card-sm">
+		<div className="museo-card-sm">
 			<h2>
 				{title} - {museo.VILLE_M}
 			</h2>
@@ -110,5 +110,5 @@ const Museo = ({ museo }) => {
         }
       `}</style>
 		</div>
-    );
+	);
 };

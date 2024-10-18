@@ -8,7 +8,7 @@ import { styles } from "./styles";
 
 export function PalissyPdf(notice, title, localisation, links) {
 	return (
-        <Document>
+		<Document>
 			<Page style={styles.page}>
 				<Text style={styles.header} fixed>
 					{" "}
@@ -646,7 +646,7 @@ export function PalissyPdf(notice, title, localisation, links) {
 								notice.POP_ARRETE_PROTECTION.map(
 									(value, index) => {
 										return (
-                                            <Link
+											<Link
 												style={styles.listLinked}
 												src={`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}
 												target="_blank"
@@ -658,7 +658,7 @@ export function PalissyPdf(notice, title, localisation, links) {
 											>
 												<Text>{`${notice.POP_ARRETE_PROTECTION[index]}`}</Text>
 											</Link>
-                                        );
+										);
 									},
 								)
 							) : (
@@ -792,5 +792,5 @@ export function PalissyPdf(notice, title, localisation, links) {
 				/>
 			</Page>
 		</Document>
-    );
+	);
 }

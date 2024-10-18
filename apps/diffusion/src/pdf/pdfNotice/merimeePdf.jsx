@@ -146,7 +146,7 @@ export function MerimeePdf(notice, title, localisation, links) {
      );
    } */
 	return (
-        <Document>
+		<Document>
 			<Page style={styles.page}>
 				<Text style={styles.header} fixed>
 					{" "}
@@ -827,7 +827,7 @@ export function MerimeePdf(notice, title, localisation, links) {
 								notice.POP_ARRETE_PROTECTION.map(
 									(value, index) => {
 										return (
-                                            <Link
+											<Link
 												style={styles.listLinked}
 												src={`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}
 												target="_blank"
@@ -845,7 +845,7 @@ export function MerimeePdf(notice, title, localisation, links) {
 														.pop()}
 												</Text>
 											</Link>
-                                        );
+										);
 									},
 								)
 							) : (
@@ -868,7 +868,7 @@ export function MerimeePdf(notice, title, localisation, links) {
 								notice.POP_DOSSIER_PROTECTION.map(
 									(value, index) => {
 										return (
-                                            <Link
+											<Link
 												style={styles.listLinked}
 												src={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}
 												target="_blank"
@@ -882,7 +882,7 @@ export function MerimeePdf(notice, title, localisation, links) {
 														.pop()}
 												</Text>
 											</Link>
-                                        );
+										);
 									},
 								)
 							) : (
@@ -985,5 +985,5 @@ export function MerimeePdf(notice, title, localisation, links) {
 				/>
 			</Page>
 		</Document>
-    );
+	);
 }
