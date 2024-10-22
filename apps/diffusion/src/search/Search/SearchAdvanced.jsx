@@ -875,6 +875,11 @@ class SearchAdvanced extends React.Component {
 							fields: "DMAJ",
 						},
 						{
+							value: ["DMOIS.keyword"],
+							text: "Date de moissonnage",
+							fields: "DMOIS",
+						},
+						{
 							value: ["DMIS.keyword"],
 							text: "Date de création",
 							fields: "DMIS",
