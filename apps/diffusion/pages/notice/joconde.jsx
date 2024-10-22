@@ -969,10 +969,9 @@ const SeeMore = ({ notice, museo }) => {
 	if (notice.MUSEO) {
 		const text = museo
 			? [
-					museo.NOMOFF || museo.NOMUSAGE || museo.ANC,
 					museo.VILLE_M || museo.VILLE_AD,
-					museo.REF,
-				].join(" - ")
+					museo.NOMOFF || museo.NOMUSAGE || museo.ANC,
+				].join(" ; ")
 			: notice.MUSEO;
 		arr.push(
 			<Field
