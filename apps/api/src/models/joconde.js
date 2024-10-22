@@ -325,6 +325,7 @@ const Schema = new mongoose.Schema(
 		DMOIS: {
 			type: String,
 			default: "",
+			index: true,
 			documentation: {
 				description: "Date de moissonnage (format AAAA-MM-JJ)",
 				generated: true,
