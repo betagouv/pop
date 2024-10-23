@@ -38,7 +38,7 @@ export function* signinByToken() {
 	} catch (e) {}
 	if (response?.user) {
 		if (process.env.SENTRY_DSN) {
-			Raven.setUserContext({ email: response.user.email });
+			Sentry.setUser({ email: response.user.email });
 		}
 
 		yield put({ type: actions.SIGNIN_SUCCESS, user: response.user });
