@@ -3,8 +3,9 @@ import React from "react";
 import { connect } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route as ReactRouterRoute, Switch } from "react-router-dom";
 import Header from "./scenes/header";
+import * as Sentry from "@sentry/react";
 
 import ScrollTop from "./components/ScrollTop";
 import Admin from "./scenes/admin";
@@ -19,6 +20,8 @@ import Producteur from "./scenes/producteur";
 import AdvancedSearch from "./scenes/search/advanced";
 import SimpleSearch from "./scenes/search/simple";
 import Thesaurus from "./scenes/thesaurus";
+
+const Route = Sentry.withSentryRouting(ReactRouterRoute);
 
 class PublicRoutes extends React.Component {
 	render() {

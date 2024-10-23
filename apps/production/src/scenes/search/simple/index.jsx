@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route as ReactRouterRoute, Switch } from "react-router-dom";
+import * as Sentry from "@sentry/react";
 
 import Autor from "./Autor";
 import Enluminures from "./Enluminures";
@@ -13,6 +14,8 @@ import Palissy from "./Palissy";
 
 import "../search.css";
 import "./index.css";
+
+const Route = Sentry.withSentryRouting(ReactRouterRoute);
 
 const search_message = "Cliquez sur la loupe pour lancer la recherche";
 

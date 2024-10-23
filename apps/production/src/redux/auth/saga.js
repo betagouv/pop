@@ -1,6 +1,7 @@
 import { push } from "connected-react-router";
 import { all, put, takeEvery } from "redux-saga/effects";
 import actions from "./actions";
+import * as Sentry from "@sentry/react";
 
 import api from "../../services/api";
 
@@ -15,13 +16,12 @@ export function* signin({ email, password }) {
 			return;
 		}
 
+		console.log("user signin", user);
 		yield put({ type: actions.SIGNIN_SUCCESS, user });
 		localStorage.setItem("cgu", true);
 		localStorage.setItem("application", id_app);
 
-		if (process.env.SENTRY_DSN) {
-			Raven.setUserContext({ email });
-		}
+		Sentry.setUser({ email });
 
 		amplitude.getInstance().setUserId(email);
 
@@ -51,6 +51,7 @@ export function* signinByToken() {
 export function* logOut() {
 	try {
 		yield api.logout();
+		Sentry.setUser(null);
 	} catch (error) {
 		console.error("L'api est inaccessible.");
 	}

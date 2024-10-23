@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route as ReactRouterRoute, Switch } from "react-router-dom";
 import AutorCard from "../components/AutorCard";
 import EnluminuresCard from "../components/EnluminuresCard";
 import JocondeCard from "../components/JocondeCard";
@@ -10,6 +10,9 @@ import MuseoCard from "../components/MuseoCard";
 import PalissyCard from "../components/PalissyCard";
 import "../simple/index.css";
 import AdvancedSearch from "./AdvancedSearch";
+import * as Sentry from "@sentry/react";
+
+const Route = Sentry.withSentryRouting(ReactRouterRoute);
 
 export default () => {
 	return (

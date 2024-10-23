@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route as ReactRouterRoute, Switch } from "react-router-dom";
 import Autor from "./autor";
 import Enluminures from "./enluminures";
 import Joconde from "./joconde";
@@ -8,8 +8,11 @@ import Merimee from "./merimee";
 import Mnr from "./mnr";
 import Museo from "./museo";
 import Palissy from "./palissy";
+import * as Sentry from "@sentry/react";
 
 import "./index.css";
+
+const Route = Sentry.withSentryRouting(ReactRouterRoute);
 
 export default () => {
 	return (

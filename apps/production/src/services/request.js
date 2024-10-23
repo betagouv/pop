@@ -1,5 +1,6 @@
 import "isomorphic-fetch";
 const { api_url } = require("../config");
+import * as Sentry from "@sentry/react";
 
 // This class provides ~low level access to POP API.
 // Use it via `request.fetchJSON`, `request.fetchFormData`, etc.
@@ -39,7 +40,7 @@ class request {
 			}
 			return Promise.reject(jsonData);
 		} catch (err) {
-			Raven.captureException(err);
+			Sentry.captureException(err);
 			throw Error({
 				success: false,
 				msg: "L'api est inaccessible.",
@@ -62,7 +63,7 @@ class request {
 			}
 			return jsonData;
 		} catch (err) {
-			Raven.captureException(err);
+			Sentry.captureException(err);
 			throw Error({ success: false, msg: "L'api est inaccessible." });
 		}
 	}
@@ -80,7 +81,7 @@ class request {
 				return null;
 			}
 			if (response.status !== 200) {
-				Raven.captureException(response);
+				Sentry.captureException(response);
 				return Promise.reject(
 					[
 						`Un probleme a été detecté lors de l'enregistrement via l'API.`,
@@ -93,11 +94,11 @@ class request {
 				const data = await response.json();
 				return data;
 			} catch (err) {
-				Raven.captureException(err);
+				Sentry.captureException(err);
 				throw Error("Problème lors de la récupération de la donnée");
 			}
 		} catch (err) {
-			Raven.captureException(JSON.stringify(err));
+			Sentry.captureException(JSON.stringify(err));
 			throw Error("L'api est inaccessible");
 		}
 	}

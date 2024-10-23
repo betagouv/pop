@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Col, Container, Progress, Row } from "reactstrap";
+import * as Sentry from "@sentry/react";
 
 import AsideIcon from "../../../assets/outbox.png";
 import api from "../../../services/api";
@@ -407,7 +408,7 @@ class Importer extends Component {
 			});
 		} catch (e) {
 			const errors = e.message ? e.message : e;
-			Raven.captureException(errors);
+			Sentry.captureException(errors);
 			this.setState({ errors, loading: false });
 			return;
 		}

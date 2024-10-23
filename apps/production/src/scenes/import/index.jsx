@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route as ReactRouterRoute, Switch } from "react-router-dom";
+import * as Sentry from "@sentry/react";
 import API from "../../services/api";
 
 import Mh from "./MH";
@@ -12,6 +13,8 @@ import List from "./list";
 import Memoire from "./memoire";
 import Mnr from "./mnr";
 import Museo from "./museo";
+
+const Route = Sentry.withSentryRouting(ReactRouterRoute);
 
 class Import extends React.Component {
 	state = {
