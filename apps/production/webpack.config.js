@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const Dotenv = require("dotenv-webpack");
 const TerserPlugin = require("terser-webpack-plugin");
+const { sentryWebpackPlugin } = require("@sentry/webpack-plugin");
 
 module.exports = (env) => {
 	const mode = env.production ? "production" : "staging";
@@ -36,6 +37,11 @@ module.exports = (env) => {
 			test: /\.(js|jsx)($|\?)/i,
 			exclude: /node_modules/,
 			parallel: 4,
+		}),
+		sentryWebpackPlugin({
+			sentryUrl: "https://sentry.incubateur.net/",
+			org: "betagouv",
+			project: "pop-edition",
 		}),
 	];
 

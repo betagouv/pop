@@ -14,7 +14,9 @@ COPY . .
 
 # Install project dependencies
 ENV OVH=true
-RUN npm ci && npm run build && npm ci --omit=dev
+
+RUN --mount=type=secret,id=sentry-auth-token,target=/app/apps/production/.sentryclirc \
+    npm ci && npm run build && npm ci --omit=dev
 
 FROM base 
 ARG SRC_REF
