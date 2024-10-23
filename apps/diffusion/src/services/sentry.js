@@ -10,7 +10,7 @@ export const sentryConfig = {
 	dsn: sentryDsn,
 	release: `pop-diffusion:${commitHash}`,
 	environment: sentryEnv,
-	enabled: process.env.NODE_ENV !== "local",
+	enabled: process.env.SENTRY_ENV !== "local",
 	tracesSampleRate: sentryTracesSampleRate,
 };
 
