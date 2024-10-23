@@ -27,9 +27,7 @@ module.exports = (env) => {
 				removeEmptyAttributes: true,
 			},
 		}),
-		process.env.OVH === "true"
-			? new Dotenv({ path: "./.env.defaults" })
-			: new Dotenv(),
+		new Dotenv({ path: "./.env.defaults" }),
 		new webpack.ProvidePlugin({
 			Buffer: ["buffer", "Buffer"],
 			process: "process/browser",

@@ -10,7 +10,6 @@ mongo
 **/README.md
 **/.DS_Store
 .env
-.env.*
 **/.prettierrc
 **/.eslintrc.js
 **/.eslintignore
