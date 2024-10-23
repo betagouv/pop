@@ -8,7 +8,7 @@ import {
 
 export const sentryConfig = {
 	dsn: sentryDsn,
-	release: `pop-consultation:${commitHash}`,
+	release: `pop-diffusion:${commitHash}`,
 	environment: sentryEnv,
 	enabled: process.env.NODE_ENV !== "local",
 	tracesSampleRate: sentryTracesSampleRate,
