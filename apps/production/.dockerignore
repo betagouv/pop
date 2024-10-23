@@ -1,0 +1,17 @@
+**/node_modules
+**/dist
+**/build
+**/.next
+**/test
+**/*.spec.ts
+mongo
+.jenkins
+.git
+**/README.md
+**/.DS_Store
+.env
+.env.*
+**/.prettierrc
+**/.eslintrc.js
+**/.eslintignore
+.sentryclirc

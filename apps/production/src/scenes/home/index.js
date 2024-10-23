@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "reactstrap";
-import Package from "../../../package.json";
+import { commitHash } from "../../config";
 import "./index.css";
 
 export default class Home extends React.Component {
@@ -29,7 +29,7 @@ export default class Home extends React.Component {
 							</li>
 						</ul>
 					</div>
-					<div className="version">Pop version {Package.version}</div>
+					<div className="version">Pop version {commitHash}</div>
 				</Container>
 			</div>
 		);

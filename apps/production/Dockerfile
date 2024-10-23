@@ -1,6 +1,6 @@
 ARG SRC_REF="nocommit"
 
-FROM node:18 AS base
+FROM node:18.20.4 AS base
 ARG SRC_REF
 
 # Set the working directory in the container
@@ -23,7 +23,7 @@ ARG SRC_REF
 ENV SRC_REF=${SRC_REF}
 ENV NODE_ENV="production"
 
-COPY --from=build /app /app
+COPY --chown=nonroot:nonroot --from=build /app /app
 
 # Set the command to start server
 CMD ["npm", "run", "ovh:start"]
