@@ -1,6 +1,6 @@
 ARG SRC_REF="nocommit"
 
-FROM node:15 AS base
+FROM node:18 AS base
 ARG SRC_REF
 
 # Set the working directory in the container
