@@ -50,7 +50,6 @@ class api {
 			credentials: "same-origin",
 			mode: "cors",
 			redirect: "follow",
-			referrer: "no-referrer",
 			body: formData,
 		});
 	}
@@ -109,7 +108,6 @@ class api {
 					headers: { "Content-Type": "Application/x-ndjson" },
 					mode: "cors",
 					redirect: "follow",
-					referrer: "no-referrer",
 					body: query,
 				},
 			)
