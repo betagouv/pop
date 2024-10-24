@@ -1,13 +1,16 @@
 ARG SRC_REF="nocommit"
+ARG DISTROLESS_TAG=debug-nonroot
 
 FROM node:18.20.4 AS base
 ARG SRC_REF
+ARG DISTROLESS_TAG
 
 # Set the working directory in the container
 WORKDIR /app
 
 FROM base AS build
 ARG SRC_REF
+ARG DISTROLESS_TAG
 
 # Copy the entire project to the working directory
 COPY . .
@@ -18,15 +21,16 @@ ENV OVH=true
 RUN --mount=type=secret,id=sentry-auth-token,target=/app/apps/production/.sentryclirc \
     npm ci && npm run build && npm ci --omit=dev
 
-FROM base 
+FROM gcr.io/distroless/nodejs18-debian12:${DISTROLESS_TAG}
 ARG SRC_REF
 ENV SRC_REF=${SRC_REF}
 ENV NODE_ENV="production"
+WORKDIR /app
 
 COPY --chown=nonroot:nonroot --from=build /app /app
 
 # Set the command to start server
-CMD ["npm", "run", "ovh:start"]
+CMD ["./src/server/index.js"]
 
 # Expose port
 EXPOSE 8081
