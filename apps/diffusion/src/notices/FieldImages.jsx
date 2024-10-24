@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 const Viewer = dynamic(() => import("react-viewer"), { ssr: false });
@@ -23,6 +23,7 @@ function SlideImage({ image: e, onPress }) {
 export default function FieldImages({ images }) {
 	const [selected, setSelected] = useState(-1);
 	const [current, setCurrent] = useState(0);
+	const sliderRef = useRef(null);
 
 	function renderImages() {
 		if (!images.length) {
@@ -50,13 +51,45 @@ export default function FieldImages({ images }) {
 				) : (
 					<span />
 				)}
-				<Swiper
-					navigation
-					modules={[Navigation]}
-					onSlideChange={(sw) => setCurrent(sw.realIndex)}
+
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						columnGap: 4,
+					}}
 				>
-					{arr}
-				</Swiper>
+					<button
+						type="button"
+						className="custom-swiper-prev"
+						onClick={() => sliderRef.current?.swiper.slidePrev()}
+						onKeyDown={() => sliderRef.current?.swiper.slidePrev()}
+					>
+						{"<"}
+					</button>
+					<Swiper
+						ref={sliderRef}
+						navigation={{
+							nextEl: ".custom-swiper-next",
+							prevEl: ".custom-swiper-prev",
+						}}
+						pagination={{
+							type: "fraction",
+						}}
+						modules={[Navigation]}
+						onSlideChange={(sw) => setCurrent(sw.realIndex)}
+					>
+						{arr}
+					</Swiper>
+					<button
+						type="button"
+						className="custom-swiper-next"
+						onClick={() => sliderRef.current?.swiper.slideNext()}
+						onKeyDown={() => sliderRef.current?.swiper.slideNext()}
+					>
+						{">"}
+					</button>
+				</div>
 			</div>
 		);
 	}
@@ -119,6 +152,30 @@ export default function FieldImages({ images }) {
           .slick-next:before,
           .slick-prev:before {
             color: #785d59;
+          }
+
+          .swiper-button-prev,
+          .swiper-button-next {
+            color: #785d59
+          }
+
+          .custom-swiper-next,
+          .custom-swiper-prev {
+            width: 24px;
+            height: 24px;
+            border: 1px grey solid;
+            border-radius: 9999px;
+            background: transparent;
+            color: #785d59;
+            display: flex;
+            justify-items: center;
+            align-items: center;
+            cursor: pointer;
+          }
+
+          .swiper-button-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
           }
         `}</style>
 		</div>
