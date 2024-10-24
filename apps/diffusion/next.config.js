@@ -41,7 +41,7 @@ module.exports = withSentryConfig(
 			sentryTracesSampleRate: process.env.SENTRY_TRACES_SAMPLE_RATE,
 			commitHash: process.env.SRC_REF,
 		},
-		webpack: webpackConfig,
+		// webpack: webpackConfig,
 	},
 	{
 		// For all available options, see:

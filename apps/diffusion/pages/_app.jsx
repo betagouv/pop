@@ -5,6 +5,9 @@ import NProgress from "nprogress";
 import React, { useEffect } from "react";
 import Cookies from "universal-cookie";
 
+import "swiper/css";
+import "swiper/css/navigation";
+
 export default function CustomApp({ Component, pageProps }) {
 	const cookies = new Cookies();
 	const currentBucket = cookies.get("currentBucket") || [];

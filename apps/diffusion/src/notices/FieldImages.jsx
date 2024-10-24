@@ -1,75 +1,68 @@
 import dynamic from "next/dynamic";
-import React from "react";
-// import Viewer from "react-viewer";
-import Slider from "react-slick";
+import React, { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 const Viewer = dynamic(() => import("react-viewer"), { ssr: false });
 
-class FieldImages extends React.Component {
-	state = {
-		selected: -1,
-		current: 0,
-	};
+function SlideImage({ image: e, onPress }) {
+	return (
+		<div
+			style={{
+				display: "flex",
+				justifyContent: "center",
+				flexDirection: "column",
+				alignItems: "center",
+			}}
+		>
+			<img src={e.src} alt={e.alt} onClick={onPress} onKeyUp={onPress} />
+			{e.footer ? e.footer : <div />}
+		</div>
+	);
+}
 
-	renderImages() {
-		if (!this.props.images.length) {
+export default function FieldImages({ images }) {
+	const [selected, setSelected] = useState(-1);
+	const [current, setCurrent] = useState(0);
+
+	function renderImages() {
+		if (!images.length) {
 			return <div />;
 		}
-		const arr = this.props.images.map((e, i) => {
+
+		const arr = images.map((e, i) => {
 			return (
-				<div key={i}>
-					<div
-						style={{
-							display: "flex",
-							justifyContent: "center",
-							flexDirection: "column",
-							alignItems: "center",
-						}}
-					>
-						<img
-							src={e.src}
-							alt={e.alt}
-							onClick={() => this.setState({ selected: i })}
-						/>
-						{e.footer ? e.footer : <div />}
-					</div>
-				</div>
+				<SwiperSlide key={e.src.split("/").pop()}>
+					<SlideImage image={e} onPress={() => setSelected(i)} />
+				</SwiperSlide>
 			);
 		});
 
-		const settings = {
-			lazyLoad: true,
-			slidesToShow: 1,
-			speed: 0,
-		};
 		return (
 			<div>
-				{this.props.images.length > 1 ? (
+				{images.length > 1 ? (
 					<div
 						style={{
 							width: "100%",
 							textAlign: "end",
 							fontSize: "11px",
 						}}
-					>{`${this.state.current + 1}/${
-						this.props.images.length
-					}`}</div>
+					>{`${current + 1}/${images.length}`}</div>
 				) : (
 					<span />
 				)}
-				<Slider
-					{...settings}
-					beforeChange={(c, n) => {
-						this.setState({ current: n });
-					}}
+				<Swiper
+					navigation
+					modules={[Navigation]}
+					onSlideChange={(sw) => setCurrent(sw.realIndex)}
 				>
 					{arr}
-				</Slider>
+				</Swiper>
 			</div>
 		);
 	}
 
-	renderModal() {
-		if (this.state.selected === -1) {
+	function renderModal() {
+		if (selected === -1) {
 			return <div />;
 		}
 
@@ -78,20 +71,19 @@ class FieldImages extends React.Component {
 				visible
 				onClose={() => {
 					document.body.style.overflow = "auto";
-					this.setState({ selected: -1 });
+					setSelected(-1);
 				}}
-				images={this.props.images}
-				activeIndex={this.state.selected}
+				images={images}
+				activeIndex={selected}
 			/>
 		);
 	}
 
-	render() {
-		return (
-			<div className="fieldImages">
-				{this.renderModal()}
-				{this.renderImages()}
-				<style jsx global>{`
+	return (
+		<div className="fieldImages">
+			{renderModal()}
+			{renderImages()}
+			<style jsx global>{`
           .fieldImages {
             width: 100%;
             max-width: 500px;
@@ -129,9 +121,6 @@ class FieldImages extends React.Component {
             color: #785d59;
           }
         `}</style>
-			</div>
-		);
-	}
+		</div>
+	);
 }
-
-export default FieldImages;
