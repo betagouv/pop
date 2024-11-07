@@ -14,7 +14,7 @@ pipeline {
 
                 parameters: [
                     string(name: 'ENVIR', value: 'prd'),
-                    string(name: 'TAG', value: '9a181e1c'),
+                    string(name: 'TAG', value: '85de1c34'),
                     string(name: 'BUCKET_NAME', value: 'pop-sitemaps')
                 ],
                 wait: false
