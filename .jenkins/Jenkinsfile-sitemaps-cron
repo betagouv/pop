@@ -1,3 +1,5 @@
+IMAGE_TAG = "85de1c34"
+
 pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
@@ -8,13 +10,21 @@ pipeline {
     }
 
     stages {
+        stage("get latest tag") {
+            steps {
+                script {
+                  IMAGE_TAG = getLatestTag("atnum-release", "pop-api", "prd")
+                }
+            }
+        }
+
         stage("generate-sitemaps") {
             steps {
                 build job: 'atnum/prd/pop/pop-sitemaps',
 
                 parameters: [
                     string(name: 'ENVIR', value: 'prd'),
-                    string(name: 'TAG', value: '85de1c34'),
+                    string(name: 'TAG', value: IMAGE_TAG),
                     string(name: 'BUCKET_NAME', value: 'pop-sitemaps')
                 ],
                 wait: false
