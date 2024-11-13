@@ -35,7 +35,7 @@ pipeline {
 
             steps {
                 script {
-                    TAG = getLatestTag($DOMAIN, $APPLICATION, $ENVIR)
+                    TAG = getLatestTag(DOMAIN, APPLICATION, ENVIR)
                 }
             }
         }
