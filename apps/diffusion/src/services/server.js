@@ -27,7 +27,7 @@ app.prepare().then(() => {
 		];
 		const noticeRegex = /^\/notice\/(.*?)\/(.*)$/;
 		const museoRegex = /^\/museo\/(.*?)$/;
-		const sitemapRegex = /^\/sitemap\/(.*?)$/;
+		const sitemapRegex = /^\/sitemap-index\.xml$/;
 		const galleryRegex = /^\/gallery\/(.*?)$/;
 		const searchRegex =
 			/^\/(advanced-search|search)\/(list|map|mosaic)(?:\/(.+))?$/;
@@ -43,9 +43,9 @@ app.prepare().then(() => {
 			res.statusCode = 404;
 			await handle(req, res, parsedUrl);
 		} else if (pathname.match(sitemapRegex)) {
-			const url = req.url.replace("/sitemap/", "");
 			res.writeHead(301, {
-				Location: `https://pop-sitemaps.s3.gra.io.cloud.ovh.net/${url}`,
+				Location:
+					"https://pop-sitemaps.s3.gra.io.cloud.ovh.net/sitemap-index.xml",
 			});
 			res.end();
 		} /* else if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
