@@ -20,7 +20,6 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials("pop-${ENVIR}-objectstorage-access-key-id")
         AWS_SECRET_ACCESS_KEY = credentials("pop-${ENVIR}-objectstorage-secret-access-key")
         SITEMAPS_BUCKET = "${BUCKET}"
-        IMAGE = "${MAIN_DOCKER_REGISTRY_HOST}/${DOMAIN}/${APPLICATION}:${TAG}"
     }
 
     agent {
@@ -36,7 +35,7 @@ pipeline {
 
             steps {
                 script {
-                    TAG = getLatestTag($DOMAIN, "pop-api", $ENVIR)
+                    TAG = getLatestTag($DOMAIN, $APPLICATION, $ENVIR)
                 }
             }
         }
