@@ -1,7 +1,7 @@
 pipeline {
     parameters {
         choice(name: "ENVIR", choices: ["dev", "stg", "prd"], description: "Environment")
-        string(name: 'TAG', defaultValue: 'latest', description: 'Image tag')
+        string(name: 'TAG', defaultValue: 'latest', description: 'Image tag, if set to latest in prd, the latest will be fetch and used')
         string(name: "BUCKET", defaultValue: "pop-sitemaps", description: "Bucket name where sitemaps will be uploaded")
     }
 
@@ -28,11 +28,24 @@ pipeline {
     }
 
     stages {
+        stage('Get latest tag') {
+            when {
+                expression { params.TAG == "latest" }
+                environment name: "ENVIR", value: "prd"
+            }
+
+            steps {
+                script {
+                    TAG = getLatestTag($DOMAIN, "pop-api", $ENVIR)
+                }
+            }
+        }
+
         stage('Run sync') {
             steps {
                 script {
                     docker.withRegistry("https://${env.MAIN_DOCKER_REGISTRY_HOST}", "main-registry-robot-${REGISTRY_DOMAIN}") {
-                        docker.image("${IMAGE}").inside() {
+                        docker.image("${MAIN_DOCKER_REGISTRY_HOST}/${DOMAIN}/${APPLICATION}:${TAG}").inside() {
                             sh 'DB_ENDPOINT="mongodb+srv://${DB_CREDS_USR}:${DB_CREDS_PSW}@${DB_HOST}?replicaSet=replicaset&tls=true" \
                                 DB_NAME="${DB_NAME}" \
                                 SITEMAPS_BUCKET="${SITEMAPS_BUCKET}" \
