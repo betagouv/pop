@@ -2,4 +2,4 @@ User-Agent: *
 Disallow: /search/*
 Disallow: /advanced-search/*
 
-Sitemap: https://www.pop.culture.gouv.fr/sitemap-index.xml
+Sitemap: https://pop.culture.gouv.fr/sitemap-index.xml
