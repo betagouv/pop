@@ -1107,10 +1107,9 @@ const withStyle = (component) => {
 
         .list-card .content {
           padding: 15px 30px 10px 0;
-          overflow: hidden;
-          width: 80%;
           position: relative;
         }
+
         .list-card .thumbnail {
           width: 290px;
           margin-right: 30px;
@@ -1189,7 +1188,6 @@ const withStyle = (component) => {
         .cardTextContent{
           display: flex;
           flex-direction: column;
-          width: 80%;
         }
 
         .rightContent{
