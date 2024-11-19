@@ -1087,6 +1087,10 @@ const withStyle = (component) => {
           width: 100%;
         }
 
+        .list-card-container a {
+          width: 100%;
+        }
+
         .list-card .list-card-container {
           display: flex;
           flex-direction: row;
@@ -1107,14 +1111,13 @@ const withStyle = (component) => {
 
         .list-card .content {
           padding: 15px 30px 10px 0;
-          position: relative;
+          flex: 1;
         }
 
         .list-card .thumbnail {
           width: 290px;
           margin-right: 30px;
           background-color: #f8f8f8;
-          display: flex;
           justify-content: center;
           align-items: center;
         }
@@ -1182,7 +1185,6 @@ const withStyle = (component) => {
 
         .leftContent{
           display: flex;
-          width: 76%;
         }
 
         .cardTextContent{
