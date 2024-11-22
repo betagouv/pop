@@ -56,7 +56,7 @@ export default class extends React.Component {
 	};
 
 	static async getInitialProps({ query: { id }, asPath }) {
-		const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+		const searchParamsUrl = asPath.replace(/.+\?id=[a-zA-Z0-9]+&/gi, "");
 		const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
 
 		try {

@@ -53,7 +53,7 @@ export default class extends React.Component {
 		const notice = await API.getNotice("joconde", id);
 		const museo =
 			notice && notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
-		const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+		const searchParamsUrl = asPath.replace(/.+\?id=[a-zA-Z0-9]+&/gi, "");
 		const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
 
 		const arr = [];
@@ -281,6 +281,7 @@ export default class extends React.Component {
 					title="Notice précédente"
 					href={this.state.prevLink}
 					className="navButton onPrintHide"
+					prefetch
 				>
 					&lsaquo;
 				</Link>
@@ -296,6 +297,7 @@ export default class extends React.Component {
 					title="Notice suivante"
 					href={this.state.nextLink}
 					className="navButton onPrintHide"
+					prefetch
 				>
 					&rsaquo;
 				</Link>
