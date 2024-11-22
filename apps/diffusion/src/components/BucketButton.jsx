@@ -67,37 +67,41 @@ export default class BucketButton extends React.Component {
 			<div>
 				<div>
 					{this.props.removeFromBucket ? (
-						<div
+						<button
+							type="button"
 							className="btn btn-outline-danger onPrintHide"
-							onClick={() =>
+							onClick={(e) => {
+								e.preventDefault();
 								this.props.removeFromBucket(
 									this.props.reference,
-								)
-							}
+								);
+							}}
 						>
 							<div className="btn-bucket">
 								<div>Supprimer</div>
 							</div>
-						</div>
+						</button>
 					) : this.checkInBucket(
 							this.props.base,
 							this.props.reference,
 						) ? (
 						<div />
 					) : (
-						<div
+						<button
+							type="button"
 							className={"btn btn-outline-success d-sm-block"}
-							onClick={() =>
+							onClick={(e) => {
+								e.preventDefault();
 								this.addToBucket(
 									this.props.base,
 									this.props.reference,
-								)
-							}
+								);
+							}}
 						>
 							<div className="btn-bucket">
 								<div>Ajouter au panier</div>
 							</div>
-						</div>
+						</button>
 					)}
 				</div>
 				<style jsx>{`
