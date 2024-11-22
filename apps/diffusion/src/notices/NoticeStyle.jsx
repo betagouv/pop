@@ -52,11 +52,7 @@ export default css`
     margin-right: 15px;
   }
 
-  .text-last-search {
-    text-decoration: none;
-    color: white;
-  }
-  .text-last-search:hover {
+  .btn-last-search:hover {
     text-decoration: none;
     color: white;
   }
@@ -67,6 +63,10 @@ export default css`
     align-items: center;
     justify-content: flex-start;
     width: 50%;
+  }
+
+  .leftContainer-buttons a {
+    color: white;
   }
 
   .rightContainer-buttons{
