@@ -98,6 +98,7 @@ export default class Layout extends React.Component {
                 src="/static/logo_MC.jpg"
                 alt="Logo"
                 className="md"
+                style={{ height: 77 }}
               />
             </Link>
 
