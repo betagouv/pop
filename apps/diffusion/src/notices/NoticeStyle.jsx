@@ -12,7 +12,7 @@ export default css`
     color: #025d59;
     font-size: 28px;
     display: table;
-    width: 1000px;
+    width: 100%;
     height: 90px;
     margin: 5px auto;
     text-align: center;

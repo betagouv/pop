@@ -407,15 +407,12 @@ export default class extends React.Component {
 							)}
 						</Head>
 
-						<div>
-							<div className="heading heading-center">
-								{this.renderPrevButton()}
-								<h1 className="heading-title">
-									{title_component}
-								</h1>
-								{this.renderNextButton()}
-							</div>
+						<div className="heading heading-center">
+							{this.renderPrevButton()}
+							<h1 className="heading-title">{title_component}</h1>
+							{this.renderNextButton()}
 						</div>
+
 						<div className="top-container">
 							<div className="leftContainer-buttons">
 								{lastRecherche !== null && (
