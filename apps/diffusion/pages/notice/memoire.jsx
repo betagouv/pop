@@ -378,16 +378,11 @@ export default class extends React.Component {
 						<div className="top-container">
 							<div className="leftContainer-buttons">
 								{lastRecherche !== null && (
-									<div className="btn btn-last-search">
-										<Link
-											href={lastRecherche}
-											legacyBehavior
-										>
-											<div className="text-last-search">
-												Retour à la recherche
-											</div>
-										</Link>
-									</div>
+									<Link href={lastRecherche}>
+										<div className="btn btn-last-search text-last-search">
+											Retour à la recherche
+										</div>
+									</Link>
 								)}
 							</div>
 							<div className="rightContainer-buttons">
