@@ -61,7 +61,7 @@ export default class extends React.Component {
 						<p>
 							À cette fin, nous mettons en œuvre la stratégie et
 							les actions suivantes&nbsp;:{" "}
-							<a href="https://www.culture.gouv.fr/Accessibilite/Schema-pluriannuel-d-accessibilite-numerique">
+							<a href="https://www.culture.gouv.fr/accessibilite-partiellement-conforme/schema-pluriannuel-d-accessibilite-numerique">
 								schéma pluriannuel d’accessibilité numérique
 							</a>
 							.
