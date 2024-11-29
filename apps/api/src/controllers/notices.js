@@ -8,6 +8,7 @@ const Palissy = require("../models/palissy");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const Mnr = require("../models/mnr");
+const Autor = require("../models/autor");
 const Enluminures = require("../models/enluminures");
 
 const _ = require("lodash");
@@ -22,6 +23,7 @@ const Notices = {
 	museo: Museo,
 	mnr: Mnr,
 	enluminures: Enluminures,
+	autor: Autor,
 };
 
 /**
@@ -53,7 +55,7 @@ router.post(
 	passport.authenticate("jwt", { session: false }),
 	async (req, res) => {
 		const { collection } = req.params;
-		logger.debug(`Will fetch to collection ${collection}`);
+		req.log.debug(`Will fetch to collection ${collection}`);
 
 		try {
 			const notices = await getExistingsNotices(
@@ -62,6 +64,7 @@ router.post(
 			);
 			res.status(200).json(notices);
 		} catch (err) {
+			req.log.error(err);
 			res.status(400).json({
 				message: "Erreur lors de la récupération des notices",
 				error: err,
