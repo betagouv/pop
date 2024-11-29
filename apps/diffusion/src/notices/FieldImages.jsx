@@ -59,12 +59,7 @@ export default function FieldImages({ images }) {
 						columnGap: 4,
 					}}
 				>
-					<button
-						type="button"
-						className="custom-swiper-prev"
-						onClick={() => sliderRef.current?.swiper.slidePrev()}
-						onKeyDown={() => sliderRef.current?.swiper.slidePrev()}
-					>
+					<button type="button" className="custom-swiper-prev">
 						{"<"}
 					</button>
 					<Swiper
@@ -81,12 +76,7 @@ export default function FieldImages({ images }) {
 					>
 						{arr}
 					</Swiper>
-					<button
-						type="button"
-						className="custom-swiper-next"
-						onClick={() => sliderRef.current?.swiper.slideNext()}
-						onKeyDown={() => sliderRef.current?.swiper.slideNext()}
-					>
+					<button type="button" className="custom-swiper-next">
 						{">"}
 					</button>
 				</div>
