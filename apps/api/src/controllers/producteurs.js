@@ -233,11 +233,11 @@ function producteurValidation(_id, label, base, allProducteurs) {
 	//Si parmis les producteurs existants il y en a un portant le même nom, retourne une erreur
 	allProducteurs.map((item) => {
 		//Ajout des préfixes déjà utilisés
-		if (item._id !== _id) {
+		if (item._id.toString() !== _id) {
 			item.BASE.map((base) => {
 				usedPrefixes.push(...base.prefixes);
 			});
-			if (String(item.LABEL) === label && item._id !== _id) {
+			if (String(item.LABEL) === label) {
 				msg = "Ce nom de producteur existe déjà";
 			}
 		}
