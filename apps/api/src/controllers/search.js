@@ -41,7 +41,7 @@ const shapeReplaceShould = z.object({
 		.array(
 			z.object({
 				bool: z.object({
-					must_not: z.any(),
+					must_not: z.array().min(1),
 				}),
 			}),
 		)
