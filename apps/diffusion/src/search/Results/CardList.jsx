@@ -102,45 +102,43 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 			style={{ textDecoration: "none" }}
 		>
 			{/* Desktop CARD */}
-			<div className="list-card-container desktop-only">
-				<Link
-					href={`/notice/memoire/${data.REF}${
-						searchParams ? `?${toUrlQueryString(searchParams)}` : ""
-					}  `}
-					key={data.REF}
-					style={{ textDecoration: "none" }}
-				>
-					<div className="leftContent">
-						<div className="thumbnail">
-							<ImageComponent src={image_preview} title={title} />
-						</div>
-						<div className="content">
-							<div
-								className="cardTextContent"
-								style={{ display: "flex" }}
-							>
-								<h2>
-									{content}
-									<br />
-								</h2>
-							</div>
-							<p>
-								{" "}
-								{data.AUTOEU && data.AUTOEU.length > 0
-									? `Auteur de l’œuvre représentée : ${data.AUTOEU.join(
-											" ; ",
-										)}`
-									: ""}
-							</p>
-							<p>{loc}</p>
-							<p>{data.TYPDOC}</p>
-							<p>{author}</p>
-							<p>{date}</p>
-							<p>{contentSerieTitre}</p>
-							<p>{data.COPY}</p>
-						</div>
+
+			<Link
+				href={`/notice/memoire/${data.REF}${
+					searchParams ? `?${toUrlQueryString(searchParams)}` : ""
+				}  `}
+				key={data.REF}
+				className="list-card-container desktop-only"
+			>
+				<div className="thumbnail">
+					<ImageComponent src={image_preview} title={title} />
+				</div>
+				<div className="content">
+					<div
+						className="cardTextContent"
+						style={{ display: "flex" }}
+					>
+						<h2>
+							{content}
+							<br />
+						</h2>
 					</div>
-				</Link>
+					<p>
+						{" "}
+						{data.AUTOEU && data.AUTOEU.length > 0
+							? `Auteur de l’œuvre représentée : ${data.AUTOEU.join(
+									" ; ",
+								)}`
+							: ""}
+					</p>
+					<p>{loc}</p>
+					<p>{data.TYPDOC}</p>
+					<p>{author}</p>
+					<p>{date}</p>
+					<p>{contentSerieTitre}</p>
+					<p>{data.COPY}</p>
+				</div>
+
 				<div className="rightContent">
 					<span>
 						<small className="base">Mémoire</small>
@@ -154,7 +152,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
 					/>
 					{LogoComponent}
 				</div>
-			</div>
+			</Link>
 
 			{/* MOBILE CARD */}
 			<div className="list-card-container-mobile mobile-only">
@@ -838,35 +836,34 @@ export const Enluminures = ({
 				key={REF}
 				className="list-card-container desktop-only"
 			>
-				<div className="leftContent">
-					<div className="thumbnail">{ImageComponent}</div>
-					<div className="content">
-						<div className="cardTextContent">
-							<h2>
-								{title}
-								<br />
-								<small>{subtitle}</small>
-							</h2>
-							<div>
-								<p>{data.ATTRIB}</p>
-								<p>
-									{[data.DATE, data.ORIGG, data.ORIGH]
-										.filter((d) => d)
-										.join(", ")}
-								</p>
-								<p>
-									{[
-										data.CONTXT,
-										data.NOMENC.join(", "),
-										data.REFD,
-									]
-										.filter((d) => d)
-										.join(", ")}
-								</p>
-							</div>
+				<div className="thumbnail">{ImageComponent}</div>
+				<div className="content">
+					<div className="cardTextContent">
+						<h2>
+							{title}
+							<br />
+							<small>{subtitle}</small>
+						</h2>
+						<div>
+							<p>{data.ATTRIB}</p>
+							<p>
+								{[data.DATE, data.ORIGG, data.ORIGH]
+									.filter((d) => d)
+									.join(", ")}
+							</p>
+							<p>
+								{[
+									data.CONTXT,
+									data.NOMENC.join(", "),
+									data.REFD,
+								]
+									.filter((d) => d)
+									.join(", ")}
+							</p>
 						</div>
 					</div>
 				</div>
+
 				<div className="rightContent">
 					<span>
 						<small className="base">Enluminures</small>
