@@ -75,12 +75,13 @@ router.post("/signin", async (req, res) => {
 			/*
 			 * Mise à jour de l'utilisateur, remise à zéro du nombre de tentative, compte bloqué == false
 			 */
-			user.set({
-				lastConnectedAt: Date.now(),
-				isBloqued: false,
-				attemptCount: 0,
-			});
-			await user.save();
+			// TODO: temporaire, le temps qu'on utilise le
+			// user.set({
+			// 	lastConnectedAt: Date.now(),
+			// 	isBloqued: false,
+			// 	attemptCount: 0,
+			// });
+			// await user.save();
 
 			const isSecure = req.protocol === "https";
 
