@@ -7,6 +7,7 @@ if (typeof window !== "undefined") {
 		release: `pop-consultation@${require("../../package.json").version}`,
 		environment: process.env.NODE_ENV,
 		enabled: process.env.NODE_ENV === "production",
+		tracesSampleRate: 0.1,
 	});
 }
 
