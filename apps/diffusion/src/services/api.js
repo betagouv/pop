@@ -130,14 +130,14 @@ class api {
 	}
 
 	getMaintenance() {
-		return false;
-		// return new Promise((resolve, reject) => {
-		// 	this._get(`${getApiUrl()}/maintenance`)
-		// 		.then((resp) => {
-		// 			resolve(resp);
-		// 		})
-		// 		.catch((e) => reject(e));
-		// });
+		// return false;
+		return new Promise((resolve, reject) => {
+			this._get(`${getApiUrl()}/maintenance/diffusion`)
+				.then((resp) => {
+					resolve(resp);
+				})
+				.catch((e) => reject(e));
+		});
 	}
 
 	async searchPlaces(query) {

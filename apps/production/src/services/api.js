@@ -498,7 +498,7 @@ class api {
 	}
 
 	getMaintenance() {
-		return request.getJSON("/maintenance");
+		return request.getJSON("/maintenance/production");
 	}
 
 	getNoticesByRef(collection, refs) {
